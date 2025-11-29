@@ -1,0 +1,2284 @@
+Make sure this is netlify compatible and fix and improve as recommended.  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet As Can Bee - Baby Shower for Gunner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --soft-white: #FAFAFA;
+            --powder-blue: #B0D0E3;
+            --honey-gold: #D4A05E;
+            --sage-green: #9CAD90;
+            --text-dark: #333333;
+            --blush: #F8E8E5;
+            --cream: #F5F1E8;
+            --deep-gold: #B8860B;
+            --light-sage: #C8D8C0;
+            --dark-text: #2A2A2A;
+            --border-soft: rgba(0,0,0,0.06);
+            --success-green: #4CAF50;
+            --error-red: #F44336;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--text-dark);
+            background: radial-gradient(circle at top, #F0F6FB 0, var(--soft-white) 50%, #FFFFFF 100%);
+            line-height: 1.7;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .script-text {
+            font-family: 'Pinyon Script', cursive;
+        }
+
+        /* Skip Link for Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--honey-gold);
+            color: white;
+            padding: 8px;
+            z-index: 10000;
+            text-decoration: none;
+            border-radius: 0 0 4px 4px;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Enhanced Loading Animation */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--soft-white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+
+        .loading-bee {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .bee-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            animation: beeFloat 2s ease-in-out infinite;
+        }
+
+        .bee-wing {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            width: 30px;
+            height: 20px;
+            top: 10px;
+            animation: beeWingFlap 0.5s ease-in-out infinite alternate;
+        }
+
+        .bee-wing-left {
+            left: -10px;
+            transform: rotate(-10deg);
+        }
+
+        .bee-wing-right {
+            right: -10px;
+            transform: rotate(10deg);
+            animation-delay: 0.25s;
+        }
+
+        @keyframes beeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes beeWingFlap {
+            0% { transform: scaleY(1); }
+            100% { transform: scaleY(0.8); }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: var(--honey-gold);
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* Enhanced Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 16px 72px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            background: linear-gradient(to bottom, rgba(255,255,255,0.97), rgba(255,255,255,0.9));
+            border-bottom: 1px solid transparent;
+        }
+
+        .main-nav.scrolled {
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border-bottom-color: var(--border-soft);
+            padding: 10px 72px;
+        }
+
+        .logo {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 2rem;
+            color: var(--honey-gold);
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            position: relative;
+            transition: color 0.25s ease;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--honey-gold);
+            border-radius: 999px;
+            transition: width 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--honey-gold);
+        }
+
+        .nav-links a:hover:after,
+        .nav-links a.is-active:after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            padding: 10px 26px;
+            background: transparent;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 999px;
+            border: 1px solid var(--honey-gold);
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-cta:hover,
+        .nav-cta:focus-visible {
+            background: var(--honey-gold);
+            color: #fff;
+            box-shadow: 0 12px 30px rgba(212,160,94,0.35);
+            transform: translateY(-1px);
+        }
+
+        .main-nav a:focus-visible {
+            outline: 2px solid var(--sage-green);
+            outline-offset: 2px;
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .mobile-nav {
+            position: fixed;
+            inset: 0;
+            background: rgba(250,250,250,0.98);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(-100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-nav.active {
+            transform: translateY(0);
+        }
+
+        .mobile-nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            margin: 12px 0;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            background: rgba(212,160,94,0.1);
+            color: var(--honey-gold);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 26px;
+            right: 26px;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav-close:hover {
+            transform: scale(1.1);
+        }
+
+        /* Sticky RSVP Button for Mobile */
+        .sticky-rsvp {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--honey-gold);
+            color: #fff;
+            text-align: center;
+            padding: 12px 16px;
+            z-index: 900;
+            display: none;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .sticky-rsvp.active {
+            transform: translateY(0);
+        }
+
+        .sticky-rsvp a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            display: block;
+            width: 100%;
+        }
+
+        /* Enhanced Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            padding: 120px 24px 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-decoration {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.15;
+            background-image:
+                radial-gradient(circle at 10% 20%, #FBEBD2 0, transparent 45%),
+                radial-gradient(circle at 80% 10%, #E3F0FF 0, transparent 50%),
+                radial-gradient(circle at 80% 90%, #FFECDD 0, transparent 40%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 920px;
+            padding: 56px 48px;
+            border-radius: 24px;
+            border: 1px solid var(--border-soft);
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 22px 70px rgba(0,0,0,0.06);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-pretitle {
+            font-size: 0.82rem;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: var(--sage-green);
+            margin-bottom: 22px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+            font-weight: 600;
+        }
+
+        .hero-title {
+            font-size: clamp(3.3rem, 5vw, 4.8rem);
+            line-height: 1.1;
+            margin-bottom: 18px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.45s forwards;
+            font-weight: 400;
+            background: linear-gradient(135deg, var(--honey-gold) 0%, #E9C68B 50%, var(--honey-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 36px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.7s forwards;
+            font-weight: 300;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 36px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.9s forwards;
+        }
+
+        .hero-chip {
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            border: 1px solid var(--border-soft);
+            background: rgba(248, 244, 236, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .hero-chip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 40px;
+            background: transparent;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 999px;
+            border: 1px solid var(--honey-gold);
+            font-size: 0.78rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.1s forwards;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -100%;
+            background: var(--honey-gold);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover,
+        .cta-button:focus-visible {
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 16px 40px rgba(230, 184, 106, 0.4);
+        }
+
+        .cta-button span.icon {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover span.icon {
+            transform: translateY(2px);
+        }
+
+        /* Enhanced Content Sections */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 96px 72px;
+            position: relative;
+        }
+
+        .section-number {
+            position: absolute;
+            top: 60px;
+            left: 30px;
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: var(--powder-blue);
+            opacity: 0.08;
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-header::before {
+            content: '';
+            width: 64px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--honey-gold), transparent);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-header h2 {
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+        }
+
+        .section-header .subtitle {
+            font-size: 1rem;
+            color: var(--sage-green);
+            font-style: italic;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text-dark);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .intro-text::first-letter {
+            font-size: 3.4rem;
+            font-family: 'Playfair Display', serif;
+            float: left;
+            line-height: 0.8;
+            margin: 8px 12px 0 0;
+            color: var(--honey-gold);
+        }
+
+        .highlight-quote {
+            font-size: 2rem;
+            font-family: 'Pinyon Script', cursive;
+            color: var(--honey-gold);
+            text-align: center;
+            margin: 48px auto 0;
+            line-height: 1.4;
+            max-width: 640px;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .highlight-quote::before,
+        .highlight-quote::after {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(212,160,94,0.2);
+            position: absolute;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .highlight-quote::before {
+            top: -10px;
+            left: -30px;
+        }
+
+        .highlight-quote::after {
+            bottom: -30px;
+            right: -30px;
+        }
+
+        /* Enhanced Countdown */
+        .countdown-section {
+            background: linear-gradient(135deg, var(--honey-gold) 0%, var(--deep-gold) 100%);
+            color: #fff;
+            text-align: center;
+            padding: 80px 32px;
+            margin: 80px auto 0;
+            max-width: 1400px;
+            border-radius: 24px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.12"><path fill="white" d="M50,20 C60,10 80,10 90,20 C100,30 100,50 90,60 C80,70 60,70 50,60 C40,70 20,70 10,60 C0,50 0,30 10,20 C20,10 40,10 50,20 Z"/></svg>');
+        }
+
+        .countdown-inner {
+            position: relative;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(14px);
+            padding: 28px 22px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .countdown-value {
+            font-size: 2.8rem;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            opacity: 0.9;
+        }
+
+        /* Enhanced Gallery */
+        #gallery {
+            background: linear-gradient(to bottom, var(--soft-white) 0%, var(--cream) 55%, var(--soft-white) 100%);
+        }
+
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            margin-top: 40px;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: #fff;
+            box-shadow: 0 16px 50px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            cursor: default;
+            opacity: 0;
+            animation: cardReveal 0.7s ease-out forwards;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        @keyframes cardReveal {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.18s; }
+        .card:nth-child(3) { animation-delay: 0.26s; }
+        .card:nth-child(4) { animation-delay: 0.34s; }
+
+        .card:hover {
+            transform: translateY(-8px) rotateX(2deg);
+            box-shadow: 0 22px 60px rgba(0,0,0,0.10);
+        }
+
+        .card-header-band {
+            padding: 10px 18px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+
+        .card-color-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            opacity: 0.9;
+        }
+
+        .card-content {
+            padding: 26px 24px 30px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .card-icon {
+            font-size: 3.2rem;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.09));
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .card:hover .card-icon {
+            transform: translateY(-4px) scale(1.05);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+            color: var(--dark-text);
+            font-weight: 600;
+        }
+
+        .card-subtitle {
+            font-size: 0.85rem;
+            color: var(--dark-text);
+            opacity: 0.7;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Character-specific gradients */
+        .card-bear .card-header-band {
+            background: linear-gradient(90deg, #FAD7A1, var(--honey-gold));
+        }
+
+        .card-piglet .card-header-band {
+            background: linear-gradient(90deg, #FAD0D0, #FFC1CC);
+        }
+
+        .card-donkey .card-header-band {
+            background: linear-gradient(90deg, #C2D5F3, var(--powder-blue));
+        }
+
+        .card-tiger .card-header-band {
+            background: linear-gradient(90deg, #FFE5A0, #FFB74D);
+        }
+
+        /* Enhanced Registry */
+        .registry-section {
+            background: var(--cream);
+            padding: 80px 72px;
+            margin: 80px auto;
+            max-width: 1200px;
+            border-radius: 24px;
+            box-shadow: 0 24px 70px rgba(0,0,0,0.08);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .registry-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--honey-gold), var(--powder-blue), var(--sage-green));
+        }
+
+        .registry-section p {
+            font-size: 1.05rem;
+            margin-bottom: 40px;
+            max-width: 780px;
+            margin-inline: auto;
+        }
+
+        .registry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 26px;
+            margin-top: 32px;
+        }
+
+        .registry-item {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: 1px solid var(--border-soft);
+            position: relative;
+        }
+
+        .registry-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--honey-gold);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .registry-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .registry-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 60px rgba(0,0,0,0.1);
+        }
+
+        .registry-image {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .registry-item:hover .registry-image {
+            transform: scale(1.05);
+        }
+
+        .registry-details {
+            padding: 22px 22px 24px;
+            text-align: left;
+        }
+
+        .registry-details h3 {
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+            color: var(--honey-gold);
+        }
+
+        .registry-details p {
+            font-size: 0.96rem;
+            margin-bottom: 14px;
+            color: var(--dark-text);
+        }
+
+        .registry-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px;
+            background: var(--honey-gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .registry-button:hover {
+            background: var(--deep-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.16);
+        }
+
+        .registry-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .registry-button:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Enhanced Favor Section */
+        .favor-section {
+            background: white;
+            margin: 80px auto 0;
+            max-width: 1400px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.12);
+            overflow: hidden;
+            border-radius: 24px;
+        }
+
+        .favor-content {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+            min-height: 420px;
+        }
+
+        .favor-text {
+            padding: 72px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--cream) 0%, #FFFFFF 100%);
+        }
+
+        .favor-text h2 {
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .favor-text .script-large {
+            font-size: 2.3rem;
+            color: var(--honey-gold);
+            display: block;
+            margin: 20px 0;
+            line-height: 1.2;
+        }
+
+        .favor-text p {
+            font-size: 1.02rem;
+            line-height: 1.8;
+            margin-bottom: 14px;
+        }
+
+        .favor-visual {
+            background: linear-gradient(135deg, var(--honey-gold) 0%, #D4A05E 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .honey-jar-visual {
+            font-size: 6rem;
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.3));
+            animation: honeyJarFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes honeyJarFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        /* Enhanced Event Details Section */
+        .event-details {
+            background: linear-gradient(135deg, var(--powder-blue) 0%, #A0C4D6 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 32px 70px;
+            margin: 40px auto 0;
+            max-width: 1400px;
+            border-radius: 24px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-details::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.06"><path fill="white" d="M50,20 C60,10 80,10 90,20 C100,30 100,50 90,60 C80,70 60,70 50,60 C40,70 20,70 10,60 C0,50 0,30 10,20 C20,10 40,10 50,20 Z"/></svg>');
+        }
+
+        .event-inner {
+            position: relative;
+        }
+
+        .details-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 32px;
+            margin-top: 30px;
+        }
+
+        .detail-box {
+            background: rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(10px);
+            padding: 32px 22px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .detail-box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .detail-box h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .detail-box p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Enhanced RSVP */
+        .rsvp-section {
+            background: var(--cream);
+            padding: 80px 72px;
+            margin: 80px auto;
+            max-width: 1200px;
+            border-radius: 24px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .rsvp-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--sage-green), var(--honey-gold));
+        }
+
+        .rsvp-form {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 26px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .label-required {
+            font-size: 0.8rem;
+            color: var(--sage-green);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .form-helper {
+            font-size: 0.82rem;
+            color: #777;
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 14px;
+            border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 10px;
+            font-size: 0.97rem;
+            font-family: 'Lato', sans-serif;
+            transition: all 0.2s ease;
+            background: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--honey-gold);
+            box-shadow: 0 0 0 2px rgba(230, 184, 106, 0.25);
+        }
+
+        .form-group input:valid,
+        .form-group select:valid,
+        .form-group textarea:valid {
+            border-color: rgba(0,0,0,0.12);
+        }
+
+        .form-group input:invalid:not(:focus):not(:placeholder-shown),
+        .form-group select:invalid:not(:focus),
+        .form-group textarea:invalid:not(:focus):not(:placeholder-shown) {
+            border-color: var(--error-red);
+        }
+
+        .error-message {
+            display: block;
+            color: var(--error-red);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .form-group input:invalid:not(:focus):not(:placeholder-shown) ~ .error-message,
+        .form-group select:invalid:not(:focus) ~ .error-message,
+        .form-group textarea:invalid:not(:focus):not(:placeholder-shown) ~ .error-message {
+            opacity: 1;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+            gap: 20px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(0,0,0,0.12);
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .radio-option:hover {
+            border-color: var(--honey-gold);
+        }
+
+        .radio-option input {
+            width: auto;
+            margin: 0;
+        }
+
+        .radio-option span {
+            font-size: 0.9rem;
+        }
+
+        .radio-option input:checked + span {
+            color: var(--honey-gold);
+        }
+
+        .radio-option input:checked {
+            accent-color: var(--honey-gold);
+        }
+
+        .success-message {
+            background: var(--success-green);
+            color: white;
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            font-size: 0.95rem;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-message i {
+            font-size: 1.2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Enhanced Footer CTA */
+        .footer-cta {
+            text-align: center;
+            padding: 96px 24px 72px;
+            background: linear-gradient(to bottom, var(--soft-white) 0%, var(--blush) 50%, var(--soft-white) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 70%;
+            max-width: 640px;
+            height: 1px;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, transparent, var(--honey-gold), transparent);
+        }
+
+        .footer-cta h2 {
+            font-size: 2.6rem;
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+
+        .footer-cta p {
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            max-width: 640px;
+            margin-inline: auto;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .cta-secondary {
+            padding: 16px 32px;
+            background: white;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 999px;
+            border: 1px solid var(--powder-blue);
+            font-size: 0.78rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover,
+        .cta-secondary:focus-visible {
+            background: var(--powder-blue);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 12px 32px rgba(176, 208, 227, 0.4);
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            font-size: 0.78rem;
+            opacity: 0.6;
+        }
+
+        /* Enhanced Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            background: var(--honey-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            z-index: 100;
+            transition: all 0.25s ease;
+            border: none;
+        }
+
+        .music-player:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+        }
+
+        .music-player:focus-visible {
+            outline: 2px solid var(--sage-green);
+            outline-offset: 3px;
+        }
+
+        .music-player i {
+            font-size: 1.3rem;
+        }
+
+        .music-player.playing {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(212, 160, 94, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(212, 160, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 160, 94, 0); }
+        }
+
+        /* Enhanced Responsive Design */
+        @media (max-width: 1024px) {
+            .main-nav,
+            .main-nav.scrolled {
+                padding: 12px 24px;
+            }
+
+            .content-section,
+            .rsvp-section,
+            .registry-section {
+                padding: 72px 24px;
+            }
+
+            .section-number {
+                font-size: 3.2rem;
+                top: 40px;
+                left: 16px;
+            }
+
+            .details-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown-section {
+                padding: 72px 24px;
+            }
+
+            .hero-content {
+                padding: 40px 26px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-cta {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-section {
+                padding: 110px 16px 64px;
+            }
+
+            .hero-content {
+                border-radius: 20px;
+            }
+
+            .hero-title {
+                font-size: 2.6rem;
+            }
+
+            .hero-meta {
+                gap: 12px;
+            }
+
+            .hero-chip {
+                font-size: 0.72rem;
+                letter-spacing: 0.15em;
+            }
+
+            .masonry-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .favor-content {
+                grid-template-columns: 1fr;
+            }
+
+            .favor-text {
+                padding: 56px 22px;
+            }
+
+            .event-details {
+                padding: 64px 20px 52px;
+            }
+
+            .details-container {
+                gap: 20px;
+            }
+
+            .registry-section {
+                margin: 72px auto;
+            }
+
+            .sticky-rsvp {
+                display: block;
+            }
+
+            .music-player {
+                display: none;
+            }
+
+            .section-number {
+                display: none;
+            }
+
+            .countdown-section {
+                margin: 72px auto 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.3rem;
+            }
+
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .highlight-quote {
+                font-size: 1.6rem;
+            }
+            
+            .highlight-quote::before,
+            .highlight-quote::after {
+                font-size: 3rem;
+            }
+            
+            .highlight-quote::before {
+                left: -10px;
+            }
+            
+            .highlight-quote::after {
+                right: -10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen" aria-hidden="true">
+        <div class="loading-bee">
+            <div class="bee-body">
+                <div class="bee-wing bee-wing-left"></div>
+                <div class="bee-wing bee-wing-right"></div>
+            </div>
+        </div>
+        <div class="loading-text">Sweet As Can Bee</div>
+    </div>
+
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <div class="logo">Sweet As Can Bee</div>
+        <div class="nav-links" aria-label="Primary navigation">
+            <a href="#details">Event Details</a>
+            <a href="#rsvp">RSVP</a>
+            <a href="#gallery">The Tables</a>
+            <a href="#registry">Registry</a>
+            <a href="#story">Our Story</a>
+        </div>
+        <a href="#rsvp" class="nav-cta">RSVP</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="#details" class="mobile-nav-link">Event Details</a>
+        <a href="#rsvp" class="mobile-nav-link">RSVP</a>
+        <a href="#gallery" class="mobile-nav-link">The Tables</a>
+        <a href="#registry" class="mobile-nav-link">Registry</a>
+        <a href="#story" class="mobile-nav-link">Our Story</a>
+    </div>
+
+    <!-- Sticky RSVP Button for Mobile -->
+    <div class="sticky-rsvp" aria-hidden="true">
+        <a href="#rsvp">RSVP for Gunner</a>
+    </div>
+
+    <!-- Music Player -->
+    <button class="music-player" id="musicPlayer" aria-label="Play background music" aria-pressed="false">
+        <i class="fas fa-music"></i>
+    </button>
+
+    <!-- Hero Section -->
+    <main id="main-content">
+        <header class="hero-section">
+            <div class="hero-decoration"></div>
+            <div class="hero-content">
+                <div class="hero-pretitle">Celebrating Gunner's Arrival</div>
+                <h1 class="hero-title">
+                    <span class="script-text">Sweet As Can Bee</span>
+                </h1>
+                <p class="hero-subtitle">A storybook baby shower, inspired by the Hundred Acre Wood.</p>
+
+                <div class="hero-meta" aria-hidden="true">
+                    <div class="hero-chip">March 22 · 2–5 PM</div>
+                    <div class="hero-chip">The Garden Room</div>
+                    <div class="hero-chip">Garden Party Pastels</div>
+                </div>
+
+                <a href="#rsvp" class="cta-button">
+                    <span>RSVP for the Shower</span>
+                    <span class="icon">↓</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Event Details -->
+        <section class="event-details" id="details">
+            <div class="event-inner">
+                <div class="section-number">01</div>
+                <div class="section-header">
+                    <h2>Event Details</h2>
+                    <p class="subtitle">Save the date for Gunner's big welcome</p>
+                </div>
+
+                <div class="details-container" aria-label="Event information">
+                    <div class="detail-box">
+                        <h3>When</h3>
+                        <p>Saturday, March 22, 2025</p>
+                        <p>2:00 PM – 5:00 PM</p>
+                    </div>
+                    <div class="detail-box">
+                        <h3>Where</h3>
+                        <p>The Garden Room</p>
+                        <p>123 Blossom Avenue</p>
+                        <p>Willow Creek, CA</p>
+                    </div>
+                    <div class="detail-box">
+                        <h3>Dress Code</h3>
+                        <p>Garden Party Elegance</p>
+                        <p>Soft pastels and florals encouraged</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section class="rsvp-section" id="rsvp" aria-labelledby="rsvp-heading">
+            <div class="section-number">02</div>
+            <div class="section-header">
+                <h2 id="rsvp-heading">RSVP</h2>
+                <p class="subtitle">Let us know if you can join the celebration</p>
+            </div>
+            
+            <div class="success-message" id="successMessage" role="status" aria-live="polite">
+                <i class="fas fa-check-circle"></i>
+                <span>Thank you! Your RSVP has been received. We can't wait to celebrate with you.</span>
+            </div>
+            
+            <form class="rsvp-form" id="rsvpForm" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">
+                            Your Name
+                            <span class="label-required">Required</span>
+                        </label>
+                        <input type="text" id="name" name="name" required autocomplete="name" aria-required="true">
+                        <span class="error-message" id="name-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">
+                            Email Address
+                            <span class="label-required">Required</span>
+                        </label>
+                        <div class="form-helper">We'll only use this to confirm your RSVP.</div>
+                        <input type="email" id="email" name="email" required autocomplete="email" aria-required="true">
+                        <span class="error-message" id="email-error"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="guests">
+                        Number of Guests
+                        <span class="label-required">Required</span>
+                    </label>
+                    <select id="guests" name="guests" required aria-required="true">
+                        <option value="" disabled selected>Select number of guests</option>
+                        <option value="1">Just me</option>
+                        <option value="2">Me + 1 guest</option>
+                    </select>
+                    <span class="error-message" id="guests-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label>Will you be attending?<span class="label-required">Required</span></label>
+                    <div class="radio-group" role="radiogroup" aria-label="Attendance choice">
+                        <label class="radio-option" for="attending-yes">
+                            <input type="radio" id="attending-yes" name="attending" value="yes" required>
+                            <span>Yes, I'll be there!</span>
+                        </label>
+                        <label class="radio-option" for="attending-no">
+                            <input type="radio" id="attending-no" name="attending" value="no">
+                            <span>Sorry, I can't make it</span>
+                        </label>
+                    </div>
+                    <span class="error-message" id="attending-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dietary">Dietary Restrictions or Allergies</label>
+                    <div class="form-helper">Optional, but it helps us plan a safe and delicious menu.</div>
+                    <textarea id="dietary" name="dietary" rows="3" placeholder="Let us know about any dietary needs"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message for the Parents-to-Be</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Share your excitement, advice, or well wishes"></textarea>
+                </div>
+                
+                <button type="submit" class="cta-button" style="margin-top: 20px;">
+                    <span>Submit RSVP</span>
+                    <span class="icon">✉️</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- Gallery -->
+        <section class="content-section" id="gallery" aria-labelledby="tables-heading">
+            <div class="section-number">03</div>
+            <div class="section-header">
+                <h2 id="tables-heading">The Character Tables</h2>
+                <p class="subtitle">Each one a soft nod to a favorite friend</p>
+            </div>
+            
+            <div class="masonry-grid">
+                <article class="card card-bear">
+                    <div class="card-header-band">
+                        <span class="card-color-dot"></span>
+                        <span>Honey-Loving Bear Table</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-icon" aria-hidden="true">🍯</div>
+                        <h3 class="card-title">The Bear</h3>
+                        <p class="card-subtitle">Honey &amp; Sunshine</p>
+                        <p class="card-description">
+                            Soft butter-yellow runners, honey-jar accents, and warm golden florals
+                            echo the cozy sweetness of our favorite bear without feeling too literal.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="card card-piglet">
+                    <div class="card-header-band">
+                        <span class="card-color-dot"></span>
+                        <span>Gentle Friend Table</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-icon" aria-hidden="true">🌸</div>
+                        <h3 class="card-title">The Piglet</h3>
+                        <p class="card-subtitle">Blush &amp; Innocence</p>
+                        <p class="card-description">
+                            Powder-blue linens meet blush napkins, pale pink blooms, and delicate
+                            baby's breath to bring a soft, brave little heart to life.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="card card-donkey">
+                    <div class="card-header-band">
+                        <span class="card-color-dot"></span>
+                        <span>Rainy-Day Dreamer Table</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-icon" aria-hidden="true">🌧️</div>
+                        <h3 class="card-title">The Donkey</h3>
+                        <p class="card-subtitle">Slate &amp; Eucalyptus</p>
+                        <p class="card-description">
+                            Gentle slate-blue tones, eucalyptus greenery, and candlelight create
+                            a calm, slightly nostalgic corner that still feels hopeful and warm.
+                        </p>
+                    </div>
+                </article>
+                
+                <article class="card card-tiger">
+                    <div class="card-header-band">
+                        <span class="card-color-dot"></span>
+                        <span>Bouncy Bright Table</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-icon" aria-hidden="true">☀️</div>
+                        <h3 class="card-title">The Tiger</h3>
+                        <p class="card-subtitle">Marigold &amp; Energy</p>
+                        <p class="card-description">
+                            Marigold napkins, cheerful yellow-orange blooms, and playful place
+                            cards keep things lively while still matching the overall palette.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Registry Section -->
+        <section class="registry-section" id="registry" aria-labelledby="registry-heading">
+            <div class="section-number">04</div>
+            <div class="section-header">
+                <h2 id="registry-heading">Gift Registry</h2>
+                <p class="subtitle">If you'd like to spoil baby Gunner</p>
+            </div>
+            
+            <p>
+                Your presence at our shower is the greatest gift of all. For those who wish to honor Gunner
+                with something special, we've created registries with the pieces we'll use every day as he
+                begins his first adventures.
+            </p>
+            
+            <div class="registry-grid">
+                <article class="registry-item">
+                    <div class="registry-image" style="background: var(--powder-blue);">
+                        <i class="fas fa-baby-carriage" aria-hidden="true"></i>
+                    </div>
+                    <div class="registry-details">
+                        <h3>Nursery Essentials</h3>
+                        <p>Crib, changing table, rocker, and soft touches to make his first room feel safe and cozy.</p>
+                        <a href="#" class="registry-button">
+                            <span>View Items</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </article>
+                
+                <article class="registry-item">
+                    <div class="registry-image" style="background: var(--honey-gold);">
+                        <i class="fas fa-tshirt" aria-hidden="true"></i>
+                    </div>
+                    <div class="registry-details">
+                        <h3>Clothing &amp; Layette</h3>
+                        <p>Onesies, sleepers, and little outfits for the tiny adventures of his first year.</p>
+                        <a href="#" class="registry-button">
+                            <span>View Items</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section class="content-section" id="story" aria-labelledby="story-heading">
+            <div class="section-number">05</div>
+            <div class="section-header">
+                <h2 id="story-heading">Once Upon a Time...</h2>
+                <p class="subtitle">Where every detail tells a story</p>
+            </div>
+            
+            <p class="intro-text">
+                We're celebrating the upcoming arrival of little Gunner Avery with a baby shower inspired by
+                the timeless charm of the Hundred Acre Wood. Imagine powder-blue runners, golden honey jars,
+                and tables that quietly nod to each beloved character. Join us for an afternoon filled with
+                sweet treats, laughter, and the gentle kind of joy that only comes when family and friends
+                gather to welcome a new little one.
+            </p>
+
+            <div class="highlight-quote">
+                Every place setting, every petal,<br>
+                whispers a soft "welcome" to the newest character in our story.
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section class="countdown-section" aria-labelledby="countdown-heading">
+            <div class="countdown-inner">
+                <div class="section-number">06</div>
+                <div class="section-header">
+                    <h2 id="countdown-heading">Counting Down to Gunner's Arrival</h2>
+                    <p class="subtitle">The sweetest chapter is almost here</p>
+                </div>
+
+                <div class="countdown-container" aria-label="Countdown to event">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">00</span>
+                        <span class="countdown-label">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">00</span>
+                        <span class="countdown-label">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">00</span>
+                        <span class="countdown-label">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="seconds">00</span>
+                        <span class="countdown-label">Seconds</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Favor Section -->
+        <section class="favor-section" aria-labelledby="favor-heading">
+            <div class="favor-content">
+                <div class="favor-text">
+                    <div class="section-number">07</div>
+                    <h2 id="favor-heading">A Sweet Send-Off</h2>
+                    <p class="script-text script-large">
+                        Sweet as can bee
+                    </p>
+                    <p>
+                        No visit to the wood is complete without a little something sweet. Each guest will receive
+                        a glass jar of local amber honey, capped with matte metal and tied with natural twine.
+                    </p>
+                    <p>
+                        The jars glow in the candlelight and echo the golden accents around the room, turning each
+                        place setting into a tiny halo. It's a practical favor you can drizzle on toast later, and a
+                        beautiful way to carry a bit of the day home.
+                    </p>
+                </div>
+                <div class="favor-visual" role="img" aria-label="A warm amber honey jar favor glowing against a golden background">
+                    <span class="honey-jar-visual" aria-hidden="true">🍯</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer-cta" aria-label="Final call to action">
+            <div class="section-number">08</div>
+            <h2>We Can't Wait to Celebrate With You</h2>
+            <p>
+                Thank you for helping us surround baby Gunner with so much love before he even arrives.
+                Your presence means more than any present.
+            </p>
+            
+            <div class="cta-group">
+                <a href="#rsvp" class="cta-button">
+                    <span>RSVP Now</span>
+                    <span class="icon">↗</span>
+                </a>
+                <a href="#registry" class="cta-secondary">
+                    View Registry
+                </a>
+            </div>
+            <p class="footer-note">With love, Sarah &amp; Michael</p>
+        </footer>
+    </main>
+
+    <script>
+        // Enhanced Loading Screen
+        window.addEventListener('load', () => {
+            const screen = document.getElementById('loadingScreen');
+            screen.style.opacity = '0';
+            setTimeout(() => {
+                if (screen && screen.parentNode) {
+                    screen.parentNode.removeChild(screen);
+                }
+                // Initialize animations after loading
+                initScrollAnimations();
+            }, 800);
+        });
+
+        // Navbar Scroll Effect
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+            
+            // Show/hide sticky RSVP button on mobile
+            const stickyRSVP = document.querySelector('.sticky-rsvp');
+            if (window.innerWidth <= 768) {
+                if (window.scrollY > 300) {
+                    stickyRSVP.classList.add('active');
+                } else {
+                    stickyRSVP.classList.remove('active');
+                }
+            }
+        });
+
+        // Mobile Navigation
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function closeMobileNav() {
+            mobileNav.classList.remove('active');
+            mobileNav.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openMobileNav() {
+            mobileNav.classList.add('active');
+            mobileNav.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        mobileMenuBtn.addEventListener('click', openMobileNav);
+
+        mobileNavClose.addEventListener('click', closeMobileNav);
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', closeMobileNav);
+        });
+
+        // Enhanced Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const target = document.querySelector(targetId);
+                if (!target) return;
+                
+                e.preventDefault();
+                
+                // Close mobile nav if open
+                if (mobileNav.classList.contains('active')) {
+                    closeMobileNav();
+                }
+                
+                const navHeight = nav.offsetHeight;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Enhanced Countdown Timer with post-event handling
+        let countdownInterval;
+        function updateCountdown() {
+            const eventDate = new Date('March 22, 2025 14:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = eventDate - now;
+
+            const heading = document.getElementById('countdown-heading');
+            const subtitle = document.querySelector('.countdown-section .subtitle');
+            const container = document.querySelector('.countdown-container');
+
+            if (timeLeft <= 0) {
+                if (heading) heading.textContent = "Gunner's Big Day Has Arrived!";
+                if (subtitle) subtitle.textContent = "Thank you for celebrating with us.";
+                if (container) container.style.display = 'none';
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            // Add animation to changing numbers
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+            
+            if (daysEl.textContent !== days.toString().padStart(2, '0')) {
+                daysEl.style.transform = 'scale(1.2)';
+                setTimeout(() => { daysEl.style.transform = 'scale(1)'; }, 300);
+            }
+            
+            if (hoursEl.textContent !== hours.toString().padStart(2, '0')) {
+                hoursEl.style.transform = 'scale(1.2)';
+                setTimeout(() => { hoursEl.style.transform = 'scale(1)'; }, 300);
+            }
+            
+            if (minutesEl.textContent !== minutes.toString().padStart(2, '0')) {
+                minutesEl.style.transform = 'scale(1.2)';
+                setTimeout(() => { minutesEl.style.transform = 'scale(1)'; }, 300);
+            }
+            
+            if (secondsEl.textContent !== seconds.toString().padStart(2, '0')) {
+                secondsEl.style.transform = 'scale(1.2)';
+                setTimeout(() => { secondsEl.style.transform = 'scale(1)'; }, 300);
+            }
+            
+            daysEl.textContent = days.toString().padStart(2, '0');
+            hoursEl.textContent = hours.toString().padStart(2, '0');
+            minutesEl.textContent = minutes.toString().padStart(2, '0');
+            secondsEl.textContent = seconds.toString().padStart(2, '0');
+        }
+
+        countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Enhanced Music Player (no autoplay)
+        const musicPlayer = document.getElementById('musicPlayer');
+        let isPlaying = false;
+        // Using a placeholder audio - replace with actual lullaby
+        const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+        audio.volume = 0.3; // Set lower volume for background music
+
+        musicPlayer.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
+                musicPlayer.setAttribute('aria-label', 'Play background music');
+                musicPlayer.setAttribute('aria-pressed', 'false');
+                musicPlayer.classList.remove('playing');
+            } else {
+                audio.play().catch(e => {
+                    console.log('Audio playback failed:', e);
+                    // Show a subtle notification that playback requires user interaction
+                    const originalText = musicPlayer.innerHTML;
+                    musicPlayer.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                    musicPlayer.setAttribute('aria-label', 'Click to enable music');
+                    setTimeout(() => {
+                        musicPlayer.innerHTML = originalText;
+                        musicPlayer.setAttribute('aria-label', 'Play background music');
+                    }, 2000);
+                });
+                musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+                musicPlayer.setAttribute('aria-label', 'Pause background music');
+                musicPlayer.setAttribute('aria-pressed', 'true');
+                musicPlayer.classList.add('playing');
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Enhanced RSVP Form Submission with validation
+        const rsvpForm = document.getElementById('rsvpForm');
+        const successMessage = document.getElementById('successMessage');
+
+        // Form validation
+        function validateField(field) {
+            const value = field.value.trim();
+            const errorElement = document.getElementById(`${field.id}-error`);
+            
+            // Clear previous error
+            if (errorElement) {
+                errorElement.textContent = '';
+            }
+            
+            // Check required fields
+            if (field.hasAttribute('required') && !value) {
+                if (errorElement) {
+                    errorElement.textContent = 'This field is required';
+                }
+                return false;
+            }
+            
+            // Email validation
+            if (field.type === 'email' && value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    if (errorElement) {
+                        errorElement.textContent = 'Please enter a valid email address';
+                    }
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        // Add real-time validation
+        const formInputs = rsvpForm.querySelectorAll('input, select, textarea');
+        formInputs.forEach(input => {
+            input.addEventListener('blur', () => validateField(input));
+            input.addEventListener('input', () => {
+                // Clear error when user starts typing
+                const errorElement = document.getElementById(`${input.id}-error`);
+                if (errorElement && validateField(input)) {
+                    errorElement.textContent = '';
+                }
+            });
+        });
+
+        rsvpForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate all fields
+            let isValid = true;
+            formInputs.forEach(input => {
+                if (!validateField(input)) {
+                    isValid = false;
+                    // Focus first invalid field
+                    if (isValid) {
+                        input.focus();
+                        isValid = false;
+                    }
+                }
+            });
+            
+            if (!isValid) {
+                // Shake form to indicate error
+                rsvpForm.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    rsvpForm.style.animation = '';
+                }, 500);
+                return;
+            }
+            
+            // Show success message with enhanced animation
+            successMessage.style.display = 'flex';
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Add confetti effect for successful submission
+            createConfetti();
+            
+            // Reset form
+            this.reset();
+            
+            // Hide success message after delay
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        });
+
+        // Confetti effect for form submission
+        function createConfetti() {
+            const confettiCount = 100;
+            const confettiContainer = document.createElement('div');
+            confettiContainer.style.position = 'fixed';
+            confettiContainer.style.top = '0';
+            confettiContainer.style.left = '0';
+            confettiContainer.style.width = '100%';
+            confettiContainer.style.height = '100%';
+            confettiContainer.style.pointerEvents = 'none';
+            confettiContainer.style.zIndex = '9999';
+            
+            document.body.appendChild(confettiContainer);
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'absolute';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.borderRadius = '50%';
+                confetti.style.top = '50%';
+                confetti.style.left = '50%';
+                confetti.style.opacity = '0';
+                
+                confettiContainer.appendChild(confetti);
+                
+                // Animate confetti
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 30 + Math.random() * 30;
+                const x = Math.cos(angle) * velocity;
+                const y = Math.sin(angle) * velocity;
+                
+                const animation = confetti.animate([
+                    { 
+                        transform: 'translate(0, 0) rotate(0deg)',
+                        opacity: 1
+                    },
+                    { 
+                        transform: `translate(${x}vw, ${y}vh) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: 1000 + Math.random() * 1000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
+                });
+                
+                animation.onfinish = () => {
+                    confetti.remove();
+                    if (confettiContainer.children.length === 0) {
+                        confettiContainer.remove();
+                    }
+                };
+            }
+        }
+
+        function getRandomColor() {
+            const colors = ['#D4A05E', '#B0D0E3', '#9CAD90', '#F8E8E5', '#FFD700'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Enhanced Scroll Spy for desktop nav
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        function onScrollSpy() {
+            const scrollPos = window.scrollY + 120;
+            let currentId = '';
+
+            sections.forEach(section => {
+                if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+                    currentId = '#' + section.id;
+                }
+            });
+
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentId) {
+                    link.classList.add('is-active');
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.classList.remove('is-active');
+                    link.removeAttribute('aria-current');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', onScrollSpy);
+        onScrollSpy();
+
+        // Enhanced scroll animations
+        function initScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.card, .detail-box, .registry-item, .countdown-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Add CSS for shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Enhanced focus management for accessibility
+        document.addEventListener('keydown', (e) => {
+            // Trap focus in mobile navigation when open
+            if (mobileNav.classList.contains('active') && e.key === 'Tab') {
+                const focusableElements = mobileNav.querySelectorAll('a, button');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+                
+                if (e.shiftKey && document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                } else if (!e.shiftKey && document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        });
+
+        // Performance optimization: Lazy load non-critical resources
+        document.addEventListener('DOMContentLoaded', () => {
+            // Preload critical resources
+            const criticalResources = [
+                'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&family=Pinyon+Script&display=swap',
+                'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+            ];
+            
+            criticalResources.forEach(resource => {
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                link.href = resource;
+                link.as = 'style';
+                document.head.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
