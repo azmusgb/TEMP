@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -62,8 +63,7 @@
         .skip-link:focus {
             top: 0;
         }
-
-        /* Enhanced Loading Animation */
+                /* Enhanced Loading Animation */
         .loading-screen {
             position: fixed;
             inset: 0;
@@ -292,8 +292,7 @@
         .mobile-nav-close:hover {
             transform: scale(1.1);
         }
-
-        /* Sticky RSVP Button for Mobile */
+                /* Sticky RSVP Button for Mobile */
         .sticky-rsvp {
             position: fixed;
             bottom: 0;
@@ -480,8 +479,7 @@
         .cta-button:hover span.icon {
             transform: translateY(2px);
         }
-
-        /* Enhanced Content Sections */
+                /* Enhanced Content Sections */
         .content-section {
             max-width: 1200px;
             margin: 0 auto;
@@ -602,7 +600,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.12"><path fill="white" d="M50,20 C60,10 80,10 90,20 C100,30 100,50 90,60 C80,70 60,70 50,60 C40,70 20,70 10,60 C0,50 0,30 10,20 C20,10 40,10 50,20 Z"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.12"><path fill="white" d="M50,20 C60,10 80,10 90,20 C1[...]');
         }
 
         .countdown-inner {
@@ -647,8 +645,7 @@
             letter-spacing: 0.2em;
             opacity: 0.9;
         }
-
-        /* Enhanced Gallery */
+                /* Enhanced Gallery */
         #gallery {
             background: linear-gradient(to bottom, var(--soft-white) 0%, var(--cream) 55%, var(--soft-white) 100%);
         }
@@ -900,8 +897,7 @@
         .registry-button:hover i {
             transform: translateX(3px);
         }
-
-        /* Enhanced Favor Section */
+                /* Enhanced Favor Section */
         .favor-section {
             background: white;
             margin: 80px auto 0;
@@ -983,7 +979,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.06"><path fill="white" d="M50,20 C60,10 80,10 90,20 C100,30 100,50 90,60 C80,70 60,70 50,60 C40,70 20,70 10,60 C0,50 0,30 10,20 C20,10 40,10 50,20 Z"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.06"><path fill="white" d="M50,20 C60,10 80,10 90,20 C1[...]');
         }
 
         .event-inner {
@@ -998,1286 +994,318 @@
         }
 
         .detail-box {
-            background: rgba(255, 255, 255, 0.16);
-            backdrop-filter: blur(10px);
-            padding: 32px 22px;
-            border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.10);
+            border-radius: 20px;
+            padding: 38px 12px;
+            text-align: center;
+            box-shadow: 0 2px 32px rgba(0,0,0,0.09);
+            font-size: 1.12rem;
+            color: #fff;
         }
 
-        .detail-box:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.2);
+        .detail-box i {
+            font-size: 2.4rem;
+            margin-bottom: 14px;
+            color: #fff;
         }
 
-        .detail-box h3 {
-            font-size: 1.4rem;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .detail-box p {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        /* Enhanced RSVP */
-        .rsvp-section {
-            background: var(--cream);
-            padding: 80px 72px;
-            margin: 80px auto;
-            max-width: 1200px;
-            border-radius: 24px;
-            box-shadow: 0 24px 80px rgba(0,0,0,0.08);
-            position: relative;
-        }
-
-        .rsvp-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(to right, var(--sage-green), var(--honey-gold));
-        }
-
-        .rsvp-form {
-            max-width: 760px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 26px;
-            position: relative;
-        }
-
-        .form-group label {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-            margin-bottom: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--dark-text);
-        }
-
-        .label-required {
-            font-size: 0.8rem;
+        /* Footer */
+        .footer {
+            text-align: center;
             color: var(--sage-green);
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
+            font-size: 1rem;
+            padding: 2rem;
+            margin-top: 4rem;
+            background: var(--white);
         }
 
-        .form-helper {
-            font-size: 0.82rem;
-            color: #777;
-            margin-bottom: 4px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 14px 14px;
-            border: 1px solid rgba(0,0,0,0.12);
-            border-radius: 10px;
-            font-size: 0.97rem;
-            font-family: 'Lato', sans-serif;
-            transition: all 0.2s ease;
-            background: #fff;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--honey-gold);
-            box-shadow: 0 0 0 2px rgba(230, 184, 106, 0.25);
-        }
-
-        .form-group input:valid,
-        .form-group select:valid,
-        .form-group textarea:valid {
-            border-color: rgba(0,0,0,0.12);
-        }
-
-        .form-group input:invalid:not(:focus):not(:placeholder-shown),
-        .form-group select:invalid:not(:focus),
-        .form-group textarea:invalid:not(:focus):not(:placeholder-shown) {
-            border-color: var(--error-red);
-        }
-
-        .error-message {
-            display: block;
-            color: var(--error-red);
-            font-size: 0.8rem;
-            margin-top: 5px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .form-group input:invalid:not(:focus):not(:placeholder-shown) ~ .error-message,
-        .form-group select:invalid:not(:focus) ~ .error-message,
-        .form-group textarea:invalid:not(:focus):not(:placeholder-shown) ~ .error-message {
-            opacity: 1;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-            gap: 20px;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 6px;
-            flex-wrap: wrap;
-        }
-
-        .radio-option {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 12px;
-            border-radius: 999px;
-            border: 1px solid rgba(0,0,0,0.12);
-            background: #fff;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .radio-option:hover {
-            border-color: var(--honey-gold);
-        }
-
-        .radio-option input {
-            width: auto;
-            margin: 0;
-        }
-
-        .radio-option span {
-            font-size: 0.9rem;
-        }
-
-        .radio-option input:checked + span {
-            color: var(--honey-gold);
-        }
-
-        .radio-option input:checked {
-            accent-color: var(--honey-gold);
-        }
-
-        .success-message {
-            background: var(--success-green);
-            color: white;
-            padding: 14px 16px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-            display: none;
-            font-size: 0.95rem;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .success-message i {
-            font-size: 1.2rem;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Enhanced Footer CTA */
-        .footer-cta {
-            text-align: center;
-            padding: 96px 24px 72px;
-            background: linear-gradient(to bottom, var(--soft-white) 0%, var(--blush) 50%, var(--soft-white) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer-cta::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 70%;
-            max-width: 640px;
-            height: 1px;
-            transform: translateX(-50%);
-            background: linear-gradient(to right, transparent, var(--honey-gold), transparent);
-        }
-
-        .footer-cta h2 {
-            font-size: 2.6rem;
-            margin-bottom: 18px;
-            font-weight: 500;
-        }
-
-        .footer-cta p {
-            font-size: 1.05rem;
-            margin-bottom: 30px;
-            font-weight: 300;
-            max-width: 640px;
-            margin-inline: auto;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 18px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
-        .cta-secondary {
-            padding: 16px 32px;
-            background: white;
-            color: var(--text-dark);
-            text-decoration: none;
-            border-radius: 999px;
-            border: 1px solid var(--powder-blue);
-            font-size: 0.78rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-        }
-
-        .cta-secondary:hover,
-        .cta-secondary:focus-visible {
-            background: var(--powder-blue);
-            color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 12px 32px rgba(176, 208, 227, 0.4);
-        }
-
-        .footer-note {
-            margin-top: 24px;
-            font-size: 0.78rem;
-            opacity: 0.6;
-        }
-
-        /* Enhanced Music Player */
-        .music-player {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 52px;
-            height: 52px;
-            background: var(--honey-gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
-            z-index: 100;
-            transition: all 0.25s ease;
-            border: none;
-        }
-
-        .music-player:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 16px 40px rgba(0,0,0,0.3);
-        }
-
-        .music-player:focus-visible {
-            outline: 2px solid var(--sage-green);
-            outline-offset: 3px;
-        }
-
-        .music-player i {
-            font-size: 1.3rem;
-        }
-
-        .music-player.playing {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(212, 160, 94, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(212, 160, 94, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(212, 160, 94, 0); }
-        }
-
-        /* Enhanced Responsive Design */
-        @media (max-width: 1024px) {
-            .main-nav,
-            .main-nav.scrolled {
-                padding: 12px 24px;
-            }
-
+        @media(max-width:1100px){
             .content-section,
-            .rsvp-section,
-            .registry-section {
-                padding: 72px 24px;
-            }
-
-            .section-number {
-                font-size: 3.2rem;
-                top: 40px;
-                left: 16px;
-            }
-
-            .details-container {
-                grid-template-columns: 1fr;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .countdown-section {
-                padding: 72px 24px;
-            }
-
+            .registry-section,
+            .favor-content,
             .hero-content {
-                padding: 40px 26px;
+                padding: 56px 24px;
+            }
+            .details-container{
+                grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+                gap: 24px;
             }
         }
-
-        @media (max-width: 768px) {
+        @media(max-width:800px){
+            .main-nav {
+                padding: 10px 12px;
+            }
             .nav-links {
-                display: none;
+                gap: 10px;
             }
-
-            .nav-cta {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .hero-section {
-                padding: 110px 16px 64px;
-            }
-
-            .hero-content {
-                border-radius: 20px;
-            }
-
-            .hero-title {
-                font-size: 2.6rem;
-            }
-
-            .hero-meta {
-                gap: 12px;
-            }
-
-            .hero-chip {
-                font-size: 0.72rem;
-                letter-spacing: 0.15em;
-            }
-
-            .masonry-grid {
-                grid-template-columns: 1fr;
-            }
-
             .favor-content {
                 grid-template-columns: 1fr;
             }
-
-            .favor-text {
-                padding: 56px 22px;
-            }
-
-            .event-details {
-                padding: 64px 20px 52px;
-            }
-
-            .details-container {
-                gap: 20px;
-            }
-
-            .registry-section {
-                margin: 72px auto;
-            }
-
-            .sticky-rsvp {
-                display: block;
-            }
-
-            .music-player {
-                display: none;
-            }
-
-            .section-number {
-                display: none;
-            }
-
-            .countdown-section {
-                margin: 72px auto 0;
-            }
         }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2.3rem;
-            }
-
-            .cta-button {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .highlight-quote {
-                font-size: 1.6rem;
-            }
-            
-            .highlight-quote::before,
-            .highlight-quote::after {
-                font-size: 3rem;
-            }
-            
-            .highlight-quote::before {
-                left: -10px;
-            }
-            
-            .highlight-quote::after {
-                right: -10px;
-            }
+        @media(max-width:500px){
+            .section-number,.section-header::before { display:none; }
+            .content-section,.registry-section,.favor-content,.hero-content,.event-details { padding: 22px 8px; }
         }
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
     <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen" aria-hidden="true">
+    <div class="loading-screen" id="loadingScreen">
         <div class="loading-bee">
-            <div class="bee-body">
-                <div class="bee-wing bee-wing-left"></div>
-                <div class="bee-wing bee-wing-right"></div>
-            </div>
+            <div class="bee-body"></div>
+            <div class="bee-wing bee-wing-left"></div>
+            <div class="bee-wing bee-wing-right"></div>
         </div>
-        <div class="loading-text">Sweet As Can Bee</div>
+        <div class="loading-text">Sweet as can bee...</div>
     </div>
-
-    <!-- Skip to main content for accessibility -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
     <!-- Navigation -->
     <nav class="main-nav" id="mainNav">
-        <div class="logo">Sweet As Can Bee</div>
-        <div class="nav-links" aria-label="Primary navigation">
-            <a href="#details">Event Details</a>
-            <a href="#rsvp">RSVP</a>
-            <a href="#gallery">The Tables</a>
+        <span class="logo">Sweet As Can Bee</span>
+        <div class="nav-links">
+            <a href="#details">Details</a>
+            <a href="#gallery">Gallery</a>
             <a href="#registry">Registry</a>
-            <a href="#story">Our Story</a>
+            <a href="#rsvp" class="nav-cta">RSVP</a>
         </div>
-        <a href="#rsvp" class="nav-cta">RSVP</a>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
-            <i class="fas fa-bars"></i>
-        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
     </nav>
-
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
-            <i class="fas fa-times"></i>
-        </button>
-        <a href="#details" class="mobile-nav-link">Event Details</a>
-        <a href="#rsvp" class="mobile-nav-link">RSVP</a>
-        <a href="#gallery" class="mobile-nav-link">The Tables</a>
-        <a href="#registry" class="mobile-nav-link">Registry</a>
-        <a href="#story" class="mobile-nav-link">Our Story</a>
+    <nav class="mobile-nav" style="display:none;" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+        <a href="#details">Details</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#registry">Registry</a>
+        <a href="#rsvp" class="nav-cta">RSVP</a>
+    </nav>
+    <div class="sticky-rsvp" id="stickyRSVP">
+        <a href="#rsvp"><i class="fa-solid fa-heart"></i> RSVP for Gunner's Baby Shower</a>
     </div>
-
-    <!-- Sticky RSVP Button for Mobile -->
-    <div class="sticky-rsvp" aria-hidden="true">
-        <a href="#rsvp">RSVP for Gunner</a>
-    </div>
-
-    <!-- Music Player -->
-    <button class="music-player" id="musicPlayer" aria-label="Play background music" aria-pressed="false">
-        <i class="fas fa-music"></i>
-    </button>
-
-    <!-- Hero Section -->
-    <main id="main-content">
-        <header class="hero-section">
-            <div class="hero-decoration"></div>
+    <main id="main">
+                <!-- Hero Section -->
+        <section class="hero-section">
             <div class="hero-content">
-                <div class="hero-pretitle">Celebrating Gunner's Arrival</div>
-                <h1 class="hero-title">
-                    <span class="script-text">Sweet As Can Bee</span>
-                </h1>
-                <p class="hero-subtitle">A storybook baby shower, inspired by the Hundred Acre Wood.</p>
-
-                <div class="hero-meta" aria-hidden="true">
-                    <div class="hero-chip">March 22 · 2–5 PM</div>
-                    <div class="hero-chip">The Garden Room</div>
-                    <div class="hero-chip">Garden Party Pastels</div>
+                <div class="hero-pretitle">You're Invited!</div>
+                <div class="hero-title script-text">Baby Shower for Gunner</div>
+                <div class="hero-subtitle">
+                    Celebrate our little honey with an afternoon of love, laughter, and memories.<br>
+                    Join us for sweet treats and sweeter company as we shower Gunner and family.
                 </div>
-
-                <a href="#rsvp" class="cta-button">
-                    <span>RSVP for the Shower</span>
-                    <span class="icon">↓</span>
-                </a>
-            </div>
-        </header>
-
-        <!-- Event Details -->
-        <section class="event-details" id="details">
-            <div class="event-inner">
-                <div class="section-number">01</div>
-                <div class="section-header">
-                    <h2>Event Details</h2>
-                    <p class="subtitle">Save the date for Gunner's big welcome</p>
+                <div class="hero-meta">
+                    <span class="hero-chip"><i class="fa-solid fa-calendar-days"></i> Dec 12, 2025</span>
+                    <span class="hero-chip"><i class="fa-solid fa-clock"></i> 1pm–4pm</span>
+                    <span class="hero-chip"><i class="fa-solid fa-location-dot"></i> Springs Town, NY</span>
                 </div>
-
-                <div class="details-container" aria-label="Event information">
-                    <div class="detail-box">
-                        <h3>When</h3>
-                        <p>Saturday, March 22, 2025</p>
-                        <p>2:00 PM – 5:00 PM</p>
-                    </div>
-                    <div class="detail-box">
-                        <h3>Where</h3>
-                        <p>The Garden Room</p>
-                        <p>123 Blossom Avenue</p>
-                        <p>Willow Creek, CA</p>
-                    </div>
-                    <div class="detail-box">
-                        <h3>Dress Code</h3>
-                        <p>Garden Party Elegance</p>
-                        <p>Soft pastels and florals encouraged</p>
-                    </div>
-                </div>
+                <a href="#rsvp" class="cta-button"><span>RSVP Now</span><span class="icon"><i class="fa-solid fa-arrow-right"></i></span></a>
             </div>
         </section>
-
-        <!-- RSVP Section -->
-        <section class="rsvp-section" id="rsvp" aria-labelledby="rsvp-heading">
-            <div class="section-number">02</div>
-            <div class="section-header">
-                <h2 id="rsvp-heading">RSVP</h2>
-                <p class="subtitle">Let us know if you can join the celebration</p>
-            </div>
-            
-            <div class="success-message" id="successMessage" role="status" aria-live="polite">
-                <i class="fas fa-check-circle"></i>
-                <span>Thank you! Your RSVP has been received. We can't wait to celebrate with you.</span>
-            </div>
-            
-            <form class="rsvp-form" id="rsvpForm" novalidate>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name">
-                            Your Name
-                            <span class="label-required">Required</span>
-                        </label>
-                        <input type="text" id="name" name="name" required autocomplete="name" aria-required="true">
-                        <span class="error-message" id="name-error"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">
-                            Email Address
-                            <span class="label-required">Required</span>
-                        </label>
-                        <div class="form-helper">We'll only use this to confirm your RSVP.</div>
-                        <input type="email" id="email" name="email" required autocomplete="email" aria-required="true">
-                        <span class="error-message" id="email-error"></span>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="guests">
-                        Number of Guests
-                        <span class="label-required">Required</span>
-                    </label>
-                    <select id="guests" name="guests" required aria-required="true">
-                        <option value="" disabled selected>Select number of guests</option>
-                        <option value="1">Just me</option>
-                        <option value="2">Me + 1 guest</option>
-                    </select>
-                    <span class="error-message" id="guests-error"></span>
-                </div>
-                
-                <div class="form-group">
-                    <label>Will you be attending?<span class="label-required">Required</span></label>
-                    <div class="radio-group" role="radiogroup" aria-label="Attendance choice">
-                        <label class="radio-option" for="attending-yes">
-                            <input type="radio" id="attending-yes" name="attending" value="yes" required>
-                            <span>Yes, I'll be there!</span>
-                        </label>
-                        <label class="radio-option" for="attending-no">
-                            <input type="radio" id="attending-no" name="attending" value="no">
-                            <span>Sorry, I can't make it</span>
-                        </label>
-                    </div>
-                    <span class="error-message" id="attending-error"></span>
-                </div>
-                
-                <div class="form-group">
-                    <label for="dietary">Dietary Restrictions or Allergies</label>
-                    <div class="form-helper">Optional, but it helps us plan a safe and delicious menu.</div>
-                    <textarea id="dietary" name="dietary" rows="3" placeholder="Let us know about any dietary needs"></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="message">Message for the Parents-to-Be</label>
-                    <textarea id="message" name="message" rows="4" placeholder="Share your excitement, advice, or well wishes"></textarea>
-                </div>
-                
-                <button type="submit" class="cta-button" style="margin-top: 20px;">
-                    <span>Submit RSVP</span>
-                    <span class="icon">✉️</span>
-                </button>
-            </form>
-        </section>
-
-        <!-- Gallery -->
-        <section class="content-section" id="gallery" aria-labelledby="tables-heading">
-            <div class="section-number">03</div>
-            <div class="section-header">
-                <h2 id="tables-heading">The Character Tables</h2>
-                <p class="subtitle">Each one a soft nod to a favorite friend</p>
-            </div>
-            
-            <div class="masonry-grid">
-                <article class="card card-bear">
-                    <div class="card-header-band">
-                        <span class="card-color-dot"></span>
-                        <span>Honey-Loving Bear Table</span>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-icon" aria-hidden="true">🍯</div>
-                        <h3 class="card-title">The Bear</h3>
-                        <p class="card-subtitle">Honey &amp; Sunshine</p>
-                        <p class="card-description">
-                            Soft butter-yellow runners, honey-jar accents, and warm golden florals
-                            echo the cozy sweetness of our favorite bear without feeling too literal.
-                        </p>
-                    </div>
-                </article>
-
-                <article class="card card-piglet">
-                    <div class="card-header-band">
-                        <span class="card-color-dot"></span>
-                        <span>Gentle Friend Table</span>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-icon" aria-hidden="true">🌸</div>
-                        <h3 class="card-title">The Piglet</h3>
-                        <p class="card-subtitle">Blush &amp; Innocence</p>
-                        <p class="card-description">
-                            Powder-blue linens meet blush napkins, pale pink blooms, and delicate
-                            baby's breath to bring a soft, brave little heart to life.
-                        </p>
-                    </div>
-                </article>
-
-                <article class="card card-donkey">
-                    <div class="card-header-band">
-                        <span class="card-color-dot"></span>
-                        <span>Rainy-Day Dreamer Table</span>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-icon" aria-hidden="true">🌧️</div>
-                        <h3 class="card-title">The Donkey</h3>
-                        <p class="card-subtitle">Slate &amp; Eucalyptus</p>
-                        <p class="card-description">
-                            Gentle slate-blue tones, eucalyptus greenery, and candlelight create
-                            a calm, slightly nostalgic corner that still feels hopeful and warm.
-                        </p>
-                    </div>
-                </article>
-                
-                <article class="card card-tiger">
-                    <div class="card-header-band">
-                        <span class="card-color-dot"></span>
-                        <span>Bouncy Bright Table</span>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-icon" aria-hidden="true">☀️</div>
-                        <h3 class="card-title">The Tiger</h3>
-                        <p class="card-subtitle">Marigold &amp; Energy</p>
-                        <p class="card-description">
-                            Marigold napkins, cheerful yellow-orange blooms, and playful place
-                            cards keep things lively while still matching the overall palette.
-                        </p>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- Registry Section -->
-        <section class="registry-section" id="registry" aria-labelledby="registry-heading">
-            <div class="section-number">04</div>
-            <div class="section-header">
-                <h2 id="registry-heading">Gift Registry</h2>
-                <p class="subtitle">If you'd like to spoil baby Gunner</p>
-            </div>
-            
-            <p>
-                Your presence at our shower is the greatest gift of all. For those who wish to honor Gunner
-                with something special, we've created registries with the pieces we'll use every day as he
-                begins his first adventures.
-            </p>
-            
-            <div class="registry-grid">
-                <article class="registry-item">
-                    <div class="registry-image" style="background: var(--powder-blue);">
-                        <i class="fas fa-baby-carriage" aria-hidden="true"></i>
-                    </div>
-                    <div class="registry-details">
-                        <h3>Nursery Essentials</h3>
-                        <p>Crib, changing table, rocker, and soft touches to make his first room feel safe and cozy.</p>
-                        <a href="#" class="registry-button">
-                            <span>View Items</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </article>
-                
-                <article class="registry-item">
-                    <div class="registry-image" style="background: var(--honey-gold);">
-                        <i class="fas fa-tshirt" aria-hidden="true"></i>
-                    </div>
-                    <div class="registry-details">
-                        <h3>Clothing &amp; Layette</h3>
-                        <p>Onesies, sleepers, and little outfits for the tiny adventures of his first year.</p>
-                        <a href="#" class="registry-button">
-                            <span>View Items</span>
-                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- Story Section -->
-        <section class="content-section" id="story" aria-labelledby="story-heading">
-            <div class="section-number">05</div>
-            <div class="section-header">
-                <h2 id="story-heading">Once Upon a Time...</h2>
-                <p class="subtitle">Where every detail tells a story</p>
-            </div>
-            
-            <p class="intro-text">
-                We're celebrating the upcoming arrival of little Gunner Avery with a baby shower inspired by
-                the timeless charm of the Hundred Acre Wood. Imagine powder-blue runners, golden honey jars,
-                and tables that quietly nod to each beloved character. Join us for an afternoon filled with
-                sweet treats, laughter, and the gentle kind of joy that only comes when family and friends
-                gather to welcome a new little one.
-            </p>
-
-            <div class="highlight-quote">
-                Every place setting, every petal,<br>
-                whispers a soft "welcome" to the newest character in our story.
-            </div>
-        </section>
-
         <!-- Countdown Section -->
-        <section class="countdown-section" aria-labelledby="countdown-heading">
+        <section class="countdown-section">
+            <h2 class="script-text">Countdown to Sweetness</h2>
             <div class="countdown-inner">
-                <div class="section-number">06</div>
-                <div class="section-header">
-                    <h2 id="countdown-heading">Counting Down to Gunner's Arrival</h2>
-                    <p class="subtitle">The sweetest chapter is almost here</p>
-                </div>
-
-                <div class="countdown-container" aria-label="Countdown to event">
+                <div class="countdown-container" id="countdown">
                     <div class="countdown-item">
-                        <span class="countdown-value" id="days">00</span>
+                        <span id="days">10</span>
                         <span class="countdown-label">Days</span>
                     </div>
                     <div class="countdown-item">
-                        <span class="countdown-value" id="hours">00</span>
+                        <span id="hours">08</span>
                         <span class="countdown-label">Hours</span>
                     </div>
                     <div class="countdown-item">
-                        <span class="countdown-value" id="minutes">00</span>
+                        <span id="minutes">35</span>
                         <span class="countdown-label">Minutes</span>
                     </div>
                     <div class="countdown-item">
-                        <span class="countdown-value" id="seconds">00</span>
+                        <span id="seconds">15</span>
                         <span class="countdown-label">Seconds</span>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- Favor Section -->
-        <section class="favor-section" aria-labelledby="favor-heading">
-            <div class="favor-content">
-                <div class="favor-text">
-                    <div class="section-number">07</div>
-                    <h2 id="favor-heading">A Sweet Send-Off</h2>
-                    <p class="script-text script-large">
-                        Sweet as can bee
-                    </p>
-                    <p>
-                        No visit to the wood is complete without a little something sweet. Each guest will receive
-                        a glass jar of local amber honey, capped with matte metal and tied with natural twine.
-                    </p>
-                    <p>
-                        The jars glow in the candlelight and echo the golden accents around the room, turning each
-                        place setting into a tiny halo. It's a practical favor you can drizzle on toast later, and a
-                        beautiful way to carry a bit of the day home.
-                    </p>
+        <!-- Gallery Cards -->
+        <section id="gallery">
+            <div class="masonry-grid">
+                <div class="card card-bear">
+                    <div class="card-header-band"><span class="card-color-dot"></span>Winnie the Pooh</div>
+                    <div class="card-content">
+                        <div class="card-icon"><i class="fa-solid fa-bear"></i></div>
+                        <div class="card-title">Pooh Bear</div>
+                        <div class="card-subtitle">Honey Lover</div>
+                        <div class="card-description">A day without a friend is like a pot without a single drop of honey left inside.</div>
+                    </div>
                 </div>
-                <div class="favor-visual" role="img" aria-label="A warm amber honey jar favor glowing against a golden background">
-                    <span class="honey-jar-visual" aria-hidden="true">🍯</span>
+                <div class="card card-piglet">
+                    <div class="card-header-band"><span class="card-color-dot"></span>Piglet</div>
+                    <div class="card-content">
+                        <div class="card-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                        <div class="card-title">Piglet</div>
+                        <div class="card-subtitle">Best Buddy</div>
+                        <div class="card-description">The tiniest friend, with the biggest heart—for Gunner and everyone!</div>
+                    </div>
+                </div>
+                <div class="card card-donkey">
+                    <div class="card-header-band"><span class="card-color-dot"></span>Eeyore</div>
+                    <div class="card-content">
+                        <div class="card-icon"><i class="fa-solid fa-donkey"></i></div>
+                        <div class="card-title">Eeyore</div>
+                        <div class="card-subtitle">Gentle Soul</div>
+                        <div class="card-description">“Thanks for noticin’ me.” We notice you, Eeyore!</div>
+                    </div>
+                </div>
+                <div class="card card-tiger">
+                    <div class="card-header-band"><span class="card-color-dot"></span>Tigger</div>
+                    <div class="card-content">
+                        <div class="card-icon"><i class="fa-solid fa-jet-fighter-up"></i></div>
+                        <div class="card-title">Tigger</div>
+                        <div class="card-subtitle">Bouncy Friend</div>
+                        <div class="card-description">Bouncing with joy for Gunner, the wonderful thing about Tiggers is YOU!</div>
+                    </div>
                 </div>
             </div>
         </section>
-
-        <!-- Footer -->
-        <footer class="footer-cta" aria-label="Final call to action">
-            <div class="section-number">08</div>
-            <h2>We Can't Wait to Celebrate With You</h2>
-            <p>
-                Thank you for helping us surround baby Gunner with so much love before he even arrives.
-                Your presence means more than any present.
-            </p>
-            
-            <div class="cta-group">
-                <a href="#rsvp" class="cta-button">
-                    <span>RSVP Now</span>
-                    <span class="icon">↗</span>
-                </a>
-                <a href="#registry" class="cta-secondary">
-                    View Registry
-                </a>
+        <!-- Registry Section -->
+        <section class="registry-section" id="registry">
+            <h2>Gift Registry</h2>
+            <p>Thank you for helping us prepare for Gunner's arrival. Browse our registry links below.</p>
+            <div class="registry-grid">
+                <div class="registry-item">
+                    <div class="registry-image" style="background:#fab973;"><i class="fa-brands fa-amazon"></i></div>
+                    <div class="registry-details">
+                        <h3>Amazon</h3>
+                        <p>Our handpicked wish list for Baby Gunner.</p>
+                        <a class="registry-button" href="https://www.amazon.com/baby-reg/gunner-example" target="_blank">
+                            View Registry <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="registry-item">
+                    <div class="registry-image" style="background:#db4a20;"><i class="fa-solid fa-baby"></i></div>
+                    <div class="registry-details">
+                        <h3>Target</h3>
+                        <p>Favorite finds for our growing family.</p>
+                        <a class="registry-button" href="https://www.target.com/gift-registry/search" target="_blank">
+                            View Registry <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="registry-item">
+                    <div class="registry-image" style="background:#1796e5;"><i class="fa-solid fa-gift"></i></div>
+                    <div class="registry-details">
+                        <h3>Walmart</h3>
+                        <p>Extra options and essentials, with love.</p>
+                        <a class="registry-button" href="https://www.walmart.com/registry/baby/12345" target="_blank">
+                            View Registry <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <p class="footer-note">With love, Sarah &amp; Michael</p>
-        </footer>
+        </section>
+        <!-- Favor Section -->
+        <section class="favor-section">
+            <div class="favor-content">
+                <div class="favor-text">
+                    <h2 class="script-large script-text">Party Favors</h2>
+                    <p>Don't forget to grab a honey jar and a bee-themed cookie on your way out. Thank you for making our day so sweet!</p>
+                </div>
+                <div class="favor-visual">
+                    <div class="honey-jar-visual"><i class="fa-solid fa-jar-wheat"></i></div>
+                </div>
+            </div>
+        </section>
+        <!-- Event Details Section -->
+        <section class="event-details" id="details">
+            <div class="event-inner">
+                <h2 class="script-text">Event Details</h2>
+                <div class="details-container">
+                    <div class="detail-box">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <h3>December 12, 2025</h3>
+                        <span>Saturday, 1 PM – 4 PM</span>
+                    </div>
+                    <div class="detail-box">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <h3>Sunnybrook House</h3>
+                        <span>1234 Meadow Lane, Springs Town, NY</span>
+                    </div>
+                    <div class="detail-box">
+                        <i class="fa-solid fa-cake-candles"></i>
+                        <h3>Winnie the Pooh & Bees</h3>
+                        <span>Theme: Sweetest hive in town!</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- RSVP Section -->
+        <section id="rsvp" class="event-details" style="background:linear-gradient(135deg,var(--sage-green) 0%,var(--light-sage) 100%);color:var(--text-dark);margin-top:44px;">
+            <div class="event-inner">
+                <h2 class="script-text">Let Us Know You're Coming!</h2>
+                <form style="margin:2rem auto;max-width:400px;">
+                    <input type="text" placeholder="Your Name" required style="width:100%;margin-bottom:1rem;padding:.7rem;border-radius:8px;border:1px solid #eee;">
+                    <input type="email" placeholder="Email Address" required style="width:100%;margin-bottom:1rem;padding:.7rem;border-radius:8px;border:1px solid #eee;">
+                    <button class="cta-button" type="submit">RSVP</button>
+                </form>
+                <small>Your info won’t be shared. Questions? Reach out to <a href="mailto:parents@example.com">parents@example.com</a>.</small>
+            </div>
+        </section>
     </main>
-
-    <script>
-        // Enhanced Loading Screen
-        window.addEventListener('load', () => {
-            const screen = document.getElementById('loadingScreen');
-            screen.style.opacity = '0';
-            setTimeout(() => {
-                if (screen && screen.parentNode) {
-                    screen.parentNode.removeChild(screen);
-                }
-                // Initialize animations after loading
-                initScrollAnimations();
-            }, 200);
+    <footer class="footer">© 2025 Sweet As Can Bee. With love from our hive to yours.</footer>
+        <script>
+        // Remove loading screen after delay
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function(){
+                document.getElementById('loadingScreen').style.opacity = 0;
+                setTimeout(function(){
+                    document.getElementById('loadingScreen').style.display = 'none';
+                },800);
+            }, 1200);
         });
 
-        // Navbar Scroll Effect
-        const nav = document.getElementById('mainNav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 80) {
-                nav.classList.add('scrolled');
+        // Mobile nav menu toggle
+        document.getElementById('mobileMenuBtn').onclick = function() {
+            document.getElementById('mobileNav').style.display = 'flex';
+            setTimeout(function(){document.getElementById('mobileNav').classList.add('active');},10);
+        }
+        document.getElementById('mobileNavClose').onclick = function(){
+            document.getElementById('mobileNav').classList.remove('active');
+            setTimeout(function(){document.getElementById('mobileNav').style.display = 'none';},400);
+        }
+
+        // Nav shadow on scroll
+        window.addEventListener('scroll',function() {
+            var nav = document.getElementById('mainNav');
+            if(window.scrollY > 20) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+            // Sticky RSVP button show (mobile)
+            var stickyRSVP = document.getElementById('stickyRSVP');
+            if(window.scrollY > 320 && window.innerWidth<821) {
+                stickyRSVP.classList.add('active');
             } else {
-                nav.classList.remove('scrolled');
-            }
-            
-            // Show/hide sticky RSVP button on mobile
-            const stickyRSVP = document.querySelector('.sticky-rsvp');
-            if (window.innerWidth <= 768) {
-                if (window.scrollY > 300) {
-                    stickyRSVP.classList.add('active');
-                } else {
-                    stickyRSVP.classList.remove('active');
-                }
+                stickyRSVP.classList.remove('active');
             }
         });
 
-        // Mobile Navigation
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileNav = document.getElementById('mobileNav');
-        const mobileNavClose = document.getElementById('mobileNavClose');
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-        function closeMobileNav() {
-            mobileNav.classList.remove('active');
-            mobileNav.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = 'auto';
-        }
-
-        function openMobileNav() {
-            mobileNav.classList.add('active');
-            mobileNav.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-        }
-
-        mobileMenuBtn.addEventListener('click', openMobileNav);
-
-        mobileNavClose.addEventListener('click', closeMobileNav);
-
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', closeMobileNav);
-        });
-
-        // Enhanced Smooth Scrolling for Anchor Links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const target = document.querySelector(targetId);
-                if (!target) return;
-                
-                e.preventDefault();
-                
-                // Close mobile nav if open
-                if (mobileNav.classList.contains('active')) {
-                    closeMobileNav();
-                }
-                
-                const navHeight = nav.offsetHeight;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Enhanced Countdown Timer with post-event handling
-        let countdownInterval;
-        function updateCountdown() {
-            const eventDate = new Date('March 22, 2025 14:00:00').getTime();
-            const now = new Date().getTime();
-            const timeLeft = eventDate - now;
-
-            const heading = document.getElementById('countdown-heading');
-            const subtitle = document.querySelector('.countdown-section .subtitle');
-            const container = document.querySelector('.countdown-container');
-
-            if (timeLeft <= 0) {
-                if (heading) heading.textContent = "Gunner's Big Day Has Arrived!";
-                if (subtitle) subtitle.textContent = "Thank you for celebrating with us.";
-                if (container) container.style.display = 'none';
-                clearInterval(countdownInterval);
-                return;
+        // COUNTDOWN TIMER - Set your date here
+        (function(){
+            var eventDate = new Date("2025-12-12T13:00:00-05:00").getTime();
+            var dEl = document.getElementById('days'),
+                hEl = document.getElementById('hours'),
+                mEl = document.getElementById('minutes'),
+                sEl = document.getElementById('seconds');
+            function updateCountdown(){
+                var now = new Date().getTime();
+                var distance = eventDate - now;
+                if(distance<0){dEl.innerText=hEl.innerText=mEl.innerText=sEl.innerText="00";return;}
+                var days = Math.floor(distance/(1000*60*60*24));
+                var hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+                var minutes = Math.floor((distance%(1000*60*60))/(1000*60));
+                var seconds = Math.floor((distance%(1000*60))/1000);
+                dEl.innerText = (days<10?"0":"")+days;
+                hEl.innerText = (hours<10?"0":"")+hours;
+                mEl.innerText = (minutes<10?"0":"")+minutes;
+                sEl.innerText = (seconds<10?"0":"")+seconds;
             }
-
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-            // Add animation to changing numbers
-            const daysEl = document.getElementById('days');
-            const hoursEl = document.getElementById('hours');
-            const minutesEl = document.getElementById('minutes');
-            const secondsEl = document.getElementById('seconds');
-            
-            if (daysEl.textContent !== days.toString().padStart(2, '0')) {
-                daysEl.style.transform = 'scale(1.2)';
-                setTimeout(() => { daysEl.style.transform = 'scale(1)'; }, 300);
-            }
-            
-            if (hoursEl.textContent !== hours.toString().padStart(2, '0')) {
-                hoursEl.style.transform = 'scale(1.2)';
-                setTimeout(() => { hoursEl.style.transform = 'scale(1)'; }, 300);
-            }
-            
-            if (minutesEl.textContent !== minutes.toString().padStart(2, '0')) {
-                minutesEl.style.transform = 'scale(1.2)';
-                setTimeout(() => { minutesEl.style.transform = 'scale(1)'; }, 300);
-            }
-            
-            if (secondsEl.textContent !== seconds.toString().padStart(2, '0')) {
-                secondsEl.style.transform = 'scale(1.2)';
-                setTimeout(() => { secondsEl.style.transform = 'scale(1)'; }, 300);
-            }
-            
-            daysEl.textContent = days.toString().padStart(2, '0');
-            hoursEl.textContent = hours.toString().padStart(2, '0');
-            minutesEl.textContent = minutes.toString().padStart(2, '0');
-            secondsEl.textContent = seconds.toString().padStart(2, '0');
-        }
-
-        countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        // Enhanced Music Player (no autoplay)
-        const musicPlayer = document.getElementById('musicPlayer');
-        let isPlaying = false;
-        // Using a placeholder audio - replace with actual lullaby
-        const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
-        audio.volume = 0.3; // Set lower volume for background music
-
-        musicPlayer.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-                musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
-                musicPlayer.setAttribute('aria-label', 'Play background music');
-                musicPlayer.setAttribute('aria-pressed', 'false');
-                musicPlayer.classList.remove('playing');
-            } else {
-                audio.play().catch(e => {
-                    console.log('Audio playback failed:', e);
-                    // Show a subtle notification that playback requires user interaction
-                    const originalText = musicPlayer.innerHTML;
-                    musicPlayer.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-                    musicPlayer.setAttribute('aria-label', 'Click to enable music');
-                    setTimeout(() => {
-                        musicPlayer.innerHTML = originalText;
-                        musicPlayer.setAttribute('aria-label', 'Play background music');
-                    }, 2000);
-                });
-                musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
-                musicPlayer.setAttribute('aria-label', 'Pause background music');
-                musicPlayer.setAttribute('aria-pressed', 'true');
-                musicPlayer.classList.add('playing');
-            }
-            isPlaying = !isPlaying;
-        });
-
-        // Enhanced RSVP Form Submission with validation
-        const rsvpForm = document.getElementById('rsvpForm');
-        const successMessage = document.getElementById('successMessage');
-
-        // Form validation
-        function validateField(field) {
-            const value = field.value.trim();
-            const errorElement = document.getElementById(`${field.id}-error`);
-            
-            // Clear previous error
-            if (errorElement) {
-                errorElement.textContent = '';
-            }
-            
-            // Check required fields
-            if (field.hasAttribute('required') && !value) {
-                if (errorElement) {
-                    errorElement.textContent = 'This field is required';
-                }
-                return false;
-            }
-            
-            // Email validation
-            if (field.type === 'email' && value) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(value)) {
-                    if (errorElement) {
-                        errorElement.textContent = 'Please enter a valid email address';
-                    }
-                    return false;
-                }
-            }
-            
-            return true;
-        }
-
-        // Add real-time validation
-        const formInputs = rsvpForm.querySelectorAll('input, select, textarea');
-        formInputs.forEach(input => {
-            input.addEventListener('blur', () => validateField(input));
-            input.addEventListener('input', () => {
-                // Clear error when user starts typing
-                const errorElement = document.getElementById(`${input.id}-error`);
-                if (errorElement && validateField(input)) {
-                    errorElement.textContent = '';
-                }
-            });
-        });
-
-        rsvpForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validate all fields
-            let isValid = true;
-            formInputs.forEach(input => {
-                if (!validateField(input)) {
-                    isValid = false;
-                    // Focus first invalid field
-                    if (isValid) {
-                        input.focus();
-                        isValid = false;
-                    }
-                }
-            });
-            
-            if (!isValid) {
-                // Shake form to indicate error
-                rsvpForm.style.animation = 'shake 0.5s';
-                setTimeout(() => {
-                    rsvpForm.style.animation = '';
-                }, 500);
-                return;
-            }
-            
-            // Show success message with enhanced animation
-            successMessage.style.display = 'flex';
-            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Add confetti effect for successful submission
-            createConfetti();
-            
-            // Reset form
-            this.reset();
-            
-            // Hide success message after delay
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 5000);
-        });
-
-        // Confetti effect for form submission
-        function createConfetti() {
-            const confettiCount = 100;
-            const confettiContainer = document.createElement('div');
-            confettiContainer.style.position = 'fixed';
-            confettiContainer.style.top = '0';
-            confettiContainer.style.left = '0';
-            confettiContainer.style.width = '100%';
-            confettiContainer.style.height = '100%';
-            confettiContainer.style.pointerEvents = 'none';
-            confettiContainer.style.zIndex = '9999';
-            
-            document.body.appendChild(confettiContainer);
-            
-            for (let i = 0; i < confettiCount; i++) {
-                const confetti = document.createElement('div');
-                confetti.style.position = 'absolute';
-                confetti.style.width = '10px';
-                confetti.style.height = '10px';
-                confetti.style.backgroundColor = getRandomColor();
-                confetti.style.borderRadius = '50%';
-                confetti.style.top = '50%';
-                confetti.style.left = '50%';
-                confetti.style.opacity = '0';
-                
-                confettiContainer.appendChild(confetti);
-                
-                // Animate confetti
-                const angle = Math.random() * Math.PI * 2;
-                const velocity = 30 + Math.random() * 30;
-                const x = Math.cos(angle) * velocity;
-                const y = Math.sin(angle) * velocity;
-                
-                const animation = confetti.animate([
-                    { 
-                        transform: 'translate(0, 0) rotate(0deg)',
-                        opacity: 1
-                    },
-                    { 
-                        transform: `translate(${x}vw, ${y}vh) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`,
-                        opacity: 0
-                    }
-                ], {
-                    duration: 1000 + Math.random() * 1000,
-                    easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
-                });
-                
-                animation.onfinish = () => {
-                    confetti.remove();
-                    if (confettiContainer.children.length === 0) {
-                        confettiContainer.remove();
-                    }
-                };
-            }
-        }
-
-        function getRandomColor() {
-            const colors = ['#D4A05E', '#B0D0E3', '#9CAD90', '#F8E8E5', '#FFD700'];
-            return colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        // Enhanced Scroll Spy for desktop nav
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-links a');
-
-        function onScrollSpy() {
-            const scrollPos = window.scrollY + 120;
-            let currentId = '';
-
-            sections.forEach(section => {
-                if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
-                    currentId = '#' + section.id;
-                }
-            });
-
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentId) {
-                    link.classList.add('is-active');
-                    link.setAttribute('aria-current', 'page');
-                } else {
-                    link.classList.remove('is-active');
-                    link.removeAttribute('aria-current');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', onScrollSpy);
-        onScrollSpy();
-
-        // Enhanced scroll animations
-        function initScrollAnimations() {
-            const animatedElements = document.querySelectorAll('.card, .detail-box, .registry-item, .countdown-item');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.animationPlayState = 'running';
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            animatedElements.forEach(el => {
-                observer.observe(el);
-            });
-        }
-
-        // Add CSS for shake animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-                20%, 40%, 60%, 80% { transform: translateX(5px); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Enhanced focus management for accessibility
-        document.addEventListener('keydown', (e) => {
-            // Trap focus in mobile navigation when open
-            if (mobileNav.classList.contains('active') && e.key === 'Tab') {
-                const focusableElements = mobileNav.querySelectorAll('a, button');
-                const firstElement = focusableElements[0];
-                const lastElement = focusableElements[focusableElements.length - 1];
-                
-                if (e.shiftKey && document.activeElement === firstElement) {
-                    e.preventDefault();
-                    lastElement.focus();
-                } else if (!e.shiftKey && document.activeElement === lastElement) {
-                    e.preventDefault();
-                    firstElement.focus();
-                }
-            }
-        });
-
-        // Performance optimization: Lazy load non-critical resources
-        document.addEventListener('DOMContentLoaded', () => {
-            // Preload critical resources
-            const criticalResources = [
-                'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&family=Pinyon+Script&display=swap',
-                'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
-            ];
-            
-            criticalResources.forEach(resource => {
-                const link = document.createElement('link');
-                link.rel = 'preload';
-                link.href = resource;
-                link.as = 'style';
-                document.head.appendChild(link);
-            });
-        });
+            setInterval(updateCountdown,1000); updateCountdown();
+        })();
     </script>
 </body>
 </html>
