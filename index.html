@@ -63,7 +63,7 @@
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s ease;
             transform-style: preserve-3d;
             box-shadow: 0 0 100px rgba(0,0,0,0.3);
         }
@@ -110,6 +110,11 @@
         .open-book-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        @keyframes title-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
         /* ENCHANTED FOREST BACKGROUND */
@@ -326,7 +331,7 @@
         .story-section {
             margin: 40px 0;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             border-radius: 15px;
             border-left: 5px solid var(--pooh-yellow);
             position: relative;
@@ -504,50 +509,7 @@
             100% { transform: rotate(20deg) scale(1.06); }
         }
 
-        /* RESPONSIVE DESIGN */
-        @media (max-width: 768px) {
-            .cover-title {
-                font-size: 3rem;
-            }
-            
-            .cover-subtitle {
-                font-size: 1.8rem;
-            }
-            
-            .character-spotlight {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .page {
-                padding: 20px;
-            }
-            
-            .story-title {
-                font-size: 2rem;
-            }
-        }
-
-        /* CUSTOM SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--page-yellow);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--pooh-yellow);
-            border-radius: 6px;
-            border: 2px solid var(--page-yellow);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--honey-gold);
-        }
-
-        /* ADDITIONAL STYLES FOR CONTENT */
+        /* CONTENT LAYOUT HELPERS */
         .invitation-details {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -562,6 +524,10 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border-top: 5px solid var(--pooh-yellow);
             transition: all 0.3s ease;
+        }
+
+        .detail-card.soft-blue {
+            border-top-color: var(--soft-blue);
         }
 
         .detail-card:hover {
@@ -633,6 +599,53 @@
             color: var(--storybook-brown);
             border-top: 2px dashed var(--pooh-yellow);
         }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .cover-title {
+                font-size: 3rem;
+            }
+            
+            .cover-subtitle {
+                font-size: 1.8rem;
+            }
+            
+            .character-spotlight {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .page {
+                padding: 20px;
+            }
+            
+            .story-title {
+                font-size: 2rem;
+            }
+
+            .invitation-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--page-yellow);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--pooh-yellow);
+            border-radius: 6px;
+            border: 2px solid var(--page-yellow);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--honey-gold);
+        }
     </style>
 </head>
 <body>
@@ -682,7 +695,8 @@
             <p class="story-text">
                 In a corner of the world where stories grow on trees and adventures wait around every bend, 
                 a very special celebration is being prepared. The friends of the Hundred Acre Wood are gathering 
-                together, for they've heard the most wonderful news – a new friend is coming to join their adventures!
+                together, for they've heard the most wonderful news – a new little boy is coming to join their adventures:
+                Baby Gunner.
             </p>
         </div>
 
@@ -744,8 +758,8 @@
                 <div class="detail-title">What Shall We Wear?</div>
                 <div class="detail-content">
                     Your Most Comfortable Storybook Attire<br>
-                    Soft Yellows, Gentle Blues, Creamy Whites<br>
-                    Or Whatever Makes Your Heart Feel Light
+                    Soft blues and gentle yellows, creamy whites and woodland greens—<br>
+                    or whatever makes your heart feel light.
                 </div>
             </div>
             
@@ -764,9 +778,71 @@
         </div>
     </div>
 
-    <!-- PAGE 3: MEET THE CHARACTERS -->
+    <!-- PAGE 3: THE ROOM & TABLES (NEW – décor, round tables, honey jars, 3D prints) -->
     <div class="page">
         <div class="page-number">3</div>
+
+        <div class="story-section">
+            <h2 class="story-title">The Room Where Our Story Unfolds</h2>
+            <p class="story-text">
+                Step through the doors and into a bright clearing of the Hundred Acre Wood brought indoors.
+                Around the room, eight round tables wait for about sixty guests, each one telling its own
+                little story while still belonging to the same gentle, boy-forward world of white linen and
+                soft blue.
+            </p>
+        </div>
+
+        <div class="invitation-details">
+            <div class="detail-card soft-blue">
+                <div class="detail-title">Round Tables for Our Guests</div>
+                <div class="detail-content">
+                    Eight round tables, each seating 6–8 guests, dressed in crisp white tablecloths with
+                    powder-blue runners flowing down the center. The soft blue ties the entire room together
+                    for Baby Gunner, even as every table has a personality of its own.
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <div class="detail-title">3D-Printed Forest Friends</div>
+                <div class="detail-content">
+                    At the heart of each table sits a small 3D-printed woodland friend—our honey-loving bear,
+                    his tiny pink pal, a bouncy tiger, a thoughtful donkey, a busy rabbit, a wise owl,
+                    and a caring kangaroo. One special “hero” table is reserved for Gunner and his family.
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <div class="detail-title">Color Stories & Florals</div>
+                <div class="detail-content">
+                    Each friend brings a different accent: honey-gold and daisy white, blush petals,
+                    tangerine marigolds, dusty blue blooms, sage greens, and warm woods. Simple floral
+                    arrangements and greenery wrap around the figurines so the room feels whimsical,
+                    not crowded.
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <div class="detail-title">A Honey Jar at Every Place</div>
+                <div class="detail-content">
+                    At every seat, guests will find a tiny jar of local honey, a place card, and a short note
+                    welcoming them into Gunner’s story. Between the blue runners, glassware, and golden lids,
+                    the whole room glows softly—like sunlight catching drops of honey.
+                </div>
+            </div>
+        </div>
+
+        <div class="story-section">
+            <p class="story-text">
+                From above, the tables look like storybook circles scattered through a clearing. Up close,
+                you’ll see the details meant just for this day: 3D-printed keepsakes, soft blues for a baby boy,
+                gentle yellows and creams, and enough honey to make every friend—old and new—feel right at home.
+            </p>
+        </div>
+    </div>
+
+    <!-- PAGE 4: MEET THE CHARACTERS -->
+    <div class="page">
+        <div class="page-number">4</div>
         
         <div class="story-section">
             <h2 class="story-title">Meet Our Hosts</h2>
@@ -825,9 +901,9 @@
         </div>
     </div>
 
-    <!-- PAGE 4: THE CELEBRATION -->
+    <!-- PAGE 5: THE CELEBRATION -->
     <div class="page">
-        <div class="page-number">4</div>
+        <div class="page-number">5</div>
         
         <div class="story-section">
             <h2 class="story-title">Our Day of Celebration</h2>
@@ -888,9 +964,9 @@
         </div>
     </div>
 
-    <!-- PAGE 5: THE TREASURE TROVE -->
+    <!-- PAGE 6: THE TREASURE TROVE -->
     <div class="page">
-        <div class="page-number">5</div>
+        <div class="page-number">6</div>
         
         <div class="story-section">
             <h2 class="story-title">Gunner's Treasure Trove</h2>
@@ -936,7 +1012,7 @@
         <p>And so our story continues, with new friends, new adventures, and endless possibilities.</p>
         <p>We cannot wait to welcome you to the Hundred Acre Wood.</p>
         <p>With love and honey,</p>
-        <p style="font-family: 'Pinyon Script', cursive; font-size: 2rem; margin-top: 10px;">TJ, Bella & All the Woodland Creatures</p>
+        <p style="font-family: 'Pinyon Script', cursive; font-size: 2rem; margin-top: 10px;">TJ, Bella &amp; All the Woodland Creatures</p>
     </div>
 </div>
 
@@ -1008,10 +1084,6 @@
             setTimeout(() => {
                 storybook.classList.add('visible');
             }, 800);
-            
-            // Play page turning sound (conceptual - would need audio file)
-            // const pageTurnSound = new Audio('page-turn.mp3');
-            // pageTurnSound.play();
         });
         
         // Add interactive elements to characters
