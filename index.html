@@ -35,6 +35,7 @@
             --radius-lg: 24px;
             --radius-pill: 999px;
             --transition-smooth: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --sidebar-width: 260px;
         }
 
         html {
@@ -182,7 +183,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 260px;
+            width: var(--sidebar-width);
             height: 100vh;
             background:
                 linear-gradient(to bottom, var(--pooh-yellow) 0%, #FBBF24 100%),
@@ -196,6 +197,22 @@
             border-right: 4px solid var(--storybook-brown);
             transform: translateX(0);
             transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .nav-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.38);
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+            z-index: 900;
+        }
+
+        .nav-overlay.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
         .nav-toggle {
@@ -314,6 +331,92 @@
             font-family: 'Caveat', cursive;
             font-size: 1.1rem;
             color: var(--storybook-brown);
+        }
+
+        /* ===== QUICK STORY MAP ===== */
+        .story-summary-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin: 10px 0 18px;
+        }
+
+        .summary-item {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 14px 16px;
+            border: 1px solid rgba(148, 81, 35, 0.18);
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            align-items: center;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
+        }
+
+        .summary-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #FFEAA7, #FFC42B);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #7C2D12;
+            font-size: 1.1rem;
+            box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.85);
+        }
+
+        .summary-label {
+            font-size: 0.95rem;
+            color: #7c6149;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .summary-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            color: var(--storybook-brown);
+        }
+
+        .navigation-map {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .navigation-map-label {
+            font-weight: 700;
+            color: var(--storybook-brown);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chapter-chip {
+            border: 1px solid rgba(148, 81, 35, 0.25);
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--storybook-brown);
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .chapter-chip:hover {
+            transform: translateY(-2px);
+            background: #fff;
+        }
+
+        .chapter-chip.active {
+            background: var(--pooh-red);
+            color: #fff;
+            border-color: var(--storybook-brown);
+            box-shadow: 0 8px 18px rgba(127, 29, 29, 0.22);
         }
 
         /* ===== STORYBOOK COVER ===== */
@@ -547,7 +650,7 @@
             border-radius: 28px;
             box-shadow: var(--shadow-soft);
             padding: 36px 34px 40px;
-            margin-left: 260px;
+            margin-left: var(--sidebar-width);
             border: 1px solid rgba(148, 81, 35, 0.25);
         }
 
@@ -1473,6 +1576,9 @@
             .nav-toggle {
                 display: flex;
             }
+            .nav-overlay.visible {
+                visibility: visible;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1487,6 +1593,16 @@
             }
             .story-title {
                 font-size: 2rem;
+            }
+
+            .navigation-map {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .chapter-chip {
+                width: 100%;
+                text-align: left;
             }
 
             .invitation-details {
@@ -1593,37 +1709,37 @@
 </div>
 
 <!-- IMMERSIVE LEFT SIDEBAR NAVIGATION -->
-<nav class="sidebar-nav" id="sidebarNav">
+<nav class="sidebar-nav" id="sidebarNav" aria-label="Story navigation">
     <div class="nav-header">
         <h1 class="nav-title">Hundred Acre Wood</h1>
         <p class="nav-subtitle">Baby Gunner's Celebration</p>
     </div>
 
     <div class="nav-menu">
-        <a href="#" class="nav-item active" data-section="section1">
+        <a href="#section1" class="nav-item active" data-section="section1">
             <i class="fas fa-home"></i>
             <span>Story Beginning</span>
         </a>
-        <a href="#" class="nav-item" data-section="section2">
+        <a href="#section2" class="nav-item" data-section="section2">
             <i class="fas fa-envelope"></i>
             <span>Invitation</span>
         </a>
-        <a href="#" class="nav-item" data-section="section3">
+        <a href="#section3" class="nav-item" data-section="section3">
             <i class="fas fa-users"></i>
             <span>Meet the Characters</span>
         </a>
-        <a href="#" class="nav-item" data-section="section4">
+        <a href="#section4" class="nav-item" data-section="section4">
             <i class="fas fa-gamepad"></i>
             <span>Woodland Activities</span>
         </a>
 
         <div class="nav-divider"></div>
 
-        <a href="#" class="nav-item" data-section="section5">
+        <a href="#section5" class="nav-item" data-section="section5">
             <i class="fas fa-gift"></i>
             <span>Gunner's Treasure Trove</span>
         </a>
-        <a href="#" class="nav-item" data-section="section6">
+        <a href="#section6" class="nav-item" data-section="section6">
             <i class="fas fa-map-marker-alt"></i>
             <span>Location & Details</span>
         </a>
@@ -1645,8 +1761,10 @@
     </div>
 </nav>
 
+<div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+
 <!-- NAVIGATION TOGGLE -->
-<div class="nav-toggle" id="navToggle">
+<div class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebarNav">
     <i class="fas fa-bars"></i>
 </div>
 
@@ -1733,12 +1851,46 @@
 <!-- STORYBOOK WRAPPER -->
 <div class="storybook-shell">
     <!-- STORYBOOK CONTENT -->
-    <div class="storybook" id="storybook" role="main">
-        <div class="storybook-inner">
-            <header class="storybook-header">
-                <h2 class="storybook-heading">Once upon a very special day...</h2>
-                <p class="storybook-subheading">A new little friend joins the Hundred Acre Wood</p>
-            </header>
+        <div class="storybook" id="storybook" role="main">
+            <div class="storybook-inner">
+                <header class="storybook-header">
+                    <h2 class="storybook-heading">Once upon a very special day...</h2>
+                    <p class="storybook-subheading">A new little friend joins the Hundred Acre Wood</p>
+
+                    <div class="story-summary-bar" aria-label="Event highlights">
+                        <div class="summary-item">
+                            <div class="summary-icon" aria-hidden="true"><i class="fas fa-calendar-day"></i></div>
+                            <div>
+                                <div class="summary-label">Date &amp; Time</div>
+                                <div class="summary-value">Saturday, April 12 · 2:00 PM</div>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-icon" aria-hidden="true"><i class="fas fa-map-signs"></i></div>
+                            <div>
+                                <div class="summary-label">Gathering Spot</div>
+                                <div class="summary-value">The Clearing · 14 Oak Lane</div>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-icon" aria-hidden="true"><i class="fas fa-seedling"></i></div>
+                            <div>
+                                <div class="summary-label">Dress Code</div>
+                                <div class="summary-value">Cozy woodland casual</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="navigation-map" aria-label="Quick links to each chapter">
+                        <span class="navigation-map-label"><i class="fas fa-location-arrow"></i>Jump to:</span>
+                        <button class="chapter-chip active" data-section="section1">Beginning</button>
+                        <button class="chapter-chip" data-section="section2">Invitation</button>
+                        <button class="chapter-chip" data-section="section3">Friends</button>
+                        <button class="chapter-chip" data-section="section4">Activities</button>
+                        <button class="chapter-chip" data-section="section5">Gifts</button>
+                        <button class="chapter-chip" data-section="section6">Details</button>
+                    </div>
+                </header>
 
             <!-- SECTION 1: THE BEGINNING -->
             <section class="content-section scroll-animate" id="section1">
@@ -2231,8 +2383,10 @@
         const modalCharacterBio = document.getElementById('modalCharacterBio');
         const modalCharacterIcon = document.getElementById('modalCharacterIcon');
         const sidebarNav = document.getElementById('sidebarNav');
+        const navOverlay = document.getElementById('navOverlay');
         const navToggle = document.getElementById('navToggle');
         const navItems = document.querySelectorAll('.nav-item');
+        const chapterChips = document.querySelectorAll('.chapter-chip');
         const homeBtn = document.getElementById('homeBtn');
         const rsvpBtn = document.getElementById('rsvpBtn');
         const storyModeBtn = document.getElementById('storyModeBtn');
@@ -2350,7 +2504,8 @@
 
         function setupEventListeners() {
             openBookBtn.addEventListener('click', openStorybook);
-            navToggle.addEventListener('click', toggleSidebarNav);
+            navToggle.addEventListener('click', () => toggleSidebarNav());
+            navOverlay.addEventListener('click', () => toggleSidebarNav(false));
 
             musicBtn.addEventListener('click', toggleMusic);
             toggleMusicNavBtn.addEventListener('click', (e) => {
@@ -2373,17 +2528,27 @@
                         e.preventDefault();
                         scrollToSection(item.dataset.section);
                         if (window.innerWidth < 992) {
-                            sidebarNav.classList.remove('active');
+                            toggleSidebarNav(false);
                         }
                     });
                 }
+            });
+
+            chapterChips.forEach(chip => {
+                chip.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    scrollToSection(chip.dataset.section);
+                    if (window.innerWidth < 992) {
+                        toggleSidebarNav(false);
+                    }
+                });
             });
 
             homeBtn.addEventListener('click', backToCover);
             rsvpBtn.addEventListener('click', () => {
                 scrollToSection('section2');
                 if (window.innerWidth < 992) {
-                    sidebarNav.classList.remove('active');
+                    toggleSidebarNav(false);
                 }
             });
             storyModeBtn.addEventListener('click', toggleStoryMode);
@@ -2392,7 +2557,7 @@
                 e.preventDefault();
                 scrollToSection('section4');
                 if (window.innerWidth < 992) {
-                    sidebarNav.classList.remove('active');
+                    toggleSidebarNav(false);
                 }
             });
 
@@ -2400,6 +2565,7 @@
             window.addEventListener('scroll', updateReadingProgress);
             window.addEventListener('scroll', updateActiveNav);
             window.addEventListener('scroll', checkScrollAnimations);
+            window.addEventListener('resize', handleResize);
 
             const bees = document.querySelectorAll('.floating-bee');
             bees.forEach(bee => {
@@ -2421,8 +2587,11 @@
             });
         }
 
-        function toggleSidebarNav() {
-            sidebarNav.classList.toggle('active');
+        function toggleSidebarNav(forceState) {
+            const shouldOpen = typeof forceState === 'boolean' ? forceState : !sidebarNav.classList.contains('active');
+            sidebarNav.classList.toggle('active', shouldOpen);
+            navOverlay.classList.toggle('visible', shouldOpen);
+            navToggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
         }
 
         function openStorybook() {
@@ -2525,6 +2694,9 @@
 
                         if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
                             item.classList.add('active');
+                            chapterChips.forEach(chip => {
+                                chip.classList.toggle('active', chip.dataset.section === sectionId);
+                            });
                         } else {
                             item.classList.remove('active');
                         }
@@ -2536,7 +2708,7 @@
         function handleKeyPress(event) {
             if (event.key === 'Escape') {
                 closeCharacterModal();
-                sidebarNav.classList.remove('active');
+                toggleSidebarNav(false);
             } else if (event.key === 'Home') {
                 backToCover();
             }
@@ -2547,6 +2719,12 @@
             const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrollProgress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
             readingProgress.style.width = `${scrollProgress}%`;
+        }
+
+        function handleResize() {
+            if (window.innerWidth >= 992) {
+                toggleSidebarNav(false);
+            }
         }
 
         function checkScrollAnimations() {
