@@ -50,10 +50,7 @@
 
         body {
             font-family: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background:
-                radial-gradient(ellipse at top, #FFEAA7 0%, #FFF7EC 28%, #F9FAFB 60%, #E0F2FE 100%),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,0 L75,25 L75,75 L50,100 L25,75 L25,25 Z" fill="%23E6B86A" opacity="0.08"/></svg>');
-            background-size: auto, 120px;
+            background: radial-gradient(ellipse at top, #FFF7EC 0%, #F5E6CC 35%, #E6D3B1 65%, #D3C1A1 100%);
             color: var(--text-dark);
             -webkit-font-smoothing: antialiased;
             position: relative;
@@ -77,6 +74,77 @@
         body.storytime-active .nav-title,
         body.storytime-active .nav-subtitle {
             color: #FACC15;
+        }
+
+        /* ===== ACCESSIBILITY UTILITIES ===== */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 16px;
+            background: #fff;
+            color: var(--storybook-brown);
+            padding: 10px 14px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: top 0.3s ease;
+            z-index: 1100;
+            font-weight: 700;
+        }
+
+        .skip-link:focus-visible {
+            top: 16px;
+            outline: 3px solid var(--pooh-red);
+            outline-offset: 4px;
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--pooh-red);
+            outline-offset: 4px;
+            box-shadow: 0 0 0 4px rgba(255, 196, 43, 0.45);
+        }
+
+        button:focus-visible,
+        .nav-item:focus-visible,
+        .chapter-chip:focus-visible,
+        .magical-btn:focus-visible,
+        .fab:focus-visible,
+        .music-btn:focus-visible,
+        .open-book-btn:focus-visible {
+            transform: translateY(-2px);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        body.nav-open {
+            overflow: hidden;
+        }
+
+        body.reduce-motion *,
+        body.reduce-motion .sparkle,
+        body.reduce-motion .floating-bee,
+        body.reduce-motion .leaf,
+        body.reduce-motion .loading-honey-fill,
+        body.reduce-motion .loading-dot,
+        body.reduce-motion .honey-drip,
+        body.reduce-motion .cover-decoration,
+        body.reduce-motion .content-section,
+        body.reduce-motion .storybook-cover,
+        body.reduce-motion .nav-toggle,
+        body.reduce-motion .nav-item,
+        body.reduce-motion .fab,
+        body.reduce-motion .music-btn {
+            animation-duration: 0s !important;
+            transition-duration: 0s !important;
         }
 
         /* ===== IMPROVED LOADING SCREEN ===== */
@@ -232,6 +300,8 @@
             transition: all 0.3s ease;
             box-shadow: 0 6px 16px rgba(0,0,0,0.25);
             display: none;
+            padding: 0;
+            appearance: none;
         }
 
         .nav-toggle:hover {
@@ -743,6 +813,15 @@
             font-family: 'Caveat', cursive;
             font-size: 2.35rem;
             color: var(--pooh-red);
+            position: relative;
+        }
+
+        .story-title::after {
+            content: '🍯';
+            display: block;
+            font-size: 1.6rem;
+            margin-top: 4px;
+            color: var(--pooh-yellow);
         }
 
         /* ===== STORYTELLING ELEMENTS ===== */
@@ -769,6 +848,53 @@
             font-size: 1.1rem;
             line-height: 1.8;
             color: var(--text-dark);
+        }
+
+        .rsvp-form {
+            background: rgba(255, 255, 255, 0.94);
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid rgba(148, 81, 35, 0.18);
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+            margin-top: 12px;
+        }
+
+        .storybook-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .storybook-form .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .storybook-form input,
+        .storybook-form select,
+        .storybook-form textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 2px solid rgba(148, 81, 35, 0.2);
+            background: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text-dark);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .storybook-form input:focus,
+        .storybook-form select:focus,
+        .storybook-form textarea:focus {
+            border-color: var(--pooh-red);
+            box-shadow: 0 0 0 3px rgba(214, 46, 46, 0.2);
+            outline: none;
+        }
+
+        .storybook-form button {
+            align-self: flex-start;
         }
 
         /* ===== WOODLAND SIGN ===== */
@@ -1082,6 +1208,9 @@
             top: 18px;
             right: 20px;
             z-index: 1000;
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
         .music-btn {
@@ -1103,6 +1232,24 @@
         .music-btn:hover {
             background: var(--pooh-red);
             transform: scale(1.06);
+        }
+
+        .accessibility-btn {
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 2px solid var(--storybook-brown);
+            background: #fff;
+            color: var(--storybook-brown);
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.16);
+            transition: all 0.25s ease;
+        }
+
+        .accessibility-btn:hover {
+            background: var(--pooh-yellow);
+            color: #000;
+            transform: translateY(-2px);
         }
 
         /* ===== READING PROGRESS ===== */
@@ -1686,6 +1833,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#mainContent">Skip to main content</a>
+
 <!-- HONEYCOMB BACKGROUND -->
 <div class="honeycomb-bg" aria-hidden="true"></div>
 
@@ -1706,6 +1855,7 @@
         <div class="loading-dot"></div>
     </div>
     <div class="loading-hint">(tap or click anywhere to skip)</div>
+    <button class="magical-btn" id="skipLoadingBtn">Skip loading screen</button>
 </div>
 
 <!-- IMMERSIVE LEFT SIDEBAR NAVIGATION -->
@@ -1764,10 +1914,11 @@
 <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
 
 <!-- NAVIGATION TOGGLE -->
-<div class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebarNav">
-    <i class="fas fa-bars"></i>
-</div>
+<button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebarNav" type="button">
+    <i class="fas fa-bars" aria-hidden="true"></i>
+</button>
 
+<main id="mainContent">
 <!-- STORYBOOK COVER -->
 <div class="storybook-cover" id="storybookCover" aria-label="Storybook cover: The Hundred Acre Celebration">
     <div class="cover-decoration"></div>
@@ -1792,9 +1943,15 @@
 
 <!-- READING PROGRESS -->
 <div class="reading-progress" id="readingProgress"></div>
+<div class="sr-only" id="progressStatus" aria-live="polite"></div>
+
+<div class="sr-only" id="musicStatus" aria-live="polite">Music is paused.</div>
 
 <!-- MUSIC CONTROLS -->
 <div class="music-controls">
+    <button class="accessibility-btn" id="motionToggleBtn" type="button" aria-pressed="false">
+        Reduce motion
+    </button>
     <button class="music-btn" id="musicBtn" aria-label="Toggle gentle background music">
         <i class="fas fa-music" aria-hidden="true"></i>
     </button>
@@ -2002,11 +2159,39 @@
                         </div>
                     </div>
 
-                    <div style="text-align: center; margin-top: 26px;">
-                        <a href="#" class="magical-btn">
-                            <i class="fas fa-paper-plane"></i>
-                            Send Your RSVP With a Buzz
-                        </a>
+                    <div class="rsvp-form" aria-labelledby="rsvp-heading">
+                        <h3 class="story-title" id="rsvp-heading" style="text-align:center; margin-bottom:14px;">Send Your RSVP With a Buzz</h3>
+                        <form class="storybook-form">
+                            <div class="form-grid">
+                                <label>
+                                    <span class="sr-only">Your name</span>
+                                    <input type="text" name="name" placeholder="Your name" required>
+                                </label>
+                                <label>
+                                    <span class="sr-only">Email or phone</span>
+                                    <input type="text" name="contact" placeholder="Email or phone" required>
+                                </label>
+                            </div>
+                            <div class="form-grid">
+                                <label>
+                                    <span class="sr-only">Attendance</span>
+                                    <select name="attendance" required>
+                                        <option value="">Will you attend?</option>
+                                        <option value="yes">Yes, I'll be there</option>
+                                        <option value="no">Sadly, I cannot</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span class="sr-only">Accessibility or notes</span>
+                                    <input type="text" name="notes" placeholder="Accessibility or special notes">
+                                </label>
+                            </div>
+                            <label>
+                                <span class="sr-only">Message</span>
+                                <textarea name="message" rows="3" placeholder="Leave a message for the family"></textarea>
+                            </label>
+                            <button type="submit" class="magical-btn" aria-label="Submit your RSVP">Submit RSVP</button>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -2355,7 +2540,8 @@
             </footer>
         </div>
     </div>
-</div>
+    </div>
+</main>
 
 <!-- HIDDEN AUDIO ELEMENTS -->
 <audio id="backgroundMusic" loop>
@@ -2374,7 +2560,10 @@
         const storybook = document.getElementById('storybook');
         const forestBg = document.querySelector('.enchanted-forest');
         const readingProgress = document.getElementById('readingProgress');
+        const progressStatus = document.getElementById('progressStatus');
         const musicBtn = document.getElementById('musicBtn');
+        const musicStatus = document.getElementById('musicStatus');
+        const motionToggleBtn = document.getElementById('motionToggleBtn');
         const backgroundMusic = document.getElementById('backgroundMusic');
         const characterModal = document.getElementById('characterModal');
         const closeModalBtn = document.getElementById('closeModal');
@@ -2385,6 +2574,7 @@
         const sidebarNav = document.getElementById('sidebarNav');
         const navOverlay = document.getElementById('navOverlay');
         const navToggle = document.getElementById('navToggle');
+        const skipLoadingBtn = document.getElementById('skipLoadingBtn');
         const navItems = document.querySelectorAll('.nav-item');
         const chapterChips = document.querySelectorAll('.chapter-chip');
         const homeBtn = document.getElementById('homeBtn');
@@ -2396,6 +2586,7 @@
         const scrollAnimateElements = document.querySelectorAll('.scroll-animate');
 
         let isMusicPlaying = false;
+        let lastFocusedElement = null;
 
         const characterData = {
             pooh: {
@@ -2456,7 +2647,9 @@
             const hideLoading = () => loadingScreen.classList.add('hidden');
             setTimeout(hideLoading, 1800);
             loadingScreen.addEventListener('click', hideLoading, { once: true });
+            skipLoadingBtn.addEventListener('click', hideLoading, { once: true });
 
+            initializeMotionPreference();
             setupEventListeners();
             checkScrollAnimations();
             updateActiveNav();
@@ -2502,12 +2695,35 @@
             }
         }
 
+        function initializeMotionPreference() {
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (prefersReduced.matches) {
+                enableReducedMotion(true);
+            }
+
+            prefersReduced.addEventListener('change', (event) => {
+                enableReducedMotion(event.matches);
+            });
+        }
+
+        function toggleMotionPreference() {
+            const isReduced = !document.body.classList.contains('reduce-motion');
+            enableReducedMotion(isReduced);
+        }
+
+        function enableReducedMotion(isReduced) {
+            document.body.classList.toggle('reduce-motion', isReduced);
+            motionToggleBtn.setAttribute('aria-pressed', isReduced.toString());
+            motionToggleBtn.textContent = isReduced ? 'Motion reduced' : 'Reduce motion';
+        }
+
         function setupEventListeners() {
             openBookBtn.addEventListener('click', openStorybook);
             navToggle.addEventListener('click', () => toggleSidebarNav());
             navOverlay.addEventListener('click', () => toggleSidebarNav(false));
 
             musicBtn.addEventListener('click', toggleMusic);
+            motionToggleBtn.addEventListener('click', toggleMotionPreference);
             toggleMusicNavBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 toggleMusic();
@@ -2521,6 +2737,7 @@
             characterModal.addEventListener('click', (e) => {
                 if (e.target === characterModal) closeCharacterModal();
             });
+            characterModal.addEventListener('keydown', trapFocusInModal);
 
             navItems.forEach(item => {
                 if (!item.id && item.dataset.section) {
@@ -2567,6 +2784,8 @@
             window.addEventListener('scroll', checkScrollAnimations);
             window.addEventListener('resize', handleResize);
 
+            updateReadingProgress();
+
             const bees = document.querySelectorAll('.floating-bee');
             bees.forEach(bee => {
                 bee.addEventListener('click', function () {
@@ -2592,6 +2811,7 @@
             sidebarNav.classList.toggle('active', shouldOpen);
             navOverlay.classList.toggle('visible', shouldOpen);
             navToggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+            document.body.classList.toggle('nav-open', shouldOpen);
         }
 
         function openStorybook() {
@@ -2599,9 +2819,6 @@
 
             setTimeout(() => {
                 storybook.classList.add('visible');
-                if (!isMusicPlaying) {
-                    toggleMusic();
-                }
                 contentSections.forEach(section => {
                     section.classList.add('visible');
                 });
@@ -2622,16 +2839,19 @@
                 isMusicPlaying = false;
                 musicBtn.innerHTML = '<i class="fas fa-music"></i>';
                 musicBtn.setAttribute('aria-label', 'Play background music');
+                musicStatus.textContent = 'Music is paused.';
             } else {
                 backgroundMusic.play().then(() => {
                     isMusicPlaying = true;
                     musicBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
                     musicBtn.setAttribute('aria-label', 'Pause background music');
+                    musicStatus.textContent = 'Music is playing.';
                 }).catch((error) => {
                     console.log('Audio play failed:', error);
                     isMusicPlaying = false;
                     musicBtn.innerHTML = '<i class="fas fa-music"></i>';
                     musicBtn.setAttribute('aria-label', 'Play background music');
+                    musicStatus.textContent = 'Music is paused.';
                 });
             }
         }
@@ -2658,6 +2878,7 @@
         }
 
         function openCharacterModal(characterKey) {
+            lastFocusedElement = document.activeElement;
             const character = characterData[characterKey];
             modalCharacterName.textContent = character.name;
             modalCharacterQuote.textContent = `"${character.quote}"`;
@@ -2665,10 +2886,18 @@
             modalCharacterIcon.className = `modal-character-icon ${character.iconClass}`;
             modalCharacterIcon.innerHTML = character.iconHTML;
             characterModal.classList.add('active');
+
+            const focusables = getFocusableElements(characterModal);
+            if (focusables.length) {
+                focusables[0].focus();
+            }
         }
 
         function closeCharacterModal() {
             characterModal.classList.remove('active');
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
         }
 
         function scrollToSection(sectionId) {
@@ -2677,6 +2906,31 @@
                 section.scrollIntoView({
                     behavior: 'smooth'
                 });
+            }
+        }
+
+        function getFocusableElements(container) {
+            return Array.from(container.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+                .filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
+        }
+
+        function trapFocusInModal(event) {
+            if (!characterModal.classList.contains('active') || event.key !== 'Tab') {
+                return;
+            }
+
+            const focusable = getFocusableElements(characterModal);
+            if (!focusable.length) return;
+
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
             }
         }
 
@@ -2719,6 +2973,7 @@
             const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrollProgress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
             readingProgress.style.width = `${scrollProgress}%`;
+            progressStatus.textContent = `Reading progress: ${Math.round(scrollProgress)} percent.`;
         }
 
         function handleResize() {
