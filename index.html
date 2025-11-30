@@ -45,7 +45,10 @@
 
         body {
             font-family: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: radial-gradient(ellipse at center, #FFEAA7 0%, #FFF7EC 30%, #F8FAFC 100%);
+            background: 
+                radial-gradient(ellipse at center, #FFEAA7 0%, #FFF7EC 30%, #F8FAFC 100%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,0 L75,25 L75,75 L50,100 L25,75 L25,25 Z" fill="%23E6B86A" opacity="0.1"/></svg>');
+            background-size: auto, 100px;
             color: var(--text-dark);
             -webkit-font-smoothing: antialiased;
             position: relative;
@@ -151,27 +154,28 @@
             40% { transform: scale(1); }
         }
 
-        /* ===== IMPROVED NAVIGATION ===== */
+        /* ===== IMMERSIVE NAVIGATION ===== */
         .main-nav {
             position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            padding: 12px 24px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="50" viewBox="0 0 100 50"><path d="M0,0 L100,0 L85,50 L15,50 Z" fill="%23FFC42B"/></svg>') no-repeat center top;
+            background-size: 100% 100%;
+            border-radius: 0 0 20px 20px;
+            padding: 30px 24px 15px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             z-index: 1000;
             display: flex;
             gap: 15px;
             align-items: center;
-            border: 2px solid var(--pooh-yellow);
             transition: all 0.3s ease;
+            min-width: 70%;
+            justify-content: center;
         }
 
         .nav-btn {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.9);
             border: none;
             color: var(--storybook-brown);
             font-family: 'Lato', sans-serif;
@@ -183,6 +187,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .nav-btn:hover {
@@ -206,7 +211,10 @@
         .storybook-cover {
             position: fixed;
             inset: 0;
-            background: linear-gradient(135deg, var(--pooh-red) 0%, var(--pooh-yellow) 40%, var(--honey-gold) 100%);
+            background: 
+                radial-gradient(circle at 30% 30%, var(--pooh-yellow) 0%, transparent 40%),
+                radial-gradient(circle at 70% 70%, var(--pooh-red) 0%, transparent 40%),
+                linear-gradient(135deg, var(--pooh-red) 0%, var(--pooh-yellow) 40%, var(--honey-gold) 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -365,6 +373,22 @@
             50% { opacity: 0.7; }
         }
 
+        /* ===== HONEYCOMB BACKGROUND PATTERN ===== */
+        .honeycomb-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255, 196, 43, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(230, 184, 106, 0.1) 0%, transparent 50%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,0 L75,25 L75,75 L50,100 L25,75 L25,25 Z" fill="%23E6B86A" opacity="0.05"/></svg>');
+            background-size: auto, auto, 100px;
+            z-index: -3;
+            pointer-events: none;
+        }
+
         /* ===== STORYBOOK CONTENT ===== */
         .storybook {
             position: relative;
@@ -430,7 +454,7 @@
             color: var(--storybook-brown);
         }
 
-        /* ===== MINI-GAME: POOHSTICKS ===== */
+        /* ===== ENHANCED MINI-GAME: POOHSTICKS ===== */
         .poohsticks-game {
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
@@ -438,6 +462,8 @@
             margin: 30px 0;
             text-align: center;
             border: 3px dashed var(--pooh-yellow);
+            position: relative;
+            overflow: hidden;
         }
 
         .poohsticks-bridge {
@@ -447,6 +473,7 @@
             position: relative;
             margin: 20px 0;
             border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .poohsticks-bridge::before {
@@ -462,12 +489,13 @@
 
         .poohsticks-river {
             width: 100%;
-            height: 60px;
+            height: 80px;
             background: linear-gradient(to bottom, #4A90E2, #87CEEB);
             margin: 20px 0;
             border-radius: 30px;
             position: relative;
             overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
         }
 
         .river-current {
@@ -485,38 +513,73 @@
             100% { transform: translateX(100%); }
         }
 
+        .stick-container {
+            position: absolute;
+            top: 10px;
+            left: 10%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
         .stick {
             width: 30px;
             height: 5px;
             background: #8B4513;
-            position: absolute;
-            top: 50%;
-            left: 10%;
             border-radius: 2px;
             cursor: pointer;
             transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .stick:hover {
-            transform: rotate(15deg);
+            transform: rotate(15deg) scale(1.1);
         }
 
-        /* ===== EASTER EGG GAME: HONEY POT TOSS ===== */
+        .stick.racing {
+            transition: left 3s linear, top 0.5s ease-in-out;
+        }
+
+        .finish-line {
+            position: absolute;
+            right: 10%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--pooh-red);
+            box-shadow: 0 0 10px var(--pooh-red);
+        }
+
+        .race-results {
+            margin-top: 20px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: var(--storybook-brown);
+        }
+
+        /* ===== ENHANCED EASTER EGG GAME: HONEY POT TOSS ===== */
         .honey-toss-game {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             padding: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
             border: 2px solid var(--pooh-yellow);
             z-index: 999;
             display: none;
+            backdrop-filter: blur(5px);
         }
 
         .honey-toss-game.active {
             display: block;
+            animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pop-in {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .honey-toss-target {
@@ -528,6 +591,14 @@
             position: relative;
             overflow: hidden;
             border: 3px solid var(--storybook-brown);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            animation: target-bob 2s ease-in-out infinite;
+        }
+
+        @keyframes target-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .honey-toss-target::before {
@@ -550,6 +621,7 @@
             margin: 0 auto;
             cursor: pointer;
             transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .honey-pot-tosser:hover {
@@ -565,6 +637,29 @@
             bottom: 20px;
             background: linear-gradient(to bottom, #FFC42B, #E6B86A);
             border-radius: 30px 30px 10px 10px;
+        }
+
+        .honey-pot-tosser::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 8px;
+            background: #8B4513;
+            border-radius: 4px;
+        }
+
+        .toss-animation {
+            position: absolute;
+            width: 50px;
+            height: 60px;
+            background: var(--honey-gold);
+            border-radius: 40px 40px 20px 20px;
+            z-index: 1000;
+            pointer-events: none;
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         /* ===== CHARACTER SPOTLIGHTS ===== */
@@ -616,6 +711,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .character-spotlight:hover .character-illustration {
+            transform: scale(1.05);
         }
 
         .character-illustration img {
@@ -1019,7 +1119,7 @@
         }
 
         .hunny-pot:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) rotate(5deg);
         }
 
         .hunny-pot::before {
@@ -1150,9 +1250,10 @@
             .main-nav {
                 flex-wrap: wrap;
                 justify-content: center;
-                padding: 10px;
+                padding: 25px 10px 10px;
                 gap: 8px;
                 width: 90%;
+                min-width: auto;
             }
             
             .nav-btn {
@@ -1229,6 +1330,9 @@
 </head>
 <body>
 
+<!-- HONEYCOMB BACKGROUND -->
+<div class="honeycomb-bg" aria-hidden="true"></div>
+
 <!-- LOADING SCREEN -->
 <div class="loading-screen" id="loadingScreen">
     <div class="honey-spinner">
@@ -1248,7 +1352,7 @@
     <div class="loading-hint">(tap or click anywhere to skip)</div>
 </div>
 
-<!-- IMPROVED NAVIGATION -->
+<!-- IMMERSIVE NAVIGATION -->
 <nav class="main-nav" id="mainNav">
     <button class="nav-btn" data-section="section1">
         <i class="fas fa-home"></i> Beginning
@@ -1320,12 +1424,13 @@
     </button>
 </div>
 
-<!-- EASTER EGG MINI-GAME -->
+<!-- ENHANCED EASTER EGG MINI-GAME -->
 <div class="honey-toss-game" id="honeyTossGame">
     <h3 style="text-align: center; font-family: 'Caveat', cursive; margin-bottom: 10px;">Honey Pot Toss</h3>
     <div class="honey-toss-target" id="honeyTarget"></div>
     <div class="honey-pot-tosser" id="honeyTosser"></div>
     <p style="text-align: center; font-size: 0.9rem; margin-top: 10px;">Score: <span id="gameScore">0</span></p>
+    <button class="magical-btn" style="margin-top: 10px; width: 100%; padding: 8px;" id="resetGameBtn">Reset Game</button>
 </div>
 
 <!-- FLOATING BEES -->
@@ -1569,7 +1674,7 @@
             </p>
         </div>
 
-        <!-- POOHSTICKS MINI-GAME -->
+        <!-- ENHANCED POOHSTICKS MINI-GAME -->
         <div class="poohsticks-game">
             <h3 style="font-family: 'Caveat', cursive; color: var(--pooh-red);">Play Poohsticks!</h3>
             <p style="font-family: 'Lato', sans-serif; color: var(--storybook-brown);">
@@ -1580,8 +1685,15 @@
             
             <div class="poohsticks-river">
                 <div class="river-current"></div>
-                <div class="stick" onclick="dropStick(this)"></div>
+                <div class="stick-container">
+                    <div class="stick" data-stick="1" onclick="dropStick(this)"></div>
+                    <div class="stick" data-stick="2" onclick="dropStick(this)"></div>
+                    <div class="stick" data-stick="3" onclick="dropStick(this)"></div>
+                </div>
+                <div class="finish-line"></div>
             </div>
+            
+            <div class="race-results" id="raceResults"></div>
             
             <button class="magical-btn" onclick="resetSticks()">Play Again</button>
         </div>
@@ -1797,12 +1909,16 @@
         const honeyTosser = document.getElementById('honeyTosser');
         const honeyTarget = document.getElementById('honeyTarget');
         const gameScore = document.getElementById('gameScore');
+        const resetGameBtn = document.getElementById('resetGameBtn');
         const contentSections = document.querySelectorAll('.content-section');
         const scrollAnimateElements = document.querySelectorAll('.scroll-animate');
+        const raceResults = document.getElementById('raceResults');
         
         // State variables
         let isMusicPlaying = false;
         let currentScore = 0;
+        let honeyTossActive = false;
+        let stickRaceActive = false;
         let characterData = {
             pooh: {
                 name: "Winnie the Pooh",
@@ -1948,6 +2064,14 @@
             
             // Honey toss game
             honeyTosser.addEventListener('click', tossHoneyPot);
+            resetGameBtn.addEventListener('click', resetHoneyTossGame);
+            
+            // Make target move
+            honeyTarget.addEventListener('mouseenter', () => {
+                if (honeyTossActive) {
+                    moveTargetRandomly();
+                }
+            });
             
             // FAB actions
             homeBtn.addEventListener('click', backToCover);
@@ -2029,6 +2153,21 @@
         // Toggle honey toss game
         function toggleHoneyTossGame() {
             honeyTossGame.classList.toggle('active');
+            honeyTossActive = honeyTossGame.classList.contains('active');
+        }
+
+        // Move target randomly
+        function moveTargetRandomly() {
+            if (!honeyTossActive) return;
+            
+            const gameRect = honeyTossGame.getBoundingClientRect();
+            const maxX = gameRect.width - 100;
+            const maxY = gameRect.height - 100;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            honeyTarget.style.transform = `translate(${randomX}px, ${randomY}px)`;
         }
 
         // Honey toss game logic
@@ -2037,26 +2176,26 @@
             
             // Create flying honey pot
             const honeyPot = document.createElement('div');
-            honeyPot.className = 'hunny-pot';
-            honeyPot.style.position = 'fixed';
+            honeyPot.className = 'toss-animation';
             honeyPot.style.left = `${honeyTosser.getBoundingClientRect().left}px`;
             honeyPot.style.top = `${honeyTosser.getBoundingClientRect().top}px`;
-            honeyPot.style.zIndex = '1000';
-            honeyPot.style.transition = 'all 1s ease';
             
             document.body.appendChild(honeyPot);
             
+            // Get target position
+            const targetRect = honeyTarget.getBoundingClientRect();
+            const targetX = targetRect.left + targetRect.width/2 - 25;
+            const targetY = targetRect.top + targetRect.height/2 - 30;
+            
             // Animate honey pot to target
             setTimeout(() => {
-                const targetRect = honeyTarget.getBoundingClientRect();
-                honeyPot.style.left = `${targetRect.left + targetRect.width/2 - 30}px`;
-                honeyPot.style.top = `${targetRect.top + targetRect.height/2 - 40}px`;
+                honeyPot.style.left = `${targetX}px`;
+                honeyPot.style.top = `${targetY}px`;
                 honeyPot.style.transform = 'rotate(360deg) scale(0.8)';
                 
                 // Check if hit target
                 setTimeout(() => {
                     const potRect = honeyPot.getBoundingClientRect();
-                    const targetRect = honeyTarget.getBoundingClientRect();
                     
                     const hit = (
                         potRect.left < targetRect.right &&
@@ -2069,15 +2208,31 @@
                         currentScore += 10;
                         gameScore.textContent = currentScore;
                         honeyTarget.style.backgroundColor = '#FFD700';
+                        honeyTarget.style.transform = 'scale(1.1)';
                         setTimeout(() => {
                             honeyTarget.style.backgroundColor = '';
+                            honeyTarget.style.transform = '';
                         }, 500);
+                        
+                        // Move target after successful hit
+                        setTimeout(() => {
+                            moveTargetRandomly();
+                        }, 600);
                     }
                     
                     // Remove honey pot
-                    document.body.removeChild(honeyPot);
+                    setTimeout(() => {
+                        document.body.removeChild(honeyPot);
+                    }, 1000);
                 }, 1000);
             }, 10);
+        }
+
+        // Reset honey toss game
+        function resetHoneyTossGame() {
+            currentScore = 0;
+            gameScore.textContent = currentScore;
+            honeyTarget.style.transform = '';
         }
 
         // Handle character click
@@ -2175,18 +2330,47 @@
             });
         }
 
-        // Poohsticks game functions
+        // Enhanced Poohsticks game functions
         function dropStick(stick) {
-            stick.style.transition = 'left 3s linear, top 3s ease-in-out';
+            if (stickRaceActive) return;
+            
+            stickRaceActive = true;
+            stick.classList.add('racing');
+            
+            const finishLine = document.querySelector('.finish-line');
+            const finishPosition = finishLine.getBoundingClientRect().left;
+            
+            // Random speed for each stick
+            const speed = 2 + Math.random() * 2;
+            const stickNumber = stick.getAttribute('data-stick');
+            
+            stick.style.transition = `left ${speed}s linear, top ${speed/2}s ease-in-out`;
             stick.style.left = '90%';
             stick.style.top = `${50 + Math.random() * 20}%`;
             
-            // Reset after animation
+            // Check which stick wins
             setTimeout(() => {
-                stick.style.transition = 'none';
-                stick.style.left = '10%';
-                stick.style.top = '50%';
-            }, 3000);
+                const results = {
+                    1: "Stick 1 wins! Pooh would be proud!",
+                    2: "Stick 2 is the champion!",
+                    3: "Stick 3 takes the prize!"
+                };
+                
+                raceResults.textContent = results[stickNumber];
+                
+                // Reset after animation
+                setTimeout(() => {
+                    stick.style.transition = 'none';
+                    stick.style.left = '10%';
+                    stick.style.top = '50%';
+                    stick.classList.remove('racing');
+                    stickRaceActive = false;
+                    
+                    setTimeout(() => {
+                        raceResults.textContent = '';
+                    }, 3000);
+                }, 1000);
+            }, speed * 1000);
         }
         
         function resetSticks() {
@@ -2194,7 +2378,10 @@
                 stick.style.transition = 'none';
                 stick.style.left = '10%';
                 stick.style.top = '50%';
+                stick.classList.remove('racing');
             });
+            stickRaceActive = false;
+            raceResults.textContent = '';
         }
 
         // Honey sound effect
