@@ -1627,7 +1627,7 @@
     }
 
     /* Responsive */
-    @media (max-width: 900px) {
+    @ (max-width: 900px) {
         .nav-toggle {
             display: flex;
         }
@@ -3415,58 +3415,58 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateDefenseGame() {
-        for (let i = defenseGameState.enemies.length - 1; i >= 0; i--) {
-            const enemy = defenseGameState.enemies[i];
-            enemy.update();
+    for (let i = defenseGameState.enemies.length - 1; i >= 0; i--) {
+        const enemy = defenseGameState.enemies[i];
+        enemy.update();
 
-            if (enemy.pathIndex >= defensePath.length - 1) {
-                defenseGameState.lives--;
-                defenseGameState.enemies.splice(i, 1);
-                updateDefenseDisplay();
-                if (defenseGameState.lives <= 0) {
-                    defenseGameOver();
-                }
-                continue;
+        if (enemy.pathIndex >= defensePath.length - 1) {
+            defenseGameState.lives--;
+            defenseGameState.enemies.splice(i, 1);
+            updateDefenseDisplay();
+            if (defenseGameState.lives <= 0) {
+                defenseGameOver();
             }
-            if (enemy.health <= 0) {
-                defenseGameState.honey += enemy.value;
-                defenseGameState.score += enemy.value;
-                defenseGameState.enemies.splice(i, 1);
-                updateDefenseDisplay();
-            }
+            continue;
         }
-
-        defenseGameState.defenders.forEach(defender => {
-            const target = defender.update(defenseGameState.enemies);
-            if (target) {
-                defenseGameState.projectiles.push(new Projectile(defender.x, defender.y, target, defender.damage));
-            }
-        }
-
-        for (let i = defenseGameState.projectiles.length - 1; i >= 0; i--) {
-            if (defenseGameState.projectiles[i].update()) {
-                defenseGameState.projectiles.splice(i, 1);
-            }
-        }
-
-        if (defenseGameState.isRunning && Math.random() < 0.02 && defenseGameState.enemies.length < 5 + defenseGameState.wave) {
-            spawnDefenseEnemy();
-        }
-
-        if (defenseGameState.enemies.length === 0 && defenseGameState.isRunning) {
-            defenseGameState.nextWaveTimer--;
-            if (defenseGameState.nextWaveTimer <= 0) {
-                defenseGameState.wave++;
-                defenseGameState.nextWaveTimer = 300;
-                defenseMessage.textContent = "Wave " + defenseGameState.wave + " starting!";
-                updateDefenseDisplay();
-            }
-        }
-
-        if (defenseGameState.wave > 10) {
-            defenseWinGame();
+        if (enemy.health <= 0) {
+            defenseGameState.honey += enemy.value;
+            defenseGameState.score += enemy.value;
+            defenseGameState.enemies.splice(i, 1);
+            updateDefenseDisplay();
         }
     }
+
+    defenseGameState.defenders.forEach(defender => {
+        const target = defender.update(defenseGameState.enemies);
+        if (target) {
+            defenseGameState.projectiles.push(new Projectile(defender.x, defender.y, target, defender.damage));
+        }
+    }); // <-- MISSING PARENTHESIS ADDED HERE
+
+    for (let i = defenseGameState.projectiles.length - 1; i >= 0; i--) {
+        if (defenseGameState.projectiles[i].update()) {
+            defenseGameState.projectiles.splice(i, 1);
+        }
+    }
+
+    if (defenseGameState.isRunning && Math.random() < 0.02 && defenseGameState.enemies.length < 5 + defenseGameState.wave) {
+        spawnDefenseEnemy();
+    }
+
+    if (defenseGameState.enemies.length === 0 && defenseGameState.isRunning) {
+        defenseGameState.nextWaveTimer--;
+        if (defenseGameState.nextWaveTimer <= 0) {
+            defenseGameState.wave++;
+            defenseGameState.nextWaveTimer = 300;
+            defenseMessage.textContent = "Wave " + defenseGameState.wave + " starting!";
+            updateDefenseDisplay();
+        }
+    }
+
+    if (defenseGameState.wave > 10) {
+        defenseWinGame();
+    }
+}
 
     function renderDefenseGame() {
         if (!defenseCtx) return;
