@@ -31,6 +31,7 @@
             --text-dark: #43302a;
             --storybook-brown: #8B4513;
             --page-yellow: #FEF9E7;
+            --deep-ink: #2f1a0e;
             --shadow-soft: 0 24px 70px rgba(15, 23, 42, 0.18);
             --radius-lg: 24px;
             --radius-pill: 999px;
@@ -129,6 +130,17 @@
 
         body.nav-open {
             overflow: hidden;
+        }
+
+        body.nav-simplified .chapter-chips,
+        body.nav-simplified .fab-container,
+        body.nav-simplified .floating-bee,
+        body.nav-simplified .nav-toggle {
+            display: none !important;
+        }
+
+        body.nav-simplified .nav-dock__hint {
+            color: #4b5563;
         }
 
         body.reduce-motion *,
@@ -366,6 +378,10 @@
             justify-content: flex-end;
             gap: 10px;
             flex-wrap: wrap;
+        }
+
+        .nav-simplify-toggle {
+            border-style: solid;
         }
 
         .nav-dock__pill {
@@ -616,10 +632,10 @@
         }
 
         .chapter-chip.active {
-            background: var(--pooh-red);
-            color: #fff;
-            border-color: var(--storybook-brown);
-            box-shadow: 0 8px 18px rgba(127, 29, 29, 0.22);
+            background: linear-gradient(135deg, #f7c948, #d69e2e);
+            color: var(--deep-ink);
+            border-color: rgba(214, 46, 46, 0.25);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
         }
 
         /* ===== STORYBOOK COVER ===== */
@@ -995,6 +1011,21 @@
             gap: 14px;
         }
 
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field-label {
+            font-weight: 800;
+            color: var(--deep-ink);
+            font-size: 0.98rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .storybook-form .form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -1015,6 +1046,20 @@
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
+        .storybook-form input.error,
+        .storybook-form select.error,
+        .storybook-form textarea.error {
+            border-color: #b91c1c;
+            box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.16);
+        }
+
+        .storybook-form input.success,
+        .storybook-form select.success,
+        .storybook-form textarea.success {
+            border-color: #15803d;
+            box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
+        }
+
         .storybook-form input:focus,
         .storybook-form select:focus,
         .storybook-form textarea:focus {
@@ -1025,6 +1070,42 @@
 
         .storybook-form button {
             align-self: flex-start;
+        }
+
+        .form-feedback {
+            font-size: 0.92rem;
+            color: #b91c1c;
+            min-height: 20px;
+        }
+
+        .form-status {
+            margin-top: 4px;
+            font-weight: 700;
+            font-size: 0.98rem;
+            color: var(--deep-ink);
+        }
+
+        .form-status.loading {
+            color: #92400e;
+        }
+
+        .form-status.success {
+            color: #166534;
+        }
+
+        .loading-indicator {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.6);
+            border-top-color: rgba(67, 35, 14, 0.9);
+            animation: spin 0.9s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* ===== WOODLAND SIGN ===== */
@@ -1261,8 +1342,8 @@
             justify-content: center;
             gap: 6px;
             padding: 12px 28px;
-            background: linear-gradient(135deg, var(--pooh-yellow), var(--honey-gold));
-            color: white;
+            background: linear-gradient(135deg, #f7c948, #d69e2e);
+            color: var(--deep-ink);
             border: none;
             border-radius: 50px;
             font-family: 'Playfair Display', serif;
@@ -1527,6 +1608,45 @@
         .game-header p {
             font-size: 0.98rem;
             color: var(--storybook-brown);
+        }
+
+        .game-onboarding {
+            background: #fff7ed;
+            border: 1px solid rgba(139, 69, 19, 0.16);
+            border-radius: 16px;
+            padding: 14px 16px;
+            text-align: left;
+            margin: 0 auto 16px;
+            max-width: 760px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        .game-onboarding.hidden {
+            display: none;
+        }
+
+        .game-onboarding h3 {
+            font-family: var(--font-heading);
+            margin-bottom: 8px;
+            color: var(--deep-ink);
+        }
+
+        .game-onboarding ol {
+            padding-left: 20px;
+            color: var(--storybook-brown);
+            line-height: 1.6;
+            display: grid;
+            gap: 4px;
+        }
+
+        .game-onboarding .dismiss-guide {
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: var(--deep-ink);
+            cursor: pointer;
         }
 
         @keyframes bounce {
@@ -2192,6 +2312,10 @@
                     <i class="fas fa-map-signs" aria-hidden="true"></i>
                     Open map
                 </button>
+                <button class="nav-dock__pill nav-dock__pill--ghost nav-simplify-toggle" id="navSimplifyBtn" aria-label="Simplify navigation" aria-pressed="false">
+                    <i class="fas fa-eye-slash" aria-hidden="true"></i>
+                    Simplify view
+                </button>
             </div>
         </div>
     </div>
@@ -2451,36 +2575,45 @@
 
                     <div class="rsvp-form" aria-labelledby="rsvp-heading">
                         <h3 class="story-title" id="rsvp-heading" style="text-align:center; margin-bottom:14px;">Send Your RSVP With a Buzz</h3>
-                        <form class="storybook-form">
+                        <form class="storybook-form" id="rsvpForm" novalidate>
                             <div class="form-grid">
-                                <label>
-                                    <span class="sr-only">Your name</span>
-                                    <input type="text" name="name" placeholder="Your name" required>
+                                <label class="form-field">
+                                    <span class="field-label">Your name <span class="sr-only">(required)</span></span>
+                                    <input type="text" name="name" id="rsvpName" placeholder="Add the name on your invitation" required>
+                                    <span class="form-feedback" id="nameError" aria-live="polite"></span>
                                 </label>
-                                <label>
-                                    <span class="sr-only">Email or phone</span>
-                                    <input type="text" name="contact" placeholder="Email or phone" required>
+                                <label class="form-field">
+                                    <span class="field-label">Email or phone <span class="sr-only">(required)</span></span>
+                                    <input type="text" name="contact" id="rsvpContact" placeholder="How can we reach you?" required>
+                                    <span class="form-feedback" id="contactError" aria-live="polite"></span>
                                 </label>
                             </div>
                             <div class="form-grid">
-                                <label>
-                                    <span class="sr-only">Attendance</span>
-                                    <select name="attendance" required>
+                                <label class="form-field">
+                                    <span class="field-label">Attendance choice <span class="sr-only">(required)</span></span>
+                                    <select name="attendance" id="rsvpAttendance" required>
                                         <option value="">Will you attend?</option>
                                         <option value="yes">Yes, I'll be there</option>
                                         <option value="no">Sadly, I cannot</option>
                                     </select>
+                                    <span class="form-feedback" id="attendanceError" aria-live="polite"></span>
                                 </label>
-                                <label>
-                                    <span class="sr-only">Accessibility or notes</span>
-                                    <input type="text" name="notes" placeholder="Accessibility or special notes">
+                                <label class="form-field">
+                                    <span class="field-label">Accessibility or notes</span>
+                                    <input type="text" name="notes" id="rsvpNotes" placeholder="Dietary needs, accessibility, or other notes">
+                                    <span class="form-feedback" aria-hidden="true"></span>
                                 </label>
                             </div>
-                            <label>
-                                <span class="sr-only">Message</span>
-                                <textarea name="message" rows="3" placeholder="Leave a message for the family"></textarea>
+                            <label class="form-field">
+                                <span class="field-label">Message for the family</span>
+                                <textarea name="message" id="rsvpMessage" rows="3" placeholder="Leave a sweet note for the parents-to-be"></textarea>
+                                <span class="form-feedback" aria-hidden="true"></span>
                             </label>
-                            <button type="submit" class="magical-btn" aria-label="Submit your RSVP">Submit RSVP</button>
+                            <button type="submit" class="magical-btn" id="rsvpSubmit" aria-label="Submit your RSVP">
+                                <span class="btn-label">Submit RSVP</span>
+                                <span class="loading-indicator" id="rsvpSpinner" aria-hidden="true" hidden></span>
+                            </button>
+                            <div class="form-status" id="rsvpStatus" aria-live="polite"></div>
                         </form>
                     </div>
                 </div>
@@ -2581,6 +2714,19 @@
                         <div class="game-header">
                             <h1>Winnie the Pooh's Honey Adventure</h1>
                             <p>Help Pooh find honey before his tummy gets too rumbly!</p>
+                        </div>
+
+                        <div class="game-onboarding" id="gameOnboarding">
+                            <h3>How to play</h3>
+                            <ol>
+                                <li>Pick a path to set the balance between honey, energy, and risks.</li>
+                                <li>Use the buttons below to search, climb, or rest while keeping energy above zero.</li>
+                                <li>Visit friends for boosts, watch the jar fill, and track progress in the log.</li>
+                            </ol>
+                            <button type="button" class="nav-dock__pill nav-dock__pill--ghost dismiss-guide" id="dismissGameGuide">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                Got it, let's play
+                            </button>
                         </div>
 
                         <div class="game-mode-pill" id="pathModePill">🌼 Meadow Stroll selected</div>
@@ -2897,6 +3043,13 @@
         const prevSectionBtn = document.getElementById('prevSectionBtn');
         const nextSectionBtn = document.getElementById('nextSectionBtn');
         const openNavMapBtn = document.getElementById('openNavMapBtn');
+        const navSimplifyBtn = document.getElementById('navSimplifyBtn');
+        const rsvpForm = document.getElementById('rsvpForm');
+        const rsvpStatus = document.getElementById('rsvpStatus');
+        const rsvpSpinner = document.getElementById('rsvpSpinner');
+        const rsvpSubmit = document.getElementById('rsvpSubmit');
+        const gameOnboarding = document.getElementById('gameOnboarding');
+        const dismissGameGuide = document.getElementById('dismissGameGuide');
 
         let isMusicPlaying = false;
         let lastFocusedElement = null;
@@ -2967,6 +3120,9 @@
 
             initializeMotionPreference();
             setupEventListeners();
+            setupNavigationSimplifier();
+            setupFormValidation();
+            setupGameOnboarding();
             checkScrollAnimations();
             updateActiveNav();
             initHoneyGame();
@@ -3131,6 +3287,115 @@
                         honeyDrip.remove();
                     }, 3000);
                 });
+            });
+        }
+
+        function setupNavigationSimplifier() {
+            if (!navSimplifyBtn) return;
+
+            navSimplifyBtn.addEventListener('click', () => {
+                const simplified = document.body.classList.toggle('nav-simplified');
+                navSimplifyBtn.setAttribute('aria-pressed', simplified.toString());
+                navSimplifyBtn.innerHTML = simplified
+                    ? '<i class="fas fa-eye" aria-hidden="true"></i> Full navigation'
+                    : '<i class="fas fa-eye-slash" aria-hidden="true"></i> Simplify view';
+            });
+        }
+
+        function setupGameOnboarding() {
+            if (!gameOnboarding || !dismissGameGuide) return;
+
+            dismissGameGuide.addEventListener('click', () => {
+                gameOnboarding.classList.add('hidden');
+                dismissGameGuide.setAttribute('aria-pressed', 'true');
+            });
+        }
+
+        function setupFormValidation() {
+            if (!rsvpForm) return;
+
+            const fields = [
+                {
+                    input: document.getElementById('rsvpName'),
+                    errorEl: document.getElementById('nameError'),
+                    validator: (value) => value.trim().length >= 2,
+                    message: 'Please share your full name so we know who is coming.'
+                },
+                {
+                    input: document.getElementById('rsvpContact'),
+                    errorEl: document.getElementById('contactError'),
+                    validator: (value) => /.+@.+\..+/.test(value) || /^\+?[0-9\-()\s]{7,}$/.test(value),
+                    message: 'Add an email or phone number so we can send updates.'
+                },
+                {
+                    input: document.getElementById('rsvpAttendance'),
+                    errorEl: document.getElementById('attendanceError'),
+                    validator: (value) => value !== '',
+                    message: 'Choose yes or no so we can plan seating and snacks.'
+                }
+            ];
+
+            function setStatus(text, statusClass = '') {
+                if (!rsvpStatus) return;
+                rsvpStatus.textContent = text;
+                rsvpStatus.className = `form-status ${statusClass}`.trim();
+            }
+
+            function setLoading(isLoading) {
+                if (rsvpSubmit) {
+                    rsvpSubmit.disabled = isLoading;
+                }
+                if (rsvpSpinner) {
+                    rsvpSpinner.hidden = !isLoading;
+                }
+            }
+
+            function validateField(field) {
+                if (!field.input) return false;
+
+                const value = field.input.value || '';
+                const isValid = field.validator(value);
+
+                field.input.classList.toggle('error', !isValid);
+                field.input.classList.toggle('success', isValid);
+
+                if (field.errorEl) {
+                    field.errorEl.textContent = isValid ? '' : field.message;
+                }
+
+                return isValid;
+            }
+
+            rsvpForm.addEventListener('input', (event) => {
+                const field = fields.find(({ input }) => input === event.target);
+                if (field) {
+                    validateField(field);
+                }
+            });
+
+            rsvpForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const isValid = fields.every(validateField);
+
+                if (!isValid) {
+                    setStatus('Please fix the highlighted fields so we can save your RSVP.', '');
+                    return;
+                }
+
+                setLoading(true);
+                setStatus('Sending your RSVP...', 'loading');
+
+                setTimeout(() => {
+                    setLoading(false);
+                    setStatus("RSVP received! We'll keep you updated with details.", 'success');
+                    fields.forEach(({ input }) => {
+                        if (input) {
+                            input.classList.remove('success');
+                            input.classList.remove('error');
+                        }
+                    });
+                    rsvpForm.reset();
+                }, 1200);
             });
         }
 
