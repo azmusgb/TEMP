@@ -1009,7 +1009,7 @@
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
-    /* Multi-game: selector + containers (from your advanced version) */
+    /* Multi-game: selector + containers */
     .games-selector {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1130,6 +1130,19 @@
         touch-action: none;
     }
 
+    .game-area.hit {
+        animation: hit-shake 0.35s ease;
+    }
+
+    @keyframes hit-shake {
+        0% { transform: translateX(0); }
+        20% { transform: translateX(-6px); }
+        40% { transform: translateX(6px); }
+        60% { transform: translateX(-4px); }
+        80% { transform: translateX(4px); }
+        100% { transform: translateX(0); }
+    }
+
     #honeyCanvas,
     #defenseCanvas {
         display: block;
@@ -1194,20 +1207,21 @@
 
     .mobile-controls {
         display: none;
-        justify-content: space-between;
+        justify-content: center;
         margin: 16px 0;
-        gap: 10px;
+        gap: 12px;
     }
 
     .mobile-control-btn {
         flex: 1;
-        padding: 12px;
+        padding: 14px;
+        max-width: 150px;
         background: linear-gradient(135deg, #ffb74d, #f57c00);
         border: none;
-        border-radius: 12px;
+        border-radius: 16px;
         color: white;
         font-weight: bold;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         box-shadow: 0 4px 0 #e65100;
         touch-action: manipulation;
         user-select: none;
@@ -1621,7 +1635,7 @@
         }
 
         .game-area {
-            height: 300px;
+            height: 320px;
         }
 
         .defender-options {
@@ -1642,6 +1656,10 @@
         .invitation-details {
             grid-template-columns: 1fr;
         }
+
+        .mobile-controls {
+            display: flex;
+        }
     }
 
     @media (max-width: 520px) {
@@ -1651,6 +1669,10 @@
 
         .storybook {
             padding: 26px 18px 32px;
+        }
+
+        .game-area {
+            height: 260px;
         }
     }
     </style>
@@ -1674,7 +1696,7 @@
         <div class="loading-dot"></div>
         <div class="loading-dot"></div>
     </div>
-    <div class="loading-hint">Tip: On mobile, you can tap the arrows to move Pooh in the game.</div>
+    <div class="loading-hint">Tip: On mobile, use the big arrow buttons or tap on the left/right side of the game to move Pooh.</div>
 </div>
 
 <!-- Background layers -->
@@ -1969,7 +1991,7 @@
                     </div>
                 </section>
 
-                <!-- Section 4: Games (FULL advanced mini-game integration) -->
+                <!-- Section 4: Games -->
                 <section class="content-section scroll-animate" id="section4">
                     <div class="content-section-inner">
                         <div class="section-number">4</div>
@@ -1986,7 +2008,8 @@
                             <p class="story-text">
                                 The Hundred Acre Wood is full of wonderful games and adventures. Whether you’re helping Pooh
                                 gather honey or defending the honey harvest from Heffalumps and Woozles, there’s a story for
-                                every guest to play.
+                                every guest to play. On phones and tablets, use the big arrows or tap on each side of the game area
+                                for quick, thumb-friendly controls.
                             </p>
                         </div>
 
@@ -2035,7 +2058,7 @@
                                 <div class="stat" id="honeyTime">⏱️ Time: 60</div>
                             </div>
 
-                            <div class="game-area">
+                            <div class="game-area" id="honeyGameArea">
                                 <canvas id="honeyCanvas"></canvas>
                             </div>
 
@@ -2052,16 +2075,17 @@
 
                             <div class="message-box">
                                 <span class="pooh-face">🐻</span>
-                                <span id="honeyMessage">Click "Start Game" to begin collecting honey!</span>
+                                <span id="honeyMessage">Click "Start Game" to begin. Use arrow keys, tap left/right on the game, or the big buttons on mobile.</span>
                             </div>
 
                             <div class="achievements">
                                 <h3>Game Instructions</h3>
                                 <div class="instruction">
-                                    • Use arrow keys or touch controls to move Pooh<br>
+                                    • Desktop: Use ← → arrow keys to move Pooh<br>
+                                    • Mobile: Tap the big arrows or tap on the left/right side of the game area<br>
                                     • Collect honey pots for points<br>
                                     • Avoid bees - they cost you lives!<br>
-                                    • Collect power-ups for special abilities
+                                    • Collect glowing orbs for power-ups
                                 </div>
                             </div>
 
@@ -2120,13 +2144,13 @@
 
                             <div class="message-box">
                                 <span class="pooh-face">🐻</span>
-                                <span id="defenseMessage">Select Pooh, Piglet, or Tigger and place them on the grass to defend!</span>
+                                <span id="defenseMessage">Select Pooh, Piglet, or Tigger and tap on the grass to place them.</span>
                             </div>
 
                             <div class="achievements">
                                 <h3>Game Instructions</h3>
                                 <div class="instruction">
-                                    • Click on a defender (Pooh, Piglet, or Tigger) then click on grass to place them<br>
+                                    • Click or tap a defender (Pooh, Piglet, or Tigger) then tap on grass to place them<br>
                                     • Defenders automatically attack Heffalumps and Woozles<br>
                                     • Earn honey by defeating enemies<br>
                                     • Survive 10 waves to win!
@@ -2318,6 +2342,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Honey game variables
     let honeyCanvas, honeyCtx;
+    let honeyGameArea = document.getElementById('honeyGameArea');
     let pooh = {
         x: 0,
         y: 0,
@@ -2413,10 +2438,11 @@ document.addEventListener('DOMContentLoaded', function() {
         checkScrollAnimations();
         updateActiveNav();
         initReduceMotionPreference();
-        // Delay hiding loading screen a bit
+
         setTimeout(() => {
             loadingScreen.classList.add('hidden');
         }, 1200);
+
         initHoneyGame();
         initDefenseGame();
     }
@@ -2493,8 +2519,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (gameType === 'honey') {
                     initHoneyGame();
+                    document.getElementById('section4').scrollIntoView({ behavior: 'smooth' });
                 } else if (gameType === 'defense') {
                     initDefenseGame();
+                    document.getElementById('section4').scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
@@ -2514,6 +2542,23 @@ document.addEventListener('DOMContentLoaded', function() {
         characterModal.addEventListener('click', (e) => {
             if (e.target === characterModal) {
                 characterModal.classList.remove('active');
+            }
+        });
+
+        // Simple resize handler to keep honey canvas responsive
+        window.addEventListener('resize', () => {
+            if (honeyCanvas) {
+                const oldWidth = honeyCanvas.width;
+                honeyCanvas.width = honeyCanvas.offsetWidth;
+                honeyCanvas.height = honeyCanvas.offsetHeight;
+                if (oldWidth > 0) {
+                    pooh.x = (pooh.x / oldWidth) * honeyCanvas.width;
+                    if (pooh.x < 0) pooh.x = 0;
+                    if (pooh.x > honeyCanvas.width - pooh.width) {
+                        pooh.x = honeyCanvas.width - pooh.width;
+                    }
+                }
+                renderHoneyGame();
             }
         });
     }
@@ -2673,12 +2718,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 honeyLeftBtn.addEventListener('mousedown', () => { honeyIsMovingLeft = true; });
                 honeyLeftBtn.addEventListener('mouseup', () => { honeyIsMovingLeft = false; });
+                honeyLeftBtn.addEventListener('mouseleave', () => { honeyIsMovingLeft = false; });
+
                 honeyRightBtn.addEventListener('mousedown', () => { honeyIsMovingRight = true; });
                 honeyRightBtn.addEventListener('mouseup', () => { honeyIsMovingRight = false; });
+                honeyRightBtn.addEventListener('mouseleave', () => { honeyIsMovingRight = false; });
             }
 
             honeyCanvas.addEventListener('touchstart', handleHoneyTouchStart);
             honeyCanvas.addEventListener('touchmove', handleHoneyTouchMove);
+
+            // Tap left/right side of canvas to nudge Pooh (good for phones)
+            honeyCanvas.addEventListener('click', (e) => {
+                if (!honeyGameState.isRunning || honeyGameState.isPaused) return;
+                const rect = honeyCanvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                if (x < honeyCanvas.width / 2) {
+                    pooh.x -= pooh.width * 1.2;
+                } else {
+                    pooh.x += pooh.width * 1.2;
+                }
+                if (pooh.x < 0) pooh.x = 0;
+                if (pooh.x > honeyCanvas.width - pooh.width) {
+                    pooh.x = honeyCanvas.width - pooh.width;
+                }
+            });
+
             document.addEventListener('keydown', handleHoneyKeyDown);
             document.addEventListener('keyup', handleHoneyKeyUp);
         }
@@ -2735,7 +2800,7 @@ document.addEventListener('DOMContentLoaded', function() {
             honeyStartBtn.disabled = true;
             honeyPauseBtn.disabled = false;
             honeyResetBtn.disabled = false;
-            honeyMessage.textContent = "Game started! Use arrow keys or touch to move Pooh!";
+            honeyMessage.textContent = "Game started! Use keys, taps, or buttons to move Pooh!";
 
             honeyGameInterval = setInterval(honeyGameLoop, 1000 / 60);
 
@@ -2771,7 +2836,7 @@ document.addEventListener('DOMContentLoaded', function() {
         honeyPauseBtn.disabled = true;
         honeyResetBtn.disabled = true;
         honeyPauseBtn.textContent = 'Pause';
-        honeyMessage.textContent = "Click 'Start Game' to begin collecting honey!";
+        honeyMessage.textContent = "Click 'Start Game' to begin. Use arrow keys, tap left/right, or use the big buttons.";
 
         Object.keys(honeyGameState.achievements).forEach(key => {
             honeyGameState.achievements[key] = false;
@@ -2811,15 +2876,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const currentTime = Date.now();
-        if (currentTime - lastHoneyTime > 1000 - (honeyGameState.level * 100)) {
+        const spawnInterval = Math.max(300, 1000 - (honeyGameState.level * 100));
+        const beeInterval = Math.max(400, 2000 - (honeyGameState.level * 150));
+
+        if (currentTime - lastHoneyTime > spawnInterval) {
             spawnHoneyPot();
             lastHoneyTime = currentTime;
         }
-        if (currentTime - lastBeeTime > 2000 - (honeyGameState.level * 150)) {
+        if (currentTime - lastBeeTime > beeInterval) {
             spawnBee();
             lastBeeTime = currentTime;
         }
-        if (currentTime - lastPowerUpTime > 10000 && Math.random() < 0.1) {
+        if (currentTime - lastPowerUpTime > 8000 && Math.random() < 0.15) {
             spawnPowerUp();
             lastPowerUpTime = currentTime;
         }
@@ -2847,6 +2915,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (checkHoneyCollision(pooh, bees[i])) {
                 createBeeParticles(bees[i].x + bees[i].width/2, bees[i].y + bees[i].height/2);
+                triggerHoneyHitEffect();
                 honeyGameState.lives--;
                 bees.splice(i, 1);
                 updateHoneyDisplay();
@@ -2877,7 +2946,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (honeyGameState.score >= honeyGameState.level * 5) {
             honeyGameState.level++;
-            honeyMessage.textContent = `Level ${honeyGameState.level}! Watch out for more bees!`;
+            honeyMessage.textContent = `Level ${honeyGameState.level}! More honey, more bees!`;
             updateHoneyDisplay();
         }
 
@@ -2970,7 +3039,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function drawPooh() {
-        const frame = Math.floor(pooh.frame);
         honeyCtx.fillStyle = '#FFC42B';
         honeyCtx.fillRect(pooh.x, pooh.y, pooh.width, pooh.height);
 
@@ -3065,7 +3133,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function spawnHoneyPot() {
         const x = Math.random() * (honeyCanvas.width - 30);
-        const value = Math.random() < 0.1 ? 5 : 1;
+        const value = Math.random() < 0.15 ? 5 : 1;
         honeyPots.push({
             x: x,
             y: 0,
@@ -3109,8 +3177,8 @@ document.addEventListener('DOMContentLoaded', function() {
         switch(type) {
             case 'speed':
                 pooh.speed += 2;
-                setTimeout(() => { pooh.speed -= 2; }, 5000);
                 honeyMessage.textContent = "Speed boost! Pooh moves faster for 5 seconds!";
+                setTimeout(() => { pooh.speed -= 2; }, 5000);
                 break;
             case 'shield':
                 honeyGameState.lives += 1;
@@ -3152,10 +3220,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function triggerHoneyHitEffect() {
+        if (!honeyGameArea) return;
+        honeyGameArea.classList.remove('hit');
+        void honeyGameArea.offsetWidth; // force reflow
+        honeyGameArea.classList.add('hit');
+    }
+
     function honeyGameOver() {
         clearInterval(honeyGameInterval);
         honeyGameState.isRunning = false;
-        honeyMessage.textContent = "Game Over! Pooh got stung too many times!";
+        honeyMessage.textContent = "Game Over! Pooh got stung too many times, but you can try again.";
         honeyStartBtn.disabled = false;
         honeyPauseBtn.disabled = true;
     }
