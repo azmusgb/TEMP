@@ -23,6 +23,14 @@
         honey: null
     };
 
+    function shakeElement(el) {
+        if (!el) return;
+        el.classList.remove('shake');
+        // force reflow to restart animation
+        void el.offsetWidth;
+        el.classList.add('shake');
+    }
+
     function loadSprites() {
         const paths = {
             pooh: 'Images/Characters/honey-bear.png',
@@ -510,6 +518,9 @@
         const startBtn = document.getElementById('start-defense');
         const upgradeBtn = document.getElementById('upgrade-tower');
         const towerOptions = document.querySelectorAll('.tower-option');
+        const defenseAlert = document.getElementById('defense-alert');
+        const waveStatus = document.getElementById('defense-wave-status');
+        const defenseCard = document.getElementById('defense-card');
 
         let honey = 100;
         let lives = 10;
@@ -522,6 +533,7 @@
         let lastSpawnTime = 0;
         let lastFrameTime = performance.now();
         let running = true;
+        let waveStatusTimeout = null;
 
         const towerTypes = {
             pooh: { cost: 20, damage: 10, range: 100, fireRate: 900, color: '#FFB347', key: 'pooh' },
@@ -546,13 +558,47 @@
             { x: 520, y: 320 }
         ];
 
+        function setDefenseAlert(msg) {
+            if (defenseAlert) defenseAlert.textContent = msg;
+        }
+
+        function updateTowerAffordability() {
+            towerOptions.forEach((opt) => {
+                const towerKey = opt.getAttribute('data-tower');
+                const spec = towerKey ? towerTypes[towerKey] : null;
+                if (!spec) return;
+                if (honey < spec.cost) {
+                    opt.classList.add('unaffordable');
+                } else {
+                    opt.classList.remove('unaffordable');
+                }
+            });
+        }
+
+        function showWaveStatus(msg, duration = 1400) {
+            if (!waveStatus) return;
+            waveStatus.textContent = msg;
+            waveStatus.classList.add('active');
+            if (waveStatusTimeout) clearTimeout(waveStatusTimeout);
+            waveStatusTimeout = setTimeout(() => waveStatus.classList.remove('active'), duration);
+        }
+
+        function flashDamage() {
+            setDefenseAlert('A honey jar spilled! Keep the path protected.');
+            showWaveStatus('Ouch! -1 life', 1200);
+            shakeElement(defenseCard);
+        }
+
         function syncStats() {
             if (honeySpan) honeySpan.textContent = honey;
             if (livesSpan) livesSpan.textContent = lives;
             if (waveSpan) waveSpan.textContent = wave;
+            updateTowerAffordability();
         }
 
         syncStats();
+        setDefenseAlert('The honey path is peaceful. Prepare your friends.');
+        showWaveStatus('Wave 1 ready', 1300);
 
         function drawBackground() {
             // Sky
@@ -710,6 +756,7 @@
                         // Reached honey pot
                         lives--;
                         syncStats();
+                        flashDamage();
                         enemies.splice(idx, 1);
                         return;
                     }
@@ -764,6 +811,7 @@
                     if (p.target.health <= 0) {
                         honey += p.target.points;
                         syncStats();
+                        setDefenseAlert(`Great teamwork! +${p.target.points} honey collected.`);
                         enemies.splice(enemies.indexOf(p.target), 1);
                     }
                     projectiles.splice(idx, 1);
@@ -802,12 +850,17 @@
                     wave++;
                     honey += 35;
                     syncStats();
+                    setDefenseAlert('Wave cleared! Extra honey for the team.');
+                    showWaveStatus(`Wave ${wave - 1} cleared!`, 1600);
                 }
             }
 
             // Game over
             if (lives <= 0 && running) {
                 running = false;
+                setDefenseAlert('Oh bother! The honey pots are empty. Tap start to try again.');
+                showWaveStatus('Game over', 1800);
+                shakeElement(defenseCard);
                 setTimeout(() => {
                     alert('Oh bother! The honey is gone. Game over.');
                     reset();
@@ -842,6 +895,8 @@
             isWaveActive = false;
             running = true;
             syncStats();
+            setDefenseAlert('The honey path is peaceful. Prepare your friends.');
+            showWaveStatus('Wave 1 ready', 1300);
         }
 
         // Place tower
@@ -875,7 +930,11 @@
             if (nearPath) return;
 
             const spec = towerTypes[selectedTower];
-            if (honey < spec.cost) return;
+            if (honey < spec.cost) {
+                showWaveStatus('Not enough honey for that friend.', 1100);
+                shakeElement(defenseCard);
+                return;
+            }
 
             honey -= spec.cost;
             syncStats();
@@ -907,6 +966,8 @@
                 if (isWaveActive) return;
                 isWaveActive = true;
                 lastSpawnTime = performance.now();
+                showWaveStatus(`Wave ${wave} is beginning...`);
+                setDefenseAlert('Your friends are on the move. Keep an eye on the path!');
             });
         }
 
@@ -921,6 +982,8 @@
                     t.range += 8;
                 });
                 syncStats();
+                setDefenseAlert('Your friends feel braver with a little extra honey.');
+                showWaveStatus('Towers upgraded!', 1200);
             });
         }
     }
@@ -939,6 +1002,10 @@
         const livesSpan = document.getElementById('catch-lives');
         const startBtn = document.getElementById('start-catch');
         const pauseBtn = document.getElementById('pause-catch');
+        const catchOverlay = document.getElementById('catch-overlay');
+        const catchCountdown = document.getElementById('catch-countdown');
+        const catchHint = document.getElementById('catch-hint');
+        const catchCard = document.getElementById('catch-card');
 
         let score = 0;
         let timeLeft = 60;
@@ -949,6 +1016,19 @@
         let timerInterval = null;
         let lastFrameTime = performance.now();
         let poohX = canvas.width / 2;
+        let countdownInterval = null;
+        let overlayTimeout = null;
+
+        function setCatchOverlay(line, sub, persistent = false, duration = 1600) {
+            if (!catchOverlay || !catchCountdown || !catchHint) return;
+            catchCountdown.textContent = line;
+            catchHint.textContent = sub || '';
+            catchOverlay.classList.add('active');
+            if (overlayTimeout) clearTimeout(overlayTimeout);
+            if (!persistent) {
+                overlayTimeout = setTimeout(() => catchOverlay.classList.remove('active'), duration);
+            }
+        }
 
         function syncStats() {
             if (scoreSpan) scoreSpan.textContent = score;
@@ -957,6 +1037,7 @@
         }
 
         syncStats();
+        setCatchOverlay('Ready when you are.', 'Press start to begin a calm 60 second run.', true);
 
         function drawBackground() {
             ctx.fillStyle = '#B3E5FC';
@@ -1070,6 +1151,9 @@
                     score += 10;
                     honeyPots.splice(idx, 1);
                     syncStats();
+                    if (score % 50 === 0) {
+                        setCatchOverlay('Sweet catching!', `You hit ${score} points. Keep it up!`, false, 1200);
+                    }
                 }
 
             // Off screen
@@ -1088,6 +1172,8 @@
                     lives -= 1;
                     bees.splice(idx, 1);
                     syncStats();
+                    setCatchOverlay('Ouch! A bee buzzed Pooh.', `Hearts remaining: ${lives}.`, false, 1400);
+                    shakeElement(catchCard);
                     if (lives <= 0) {
                         endGame(false);
                     }
@@ -1139,24 +1225,37 @@
         requestAnimationFrame(loop);
 
         function startGame() {
-            if (gameRunning) return;
+            if (gameRunning || countdownInterval) return;
             score = 0;
             lives = 3;
             timeLeft = 60;
             honeyPots = [];
             bees = [];
             poohX = canvas.width / 2;
-            gameRunning = true;
             syncStats();
 
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                syncStats();
-                if (timeLeft <= 0) {
-                    endGame(true);
+            let count = 3;
+            setCatchOverlay('Starting in 3...', 'Get Pooh ready to move.', true);
+            countdownInterval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    setCatchOverlay(`Starting in ${count}...`, 'Catch honey, dodge bees.', true);
+                } else {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                    setCatchOverlay('Go!', 'Keep Pooh under the falling honey.', false, 900);
+                    gameRunning = true;
+
+                    clearInterval(timerInterval);
+                    timerInterval = setInterval(() => {
+                        timeLeft--;
+                        syncStats();
+                        if (timeLeft <= 0) {
+                            endGame(true);
+                        }
+                    }, 1000);
                 }
-            }, 1000);
+            }, 800);
         }
 
         function endGame(timeExpired) {
@@ -1164,6 +1263,12 @@
             gameRunning = false;
             clearInterval(timerInterval);
             timerInterval = null;
+            setCatchOverlay(
+                timeExpired ? "Time's up!" : 'Ouch! The bees won this round.',
+                'Press start to give Pooh another try.',
+                true
+            );
+            shakeElement(catchCard);
 
             setTimeout(() => {
                 if (timeExpired) {
@@ -1187,10 +1292,12 @@
                         }
                     }, 1000);
                 }
+                if (catchOverlay) catchOverlay.classList.remove('active');
             } else if (gameRunning) {
                 gameRunning = false;
                 clearInterval(timerInterval);
                 timerInterval = null;
+                setCatchOverlay('Paused', 'Tap start or pause to continue when ready.', true);
             }
         }
 
