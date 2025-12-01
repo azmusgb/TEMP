@@ -29,7 +29,8 @@
 <body>
 
     <a href="#mainContent" class="skip-link">Skip to main content</a>
-    <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+    <div class="reading-progress" id="readingProgress" aria-hidden="true" role="progressbar" 
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Reading progress"></div>
 
     <!-- Loading -->
     <div class="loading-screen hidden" id="loadingScreen" role="status" aria-live="polite">
@@ -76,9 +77,10 @@
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"
                 aria-controls="navMenu">
                 <i class="fas fa-bars" aria-hidden="true"></i>
+                <span class="sr-only">Menu</span>
             </button>
 
-            <div class="nav-menu" id="navMenu">
+            <div class="nav-menu" id="navMenu" aria-hidden="true">
                 <a href="#section1" class="nav-item active" data-section="section1">
                     <i class="fas fa-book" aria-hidden="true"></i>
                     <span>Story Beginning</span>
@@ -112,7 +114,7 @@
         <div class="cover-decoration" aria-hidden="true"></div>
         <h1 class="cover-title" id="coverTitle">The Hundred Acre Celebration</h1>
         <p class="cover-subtitle">Welcoming Baby Gunner to Our Story</p>
-        <button class="open-book-btn" id="openBookBtn">
+        <button class="open-book-btn" id="openBookBtn" aria-label="Open the storybook">
             <i class="fas fa-book-open" aria-hidden="true"></i>
             <span>Open the Story</span>
         </button>
@@ -120,16 +122,19 @@
 
     <!-- Music & accessibility controls -->
     <div class="music-controls" aria-label="Page controls">
-        <button class="music-btn" id="musicToggle" aria-label="Toggle background music">
+        <button class="music-btn" id="musicToggle" aria-label="Toggle background music" aria-pressed="false">
             <i class="fas fa-music" aria-hidden="true"></i>
+            <span class="sr-only">Music</span>
         </button>
         <button class="accessibility-btn" id="motionToggle" aria-label="Toggle reduced motion">
             <i class="fas fa-universal-access" aria-hidden="true"></i>
+            <span class="sr-only">Accessibility</span>
         </button>
     </div>
 
     <!-- Background music element -->
-    <audio id="bgMusic" loop preload="auto">
+    <audio id="bgMusic" loop preload="none">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-little-birds-singing-in-the-trees-34.mp3" type="audio/mpeg">
         <source src="media/hundred-acre-lullaby.mp3" type="audio/mpeg">
     </audio>
 
@@ -137,9 +142,11 @@
     <div class="fab-container" aria-label="Quick navigation">
         <button class="fab" id="scrollTopFab" aria-label="Back to top of page">
             <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            <span class="sr-only">Back to top</span>
         </button>
         <button class="fab" id="scrollRsvpFab" aria-label="Jump to RSVP form">
             <i class="fas fa-heart" aria-hidden="true"></i>
+            <span class="sr-only">RSVP</span>
         </button>
     </div>
 
@@ -156,14 +163,15 @@
                     <!-- Section 1: Story beginning -->
                     <section class="content-section scroll-animate" id="section1" aria-labelledby="storyStartTitle">
                         <div class="content-section-inner">
-                            <div class="section-number">1</div>
+                            <div class="section-number" aria-hidden="true">1</div>
                             <div class="section-header">
                                 <h2 class="story-title" id="storyStartTitle">
                                     Once Upon a Time in the Hundred Acre Wood...
                                 </h2>
                             </div>
 
-                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)">
+                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)" 
+                                    aria-label="Play woodland sound">
                                 Welcome to the Hundred Acre Wood
                             </button>
 
@@ -177,8 +185,8 @@
                             </div>
 
                             <!-- Pooh spotlight uses honey-bear.png -->
-                            <button class="character-spotlight" type="button" data-character="pooh"
-                                onclick="showCharacterModal('pooh')">
+                            <button class="character-spotlight" type="button" onclick="showCharacterModal('pooh')" 
+                                    aria-label="Learn more about Winnie the Pooh">
                                 <div class="character-illustration" aria-hidden="true">
                                     <img src="Images/Characters/honey-bear.png" alt="" />
                                 </div>
@@ -204,12 +212,13 @@
                     <!-- Section 2: Invitation & RSVP -->
                     <section class="content-section scroll-animate" id="section2" aria-labelledby="invitationTitle">
                         <div class="content-section-inner">
-                            <div class="section-number">2</div>
+                            <div class="section-number" aria-hidden="true">2</div>
                             <div class="section-header">
                                 <h2 class="story-title" id="invitationTitle">You Are Cordially Invited</h2>
                             </div>
 
-                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)">
+                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)" 
+                                    aria-label="Play woodland sound">
                                 Party This Way →
                             </button>
 
@@ -242,10 +251,12 @@
                             </div>
 
                             <div class="rsvp-form" id="rsvp">
-                                <h3
-                                    style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; color: var(--storybook-brown);">
+                                <h3 class="rsvp-title">
                                     RSVP to Join the Celebration
                                 </h3>
+                                <div class="rsvp-count" aria-live="polite">
+                                    <span id="rsvpCount">0</span> friends have RSVP'd so far
+                                </div>
                                 <form class="storybook-form" id="rsvpForm" novalidate>
                                     <div class="form-grid">
                                         <div class="form-field">
@@ -256,6 +267,7 @@
                                             <input id="guestName" name="guestName" type="text" required
                                                 autocomplete="name"
                                                 placeholder="Who's coming from your Hundred Acre Wood?">
+                                            <div class="field-hint">Minimum 2 characters</div>
                                         </div>
                                         <div class="form-field">
                                             <label class="field-label" for="guestCount">
@@ -270,6 +282,7 @@
                                                 <option value="4">4</option>
                                                 <option value="5">5</option>
                                             </select>
+                                            <div class="field-hint">Between 1-5 guests</div>
                                         </div>
                                     </div>
                                     <div class="form-field">
@@ -278,13 +291,15 @@
                                             <span>Notes for the Hosts</span>
                                         </label>
                                         <textarea id="guestNote" name="guestNote" rows="3"
-                                            placeholder="Share favorite snacks, allergies, or a short note for Baby Gunner."></textarea>
+                                            placeholder="Share favorite snacks, allergies, or a short note for Baby Gunner." 
+                                            maxlength="200"></textarea>
+                                        <div class="field-hint">Maximum 200 characters</div>
                                     </div>
                                     <button type="submit" class="magical-btn">
                                         <i class="fas fa-paper-plane" aria-hidden="true"></i>
                                         <span>Send RSVP</span>
                                     </button>
-                                    <div class="form-status" id="rsvpStatus" aria-live="polite"></div>
+                                    <div class="form-status" id="rsvpStatus" aria-live="polite" role="status"></div>
                                 </form>
                             </div>
                         </div>
@@ -294,13 +309,14 @@
                     <section class="content-section scroll-animate" id="section6"
                         aria-labelledby="locationTitle">
                         <div class="content-section-inner">
-                            <div class="section-number">3</div>
+                            <div class="section-number" aria-hidden="true">3</div>
 
                             <div class="section-header">
                                 <h2 class="story-title" id="locationTitle">Finding Our Woodland Gathering</h2>
                             </div>
 
-                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)">
+                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)" 
+                                    aria-label="Play woodland sound">
                                 Directions &amp; Details
                             </button>
 
@@ -327,6 +343,20 @@
                                         friend are all welcome.
                                     </div>
                                 </div>
+                                <div class="detail-card">
+                                    <div class="detail-title">Weather Plan</div>
+                                    <div class="detail-content">
+                                        Our celebration will happen rain or shine. The Gathering Hall is fully enclosed with indoor
+                                        and covered outdoor spaces.
+                                    </div>
+                                </div>
+                                <div class="detail-card">
+                                    <div class="detail-title">Accessibility</div>
+                                    <div class="detail-content">
+                                        The venue is wheelchair accessible with ramps at all entrances. Please let us know if you
+                                        need any accommodations.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -335,13 +365,14 @@
                     <section class="content-section scroll-animate" id="section3"
                         aria-labelledby="charactersTitle">
                         <div class="content-section-inner">
-                            <div class="section-number">4</div>
+                            <div class="section-number" aria-hidden="true">4</div>
 
                             <div class="section-header">
                                 <h2 class="story-title" id="charactersTitle">Meet Our Hosts</h2>
                             </div>
 
-                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)">
+                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)" 
+                                    aria-label="Play woodland sound">
                                 Character Meet &amp; Greet
                             </button>
 
@@ -354,7 +385,8 @@
                             </div>
 
                             <!-- Character PNGs here -->
-                            <button class="character-spotlight" type="button" onclick="showCharacterModal('pooh')">
+                            <button class="character-spotlight" type="button" onclick="showCharacterModal('pooh')" 
+                                    aria-label="Learn more about Winnie the Pooh">
                                 <div class="character-illustration" aria-hidden="true">
                                     <img src="Images/Characters/honey-bear.png" alt="" />
                                 </div>
@@ -366,7 +398,8 @@
                                 </div>
                             </button>
 
-                            <button class="character-spotlight" type="button" onclick="showCharacterModal('piglet')">
+                            <button class="character-spotlight" type="button" onclick="showCharacterModal('piglet')" 
+                                    aria-label="Learn more about Piglet">
                                 <div class="character-illustration" aria-hidden="true">
                                     <img src="Images/Characters/piglet.png" alt="" />
                                 </div>
@@ -378,7 +411,8 @@
                                 </div>
                             </button>
 
-                            <button class="character-spotlight" type="button" onclick="showCharacterModal('tigger')">
+                            <button class="character-spotlight" type="button" onclick="showCharacterModal('tigger')" 
+                                    aria-label="Learn more about Tigger">
                                 <div class="character-illustration" aria-hidden="true">
                                     <img src="Images/Characters/tigger.png" alt="" />
                                 </div>
@@ -390,7 +424,8 @@
                                 </div>
                             </button>
 
-                            <button class="character-spotlight" type="button" onclick="showCharacterModal('eeyore')">
+                            <button class="character-spotlight" type="button" onclick="showCharacterModal('eeyore')" 
+                                    aria-label="Learn more about Eeyore">
                                 <div class="character-illustration" aria-hidden="true">
                                     <img src="Images/Characters/eeyore.png" alt="" />
                                 </div>
@@ -408,13 +443,14 @@
                     <section class="content-section scroll-animate" id="section5"
                         aria-labelledby="treasureTitle">
                         <div class="content-section-inner">
-                            <div class="section-number">5</div>
+                            <div class="section-number" aria-hidden="true">5</div>
 
                             <div class="section-header">
                                 <h2 class="story-title" id="treasureTitle">Gunner's Treasure Trove</h2>
                             </div>
 
-                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)">
+                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)" 
+                                    aria-label="Play woodland sound">
                                 Baby's First Treasures
                             </button>
 
@@ -442,6 +478,20 @@
                                         soft friends, and just enough honey-colored things to make a nursery glow.
                                     </div>
                                 </div>
+                                <div class="detail-card">
+                                    <div class="detail-title">Diaper Fund</div>
+                                    <div class="detail-content">
+                                        If you'd like to contribute to practical needs, a diaper fund will be available. Every
+                                        little bit helps with those daily adventures!
+                                    </div>
+                                </div>
+                                <div class="detail-card">
+                                    <div class="detail-title">Memory Book</div>
+                                    <div class="detail-content">
+                                        Share a special memory or piece of advice for Baby Gunner's parents in our memory book.
+                                        Your words will be cherished forever.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -449,7 +499,7 @@
                     <!-- Section 6: Games (bonus) -->
                     <section class="content-section scroll-animate" id="games" aria-labelledby="gamesHeading">
                         <div class="content-section-inner">
-                            <div class="section-number">6</div>
+                            <div class="section-number" aria-hidden="true">6</div>
                             <div class="section-header">
                                 <h2 class="story-title" id="gamesHeading">Bonus Playtime in the Hundred Acre Wood</h2>
                             </div>
@@ -457,7 +507,7 @@
                             <div class="story-section">
                                 <p class="story-text">
                                     Once the plans are set, the maps are marked, and the gifts are tucked away,
-                                    there’s still room for a bit of gentle fun. These little games are just a bonus—
+                                    there's still room for a bit of gentle fun. These little games are just a bonus—
                                     something extra for older kids and playful grown-ups who want to wander through the
                                     Hundred Acre Wood a tiny bit longer.
                                 </p>
@@ -479,7 +529,7 @@
                                     <div class="game-character eeyore" aria-hidden="true">🐴</div>
 
                                     <h2 class="game-title" id="defenseTitle">Honey Hive Defense</h2>
-                                    <p class="game-tagline">Help Pooh’s friends guard the honey path from silly mischief-makers.</p>
+                                    <p class="game-tagline">Help Pooh's friends guard the honey path from silly mischief-makers.</p>
 
                                     <p class="game-description">
                                         Choose your favorite Hundred Acre friend and place them along the path.
@@ -543,11 +593,11 @@
                                     </div>
 
                                     <div class="controls controls--stack">
-                                        <button id="start-defense" type="button">
+                                        <button id="start-defense" type="button" aria-label="Start wave">
                                             <i class="fas fa-play" aria-hidden="true"></i>
                                             Start Wave
                                         </button>
-                                        <button id="upgrade-tower" type="button">
+                                        <button id="upgrade-tower" type="button" aria-label="Upgrade tower for 50 honey">
                                             <i class="fas fa-arrow-up" aria-hidden="true"></i>
                                             Upgrade Tower (50🍯)
                                         </button>
@@ -574,7 +624,7 @@
                                     <p class="game-tagline">A simple, kid-friendly reflex game—no stress, just honey.</p>
 
                                     <p class="game-description">
-                                        Pooh has stacked a few too many jars, and they’re starting to wobble.
+                                        Pooh has stacked a few too many jars, and they're starting to wobble.
                                         Help him catch the falling honey pots while keeping an eye out for buzzing bees.
                                     </p>
 
@@ -606,11 +656,11 @@
                                     </div>
 
                                     <div class="controls controls--stack">
-                                        <button id="start-catch" type="button">
+                                        <button id="start-catch" type="button" aria-label="Start game">
                                             <i class="fas fa-play" aria-hidden="true"></i>
                                             Start Game
                                         </button>
-                                        <button id="pause-catch" type="button">
+                                        <button id="pause-catch" type="button" aria-label="Pause game">
                                             <i class="fas fa-pause" aria-hidden="true"></i>
                                             Pause
                                         </button>
@@ -633,6 +683,7 @@
                     <footer class="footer">
                         <p>"Sometimes the smallest things take up the most room in your heart."</p>
                         <p>We can't wait to celebrate Baby Gunner with you in our own little Hundred Acre Wood.</p>
+                        <p class="footer-credits">Created with love for Baby Gunner's celebration</p>
                     </footer>
                 </div>
             </div>
@@ -640,16 +691,17 @@
     </main>
 
     <!-- Character modal -->
-    <div class="character-modal" id="characterModal" role="dialog" aria-modal="true"
-        aria-labelledby="characterModalTitle">
+    <div class="character-modal" id="characterModal" role="dialog" aria-modal="true" aria-hidden="true"
+        aria-labelledby="characterModalTitle" aria-describedby="modalCharacterBio">
         <div class="modal-content">
             <button class="close-modal" id="closeCharacterModal" aria-label="Close character details">
                 <i class="fas fa-times" aria-hidden="true"></i>
+                <span class="sr-only">Close</span>
             </button>
             <div class="modal-character">
                 <div class="modal-character-icon" id="modalCharacterIcon" aria-hidden="true"></div>
                 <div>
-                    <div class="modal-character-name" id="characterModalTitle"></div>
+                    <h3 class="modal-character-name" id="characterModalTitle"></h3>
                 </div>
             </div>
             <div class="modal-character-quote" id="modalCharacterQuote"></div>
@@ -658,6 +710,90 @@
     </div>
 
     <!-- Main script -->
+    <script>
+        // Add CSS for screen readers
+        const style = document.createElement('style');
+        style.textContent = `
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+            .hidden {
+                display: none !important;
+            }
+            .alert-pulse {
+                animation: pulse 1s infinite;
+            }
+            @keyframes pulse {
+                0% { opacity: 1; }
+                50% { opacity: 0.7; }
+                100% { opacity: 1; }
+            }
+            .bee-hit {
+                filter: brightness(1.5) saturate(2);
+                transition: filter 0.3s;
+            }
+            .wave-status.ready {
+                color: #28a745;
+            }
+            .wave-status.active {
+                color: #ffc107;
+            }
+            .form-status {
+                padding: 12px;
+                border-radius: 8px;
+                margin-top: 16px;
+                transition: all 0.3s;
+            }
+            .form-status.success {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+            .form-status.error {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+            .form-status.info {
+                background-color: #d1ecf1;
+                color: #0c5460;
+                border: 1px solid #bee5eb;
+            }
+            .rsvp-count {
+                background-color: #fff3cd;
+                padding: 8px 12px;
+                border-radius: 6px;
+                margin: 12px 0;
+                color: #856404;
+                border: 1px solid #ffeaa7;
+            }
+            .rsvp-title {
+                font-family: 'Playfair Display', serif;
+                font-size: 1.4rem;
+                margin-bottom: 8px;
+                color: #8B4513;
+            }
+            .footer-credits {
+                margin-top: 20px;
+                font-size: 0.9rem;
+                color: #999;
+                font-style: italic;
+            }
+            .field-hint {
+                font-size: 0.8rem;
+                color: #666;
+                margin-top: 4px;
+            }
+        `;
+        document.head.appendChild(style);
     <script src="script.js"></script>
 </body>
 
