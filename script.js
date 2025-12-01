@@ -135,12 +135,21 @@ function setupButtons() {
 
     if (openBookBtn && storybookCover) {
         let hideTimeout;
+        let transitionHandler;
+
+        const clearTransitionHandler = () => {
+            if (transitionHandler) {
+                storybookCover.removeEventListener('transitionend', transitionHandler);
+                transitionHandler = undefined;
+            }
+        };
 
         const hideCover = () => {
             if (hideTimeout) {
                 clearTimeout(hideTimeout);
                 hideTimeout = undefined;
             }
+            clearTransitionHandler();
             if (!storybookCover.hasAttribute('hidden')) {
                 storybookCover.setAttribute('hidden', '');
             }
@@ -151,21 +160,20 @@ function setupButtons() {
             document.body.classList.contains('reduce-motion');
 
         const closeCover = () => {
+            clearTransitionHandler();
             if (hideTimeout) {
                 clearTimeout(hideTimeout);
             }
             storybookCover.classList.add('closed');
             storybookCover.setAttribute('aria-hidden', 'true');
 
-            storybookCover.addEventListener(
-                'transitionend',
-                (event) => {
-                    if (event.target === storybookCover && event.propertyName === 'transform') {
-                        hideCover();
-                    }
-                },
-                { once: true }
-            );
+            transitionHandler = (event) => {
+                if (event.target === storybookCover && event.propertyName === 'transform') {
+                    hideCover();
+                }
+            };
+
+            storybookCover.addEventListener('transitionend', transitionHandler, { once: true });
 
             hideTimeout = window.setTimeout(hideCover, isReducedMotion() ? 0 : 1400);
         };
