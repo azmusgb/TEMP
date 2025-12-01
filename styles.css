@@ -45,13 +45,26 @@ body {
     padding: 20px;
 }
 
-/* Reduced motion */
+/* Reduced motion class */
 body.reduce-motion,
 body.reduce-motion * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition: none !important;
     scroll-behavior: auto !important;
+}
+
+/* Respect system reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition: none !important;
+    }
 }
 
 /* ACCESSIBILITY */
@@ -218,6 +231,38 @@ h1 {
     font-size: 0.98rem;
 }
 
+.game-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.meta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(135deg, rgba(255, 235, 190, 0.85), rgba(255, 219, 143, 0.9));
+    color: #5d3a0b;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: 1px solid rgba(148, 81, 35, 0.14);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.game-card--primary {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(254, 247, 232, 0.98));
+    border: 1px solid rgba(148, 81, 35, 0.12);
+}
+
+.game-card--secondary {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(214, 236, 248, 0.95));
+    border: 1px solid rgba(51, 113, 148, 0.14);
+}
+
 /* GAME AREA */
 .game-area {
     position: relative;
@@ -263,10 +308,36 @@ canvas {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-.controls button {
-    flex: 1;
-    min-width: 160px;
-    font-family: var(--font-handwriting);
+.progress-block {
+    margin: 10px 0 18px;
+}
+
+.progress-label {
+    font-weight: 800;
+    color: var(--storybook-brown);
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.progress-track {
+    width: 100%;
+    height: 14px;
+    border-radius: 999px;
+    background: rgba(67, 52, 46, 0.12);
+    overflow: hidden;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+    border-radius: inherit;
+    transition: width 0.3s ease;
+}
+
+.progress-fill--blue {
+    background: linear-gradient(90deg, #9bc5f3 0%, #6ba2f7 100%);
 }
 
 /* BUTTONS – BASE */
@@ -290,6 +361,8 @@ button {
     overflow: hidden;
     transition: var(--transition-fast), transform 0.18s ease, box-shadow 0.18s ease;
     text-decoration: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 button::after {
@@ -323,6 +396,14 @@ button:disabled {
     box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
 }
 
+/* Game controls buttons override */
+.controls button {
+    flex: 1;
+    min-width: 160px;
+    font-family: var(--font-handwriting);
+}
+
+/* TOWER SELECTOR */
 .tower-selector {
     display: flex;
     gap: 10px;
@@ -378,6 +459,89 @@ button:disabled {
     margin-top: 15px;
     font-size: 0.96rem;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.game-status {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px dashed rgba(148, 81, 35, 0.25);
+    color: var(--deep-ink);
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.game-overlay-banner {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--deep-ink);
+    font-weight: 800;
+    text-align: center;
+    border: 1px solid rgba(148, 81, 35, 0.2);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+    pointer-events: none;
+}
+
+.game-overlay-banner--blue {
+    background: rgba(236, 247, 255, 0.95);
+    border-color: rgba(63, 118, 160, 0.35);
+}
+
+.legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(148, 81, 35, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.legend-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #fff3c6, #f7c948);
+    font-size: 1.5rem;
+}
+
+.legend-copy strong {
+    display: block;
+    color: var(--storybook-brown);
+}
+
+.legend-copy span {
+    display: block;
+    color: #6b4b2a;
+    font-size: 0.92rem;
+}
+
+.touch-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.touch-controls button {
+    font-size: 1rem;
+    letter-spacing: 0.01em;
 }
 
 /* Background characters around game-card */
