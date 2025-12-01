@@ -527,6 +527,21 @@
                                 <p class="subtitle">Cozy, kid-friendly games inspired by the Hundred Acre Wood.</p>
                             </header>
 
+                            <!-- Mobile Controls for Honey Game -->
+                            <div class="mobile-game-controls" id="mobileControls" style="display: none;">
+                                <div class="mobile-controls-label">Tap to move Pooh:</div>
+                                <div class="mobile-controls-buttons">
+                                    <button class="mobile-control-btn" id="mobileLeftBtn" aria-label="Move left">
+                                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                        Left
+                                    </button>
+                                    <button class="mobile-control-btn" id="mobileRightBtn" aria-label="Move right">
+                                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                        Right
+                                    </button>
+                                </div>
+                            </div>
+
                             <div class="games-container" aria-label="Pooh-themed mini games">
                                 <!-- Tower Defense Game -->
                                 <article class="game-card game-card--primary" aria-labelledby="defenseTitle"
@@ -608,6 +623,11 @@
                                             <i class="fas fa-arrow-up" aria-hidden="true"></i>
                                             Upgrade Tower (50🍯)
                                         </button>
+                                        <button type="button" onclick="showGameInstructions('defense')" 
+                                                class="instruction-btn" aria-label="Show game instructions">
+                                            <i class="fas fa-question-circle" aria-hidden="true"></i>
+                                            How to Play
+                                        </button>
                                     </div>
 
                                     <div class="instructions">
@@ -671,6 +691,11 @@
                                             <i class="fas fa-pause" aria-hidden="true"></i>
                                             Pause
                                         </button>
+                                        <button type="button" onclick="showGameInstructions('catch')" 
+                                                class="instruction-btn" aria-label="Show game instructions">
+                                            <i class="fas fa-question-circle" aria-hidden="true"></i>
+                                            How to Play
+                                        </button>
                                     </div>
 
                                     <div class="instructions">
@@ -697,7 +722,7 @@
         </div>
     </main>
 
-    <!-- Character modal -->
+    <!-- Character Modal -->
     <div class="character-modal" id="characterModal" role="dialog" aria-modal="true" aria-hidden="true"
         aria-labelledby="characterModalTitle" aria-describedby="modalCharacterBio">
         <div class="modal-content">
@@ -716,9 +741,30 @@
         </div>
     </div>
 
+    <!-- Game Instruction Modal -->
+    <div class="character-modal" id="gameInstructionModal" role="dialog" aria-modal="true" aria-hidden="true"
+        aria-labelledby="gameInstructionTitle">
+        <div class="modal-content">
+            <button class="close-modal" id="closeGameModal" aria-label="Close game instructions">
+                <i class="fas fa-times" aria-hidden="true"></i>
+                <span class="sr-only">Close</span>
+            </button>
+            <div class="modal-character">
+                <div class="modal-character-icon" aria-hidden="true">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <div>
+                    <h3 class="modal-character-name" id="gameInstructionTitle">Game Instructions</h3>
+                </div>
+            </div>
+            <div class="modal-character-quote" id="gameInstructionQuote"></div>
+            <ul class="modal-character-list" id="gameInstructionList"></ul>
+        </div>
+    </div>
+
     <!-- Main script -->
     <script>        
-        // Add a simple fallback for the open book button in case script.js doesn't load
+        // Simple fallback for the open book button
         document.addEventListener('DOMContentLoaded', function() {
             const openBookBtn = document.getElementById('openBookBtn');
             const storybookCover = document.getElementById('storybookCover');
@@ -750,4 +796,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
