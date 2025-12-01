@@ -514,43 +514,39 @@ function setupRSVPForm() {
 function setupMotionToggle() {
     const motionToggle = document.getElementById('motionToggle');
     if (!motionToggle) return;
-    
+
     const applyPreference = (reduced) => {
         document.body.classList.toggle('reduce-motion', reduced);
         localStorage.setItem('reduceMotion', reduced ? 'true' : 'false');
         
-        // Update button text for accessibility
-        motionToggle.setAttribute('aria-label', 
-            reduced ? 'Enable animations' : 'Reduce animations'
-        );
-        motionToggle.querySelector('.toggle-text')?.textContent = 
-            reduced ? 'Enable Animations' : 'Reduce Animations';
+        // Update the button's aria-label and aria-pressed
+        motionToggle.setAttribute('aria-label', reduced ? 'Enable animations' : 'Reduce motion');
+        motionToggle.setAttribute('aria-pressed', reduced ? 'true' : 'false');
+        
+        // Optionally change the icon
+        const icon = motionToggle.querySelector('i');
+        if (icon) {
+            icon.className = reduced ? 'fas fa-stop-circle' : 'fas fa-universal-access';
+        }
     };
-    
-    // Check for user's OS preference
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const stored = localStorage.getItem('reduceMotion');
+    let reduced = false;
     
-    // Apply stored preference or OS preference
     if (stored !== null) {
-        applyPreference(stored === 'true');
+        reduced = stored === 'true';
     } else {
-        applyPreference(prefersReducedMotion);
+        reduced = prefersReducedMotion;
     }
     
+    applyPreference(reduced);
+
     motionToggle.addEventListener('click', () => {
         const reduced = !document.body.classList.contains('reduce-motion');
         applyPreference(reduced);
-        
-        // Provide feedback
-        const feedback = document.createElement('div');
-        feedback.className = 'sr-only';
-        feedback.textContent = reduced ? 'Animations reduced' : 'Animations enabled';
-        document.body.appendChild(feedback);
-        setTimeout(() => feedback.remove(), 1000);
     });
 }
-
 function setupMusicToggle() {
     const musicBtn = document.getElementById('musicToggle');
     const music = document.getElementById('bgMusic');
