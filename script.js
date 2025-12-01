@@ -130,10 +130,42 @@ function setupButtons() {
     const scrollTopFab = document.getElementById('scrollTopFab');
     const scrollRsvpFab = document.getElementById('scrollRsvpFab');
     const rsvpSection = document.getElementById('rsvp');
+    const storybookCover = document.getElementById('storybookCover');
+    const mainContent = document.getElementById('mainContent');
 
     if (openBookBtn) {
+        const hideCover = () => {
+            if (!storybookCover?.hasAttribute('hidden')) {
+                storybookCover?.setAttribute('hidden', '');
+            }
+        };
+
         openBookBtn.addEventListener('click', () => {
-            document.getElementById('mainContent')?.scrollIntoView({ behavior: 'smooth' });
+            storybookCover?.classList.add('closed');
+            storybookCover?.setAttribute('aria-hidden', 'true');
+
+            const reducedMotion =
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+                document.body.classList.contains('reduce-motion');
+
+            if (storybookCover) {
+                storybookCover.addEventListener(
+                    'transitionend',
+                    (event) => {
+                        if (event.propertyName === 'transform') hideCover();
+                    },
+                    { once: true }
+                );
+            }
+
+            if (reducedMotion) {
+                hideCover();
+            } else {
+                setTimeout(hideCover, 1300);
+            }
+
+            mainContent?.scrollIntoView({ behavior: 'smooth' });
+            if (mainContent) mainContent.focus({ preventScroll: true });
         });
     }
 
