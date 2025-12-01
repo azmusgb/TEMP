@@ -594,9 +594,9 @@
 
                             <div class="story-section">
                                 <p class="story-text">
-                                    When the planning is done and the gifts are wrapped, there's still time for a little 
-                                    something extra. These enhanced games feature modern mechanics, beautiful particle effects, 
-                                    and progressive challenges—perfect for kids and the young-at-heart who want to extend 
+                                    When the planning is done and the gifts are wrapped, there's still time for a little
+                                    something extra. These enhanced games feature modern mechanics, beautiful particle effects,
+                                    and progressive challenges—perfect for kids and the young-at-heart who want to extend
                                     their visit to the Hundred Acre Wood just a little longer.
                                 </p>
                                 <div class="feature-badges">
@@ -604,6 +604,73 @@
                                     <span class="feature-badge">✨ Particle Effects</span>
                                     <span class="feature-badge">🏆 High Score Challenges</span>
                                     <span class="feature-badge">🎯 Progressive Difficulty</span>
+                                </div>
+                            </div>
+
+                            <div class="game-section">
+                                <div class="game-container">
+                                    <h2 class="game-title">🐝 Honey Defense</h2>
+                                    <p>Place towers to defend the hive from bees! Click towers to see their range.</p>
+                                    <div class="game-hud">
+                                        <div class="hud-item">
+                                            <span class="hud-label">Wave</span>
+                                            <span id="defense-wave">1</span>
+                                        </div>
+                                        <div class="hud-item">
+                                            <span class="hud-label">Health</span>
+                                            <span id="defense-health">100</span>
+                                        </div>
+                                        <div class="hud-item">
+                                            <span class="hud-label">Honey</span>
+                                            <span id="defense-money">500</span>
+                                        </div>
+                                        <div class="hud-item">
+                                            <span class="hud-label">Score</span>
+                                            <span id="defense-score">0</span>
+                                        </div>
+                                    </div>
+                                    <canvas id="defense-game" width="800" height="500"></canvas>
+                                    <div class="game-controls">
+                                        <button id="defense-reset">Reset</button>
+                                        <button id="defense-toggle">Pause</button>
+                                        <div class="speed-control" aria-live="polite">
+                                            <span class="hud-label">Speed</span>
+                                            <button type="button" class="speed-btn" data-speed="-0.5">-</button>
+                                            <span id="game-speed" class="speed-display">1x</span>
+                                            <button type="button" class="speed-btn" data-speed="0.5">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="game-container">
+                                    <h2 class="game-title">🍯 Honey Catch</h2>
+                                    <p>Move Pooh to catch honey pots, avoid rocks! Use arrow keys or click to move.</p>
+                                    <div class="game-hud">
+                                        <div class="hud-item">
+                                            <span class="hud-label">Score</span>
+                                            <span id="honey-score">0</span>
+                                        </div>
+                                        <div class="hud-item">
+                                            <span class="hud-label">Time</span>
+                                            <span id="honey-time">60s</span>
+                                        </div>
+                                        <div class="hud-item">
+                                            <span class="hud-label">Lives</span>
+                                            <span id="honey-lives">3</span>
+                                        </div>
+                                        <div class="hud-item">
+                                            <span class="hud-label">Combo</span>
+                                            <span id="honey-combo">0x</span>
+                                        </div>
+                                    </div>
+                                    <canvas id="honey-game" width="800" height="500"></canvas>
+                                    <div class="game-controls">
+                                        <button id="honey-start">Start / Restart</button>
+                                        <button id="honey-toggle">Pause</button>
+                                    </div>
+                                    <div class="game-instructions">
+                                        <p>🎮 Controls: Arrow Keys to move | Space to jump | Click/Tap to move Pooh</p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -779,23 +846,23 @@
 
                                         <!-- Game Area -->
                                         <div class="game-display-area">
-                                            <div class="game-area-header">
-                                                <h4 class="area-title">Honey Path Defense</h4>
-                                                <div class="area-info">
-                                                    <span class="info-tag" id="defense-wave-status">Wave 1 Ready</span>
-                                                    <span class="info-tag">⏱️ 0:00</span>
+                                        <div class="game-area-header">
+                                            <h4 class="area-title">Honey Path Defense</h4>
+                                            <div class="area-info">
+                                                <span class="info-tag" id="defense-wave-status">Wave 1 Ready</span>
+                                                <span class="info-tag">⏱️ 0:00</span>
+                                            </div>
+                                        </div>
+                                        <div class="game-canvas-container legacy-canvas">
+                                            <canvas id="defense-game-legacy" width="800" height="400"
+                                                    role="img" aria-label="Tower defense game: Place characters to defend honey path"></canvas>
+                                            <div class="canvas-overlay" id="defense-overlay" aria-live="polite">
+                                                <div class="overlay-hint">
+                                                    <span class="hint-icon">📍</span>
+                                                    <span class="hint-text">Click empty spots to place towers • Click towers to upgrade</span>
                                                 </div>
                                             </div>
-                                            <div class="game-canvas-container">
-                                                <canvas id="defense-game" width="800" height="400" 
-                                                        role="img" aria-label="Tower defense game: Place characters to defend honey path"></canvas>
-                                                <div class="canvas-overlay" id="defense-overlay" aria-live="polite">
-                                                    <div class="overlay-hint">
-                                                        <span class="hint-icon">📍</span>
-                                                        <span class="hint-text">Click empty spots to place towers • Click towers to upgrade</span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        </div>
                                         </div>
 
                                         <!-- Game Controls -->
@@ -963,27 +1030,27 @@
 
                                         <!-- Game Area -->
                                         <div class="game-display-area">
-                                            <div class="game-area-header">
-                                                <h4 class="area-title">Catch the Falling Honey</h4>
-                                                <div class="area-info">
-                                                    <span class="info-tag" id="catch-status">Ready to Start</span>
-                                                    <span class="info-tag">High Score: 0</span>
-                                                </div>
+                                        <div class="game-area-header">
+                                            <h4 class="area-title">Catch the Falling Honey</h4>
+                                            <div class="area-info">
+                                                <span class="info-tag" id="catch-status">Ready to Start</span>
+                                                <span class="info-tag">High Score: 0</span>
                                             </div>
-                                            <div class="game-canvas-container">
-                                                <canvas id="honey-game" width="800" height="400" 
-                                                        role="img" aria-label="Catching game: Control Pooh to catch honey pots"></canvas>
-                                                <div class="canvas-overlay" id="catch-overlay" aria-live="polite">
-                                                    <div class="overlay-content">
-                                                        <div class="overlay-title" id="catch-countdown">Ready When You Are</div>
-                                                        <div class="overlay-subtitle" id="catch-hint">Press start to catch honey for 60 seconds!</div>
-                                                        <div class="overlay-highscore">
-                                                            <span class="highscore-label">Your Best:</span>
-                                                            <span class="highscore-value" id="catch-high-score-display">0 points</span>
-                                                        </div>
+                                        </div>
+                                        <div class="game-canvas-container legacy-canvas">
+                                            <canvas id="honey-game-legacy" width="800" height="400"
+                                                    role="img" aria-label="Catching game: Control Pooh to catch honey pots"></canvas>
+                                            <div class="canvas-overlay" id="catch-overlay" aria-live="polite">
+                                                <div class="overlay-content">
+                                                    <div class="overlay-title" id="catch-countdown">Ready When You Are</div>
+                                                    <div class="overlay-subtitle" id="catch-hint">Press start to catch honey for 60 seconds!</div>
+                                                    <div class="overlay-highscore">
+                                                        <span class="highscore-label">Your Best:</span>
+                                                        <span class="highscore-value" id="catch-high-score-display">0 points</span>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                         </div>
 
                                         <!-- Game Controls -->
