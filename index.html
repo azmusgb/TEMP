@@ -6,33 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Hundred Acre Celebration: Welcoming Baby Gunner</title>
 
+    <!-- SEO & Social -->
+    <meta name="description" content="A storybook-style Winnie the Pooh baby shower experience for Baby Gunner, with games, invitations, and Hundred Acre Wood magic.">
+    <meta property="og:title" content="The Hundred Acre Celebration: Welcoming Baby Gunner">
+    <meta property="og:description" content="Join us in the Hundred Acre Wood to celebrate Baby Gunner with games, stories, and honey-sweet moments.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#FFC42B">
+
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
- <link rel="stylesheet" href="styles.css">
-   
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&family=Patrick+Hand&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-
     <a href="#mainContent" class="skip-link">Skip to main content</a>
-    <div class="reading-progress" id="readingProgress"></div>
+    <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
 
     <!-- Loading -->
     <div class="loading-screen hidden" id="loadingScreen" role="status" aria-live="polite">
-        <div class="honey-spinner">
+        <div class="honey-spinner" aria-hidden="true">
             <div class="loading-jar">
                 <div class="loading-honey-fill"></div>
             </div>
         </div>
         <div class="loading-text">Stirring the Honey...</div>
-        <div class="loading-subtext">The Hundred Acre Wood is getting ready for Baby Gunner's celebration.</div>
-        <div class="loading-dots">
+        <div class="loading-subtext">
+            The Hundred Acre Wood is getting ready for Baby Gunner's celebration.
+        </div>
+        <div class="loading-dots" aria-hidden="true">
             <div class="loading-dot"></div>
             <div class="loading-dot"></div>
             <div class="loading-dot"></div>
+        </div>
+        <div class="loading-hint">
+            If this takes more than a few seconds, try a little refresh—just like tapping a honey jar.
         </div>
     </div>
 
@@ -53,38 +68,39 @@
     <nav class="main-nav" id="mainNav" aria-label="Primary">
         <div class="nav-container">
             <div class="nav-brand">
-                <a href="#" class="nav-title">Hundred Acre Wood</a>
+                <a href="#mainContent" class="nav-title">Hundred Acre Wood</a>
                 <div class="nav-subtitle">Baby Gunner's Celebration</div>
             </div>
 
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
-                <i class="fas fa-bars"></i>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false"
+                aria-controls="navMenu">
+                <i class="fas fa-bars" aria-hidden="true"></i>
             </button>
 
             <div class="nav-menu" id="navMenu">
                 <a href="#games" class="nav-item" data-section="games">
-                    <i class="fas fa-gamepad"></i>
+                    <i class="fas fa-gamepad" aria-hidden="true"></i>
                     <span>Fun Games</span>
                 </a>
                 <a href="#section1" class="nav-item active" data-section="section1">
-                    <i class="fas fa-home"></i>
+                    <i class="fas fa-home" aria-hidden="true"></i>
                     <span>Story Beginning</span>
                 </a>
                 <a href="#section2" class="nav-item" data-section="section2">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
                     <span>Invitation</span>
                 </a>
                 <a href="#section3" class="nav-item" data-section="section3">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-users" aria-hidden="true"></i>
                     <span>Meet the Characters</span>
                 </a>
                 <a href="#section5" class="nav-item" data-section="section5">
-                    <i class="fas fa-gift"></i>
+                    <i class="fas fa-gift" aria-hidden="true"></i>
                     <span>Gunner's Treasure Trove</span>
                 </a>
                 <a href="#section6" class="nav-item" data-section="section6">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Location & Details</span>
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    <span>Location &amp; Details</span>
                 </a>
             </div>
         </div>
@@ -92,22 +108,22 @@
 
     <!-- Storybook cover -->
     <div class="storybook-cover" id="storybookCover" aria-labelledby="coverTitle">
-        <div class="cover-decoration"></div>
+        <div class="cover-decoration" aria-hidden="true"></div>
         <h1 class="cover-title" id="coverTitle">The Hundred Acre Celebration</h1>
         <p class="cover-subtitle">Welcoming Baby Gunner to Our Story</p>
         <button class="open-book-btn" id="openBookBtn">
-            <i class="fas fa-book-open"></i>
-            Open the Story
+            <i class="fas fa-book-open" aria-hidden="true"></i>
+            <span>Open the Story</span>
         </button>
     </div>
 
     <!-- Music & accessibility controls -->
-    <div class="music-controls">
+    <div class="music-controls" aria-label="Page controls">
         <button class="music-btn" id="musicToggle" aria-label="Toggle background music">
-            <i class="fas fa-music"></i>
+            <i class="fas fa-music" aria-hidden="true"></i>
         </button>
         <button class="accessibility-btn" id="motionToggle" aria-label="Toggle reduced motion">
-            <i class="fas fa-universal-access"></i>
+            <i class="fas fa-universal-access" aria-hidden="true"></i>
         </button>
     </div>
 
@@ -117,17 +133,17 @@
     </audio>
 
     <!-- FABs -->
-    <div class="fab-container">
-        <button class="fab" id="scrollTopFab" aria-label="Back to top">
-            <i class="fas fa-arrow-up"></i>
+    <div class="fab-container" aria-label="Quick navigation">
+        <button class="fab" id="scrollTopFab" aria-label="Back to top of page">
+            <i class="fas fa-arrow-up" aria-hidden="true"></i>
         </button>
-        <button class="fab" id="scrollRsvpFab" aria-label="Jump to RSVP">
-            <i class="fas fa-heart"></i>
+        <button class="fab" id="scrollRsvpFab" aria-label="Jump to RSVP form">
+            <i class="fas fa-heart" aria-hidden="true"></i>
         </button>
     </div>
 
     <!-- Main content - Celebration Storybook -->
-    <main id="mainContent">
+    <main id="mainContent" tabindex="-1">
         <div class="storybook-shell">
             <div class="storybook" id="storybook">
                 <div class="storybook-inner">
@@ -136,17 +152,151 @@
                         <p class="storybook-subheading">A new little friend joins the Hundred Acre Wood</p>
                     </header>
 
+                    <!-- Games Section -->
+                    <section class="content-section scroll-animate" id="games" aria-labelledby="gamesHeading">
+                        <div class="content-section-inner">
+                            <div class="section-number">0</div>
+                            <div class="section-header">
+                                <h2 class="story-title" id="gamesHeading">Play in the Hundred Acre Wood</h2>
+                            </div>
+
+                            <div class="story-section">
+                                <p class="story-text">
+                                    While our friends are hanging streamers and filling honey pots, there’s time for a little
+                                    adventure. Try these simple games to get in the Hundred Acre mood before the party:
+                                    one to protect Pooh’s honey, and one to help him catch it.
+                                </p>
+                            </div>
+
+                            <header class="games-header">
+                                <div class="character pooh-header" aria-hidden="true">🐻</div>
+                                <div class="character tigger-header" aria-hidden="true">🐯</div>
+                                <h1>Winnie the Pooh Adventures</h1>
+                                <p class="subtitle">Fun activities to enjoy while celebrating Baby Gunner!</p>
+                            </header>
+
+                            <div class="games-container" aria-label="Pooh-themed mini games">
+                                <!-- Tower Defense Game -->
+                                <article class="game-card" aria-labelledby="defenseTitle">
+                                    <div class="game-character piglet" aria-hidden="true">🐷</div>
+                                    <div class="game-character eeyore" aria-hidden="true">🐴</div>
+                                    <h2 class="game-title" id="defenseTitle">Honey Hive Defense</h2>
+                                    <p class="game-description">
+                                        Protect the honey from the Heffalumps and Woozles using your friends from the Hundred Acre Wood!
+                                    </p>
+
+                                    <div class="stats" aria-label="Honey hive game stats">
+                                        <div>Honey: <span id="honey-count">100</span>🍯</div>
+                                        <div>Lives: <span id="lives-count">10</span>❤️</div>
+                                        <div>Wave: <span id="wave-count">1</span>🌊</div>
+                                    </div>
+
+                                    <div class="tower-selector" aria-label="Choose a defender">
+                                        <button class="tower-option selected" type="button" data-tower="pooh"
+                                            aria-pressed="true" aria-label="Pooh tower, cost 20 honey">
+                                            <div class="tower-icon" aria-hidden="true">🐻</div>
+                                            <div class="tower-cost">20🍯</div>
+                                        </button>
+                                        <button class="tower-option" type="button" data-tower="tigger"
+                                            aria-pressed="false" aria-label="Tigger tower, cost 30 honey">
+                                            <div class="tower-icon" aria-hidden="true">🐯</div>
+                                            <div class="tower-cost">30🍯</div>
+                                        </button>
+                                        <button class="tower-option" type="button" data-tower="rabbit"
+                                            aria-pressed="false" aria-label="Rabbit tower, cost 40 honey">
+                                            <div class="tower-icon" aria-hidden="true">🐰</div>
+                                            <div class="tower-cost">40🍯</div>
+                                        </button>
+                                        <button class="tower-option" type="button" data-tower="piglet"
+                                            aria-pressed="false" aria-label="Piglet tower, cost 25 honey">
+                                            <div class="tower-icon" aria-hidden="true">🐷</div>
+                                            <div class="tower-cost">25🍯</div>
+                                        </button>
+                                        <button class="tower-option" type="button" data-tower="eeyore"
+                                            aria-pressed="false" aria-label="Eeyore tower, cost 35 honey">
+                                            <div class="tower-icon" aria-hidden="true">🐴</div>
+                                            <div class="tower-cost">35🍯</div>
+                                        </button>
+                                    </div>
+
+                                    <div class="game-area" aria-label="Honey hive defense game area">
+                                        <canvas id="defense-game" width="520" height="400" role="img"
+                                            aria-label="Pooh and friends defending the honey path"></canvas>
+                                    </div>
+
+                                    <div class="controls">
+                                        <button id="start-defense" type="button">
+                                            Start Wave
+                                        </button>
+                                        <button id="upgrade-tower" type="button">
+                                            Upgrade Tower (50🍯)
+                                        </button>
+                                    </div>
+
+                                    <div class="instructions">
+                                        <p><strong>How to play:</strong></p>
+                                        <ul>
+                                            <li>Select a friend (tower) above.</li>
+                                            <li>Tap or click on the path in the game area to place them.</li>
+                                            <li>Defend the honey pot from Heffalumps and Woozles as waves begin.</li>
+                                        </ul>
+                                    </div>
+                                </article>
+
+                                <!-- Honey Catch Game -->
+                                <article class="game-card" aria-labelledby="catchTitle">
+                                    <div class="game-character rabbit" aria-hidden="true">🐰</div>
+                                    <h2 class="game-title" id="catchTitle">Honey Pot Catch</h2>
+                                    <p class="game-description">
+                                        Help Pooh catch as many honey pots as possible while avoiding the bees!
+                                    </p>
+
+                                    <div class="stats" aria-label="Honey pot game stats">
+                                        <div>Score: <span id="score-count">0</span>🏆</div>
+                                        <div>Time: <span id="time-count">60</span>s⏱️</div>
+                                        <div>Lives: <span id="catch-lives">3</span>❤️</div>
+                                    </div>
+
+                                    <div class="game-area" aria-label="Honey pot catch game area">
+                                        <canvas id="honey-game" width="520" height="400" role="img"
+                                            aria-label="Pooh catching falling honey pots"></canvas>
+                                    </div>
+
+                                    <div class="controls">
+                                        <button id="start-catch" type="button">
+                                            Start Game
+                                        </button>
+                                        <button id="pause-catch" type="button">
+                                            Pause
+                                        </button>
+                                    </div>
+
+                                    <div class="instructions">
+                                        <p><strong>How to play:</strong></p>
+                                        <ul>
+                                            <li>On a keyboard: use the ◀ and ▶ arrow keys to move Pooh.</li>
+                                            <li>On a phone: tap the left or right side of the game area to move.</li>
+                                            <li>Catch honey pots for points and avoid bees to keep your lives.</li>
+                                        </ul>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </section>
+
                     <!-- Section 1 -->
-                    <section class="content-section scroll-animate" id="section1">
+                    <section class="content-section scroll-animate" id="section1" aria-labelledby="storyStartTitle">
                         <div class="content-section-inner">
                             <div class="section-number">1</div>
                             <div class="section-header">
-                                <h2 class="story-title">Once Upon a Time in the Hundred Acre Wood...</h2>
+                                <h2 class="story-title" id="storyStartTitle">
+                                    Once Upon a Time in the Hundred Acre Wood...
+                                </h2>
                             </div>
 
-                            <div class="woodland-sign" onclick="playWoodlandSound(event)">
+                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)">
                                 Welcome to the Hundred Acre Wood
-                            </div>
+                            </button>
 
                             <div class="story-section">
                                 <p class="story-text">
@@ -157,8 +307,9 @@
                                 </p>
                             </div>
 
-                            <div class="character-spotlight" data-character="pooh" onclick="showCharacterModal('pooh')">
-                                <div class="character-illustration">
+                            <button class="character-spotlight" type="button" data-character="pooh"
+                                onclick="showCharacterModal('pooh')">
+                                <div class="character-illustration" aria-hidden="true">
                                     <i class="fas fa-bear" style="font-size: 3rem; color: var(--pooh-yellow);"></i>
                                 </div>
                                 <div class="character-spotlight-content">
@@ -167,7 +318,7 @@
                                     </div>
                                     <div class="character-name">- Winnie the Pooh</div>
                                 </div>
-                            </div>
+                            </button>
 
                             <div class="story-section">
                                 <p class="story-text">
@@ -181,16 +332,16 @@
                     </section>
 
                     <!-- Section 2: Invitation -->
-                    <section class="content-section scroll-animate" id="section2">
+                    <section class="content-section scroll-animate" id="section2" aria-labelledby="invitationTitle">
                         <div class="content-section-inner">
                             <div class="section-number">2</div>
                             <div class="section-header">
-                                <h2 class="story-title">You Are Cordially Invited</h2>
+                                <h2 class="story-title" id="invitationTitle">You Are Cordially Invited</h2>
                             </div>
 
-                            <div class="woodland-sign" onclick="playWoodlandSound(event)">
+                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)">
                                 Party This Way →
-                            </div>
+                            </button>
 
                             <div class="story-section">
                                 <p class="story-text">
@@ -200,13 +351,13 @@
                                 </p>
                             </div>
 
-                            <div class="invitation-details">
+                            <div class="invitation-details" aria-label="Event details">
                                 <div class="detail-card">
-                                    <div class="detail-title">Date & Time</div>
+                                    <div class="detail-title">Date &amp; Time</div>
                                     <div class="detail-content">
                                         Saturday, February 15, 2025<br>
                                         1:00 PM – 4:00 PM<br>
-                                        (Arrive a few minutes early to visit the honey jars and guestbook.)
+                                        <small>(Arrive a few minutes early to visit the honey jars and guestbook.)</small>
                                     </div>
                                 </div>
                                 <div class="detail-card">
@@ -221,20 +372,25 @@
                             </div>
 
                             <div class="rsvp-form" id="rsvp">
-                                <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; color: var(--storybook-brown);">
+                                <h3
+                                    style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 8px; color: var(--storybook-brown);">
                                     RSVP to Join the Celebration
                                 </h3>
-                                <form class="storybook-form" id="rsvpForm">
+                                <form class="storybook-form" id="rsvpForm" novalidate>
                                     <div class="form-grid">
                                         <div class="form-field">
                                             <label class="field-label" for="guestName">
-                                                <i class="fas fa-user"></i> Your Name
+                                                <i class="fas fa-user" aria-hidden="true"></i>
+                                                <span>Your Name</span>
                                             </label>
-                                            <input id="guestName" name="guestName" type="text" required placeholder="Who's coming from your Hundred Acre Wood?" />
+                                            <input id="guestName" name="guestName" type="text" required
+                                                autocomplete="name"
+                                                placeholder="Who's coming from your Hundred Acre Wood?">
                                         </div>
                                         <div class="form-field">
                                             <label class="field-label" for="guestCount">
-                                                <i class="fas fa-users"></i> Number of Guests
+                                                <i class="fas fa-users" aria-hidden="true"></i>
+                                                <span>Number of Guests</span>
                                             </label>
                                             <select id="guestCount" name="guestCount" required>
                                                 <option value="">Select</option>
@@ -248,13 +404,15 @@
                                     </div>
                                     <div class="form-field">
                                         <label class="field-label" for="guestNote">
-                                            <i class="fas fa-comment-dots"></i> Notes for the Hosts
+                                            <i class="fas fa-comment-dots" aria-hidden="true"></i>
+                                            <span>Notes for the Hosts</span>
                                         </label>
-                                        <textarea id="guestNote" name="guestNote" rows="3" placeholder="Share favorite snacks, allergies, or a short note for Baby Gunner."></textarea>
+                                        <textarea id="guestNote" name="guestNote" rows="3"
+                                            placeholder="Share favorite snacks, allergies, or a short note for Baby Gunner."></textarea>
                                     </div>
                                     <button type="submit" class="magical-btn">
-                                        <i class="fas fa-paper-plane"></i>
-                                        Send RSVP
+                                        <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                                        <span>Send RSVP</span>
                                     </button>
                                     <div class="form-status" id="rsvpStatus" aria-live="polite"></div>
                                 </form>
@@ -263,17 +421,18 @@
                     </section>
 
                     <!-- Section 3: Characters -->
-                    <section class="content-section scroll-animate" id="section3">
+                    <section class="content-section scroll-animate" id="section3"
+                        aria-labelledby="charactersTitle">
                         <div class="content-section-inner">
                             <div class="section-number">3</div>
 
                             <div class="section-header">
-                                <h2 class="story-title">Meet Our Hosts</h2>
+                                <h2 class="story-title" id="charactersTitle">Meet Our Hosts</h2>
                             </div>
 
-                            <div class="woodland-sign" onclick="playWoodlandSound(event)">
+                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)">
                                 Character Meet &amp; Greet
-                            </div>
+                            </button>
 
                             <div class="story-section">
                                 <p class="story-text">
@@ -283,8 +442,8 @@
                                 </p>
                             </div>
 
-                            <div class="character-spotlight" onclick="showCharacterModal('pooh')">
-                                <div class="character-illustration">
+                            <button class="character-spotlight" type="button" onclick="showCharacterModal('pooh')">
+                                <div class="character-illustration" aria-hidden="true">
                                     <i class="fas fa-bear" style="font-size: 3rem; color: var(--pooh-yellow);"></i>
                                 </div>
                                 <div class="character-spotlight-content">
@@ -293,10 +452,10 @@
                                     </div>
                                     <div class="character-name">Winnie the Pooh</div>
                                 </div>
-                            </div>
+                            </button>
 
-                            <div class="character-spotlight" onclick="showCharacterModal('piglet')">
-                                <div class="character-illustration">
+                            <button class="character-spotlight" type="button" onclick="showCharacterModal('piglet')">
+                                <div class="character-illustration" aria-hidden="true">
                                     <i class="fas fa-heart" style="font-size: 3rem; color: #F8BBD9;"></i>
                                 </div>
                                 <div class="character-spotlight-content">
@@ -305,10 +464,10 @@
                                     </div>
                                     <div class="character-name">Piglet</div>
                                 </div>
-                            </div>
+                            </button>
 
-                            <div class="character-spotlight" onclick="showCharacterModal('tigger')">
-                                <div class="character-illustration">
+                            <button class="character-spotlight" type="button" onclick="showCharacterModal('tigger')">
+                                <div class="character-illustration" aria-hidden="true">
                                     <i class="fas fa-paw" style="font-size: 3rem; color: #FF8C42;"></i>
                                 </div>
                                 <div class="character-spotlight-content">
@@ -317,10 +476,10 @@
                                     </div>
                                     <div class="character-name">Tigger</div>
                                 </div>
-                            </div>
+                            </button>
 
-                            <div class="character-spotlight" onclick="showCharacterModal('eeyore')">
-                                <div class="character-illustration">
+                            <button class="character-spotlight" type="button" onclick="showCharacterModal('eeyore')">
+                                <div class="character-illustration" aria-hidden="true">
                                     <i class="fas fa-cloud" style="font-size: 3rem; color: #9CA3AF;"></i>
                                 </div>
                                 <div class="character-spotlight-content">
@@ -329,111 +488,23 @@
                                     </div>
                                     <div class="character-name">Eeyore</div>
                                 </div>
-                            </div>
+                            </button>
                         </div>
                     </section>
 
-                    <!-- Simple Games Section at Top -->
-                    <div class="container" id="games">
-                        <header>
-                            <div class="character pooh-header">🐻</div>
-                            <div class="character tigger-header">🐯</div>
-                            <h1>Winnie the Pooh Adventures</h1>
-                            <p class="subtitle">Fun activities to enjoy while celebrating Baby Gunner!</p>
-                        </header>
-
-
-                        <div class="games-container">
-                            <!-- Tower Defense Game -->
-                            <div class="game-card">
-                                <div class="game-character piglet">🐷</div>
-                                <div class="game-character eeyore">🐴</div>
-                                <h2 class="game-title">Honey Hive Defense</h2>
-                                <p class="game-description">Protect the honey from the Heffalumps and Woozles using your friends from the Hundred Acre Wood!</p>
-
-                                <div class="stats">
-                                    <div>Honey: <span id="honey-count">100</span>🍯</div>
-                                    <div>Lives: <span id="lives-count">10</span>❤️</div>
-                                    <div>Wave: <span id="wave-count">1</span>🌊</div>
-                                </div>
-
-                                <div class="tower-selector">
-                                    <div class="tower-option selected" data-tower="pooh">
-                                        <div class="tower-icon">🐻</div>
-                                        <div class="tower-cost">20🍯</div>
-                                    </div>
-                                    <div class="tower-option" data-tower="tigger">
-                                        <div class="tower-icon">🐯</div>
-                                        <div class="tower-cost">30🍯</div>
-                                    </div>
-                                    <div class="tower-option" data-tower="rabbit">
-                                        <div class="tower-icon">🐰</div>
-                                        <div class="tower-cost">40🍯</div>
-                                    </div>
-                                    <div class="tower-option" data-tower="piglet">
-                                        <div class="tower-icon">🐷</div>
-                                        <div class="tower-cost">25🍯</div>
-                                    </div>
-                                    <div class="tower-option" data-tower="eeyore">
-                                        <div class="tower-icon">🐴</div>
-                                        <div class="tower-cost">35🍯</div>
-                                    </div>
-                                </div>
-
-                                <div class="game-area">
-                                    <canvas id="defense-game" width="520" height="400"></canvas>
-                                </div>
-
-                                <div class="controls">
-                                    <button id="start-defense">Start Wave</button>
-                                    <button id="upgrade-tower">Upgrade Tower (50🍯)</button>
-                                </div>
-
-                                <div class="instructions">
-                                    <p><strong>How to play:</strong> Click on a tower type, then click on the path to place it. Defend the honey pot from Heffalumps and Woozles!</p>
-                                </div>
-                            </div>
-
-                            <!-- Honey Catch Game -->
-                            <div class="game-card">
-                                <div class="game-character rabbit">🐰</div>
-                                <h2 class="game-title">Honey Pot Catch</h2>
-                                <p class="game-description">Help Pooh catch as many honey pots as possible while avoiding the bees!</p>
-
-                                <div class="stats">
-                                    <div>Score: <span id="score-count">0</span>🏆</div>
-                                    <div>Time: <span id="time-count">60</span>s⏱️</div>
-                                    <div>Lives: <span id="catch-lives">3</span>❤️</div>
-                                </div>
-
-                                <div class="game-area">
-                                    <canvas id="honey-game" width="520" height="400"></canvas>
-                                </div>
-
-                                <div class="controls">
-                                    <button id="start-catch">Start Game</button>
-                                    <button id="pause-catch">Pause</button>
-                                </div>
-
-                                <div class="instructions">
-                                    <p><strong>How to play:</strong> Use arrow keys or tap sides to move Pooh left and right. Catch honey pots for points, avoid bees!</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
                     <!-- Section 5: Gifts -->
-                    <section class="content-section scroll-animate" id="section5">
+                    <section class="content-section scroll-animate" id="section5"
+                        aria-labelledby="treasureTitle">
                         <div class="content-section-inner">
                             <div class="section-number">4</div>
 
                             <div class="section-header">
-                                <h2 class="story-title">Gunner's Treasure Trove</h2>
+                                <h2 class="story-title" id="treasureTitle">Gunner's Treasure Trove</h2>
                             </div>
 
-                            <div class="woodland-sign" onclick="playWoodlandSound(event)">
+                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)">
                                 Baby's First Treasures
-                            </div>
+                            </button>
 
                             <div class="story-section">
                                 <p class="story-text">
@@ -444,7 +515,7 @@
                                 </p>
                             </div>
 
-                            <div class="invitation-details">
+                            <div class="invitation-details" aria-label="Gift suggestions">
                                 <div class="detail-card">
                                     <div class="detail-title">Book Nook</div>
                                     <div class="detail-content">
@@ -464,17 +535,18 @@
                     </section>
 
                     <!-- Section 6: Location -->
-                    <section class="content-section scroll-animate" id="section6">
+                    <section class="content-section scroll-animate" id="section6"
+                        aria-labelledby="locationTitle">
                         <div class="content-section-inner">
                             <div class="section-number">5</div>
 
                             <div class="section-header">
-                                <h2 class="story-title">Finding Our Woodland Gathering</h2>
+                                <h2 class="story-title" id="locationTitle">Finding Our Woodland Gathering</h2>
                             </div>
 
-                            <div class="woodland-sign" onclick="playWoodlandSound(event)">
+                            <button class="woodland-sign" type="button" onclick="playWoodlandSound(event)">
                                 Directions &amp; Details
-                            </div>
+                            </button>
 
                             <div class="story-section">
                                 <p class="story-text">
@@ -484,9 +556,9 @@
                                 </p>
                             </div>
 
-                            <div class="invitation-details">
+                            <div class="invitation-details" aria-label="Logistics">
                                 <div class="detail-card">
-                                    <div class="detail-title">Parking & Arrival</div>
+                                    <div class="detail-title">Parking &amp; Arrival</div>
                                     <div class="detail-content">
                                         Follow the balloons and wooden signs from the main entrance. Parking attendants (disguised
                                         as friendly grown-ups) will help you find a spot.
@@ -513,13 +585,14 @@
     </main>
 
     <!-- Character modal -->
-    <div class="character-modal" id="characterModal" role="dialog" aria-modal="true" aria-labelledby="characterModalTitle">
+    <div class="character-modal" id="characterModal" role="dialog" aria-modal="true"
+        aria-labelledby="characterModalTitle">
         <div class="modal-content">
             <button class="close-modal" id="closeCharacterModal" aria-label="Close character details">
-                <i class="fas fa-times"></i>
+                <i class="fas fa-times" aria-hidden="true"></i>
             </button>
             <div class="modal-character">
-                <div class="modal-character-icon" id="modalCharacterIcon"></div>
+                <div class="modal-character-icon" id="modalCharacterIcon" aria-hidden="true"></div>
                 <div>
                     <div class="modal-character-name" id="characterModalTitle"></div>
                 </div>
@@ -528,8 +601,9 @@
             <p class="modal-character-bio" id="modalCharacterBio"></p>
         </div>
     </div>
-<script src="script.js"></script>
-    
+
+    <!-- Main script -->
+    <script src="script.js"></script>
 </body>
 
 </html>
