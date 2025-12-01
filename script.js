@@ -1,1576 +1,1646 @@
-const characters = {
-    pooh: {
-        name: 'Winnie the Pooh',
-        icon: '🐻',
-        quote: 'Sometimes the smallest things take up the most room in your heart.',
-        bio: 'Pooh is busy arranging honey pots and handwritten notes for Baby Gunner. He believes every sweet treat tastes better when it is shared with friends.'
-    },
-    piglet: {
-        name: 'Piglet',
-        icon: '🐷',
-        quote: 'Even the littlest friend can bring the greatest joy.',
-        bio: 'Piglet is setting out soft blankets and tiny decorations. He has also picked a handful of wildflowers to make sure everything feels cozy.'
-    },
-    tigger: {
-        name: 'Tigger',
-        icon: '🐯',
-        quote: "New babies are what Tiggers like best!",
-        bio: 'Tigger is in charge of the games and is bouncing around the room making sure every guest has a smile (and maybe a balloon).' 
-    },
-    eeyore: {
-        name: 'Eeyore',
-        icon: '🐴',
-        quote: 'Not that I\'m complaining, but it will be rather nice to have someone new around.',
-        bio: 'Eeyore has thoughtfully prepared a quiet corner for reading stories aloud. He even brought a spare tail ribbon to share if anyone needs cheering up.'
-    }
-};
+// script.js - Enhanced and Evolved JavaScript for Hundred Acre Celebration
 
-function showCharacterModal(key) {
-    const modal = document.getElementById('characterModal');
-    const character = characters[key];
-    if (!modal || !character) return;
-
-    // Store which button opened the modal for focus restoration
-    document.querySelectorAll('[data-character]').forEach(btn => {
-        if (btn.dataset.character === key) {
-            btn.classList.add('last-focused');
-        } else {
-            btn.classList.remove('last-focused');
-        }
-    });
-
-    // Update modal content
-    document.getElementById('modalCharacterIcon').textContent = character.icon;
-    document.getElementById('characterModalTitle').textContent = character.name;
-    document.getElementById('modalCharacterQuote').textContent = character.quote;
-    document.getElementById('modalCharacterBio').textContent = character.bio;
-
-    // Accessibility
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
-    modal.setAttribute('role', 'dialog');
-    modal.setAttribute('aria-labelledby', 'characterModalTitle');
-    modal.setAttribute('aria-describedby', 'modalCharacterBio');
-    
-    document.body.classList.add('modal-open');
-
-    // Trap focus inside modal
-    const focusableElements = modal.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    const firstFocusable = focusableElements[0];
-    
-    if (firstFocusable) {
-        setTimeout(() => firstFocusable.focus(), 100);
-    }
-
-    // Handle focus trapping
-    const trapFocus = (e) => {
-        if (e.key === 'Tab') {
-            if (!focusableElements.length) return;
-            
-            const firstElement = focusableElements[0];
-            const lastElement = focusableElements[focusableElements.length - 1];
-            
-            if (e.shiftKey && document.activeElement === firstElement) {
-                lastElement.focus();
-                e.preventDefault();
-            } else if (!e.shiftKey && document.activeElement === lastElement) {
-                firstElement.focus();
-                e.preventDefault();
-            }
-        }
-    };
-    
-    if (modal._trapFocusHandler) {
-        modal.removeEventListener('keydown', modal._trapFocusHandler);
-    }
-    modal.addEventListener('keydown', trapFocus);
-    modal._trapFocusHandler = trapFocus;
-}
-
-function closeCharacterModal() {
-    const modal = document.getElementById('characterModal');
-    if (!modal) return;
-    
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
-    
-    // Restore focus to the button that opened the modal
-    const lastFocused = document.querySelector('[data-character].last-focused');
-    if (lastFocused) {
-        setTimeout(() => {
-            lastFocused.focus();
-            lastFocused.classList.remove('last-focused');
-        }, 50);
-    }
-    
-    // Remove focus trap
-    if (modal._trapFocusHandler) {
-        modal.removeEventListener('keydown', modal._trapFocusHandler);
-        delete modal._trapFocusHandler;
-    }
-}
-
-function playWoodlandSound(event) {
-    // Prevent default and handle mobile restrictions
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    
-    // Create or resume AudioContext on user interaction
-    const createSound = () => {
-        try {
-            if (!window.AudioContext && !window.webkitAudioContext) return;
-            
-            const context = new (window.AudioContext || window.webkitAudioContext)();
-            
-            // Check if context is in suspended state (common on mobile)
-            if (context.state === 'suspended') {
-                context.resume().then(() => {
-                    playActualSound(context);
-                }).catch(err => {
-                    console.warn('Could not resume audio context:', err);
-                });
-            } else {
-                playActualSound(context);
-            }
-        } catch (error) {
-            console.warn('Audio playback failed:', error);
-        }
-    };
-    
-    const playActualSound = (context) => {
-        const oscillator = context.createOscillator();
-        const gain = context.createGain();
-        
-        oscillator.type = 'triangle';
-        oscillator.frequency.value = 660 + Math.random() * 40;
-        gain.gain.setValueAtTime(0.001, context.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.25, context.currentTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.5);
-        
-        oscillator.connect(gain);
-        gain.connect(context.destination);
-        oscillator.start();
-        oscillator.stop(context.currentTime + 0.6);
-        
-        if (event?.target) {
-            event.target.classList.add('active-sound');
-            setTimeout(() => event.target.classList.remove('active-sound'), 350);
-        }
-    };
-    
-    createSound();
-}
-
-function setupNavigation() {
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
-    const navItems = document.querySelectorAll('.nav-item');
-    
-    // Clean up existing listeners
-    if (window.navHandlers) {
-        if (navToggle && window.navHandlers.toggleHandler) {
-            navToggle.removeEventListener('click', window.navHandlers.toggleHandler);
-        }
-        window.removeEventListener('scroll', window.navHandlers.scrollHandler);
-        navItems.forEach(item => {
-            if (window.navHandlers.itemHandlers) {
-                const handler = window.navHandlers.itemHandlers.get(item);
-                if (handler) {
-                    item.removeEventListener('click', handler);
-                }
-            }
-        });
-    }
-    
-    // Initialize handlers storage
-    window.navHandlers = {
-        toggleHandler: null,
-        scrollHandler: null,
-        itemHandlers: new Map()
-    };
-    
-    if (navToggle && navMenu) {
-        const toggleHandler = () => {
-            const isOpen = navMenu.classList.toggle('open');
-            navToggle.setAttribute('aria-expanded', String(isOpen));
-            navMenu.setAttribute('aria-hidden', String(!isOpen));
-            
-            // Focus management for accessibility
-            if (isOpen) {
-                setTimeout(() => {
-                    const firstNavItem = navMenu.querySelector('.nav-item');
-                    if (firstNavItem) firstNavItem.focus();
-                }, 100);
-            }
-        };
-        
-        navToggle.addEventListener('click', toggleHandler);
-        window.navHandlers.toggleHandler = toggleHandler;
-    }
-    
-    const activateSection = () => {
-        const sections = Array.from(document.querySelectorAll('.content-section'));
-        const scrollPos = window.scrollY + window.innerHeight / 3;
-        let activeFound = false;
-        
-        sections.forEach((section) => {
-            const id = section.getAttribute('id');
-            const link = document.querySelector(`.nav-item[data-section="${id}"]`);
-            if (!link) return;
-            
-            const top = section.offsetTop;
-            const height = section.offsetHeight;
-            const active = scrollPos >= top && scrollPos < top + height;
-            
-            link.classList.toggle('active', active);
-            if (active) activeFound = true;
-        });
-        
-        // If no active section found, default to first
-        if (!activeFound && navItems.length > 0) {
-            navItems[0].classList.add('active');
-        }
-    };
-    
-    navItems.forEach((item) => {
-        const itemHandler = (e) => {
-            e.preventDefault();
-            navItems.forEach((link) => link.classList.remove('active'));
-            item.classList.add('active');
-            
-            const targetId = item.getAttribute('data-section');
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                targetSection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-            
-            if (navMenu) {
-                navMenu.classList.remove('open');
-                navMenu.setAttribute('aria-hidden', 'true');
-            }
-            if (navToggle) {
-                navToggle.setAttribute('aria-expanded', 'false');
-                navToggle.focus();
-            }
-        };
-        
-        item.addEventListener('click', itemHandler);
-        window.navHandlers.itemHandlers.set(item, itemHandler);
-    });
-    
-    const scrollHandler = () => {
-        if (!window.scrollTicking) {
-            window.requestAnimationFrame(() => {
-                activateSection();
-                window.scrollTicking = false;
-            });
-            window.scrollTicking = true;
-        }
-    };
-    
-    window.addEventListener('scroll', scrollHandler);
-    window.navHandlers.scrollHandler = scrollHandler;
-    
-    activateSection();
-}
-
-function setupReadingProgress() {
-    const bar = document.getElementById('readingProgress');
-    if (!bar) return;
-    
-    let ticking = false;
-    const updateProgress = () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
-        bar.style.width = `${progress}%`;
-        
-        // Update aria-valuenow for accessibility
-        bar.setAttribute('aria-valuenow', Math.round(progress));
-        ticking = false;
-    };
-    
-    const scrollHandler = () => {
-        if (!ticking) {
-            window.requestAnimationFrame(updateProgress);
-            ticking = true;
-        }
-    };
-    
-    window.addEventListener('scroll', scrollHandler);
-    updateProgress();
-}
-
-function setupButtons() {
-    const openBookBtn = document.getElementById('openBookBtn');
-    const scrollTopFab = document.getElementById('scrollTopFab');
-    const scrollRsvpFab = document.getElementById('scrollRsvpFab');
-    const rsvpSection = document.getElementById('rsvp');
-    const storybookCover = document.getElementById('storybookCover');
-    const mainContent = document.getElementById('mainContent');
-    
-    if (openBookBtn) {
-        openBookBtn.addEventListener('click', () => {
-            storybookCover?.classList.add('closed');
-            storybookCover?.setAttribute('aria-hidden', 'true');
-            
-            // Add focus to main content for accessibility
-            if (mainContent) {
-                mainContent.setAttribute('tabindex', '-1');
-                mainContent.focus({ preventScroll: true });
-                setTimeout(() => mainContent.removeAttribute('tabindex'), 1000);
-            }
-            
-            // Scroll to main content smoothly
-            setTimeout(() => {
-                if (mainContent) {
-                    mainContent.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }, 300);
-            
-            // Update reading progress after transition
-            setTimeout(setupReadingProgress, 500);
-        });
-    }
-    
-    if (scrollTopFab) {
-        scrollTopFab.addEventListener('click', () => {
-            window.scrollTo({ 
-                top: 0, 
-                behavior: 'smooth',
-                block: 'start'
-            });
-            
-            // Focus management for accessibility
-            setTimeout(() => {
-                const firstFocusable = document.querySelector('header h1, .nav-item');
-                if (firstFocusable) firstFocusable.focus();
-            }, 300);
-        });
-    }
-    
-    if (scrollRsvpFab && rsvpSection) {
-        scrollRsvpFab.addEventListener('click', () => {
-            rsvpSection.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-            
-            // Focus on RSVP form for accessibility
-            setTimeout(() => {
-                const rsvpInput = document.querySelector('#rsvpForm input[name="guestName"]');
-                if (rsvpInput) rsvpInput.focus();
-            }, 300);
-        });
-    }
-}
-
-function setupRSVPForm() {
-    const form = document.getElementById('rsvpForm');
-    const status = document.getElementById('rsvpStatus');
-    if (!form || !status) return;
-    
-    // Add input validation
-    const nameInput = form.querySelector('[name="guestName"]');
-    const countInput = form.querySelector('[name="guestCount"]');
-    const noteInput = form.querySelector('[name="guestNote"]');
-    
-    const validateForm = () => {
-        let isValid = true;
-        
-        if (nameInput) {
-            const nameValue = nameInput.value.trim();
-            if (!nameValue || nameValue.length < 2) {
-                nameInput.setCustomValidity('Please enter a name (at least 2 characters)');
-                isValid = false;
-            } else {
-                nameInput.setCustomValidity('');
-            }
-        }
-        
-        if (countInput) {
-            const countValue = parseInt(countInput.value);
-            if (isNaN(countValue) || countValue < 1 || countValue > 20) {
-                countInput.setCustomValidity('Please enter between 1 and 20 guests');
-                isValid = false;
-            } else {
-                countInput.setCustomValidity('');
-            }
-        }
-        
-        return isValid;
-    };
-    
-    if (nameInput) {
-        nameInput.addEventListener('input', validateForm);
-        nameInput.addEventListener('blur', validateForm);
-    }
-    
-    if (countInput) {
-        countInput.addEventListener('input', validateForm);
-        countInput.addEventListener('blur', validateForm);
-    }
-    
-    if (noteInput) {
-        noteInput.addEventListener('input', () => {
-            const noteValue = noteInput.value.trim();
-            if (noteValue.length > 200) {
-                noteInput.setCustomValidity('Note must be less than 200 characters');
-            } else {
-                noteInput.setCustomValidity('');
-            }
-        });
-    }
-    
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        
-        if (!validateForm()) {
-            form.reportValidity();
-            status.textContent = 'Please check your entries above.';
-            status.className = 'form-status error';
-            return;
-        }
-        
-        const data = new FormData(form);
-        const name = data.get('guestName')?.toString().trim();
-        const count = data.get('guestCount');
-        
-        if (!name || !count) {
-            status.textContent = 'Please add your name and the number of guests joining.';
-            status.className = 'form-status error';
-            return;
-        }
-        
-        // Show saving status
-        status.textContent = 'Saving your RSVP...';
-        status.className = 'form-status info';
-        
-        // Simulate API call with timeout
-        setTimeout(() => {
-            const note = data.get('guestNote')?.toString().trim();
-            const summary = `${name} (${count} attending)${note ? ` – ${note}` : ''}`;
-            
-            // Save to localStorage for persistence
-            try {
-                const rsvps = JSON.parse(localStorage.getItem('babyShowerRSVPs') || '[]');
-                rsvps.push({
-                    name,
-                    count: parseInt(count),
-                    note: note || '',
-                    timestamp: new Date().toISOString()
-                });
-                localStorage.setItem('babyShowerRSVPs', JSON.stringify(rsvps));
-                
-                // Update UI
-                const rsvpCountEl = document.getElementById('rsvpCount');
-                if (rsvpCountEl) {
-                    rsvpCountEl.textContent = rsvps.length;
-                }
-            } catch (error) {
-                console.log('Could not save to localStorage:', error);
-            }
-            
-            status.textContent = `Thank you! Your RSVP was saved: ${summary}`;
-            status.className = 'form-status success';
-            
-            // Reset form and focus
-            form.reset();
-            if (nameInput) nameInput.focus();
-            
-            // Clear success message after 5 seconds
-            setTimeout(() => {
-                if (status.className === 'form-status success') {
-                    status.textContent = '';
-                    status.className = 'form-status';
-                }
-            }, 5000);
-        }, 800);
-    });
-    
-    // Load existing RSVP count on page load
-    try {
-        const rsvps = JSON.parse(localStorage.getItem('babyShowerRSVPs') || '[]');
-        const rsvpCountEl = document.getElementById('rsvpCount');
-        if (rsvpCountEl) {
-            rsvpCountEl.textContent = rsvps.length;
-        }
-    } catch (error) {
-        console.log('Could not load RSVPs from localStorage');
-    }
-}
-
-function setupMotionToggle() {
-    const motionToggle = document.getElementById('motionToggle');
-    if (!motionToggle) return;
-
-    const applyPreference = (reduced) => {
-        document.body.classList.toggle('reduce-motion', reduced);
-        localStorage.setItem('reduceMotion', reduced ? 'true' : 'false');
-        
-        // Update button visual state
-        const icon = motionToggle.querySelector('i');
-        if (icon) {
-            if (reduced) {
-                icon.className = 'fas fa-universal-access';
-                motionToggle.setAttribute('aria-label', 'Enable animations');
-            } else {
-                icon.className = 'fas fa-running';
-                motionToggle.setAttribute('aria-label', 'Reduce motion');
-            }
-        }
-        
-        // Update aria-pressed state
-        motionToggle.setAttribute('aria-pressed', reduced ? 'true' : 'false');
-        
-        // Provide visual feedback
-        motionToggle.classList.add('active');
-        setTimeout(() => motionToggle.classList.remove('active'), 300);
-    };
-
-    // Check for system preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    // Check for stored preference
-    const stored = localStorage.getItem('reduceMotion');
-    let useReducedMotion = false;
-    
-    if (stored !== null) {
-        useReducedMotion = stored === 'true';
-    } else {
-        useReducedMotion = prefersReducedMotion;
-    }
-    
-    // Apply the preference
-    applyPreference(useReducedMotion);
-    
-    // Add click event listener
-    motionToggle.addEventListener('click', () => {
-        const reduced = !document.body.classList.contains('reduce-motion');
-        applyPreference(reduced);
-    });
-}
-
-function setupMusicToggle() {
-    const musicBtn = document.getElementById('musicToggle');
-    const music = document.getElementById('bgMusic');
-    if (!musicBtn || !music) return;
-    
-    // Set initial volume
-    music.volume = 0.35;
-    
-    // Handle audio context for mobile
-    const unlockAudio = () => {
-        if (music.paused) {
-            music.play().then(() => {
-                // Pause immediately after unlocking
-                music.pause();
-                music.currentTime = 0;
-            }).catch(error => {
-                console.warn('Audio context unlock failed:', error);
-            });
-        }
-    };
-    
-    // Unlock audio on first user interaction
-    const unlockHandler = () => {
-        unlockAudio();
-        document.removeEventListener('click', unlockHandler);
-        document.removeEventListener('keydown', unlockHandler);
-    };
-    
-    document.addEventListener('click', unlockHandler, { once: true });
-    document.addEventListener('keydown', unlockHandler, { once: true });
-    
-    musicBtn.addEventListener('click', async () => {
-        try {
-            if (music.paused) {
-                await music.play();
-                musicBtn.classList.add('active');
-                musicBtn.setAttribute('aria-pressed', 'true');
-            } else {
-                music.pause();
-                musicBtn.classList.remove('active');
-                musicBtn.setAttribute('aria-pressed', 'false');
-            }
-        } catch (error) {
-            console.warn('Audio playback failed:', error);
-            musicBtn.classList.remove('active');
-            musicBtn.setAttribute('aria-pressed', 'false');
-        }
-    });
-    
-    // Handle audio ending
-    music.addEventListener('ended', () => {
-        music.currentTime = 0;
-        musicBtn.classList.remove('active');
-        musicBtn.setAttribute('aria-pressed', 'false');
-    });
-}
-
-function setupScrollAnimations() {
-    const items = document.querySelectorAll('.scroll-animate');
-    if (!items.length) return;
-    
-    let ticking = false;
-    const reveal = () => {
-        const triggerBottom = window.scrollY + window.innerHeight * 0.85;
-        
-        items.forEach((item) => {
-            if (triggerBottom > item.offsetTop + item.offsetHeight * 0.3) {
-                item.classList.add('visible');
-            } else {
-                // Optional: remove visible class when scrolled past
-                // item.classList.remove('visible');
-            }
-        });
-        ticking = false;
-    };
-    
-    const scrollHandler = () => {
-        if (!ticking) {
-            window.requestAnimationFrame(reveal);
-            ticking = true;
-        }
-    };
-    
-    window.addEventListener('scroll', scrollHandler);
-    reveal(); // Initial check
-}
-
-function setupModalControls() {
-    const modal = document.getElementById('characterModal');
-    const closeBtn = document.getElementById('closeCharacterModal');
-    if (!modal || !closeBtn) return;
-    
-    // Remove existing listeners to prevent duplicates
-    closeBtn.removeEventListener('click', closeCharacterModal);
-    modal.removeEventListener('click', modal.clickHandler);
-    document.removeEventListener('keydown', modal.keydownHandler);
-    
-    // Add new listeners
-    closeBtn.addEventListener('click', closeCharacterModal);
-    
-    modal.clickHandler = (event) => {
-        if (event.target === modal) closeCharacterModal();
-    };
-    modal.addEventListener('click', modal.clickHandler);
-    
-    modal.keydownHandler = (event) => {
-        if (event.key === 'Escape') closeCharacterModal();
-    };
-    document.addEventListener('keydown', modal.keydownHandler);
-}
-
-function setupLoadingScreen() {
-    const loadingScreen = document.getElementById('loadingScreen');
-    if (!loadingScreen) return;
-    
-    // Ensure loading screen is visible initially
-    loadingScreen.classList.remove('hidden');
-    loadingScreen.setAttribute('aria-hidden', 'false');
-    
-    const hide = () => {
-        loadingScreen.classList.add('fade-out');
-        loadingScreen.setAttribute('aria-hidden', 'true');
-        
-        // Remove from tab order and hide completely
-        setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-            
-            // Restore focus to main content
-            const mainContent = document.getElementById('mainContent');
-            if (mainContent) {
-                mainContent.setAttribute('tabindex', '-1');
-                mainContent.focus({ preventScroll: true });
-                setTimeout(() => mainContent.removeAttribute('tabindex'), 100);
-            }
-        }, 450);
-    };
-    
-    // Hide after load or max 3 seconds
-    const loadTimeout = setTimeout(hide, 3000);
-    
-    window.addEventListener('load', () => {
-        clearTimeout(loadTimeout);
-        setTimeout(hide, 500); // Small delay for smooth transition
-    });
-    
-    // If everything is already loaded
-    if (document.readyState === 'complete') {
-        clearTimeout(loadTimeout);
-        setTimeout(hide, 100);
-    }
-}
-
-class TowerDefenseGame {
-    constructor(canvas) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
-        this.width = canvas.width;
-        this.height = canvas.height;
-        this.towers = [];
-        this.enemies = [];
-        this.projectiles = [];
-        this.honey = 100;
-        this.lives = 10;
-        this.wave = 1;
-        this.running = false;
-        this.spawnTimer = 0;
-        this.enemiesToSpawn = 0;
-        this.lastTime = 0;
-        this.selectedTower = 'pooh';
-        this.active = true;
-        this.cleanupFunctions = [];
-
-        this.towerStats = {
-            pooh: { cost: 20, range: 110, damage: 12, rate: 900, color: '#d19a3d', icon: '🐻' },
-            tigger: { cost: 30, range: 130, damage: 14, rate: 750, color: '#e68a00', icon: '🐯' },
-            rabbit: { cost: 40, range: 140, damage: 16, rate: 800, color: '#cfa95e', icon: '🐰' },
-            piglet: { cost: 25, range: 120, damage: 12, rate: 820, color: '#f48fb1', icon: '🐷' },
-            eeyore: { cost: 35, range: 150, damage: 18, rate: 1050, color: '#7e8ca3', icon: '🐴' }
-        };
-
-        this.pathY = this.height / 2;
+class HundredAcreGame {
+    constructor() {
         this.init();
     }
 
     init() {
-        const clickHandler = (event) => this.placeTower(event);
-        this.canvas.addEventListener('click', clickHandler);
-        this.cleanupFunctions.push(() => {
-            this.canvas.removeEventListener('click', clickHandler);
+        try {
+            this.cacheElements();
+            this.setupEventListeners();
+            this.setupIntersectionObservers();
+            this.initPreferences();
+            this.checkExistingRSVP();
+            this.startLoadingSequence();
+        } catch (error) {
+            console.error('Game initialization failed:', error);
+            this.safeHideLoading();
+        }
+    }
+
+    cacheElements() {
+        // Base elements
+        this.elements = {
+            body: document.body,
+            storybookCover: document.getElementById('storybookCover'),
+            openBookBtn: document.getElementById('openBookBtn'),
+            storybook: document.getElementById('storybook'),
+            contentSections: document.querySelectorAll('.content-section'),
+            scrollAnimateElements: document.querySelectorAll('.scroll-animate'),
+            navItems: document.querySelectorAll('.nav-item'),
+            navMenu: document.getElementById('navMenu'),
+            navToggle: document.getElementById('navToggle'),
+            loadingScreen: document.getElementById('loadingScreen'),
+            readingProgress: document.getElementById('readingProgress'),
+            scrollTopFab: document.getElementById('scrollTopFab'),
+            scrollRsvpFab: document.getElementById('scrollRsvpFab'),
+            musicToggle: document.getElementById('musicToggle'),
+            motionToggle: document.getElementById('motionToggle'),
+            rsvpForm: document.getElementById('rsvpForm'),
+            rsvpStatus: document.getElementById('rsvpStatus'),
+            bgMusic: document.getElementById('bgMusic'),
+            persistentRsvpBtn: document.getElementById('persistentRsvpBtn')
+        };
+
+        // Character modal
+        this.modal = {
+            character: document.getElementById('characterModal'),
+            closeCharacter: document.getElementById('closeCharacterModal'),
+            characterIcon: document.getElementById('modalCharacterIcon'),
+            characterTitle: document.getElementById('characterModalTitle'),
+            characterQuote: document.getElementById('modalCharacterQuote'),
+            characterBio: document.getElementById('modalCharacterBio')
+        };
+
+        // Game instruction modal
+        this.gameModal = {
+            instruction: document.getElementById('gameInstructionModal'),
+            close: document.getElementById('closeGameModal'),
+            title: document.getElementById('gameInstructionTitle'),
+            list: document.getElementById('gameInstructionList')
+        };
+
+        // Game canvases
+        this.canvases = {
+            honey: document.getElementById('honey-game'),
+            defense: document.getElementById('defense-game')
+        };
+
+        // Initialize games if canvases exist
+        if (this.canvases.honey) this.initHoneyCatchGame();
+        if (this.canvases.defense) this.initTowerDefenseGame();
+    }
+
+    setupEventListeners() {
+        const { elements, modal, gameModal } = this;
+
+        // Storybook controls
+        elements.openBookBtn?.addEventListener('click', () => this.openStorybook());
+
+        // Navigation
+        elements.navToggle?.addEventListener('click', () => this.toggleNavigation());
+        elements.navItems?.forEach(item => {
+            item.addEventListener('click', () => this.closeNavigation());
         });
 
-        this.startButton = document.getElementById('start-defense');
-        this.upgradeButton = document.getElementById('upgrade-tower');
-        this.honeyEl = document.getElementById('honey-count');
-        this.livesEl = document.getElementById('lives-count');
-        this.waveEl = document.getElementById('wave-count');
-        this.alertEl = document.getElementById('defense-alert');
-        this.waveStatusEl = document.getElementById('defense-wave-status');
-        this.towerOptions = document.querySelectorAll('.tower-option');
+        // Scroll events
+        window.addEventListener('scroll', () => {
+            this.throttle(this.checkScrollAnimations, 100)();
+            this.throttle(this.updateReadingProgress, 50)();
+        });
 
-        if (this.startButton) {
-            const startHandler = () => this.startWave();
-            this.startButton.addEventListener('click', startHandler);
-            this.cleanupFunctions.push(() => {
-                this.startButton.removeEventListener('click', startHandler);
-            });
-        }
+        // FAB controls
+        elements.scrollTopFab?.addEventListener('click', () => this.scrollToTop());
+        elements.scrollRsvpFab?.addEventListener('click', () => this.scrollToRSVP());
 
-        if (this.upgradeButton) {
-            const upgradeHandler = () => this.upgradeTowers();
-            this.upgradeButton.addEventListener('click', upgradeHandler);
-            this.cleanupFunctions.push(() => {
-                this.upgradeButton.removeEventListener('click', upgradeHandler);
-            });
-        }
+        // Persistent RSVP
+        elements.persistentRsvpBtn?.addEventListener('click', () => this.scrollToRSVP());
 
-        this.towerOptions.forEach((btn) => {
-            const selectHandler = () => this.selectTower(btn);
-            btn.addEventListener('click', selectHandler);
-            this.cleanupFunctions.push(() => {
-                btn.removeEventListener('click', selectHandler);
-            });
-            
-            if (btn.dataset.tower === this.selectedTower) {
-                this.selectTower(btn);
+        // Preferences
+        elements.musicToggle?.addEventListener('click', () => this.toggleMusic());
+        elements.motionToggle?.addEventListener('click', () => this.toggleReduceMotion());
+
+        // RSVP Form
+        elements.rsvpForm?.addEventListener('submit', (e) => this.handleRsvpSubmit(e));
+
+        // Modals
+        modal.closeCharacter?.addEventListener('click', () => this.closeModal(modal.character));
+        modal.character?.addEventListener('click', (e) => {
+            if (e.target === modal.character) this.closeModal(modal.character);
+        });
+
+        gameModal.close?.addEventListener('click', () => this.closeModal(gameModal.instruction));
+        gameModal.instruction?.addEventListener('click', (e) => {
+            if (e.target === gameModal.instruction) this.closeModal(gameModal.instruction);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
+
+        // Window resize
+        window.addEventListener('resize', () => this.throttle(this.handleResize, 250)());
+    }
+
+    // Throttle function for performance
+    throttle(func, limit) {
+        let inThrottle;
+        return function(...args) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
             }
-        });
-
-        this.updateHud();
-        requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
+        };
     }
 
-    selectTower(button) {
-        this.towerOptions.forEach((btn) => {
-            btn.classList.remove('selected');
-            btn.setAttribute('aria-pressed', 'false');
-        });
-        
-        button.classList.add('selected');
-        button.setAttribute('aria-pressed', 'true');
-        this.selectedTower = button.dataset.tower;
-        
-        // Visual feedback
-        button.classList.add('pulse');
-        setTimeout(() => button.classList.remove('pulse'), 300);
-    }
+    // Storybook Functions
+    openStorybook() {
+        const { elements } = this;
+        elements.storybookCover.classList.add('closed');
 
-    startWave() {
-        if (this.running) return;
-        this.running = true;
-        this.enemiesToSpawn = 5 + this.wave * 2;
-        this.spawnTimer = 0;
-        
-        this.alertEl.textContent = `Wave ${this.wave} started! Defend the path!`;
-        this.alertEl.classList.add('alert-pulse');
-        setTimeout(() => this.alertEl.classList.remove('alert-pulse'), 2000);
-    }
-
-    upgradeTowers() {
-        if (this.honey < 50) {
-            this.alertEl.textContent = 'You need 50🍯 to upgrade your team.';
-            return;
-        }
-        
-        this.honey -= 50;
-        this.towers.forEach((tower) => {
-            tower.range *= 1.08;
-            tower.damage += 4;
-            tower.rate = Math.max(300, tower.rate * 0.95);
-            
-            // Visual upgrade effect
-            this.createUpgradeEffect(tower.x, tower.y);
-        });
-        
-        this.alertEl.textContent = 'Your friends feel braver and stronger!';
-        this.updateHud();
-        
-        // Button feedback
-        this.upgradeButton.classList.add('pulse');
-        setTimeout(() => this.upgradeButton.classList.remove('pulse'), 500);
-    }
-
-    createUpgradeEffect(x, y) {
-        // Simple particle effect
-        const ctx = this.ctx;
-        ctx.save();
-        ctx.globalAlpha = 0.7;
-        ctx.fillStyle = '#FFD700';
-        for (let i = 0; i < 5; i++) {
-            const radius = 5 + i * 3;
-            ctx.beginPath();
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
-            ctx.fill();
-        }
-        ctx.restore();
-    }
-
-    placeTower(event) {
-        const rect = this.canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        const stats = this.towerStats[this.selectedTower];
-        
-        if (!stats) return;
-        if (this.honey < stats.cost) {
-            this.alertEl.textContent = `Not enough honey to place ${this.selectedTower}.`;
-            return;
-        }
-
-        // Check if position is too close to existing tower
-        const tooClose = this.towers.some(tower => {
-            const distance = Math.hypot(tower.x - x, tower.y - y);
-            return distance < 40;
-        });
-        
-        if (tooClose) {
-            this.alertEl.textContent = 'Too close to another friend!';
-            return;
-        }
-
-        this.towers.push({
-            x,
-            y,
-            range: stats.range,
-            damage: stats.damage,
-            rate: stats.rate,
-            lastShot: 0,
-            color: stats.color,
-            icon: stats.icon
-        });
-        
-        this.honey -= stats.cost;
-        this.alertEl.textContent = `${this.selectedTower} joined the party!`;
-        this.updateHud();
-        
-        // Visual feedback
-        playWoodlandSound(event);
-    }
-
-    spawnEnemy() {
-        this.enemies.push({
-            x: -30,
-            y: this.pathY + (Math.random() * 40 - 20),
-            speed: 35 + Math.random() * 20 + this.wave * 2,
-            hp: 60 + this.wave * 10,
-            maxHp: 60 + this.wave * 10
-        });
-    }
-
-    updateEnemies(delta) {
-        for (let i = this.enemies.length - 1; i >= 0; i -= 1) {
-            const enemy = this.enemies[i];
-            enemy.x += enemy.speed * delta;
-            
-            if (enemy.x > this.width + 40) {
-                this.enemies.splice(i, 1);
-                this.lives = Math.max(0, this.lives - 1);
-                this.alertEl.textContent = 'A Woozle slipped by!';
-                this.updateHud();
-            }
-        }
-    }
-
-    updateTowers(delta, timestamp) {
-        this.towers.forEach((tower) => {
-            const target = this.enemies.find((enemy) => {
-                const dx = enemy.x - tower.x;
-                const dy = enemy.y - tower.y;
-                return Math.hypot(dx, dy) <= tower.range;
+        setTimeout(() => {
+            elements.storybook.classList.add('visible');
+            elements.contentSections.forEach(section => {
+                section.classList.add('visible');
             });
+            
+            // Scroll to the first section
+            document.getElementById('section1')?.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }, 800);
+    }
 
-            if (target && timestamp - tower.lastShot > tower.rate) {
-                tower.lastShot = timestamp;
-                const angle = Math.atan2(target.y - tower.y, target.x - tower.x);
+    // Navigation Functions
+    toggleNavigation() {
+        this.elements.navMenu.classList.toggle('open');
+    }
+
+    closeNavigation() {
+        this.elements.navMenu.classList.remove('open');
+    }
+
+    setupIntersectionObservers() {
+        const sections = document.querySelectorAll('.content-section');
+        const options = {
+            root: null,
+            rootMargin: '-20% 0px -60% 0px',
+            threshold: 0.1
+        };
+
+        this.sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const navItem = document.querySelector(`.nav-item[data-section="${id}"]`);
                 
-                this.projectiles.push({
-                    x: tower.x,
-                    y: tower.y,
-                    vx: Math.cos(angle) * 260,
-                    vy: Math.sin(angle) * 260,
-                    damage: tower.damage,
-                    color: tower.color
-                });
-            }
-        });
-    }
-
-    updateProjectiles(delta) {
-        for (let i = this.projectiles.length - 1; i >= 0; i -= 1) {
-            const projectile = this.projectiles[i];
-            projectile.x += projectile.vx * delta;
-            projectile.y += projectile.vy * delta;
-
-            const enemy = this.enemies.find((e) => 
-                Math.hypot(e.x - projectile.x, e.y - projectile.y) < 16
-            );
-            
-            if (enemy) {
-                enemy.hp -= projectile.damage;
-                this.projectiles.splice(i, 1);
-                
-                if (enemy.hp <= 0) {
-                    const enemyIndex = this.enemies.indexOf(enemy);
-                    this.enemies.splice(enemyIndex, 1);
-                    this.honey += 8 + Math.floor(this.wave / 2);
-                    this.alertEl.textContent = 'Great teamwork! You earned honey.';
-                    this.updateHud();
+                if (entry.isIntersecting) {
+                    this.elements.navItems.forEach(item => item.classList.remove('active'));
+                    if (navItem) navItem.classList.add('active');
+                    
+                    // Handle persistent RSVP button visibility
+                    this.handlePersistentRsvpVisibility(id);
                 }
-                continue;
-            }
+            });
+        }, options);
 
-            if (projectile.x < -20 || projectile.x > this.width + 20 || 
-                projectile.y < -20 || projectile.y > this.height + 20) {
-                this.projectiles.splice(i, 1);
-            }
+        sections.forEach(section => {
+            this.sectionObserver.observe(section);
+        });
+    }
+
+    handlePersistentRsvpVisibility(sectionId) {
+        if (!this.elements.persistentRsvpBtn) return;
+        
+        if (sectionId === 'section2') {
+            this.elements.persistentRsvpBtn.classList.remove('hidden');
+        } else if (sectionId === 'section1') {
+            this.elements.persistentRsvpBtn.classList.add('hidden');
         }
     }
 
-    drawBackground() {
-        const ctx = this.ctx;
-        ctx.fillStyle = '#a8e6cf';
-        ctx.fillRect(0, 0, this.width, this.height);
+    // Scroll Animation Functions
+    checkScrollAnimations() {
+        const windowHeight = window.innerHeight;
+        const triggerBottom = windowHeight * 0.8;
 
-        ctx.fillStyle = '#f7e0a3';
-        ctx.fillRect(0, this.pathY - 30, this.width, 60);
-
-        ctx.strokeStyle = 'rgba(139, 69, 19, 0.4)';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([12, 8]);
-        ctx.beginPath();
-        ctx.moveTo(0, this.pathY);
-        ctx.lineTo(this.width, this.pathY);
-        ctx.stroke();
-        ctx.setLineDash([]);
+        this.elements.scrollAnimateElements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            if (elementTop < triggerBottom) {
+                element.classList.add('visible');
+            }
+        });
     }
 
-    drawEntities() {
-        const ctx = this.ctx;
+    updateReadingProgress() {
+        const doc = document.documentElement;
+        const scrollTop = doc.scrollTop || document.body.scrollTop;
+        const scrollHeight = doc.scrollHeight - doc.clientHeight;
+        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        this.elements.readingProgress.style.width = `${progress}%`;
+    }
+
+    scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    scrollToRSVP() {
+        const rsvpSection = document.getElementById('rsvp');
+        if (rsvpSection) {
+            rsvpSection.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    // Accessibility & Preferences
+    initPreferences() {
+        this.initReduceMotionPreference();
+        this.initMusicPreference();
+    }
+
+    initReduceMotionPreference() {
+        const stored = localStorage.getItem('reduce-motion');
+        if (stored === 'true') {
+            this.elements.body.classList.add('reduce-motion');
+        }
+    }
+
+    toggleReduceMotion() {
+        const enabled = this.elements.body.classList.toggle('reduce-motion');
+        localStorage.setItem('reduce-motion', enabled ? 'true' : 'false');
+    }
+
+    initMusicPreference() {
+        if (!this.elements.bgMusic) return;
         
-        // Draw towers
-        this.towers.forEach((tower) => {
-            ctx.fillStyle = tower.color;
-            ctx.beginPath();
-            ctx.arc(tower.x, tower.y, 14, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Draw tower icon
-            ctx.fillStyle = 'white';
-            ctx.font = '12px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(tower.icon, tower.x, tower.y);
-            
-            // Draw range (semi-transparent)
-            ctx.strokeStyle = 'rgba(0,0,0,0.1)';
-            ctx.beginPath();
-            ctx.arc(tower.x, tower.y, tower.range, 0, Math.PI * 2);
-            ctx.stroke();
-        });
-
-        // Draw enemies
-        ctx.fillStyle = '#6c4b1a';
-        this.enemies.forEach((enemy) => {
-            // Enemy body
-            ctx.beginPath();
-            ctx.arc(enemy.x, enemy.y, 14, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Health bar background
-            ctx.fillStyle = '#ffe7a1';
-            ctx.fillRect(enemy.x - 16, enemy.y - 20, 32, 6);
-            
-            // Health bar fill
-            ctx.fillStyle = enemy.hp > enemy.maxHp * 0.5 ? '#5cb85c' : 
-                           enemy.hp > enemy.maxHp * 0.25 ? '#f0ad4e' : '#d9534f';
-            const healthWidth = Math.max(0, (enemy.hp / enemy.maxHp) * 32);
-            ctx.fillRect(enemy.x - 16, enemy.y - 20, healthWidth, 6);
-            
-            ctx.fillStyle = '#6c4b1a';
-        });
-
-        // Draw projectiles
-        this.projectiles.forEach((projectile) => {
-            ctx.fillStyle = projectile.color;
-            ctx.beginPath();
-            ctx.arc(projectile.x, projectile.y, 6, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Trail effect
-            ctx.globalAlpha = 0.5;
-            ctx.beginPath();
-            ctx.arc(projectile.x - projectile.vx * 0.02, 
-                    projectile.y - projectile.vy * 0.02, 3, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.globalAlpha = 1.0;
-        });
-    }
-
-    updateHud() {
-        if (this.honeyEl) this.honeyEl.textContent = Math.max(0, Math.floor(this.honey));
-        if (this.livesEl) this.livesEl.textContent = Math.max(0, this.lives);
-        if (this.waveEl) this.waveEl.textContent = this.wave;
-    }
-
-    updateWaveStatus() {
-        if (!this.waveStatusEl) return;
+        const stored = localStorage.getItem('bg-music');
+        const icon = this.elements.musicToggle.querySelector('i');
         
-        if (!this.running && this.enemies.length === 0 && this.enemiesToSpawn === 0) {
-            this.waveStatusEl.textContent = `Wave ${this.wave} ready`;
-            this.waveStatusEl.className = 'wave-status ready';
+        if (stored === 'on') {
+            this.elements.bgMusic.volume = 0.35;
+            this.playBackgroundMusic();
+            icon?.classList.replace('fa-volume-xmark', 'fa-music');
         } else {
-            this.waveStatusEl.textContent = `Wave ${this.wave} in progress`;
-            this.waveStatusEl.className = 'wave-status active';
+            icon?.classList.replace('fa-music', 'fa-volume-xmark');
         }
     }
 
-    gameLoop(timestamp) {
-        if (!this.active) return;
-        
-        const delta = Math.min(0.05, (timestamp - this.lastTime) / 1000);
-        this.lastTime = timestamp;
-        
-        this.ctx.clearRect(0, 0, this.width, this.height);
-        this.drawBackground();
+    async playBackgroundMusic() {
+        try {
+            await this.elements.bgMusic.play();
+        } catch (error) {
+            console.log('Autoplay prevented:', error);
+        }
+    }
 
-        if (this.running) {
-            this.spawnTimer += delta;
-            if (this.enemiesToSpawn > 0 && this.spawnTimer > 0.9) {
-                this.spawnEnemy();
-                this.enemiesToSpawn -= 1;
-                this.spawnTimer = 0;
+    toggleMusic() {
+        if (!this.elements.bgMusic) return;
+        
+        const icon = this.elements.musicToggle.querySelector('i');
+        if (this.elements.bgMusic.paused) {
+            this.elements.bgMusic.volume = 0.35;
+            this.playBackgroundMusic();
+            icon?.classList.replace('fa-volume-xmark', 'fa-music');
+            localStorage.setItem('bg-music', 'on');
+        } else {
+            this.elements.bgMusic.pause();
+            icon?.classList.replace('fa-music', 'fa-volume-xmark');
+            localStorage.setItem('bg-music', 'off');
+        }
+    }
+
+    // Modal Functions
+    showCharacterModal(character) {
+        const characterData = {
+            pooh: {
+                name: 'Winnie the Pooh',
+                quote: '"A little Consideration, a little Thought for Others, makes all the difference."',
+                icon: 'fas fa-bear',
+                bio: 'Pooh has volunteered to be in charge of honey jars, hugs, and quiet snuggles. He is quite certain Baby Gunner will need all three in generous amounts.'
+            },
+            piglet: {
+                name: 'Piglet',
+                quote: '"It is hard to be brave, when you\'re only a Very Small Animal — but I\'ll do it for Baby Gunner."',
+                icon: 'fas fa-heart',
+                bio: 'Piglet has carefully arranged the soft blankets and tiny clothes, making sure everything feels cozy, safe, and just right for someone very small.'
+            },
+            tigger: {
+                name: 'Tigger',
+                quote: '"The wonderful thing about babies is that babies are wonderful things!"',
+                icon: 'fas fa-paw',
+                bio: 'Tigger is in charge of games, giggles, and any moment that calls for a bounce. He\'s especially excited about showing everyone how to make Baby Gunner smile.'
+            },
+            eeyore: {
+                name: 'Eeyore',
+                quote: '"Not much of a tail, but it\'s my tail. And this is our baby, and that\'s rather special."',
+                icon: 'fas fa-cloud',
+                bio: 'Eeyore has quietly found the best spot for photos and moments of quiet. He is making sure there\'s always a comfortable place to sit and simply be together.'
             }
-        }
+        };
 
-        this.updateEnemies(delta);
-        this.updateTowers(delta, timestamp);
-        this.updateProjectiles(delta);
-        this.drawEntities();
-        this.updateWaveStatus();
+        const data = characterData[character];
+        if (!data) return;
 
-        if (this.running && this.enemies.length === 0 && this.enemiesToSpawn === 0) {
-            this.running = false;
-            this.wave += 1;
-            this.honey += 15;
-            this.alertEl.textContent = 'The path is safe! Get ready for the next wave.';
-            this.updateHud();
-        }
-
-        if (this.lives <= 0) {
-            this.running = false;
-            this.alertEl.textContent = 'Oh, bother! The honey was taken. Press start to try again.';
-            this.wave = 1;
-            this.honey = 100;
-            this.lives = 10;
-            this.towers = [];
-            this.enemies = [];
-            this.projectiles = [];
-            this.updateHud();
-        }
-
-        requestAnimationFrame((time) => this.gameLoop(time));
+        const { modal } = this;
+        modal.characterIcon.innerHTML = `<i class="${data.icon}"></i>`;
+        modal.characterIcon.className = `modal-character-icon ${character}-icon-modal`;
+        modal.characterTitle.textContent = data.name;
+        modal.characterQuote.textContent = data.quote;
+        modal.characterBio.textContent = data.bio;
+        modal.character.classList.add('active');
     }
 
-    cleanup() {
-        this.active = false;
-        this.cleanupFunctions.forEach(fn => fn());
-        this.cleanupFunctions = [];
+    showGameInstructions(gameType) {
+        const gameInstructions = {
+            catch: {
+                title: "Honey Pot Catch - How to Play",
+                instructions: [
+                    "Use LEFT and RIGHT arrow keys to move Pooh",
+                    "Catch falling honey pots to earn points (+10 points each)",
+                    "Avoid the bees! Each bee sting costs one life",
+                    "You start with 3 lives - don't lose them all!",
+                    "Game lasts 60 seconds - catch as much honey as you can!",
+                    "On mobile: Use the left/right buttons below the game"
+                ]
+            },
+            defense: {
+                title: "Honey Hive Defense - How to Play",
+                instructions: [
+                    "Select a tower type by clicking on the character icons",
+                    "Click on empty grass areas to place towers (costs honey)",
+                    "Towers automatically attack Heffalumps, Woozles, and Bees",
+                    "Each enemy type has different health and speed",
+                    "Upgrade towers to increase damage and range",
+                    "Start waves manually - enemies get tougher each wave",
+                    "Protect your honey pot at the end of the path!",
+                    "Game over if you lose all 10 lives"
+                ]
+            }
+        };
+
+        const instructions = gameInstructions[gameType];
+        if (!instructions) return;
+
+        const { gameModal } = this;
+        gameModal.title.textContent = instructions.title;
+        gameModal.list.innerHTML = '';
+        
+        instructions.instructions.forEach(instruction => {
+            const li = document.createElement('li');
+            li.innerHTML = `<i class="fas fa-honey-pot"></i>${instruction}`;
+            gameModal.list.appendChild(li);
+        });
+        
+        gameModal.instruction.classList.add('active');
+    }
+
+    closeModal(modalElement) {
+        modalElement.classList.remove('active');
+    }
+
+    // RSVP Functions
+    handleRsvpSubmit(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this.elements.rsvpForm);
+        const guestName = formData.get('guestName')?.trim();
+        const guestCount = formData.get('guestCount');
+        const guestNote = formData.get('guestNote')?.trim();
+
+        if (!guestName) {
+            this.showRsvpStatus('Please enter your name', 'error');
+            return;
+        }
+
+        this.processSuccessfulRSVP(guestName, guestCount, guestNote);
+    }
+
+    processSuccessfulRSVP(name, count, note) {
+        const { elements } = this;
+        
+        elements.rsvpForm.style.display = 'none';
+        elements.rsvpStatus.innerHTML = this.createRsvpSuccessHTML(name, count, note);
+        elements.rsvpStatus.style.color = 'inherit';
+        
+        // Celebration effects
+        this.createConfetti();
+        this.createHoneyAnimation();
+        
+        // Hide persistent RSVP button
+        elements.persistentRsvpBtn?.classList.add('hidden');
+        
+        // Store RSVP data
+        this.storeRsvpData(name, count, note);
+    }
+
+    createRsvpSuccessHTML(name, count, note) {
+        return `
+            <div class="form-success">
+                <div class="success-icon">🎉</div>
+                <div class="success-message">Thank you, ${name}!</div>
+                <div class="success-submessage">
+                    We're excited to celebrate with ${count === '1' ? 'you' : `your party of ${count}`}!
+                    ${note ? '<br>We appreciate your note!' : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    storeRsvpData(name, count, note) {
+        const rsvpData = {
+            name: name,
+            count: count,
+            note: note,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem('babyGunnerRSVP', JSON.stringify(rsvpData));
+    }
+
+    checkExistingRSVP() {
+        const existingRSVP = localStorage.getItem('babyGunnerRSVP');
+        if (!existingRSVP || !this.elements.rsvpForm) return;
+
+        const rsvpData = JSON.parse(existingRSVP);
+        this.populateRsvpForm(rsvpData);
+        this.showExistingRsvpConfirmation(rsvpData);
+    }
+
+    populateRsvpForm(rsvpData) {
+        document.getElementById('guestName').value = rsvpData.name;
+        document.getElementById('guestCount').value = rsvpData.count;
+        document.getElementById('guestNote').value = rsvpData.note || '';
+    }
+
+    showExistingRsvpConfirmation(rsvpData) {
+        this.elements.rsvpForm.style.display = 'none';
+        this.elements.rsvpStatus.innerHTML = `
+            <div class="form-success">
+                <div class="success-icon">✅</div>
+                <div class="success-message">RSVP Confirmed!</div>
+                <div class="success-submessage">
+                    We have your RSVP for ${rsvpData.name} and ${rsvpData.count} guest${rsvpData.count === '1' ? '' : 's'}.
+                    <br><button onclick="game.editRSVP()" class="back-btn" style="margin-top: 10px;">Edit RSVP</button>
+                </div>
+            </div>
+        `;
+        this.elements.persistentRsvpBtn?.classList.add('hidden');
+    }
+
+    editRSVP() {
+        localStorage.removeItem('babyGunnerRSVP');
+        if (this.elements.rsvpForm && this.elements.rsvpStatus) {
+            this.elements.rsvpForm.style.display = 'block';
+            this.elements.rsvpStatus.innerHTML = '';
+            this.elements.persistentRsvpBtn?.classList.remove('hidden');
+        }
+    }
+
+    showRsvpStatus(message, type = 'info') {
+        this.elements.rsvpStatus.textContent = message;
+        this.elements.rsvpStatus.style.color = type === 'error' ? '#dc3545' : 'inherit';
+    }
+
+    // Celebration Effects
+    createConfetti() {
+        const container = document.createElement('div');
+        container.className = 'confetti-container';
+        document.body.appendChild(container);
+        
+        const colors = ['#FFC42B', '#D62E2E', '#E6B86A', '#B0D0E3', '#9CAD90'];
+        
+        for (let i = 0; i < 150; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.cssText = this.generateConfettiStyle(colors);
+            container.appendChild(confetti);
+        }
+        
+        setTimeout(() => container.remove(), 3000);
+    }
+
+    generateConfettiStyle(colors) {
+        const isCircle = Math.random() > 0.7;
+        const isRectangle = Math.random() > 0.5 && !isCircle;
+        
+        return `
+            left: ${Math.random() * 100}vw;
+            animation-delay: ${Math.random() * 2}s;
+            background-color: ${colors[Math.floor(Math.random() * colors.length)]};
+            transform: rotate(${Math.random() * 360}deg);
+            ${isCircle ? 'border-radius: 50%; width: 8px; height: 8px;' : ''}
+            ${isRectangle ? 'width: 12px; height: 4px;' : 'width: 10px; height: 10px;'}
+        `;
+    }
+
+    createHoneyAnimation() {
+        const honeyIcon = document.createElement('div');
+        honeyIcon.innerHTML = '🍯';
+        honeyIcon.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            font-size: 4rem;
+            transform: translate(-50%, -50%) scale(0);
+            animation: honeyPop 1s ease-out forwards;
+            z-index: 10005;
+        `;
+        document.body.appendChild(honeyIcon);
+        
+        setTimeout(() => honeyIcon.remove(), 1000);
+    }
+
+    // Woodland Sound Function
+    playWoodlandSound(event) {
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            this.createWoodlandSound(audioContext);
+        } catch (error) {
+            console.log("Web Audio API not supported");
+        }
+
+        this.animateWoodlandSign(event);
+    }
+
+    createWoodlandSound(audioContext) {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.type = 'sine';
+        const times = [0, 0.1, 0.2];
+        const frequencies = [523.25, 659.25, 783.99];
+        
+        times.forEach((time, index) => {
+            oscillator.frequency.setValueAtTime(frequencies[index], audioContext.currentTime + time);
+        });
+
+        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.8);
+
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 0.8);
+    }
+
+    animateWoodlandSign(event) {
+        const sign = event.target.closest('.woodland-sign');
+        if (sign) {
+            sign.style.transform = 'scale(1.08) rotate(-1deg)';
+            setTimeout(() => {
+                sign.style.transform = '';
+            }, 300);
+        }
+    }
+
+    // Keyboard Shortcuts
+    handleKeyboardShortcuts(e) {
+        // Escape key closes modals
+        if (e.key === 'Escape') {
+            this.closeModal(this.modal.character);
+            this.closeModal(this.gameModal.instruction);
+        }
+        
+        // Space key toggles music (when not in input fields)
+        if (e.key === ' ' && !this.isInputElement(e.target)) {
+            e.preventDefault();
+            this.toggleMusic();
+        }
+    }
+
+    isInputElement(element) {
+        return element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.isContentEditable;
+    }
+
+    // Resize Handler
+    handleResize() {
+        // Reinitialize games if needed
+        if (this.honeyGame) this.honeyGame.handleResize();
+        if (this.defenseGame) this.defenseGame.handleResize();
+    }
+
+    // Loading Functions
+    startLoadingSequence() {
+        setTimeout(() => {
+            this.safeHideLoading();
+            this.animateContentSections();
+        }, 1000);
+    }
+
+    safeHideLoading() {
+        if (this.elements.loadingScreen && !this.elements.loadingScreen.classList.contains('hidden')) {
+            this.elements.loadingScreen.classList.add('hidden');
+        }
+    }
+
+    animateContentSections() {
+        this.elements.contentSections.forEach((section, index) => {
+            setTimeout(() => {
+                section.classList.add('animate-in');
+            }, index * 200);
+        });
+    }
+
+    // Game Initialization
+    initHoneyCatchGame() {
+        this.honeyGame = new HoneyCatchGame(this.canvases.honey);
+    }
+
+    initTowerDefenseGame() {
+        this.defenseGame = new TowerDefenseGame(this.canvases.defense);
     }
 }
 
+// Honey Catch Game Class
 class HoneyCatchGame {
     constructor(canvas) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        this.width = canvas.width;
-        this.height = canvas.height;
-        this.player = { x: this.width / 2, width: 80, height: 18, speed: 320 };
-        this.items = [];
+        this.init();
+    }
+
+    init() {
+        this.resetGame();
+        this.setupEventListeners();
+        this.draw();
+    }
+
+    resetGame() {
         this.score = 0;
-        this.timeRemaining = 60;
+        this.timeLeft = 60;
         this.lives = 3;
-        this.running = false;
-        this.started = false;
-        this.lastTime = 0;
-        this.spawnTimer = 0;
-        this.active = true;
-        this.cleanupFunctions = [];
-        this.controls = { left: false, right: false };
-        this.touchStartX = 0;
-
-        this.scoreEl = document.getElementById('score-count');
-        this.timeEl = document.getElementById('time-count');
-        this.livesEl = document.getElementById('catch-lives');
-        this.overlay = document.getElementById('catch-overlay');
-        this.countdown = document.getElementById('catch-countdown');
-        this.hint = document.getElementById('catch-hint');
-        this.startBtn = document.getElementById('start-catch');
-        this.pauseBtn = document.getElementById('pause-catch');
-
-        this.bindControls();
-        this.updateHud();
-        requestAnimationFrame((timestamp) => this.loop(timestamp));
+        this.poohX = this.canvas.width / 2;
+        this.honeyPots = [];
+        this.bees = [];
+        this.gameRunning = false;
+        this.gameInterval = null;
+        this.timerInterval = null;
+        
+        this.updateUI();
     }
 
-    bindControls() {
+    setupEventListeners() {
         // Keyboard controls
-        const keyDownHandler = (event) => {
-            if (event.key === 'ArrowLeft') this.controls.left = true;
-            if (event.key === 'ArrowRight') this.controls.right = true;
-            if (event.key === ' ' || event.key === 'Spacebar') {
-                if (!this.running) this.start();
-            }
-        };
-
-        const keyUpHandler = (event) => {
-            if (event.key === 'ArrowLeft') this.controls.left = false;
-            if (event.key === 'ArrowRight') this.controls.right = false;
-        };
-
-        window.addEventListener('keydown', keyDownHandler);
-        window.addEventListener('keyup', keyUpHandler);
+        document.addEventListener('keydown', (e) => this.handleKeyPress(e));
         
-        this.cleanupFunctions.push(() => {
-            window.removeEventListener('keydown', keyDownHandler);
-            window.removeEventListener('keyup', keyUpHandler);
-        });
-
-        // Mouse/touch controls
-        const clickHandler = (event) => {
-            const rect = this.canvas.getBoundingClientRect();
-            const relativeX = event.clientX - rect.left;
-            this.handleSideClick(relativeX);
-        };
-
-        const touchStartHandler = (event) => {
-            event.preventDefault();
-            if (event.touches.length > 0) {
-                const touch = event.touches[0];
-                const rect = this.canvas.getBoundingClientRect();
-                const relativeX = touch.clientX - rect.left;
-                this.handleSideClick(relativeX);
-            }
-        };
-
-        const touchMoveHandler = (event) => {
-            event.preventDefault();
-            if (event.touches.length > 0) {
-                const touch = event.touches[0];
-                const rect = this.canvas.getBoundingClientRect();
-                const touchX = touch.clientX - rect.left;
-                
-                // Smooth follow for touch movement
-                this.player.x = Math.max(
-                    this.player.width / 2,
-                    Math.min(this.width - this.player.width / 2, touchX)
-                );
-            }
-        };
-
-        this.canvas.addEventListener('click', clickHandler);
-        this.canvas.addEventListener('touchstart', touchStartHandler, { passive: false });
-        this.canvas.addEventListener('touchmove', touchMoveHandler, { passive: false });
+        // Mobile controls
+        const leftBtn = document.getElementById('mobileLeftBtn');
+        const rightBtn = document.getElementById('mobileRightBtn');
         
-        this.cleanupFunctions.push(() => {
-            this.canvas.removeEventListener('click', clickHandler);
-            this.canvas.removeEventListener('touchstart', touchStartHandler);
-            this.canvas.removeEventListener('touchmove', touchMoveHandler);
-        });
-
-        // Button controls
-        if (this.startBtn) {
-            const startHandler = () => this.start();
-            this.startBtn.addEventListener('click', startHandler);
-            this.cleanupFunctions.push(() => {
-                this.startBtn.removeEventListener('click', startHandler);
+        if (leftBtn && rightBtn) {
+            leftBtn.addEventListener('touchstart', (e) => this.handleMobileInput('left', e));
+            rightBtn.addEventListener('touchstart', (e) => this.handleMobileInput('right', e));
+            
+            // Prevent context menu
+            [leftBtn, rightBtn].forEach(btn => {
+                btn.addEventListener('contextmenu', (e) => e.preventDefault());
             });
         }
 
-        if (this.pauseBtn) {
-            const pauseHandler = () => this.togglePause();
-            this.pauseBtn.addEventListener('click', pauseHandler);
-            this.cleanupFunctions.push(() => {
-                this.pauseBtn.removeEventListener('click', pauseHandler);
-            });
+        // Game controls
+        document.getElementById('start-catch')?.addEventListener('click', () => this.start());
+        document.getElementById('pause-catch')?.addEventListener('click', () => this.togglePause());
+    }
+
+    handleKeyPress(e) {
+        if (!this.gameRunning) return;
+
+        if (e.key === 'ArrowLeft' && this.poohX > 40) {
+            this.poohX -= 20;
+        } else if (e.key === 'ArrowRight' && this.poohX < this.canvas.width - 40) {
+            this.poohX += 20;
         }
     }
 
-    handleSideClick(clickX) {
-        if (clickX < this.width / 2) {
-            this.controls.left = true;
-            setTimeout(() => (this.controls.left = false), 120);
-        } else {
-            this.controls.right = true;
-            setTimeout(() => (this.controls.right = false), 120);
+    handleMobileInput(direction, e) {
+        e.preventDefault();
+        if (!this.gameRunning) return;
+
+        if (direction === 'left' && this.poohX > 40) {
+            this.poohX -= 20;
+        } else if (direction === 'right' && this.poohX < this.canvas.width - 40) {
+            this.poohX += 20;
         }
     }
 
     start() {
-        if (this.running) return;
+        if (this.gameRunning) return;
 
-        const canResume = this.started && this.timeRemaining > 0 && this.lives > 0;
-        if (canResume) {
-            this.running = true;
-            this.overlay.classList.add('hidden');
-            this.countdown.textContent = 'Back to catching honey!';
-            this.hint.textContent = 'Keep scooping pots and dodge the bees.';
-            this.updateHud();
-            return;
-        }
+        this.resetGame();
+        this.gameRunning = true;
 
-        // New game
-        this.score = 0;
-        this.timeRemaining = 60;
-        this.lives = 3;
-        this.items = [];
-        this.running = true;
-        this.started = true;
-        this.overlay.classList.add('hidden');
-        this.countdown.textContent = 'Ready when you are.';
-        this.hint.textContent = 'Tap left/right or use arrow keys to move Pooh.';
-        this.updateHud();
+        this.gameInterval = setInterval(() => this.gameLoop(), 16);
+        this.startTimer();
     }
 
     togglePause() {
-        if (!this.running) return;
-        this.running = false;
-        this.overlay.classList.remove('hidden');
-        this.countdown.textContent = 'Paused – take a breather';
-        this.hint.textContent = 'Press start again when you are ready to continue.';
-    }
-
-    spawnItem() {
-        const type = Math.random() < 0.75 ? 'honey' : 'bee';
-        this.items.push({
-            x: Math.random() * (this.width - 30) + 15,
-            y: -20,
-            speed: 90 + Math.random() * 120 + (60 - this.timeRemaining) * 0.5,
-            type
-        });
-    }
-
-    updateItems(delta) {
-        for (let i = this.items.length - 1; i >= 0; i -= 1) {
-            const item = this.items[i];
-            item.y += item.speed * delta;
-
-            if (item.y > this.height - this.player.height - 16 && item.y < this.height) {
-                if (Math.abs(item.x - this.player.x) < this.player.width / 2 + 10) {
-                    if (item.type === 'honey') {
-                        this.score += 10;
-                        this.countdown.textContent = 'Nice catch! +10 honey points';
-                        playWoodlandSound();
-                    } else {
-                        this.lives = Math.max(0, this.lives - 1);
-                        this.countdown.textContent = 'A bee buzzed by – careful!';
-                        
-                        // Visual feedback for bee hit
-                        this.canvas.classList.add('bee-hit');
-                        setTimeout(() => this.canvas.classList.remove('bee-hit'), 300);
-                    }
-                    this.items.splice(i, 1);
-                    this.updateHud();
-                    continue;
-                }
-            }
-
-            if (item.y > this.height + 30) {
-                this.items.splice(i, 1);
-            }
+        if (!this.gameRunning && this.timeLeft > 0 && this.lives > 0) {
+            this.gameRunning = true;
+            this.gameInterval = setInterval(() => this.gameLoop(), 16);
+            this.startTimer();
+        } else if (this.gameRunning) {
+            this.gameRunning = false;
+            clearInterval(this.gameInterval);
+            clearInterval(this.timerInterval);
         }
     }
 
-    updatePlayer(delta) {
-        if (this.controls.left) this.player.x -= this.player.speed * delta;
-        if (this.controls.right) this.player.x += this.player.speed * delta;
-        this.player.x = Math.max(
-            this.player.width / 2, 
-            Math.min(this.width - this.player.width / 2, this.player.x)
-        );
+    startTimer() {
+        clearInterval(this.timerInterval);
+        this.timerInterval = setInterval(() => {
+            this.timeLeft--;
+            this.updateUI();
+
+            if (this.timeLeft <= 0) {
+                this.endGame();
+            }
+        }, 1000);
+    }
+
+    gameLoop() {
+        this.update();
+        this.draw();
+    }
+
+    update() {
+        this.moveHoneyPots();
+        this.moveBees();
+        this.spawnObjects();
+    }
+
+    moveHoneyPots() {
+        this.honeyPots.forEach((pot, index) => {
+            pot.y += pot.speed;
+
+            if (this.checkCatch(pot)) {
+                this.score += 10;
+                this.honeyPots.splice(index, 1);
+                this.showCatchEffect();
+            } else if (pot.y > this.canvas.height) {
+                this.honeyPots.splice(index, 1);
+            }
+        });
+    }
+
+    moveBees() {
+        this.bees.forEach((bee, index) => {
+            bee.y += bee.speed;
+
+            if (this.checkCollision(bee)) {
+                this.lives--;
+                this.bees.splice(index, 1);
+                this.showCollisionEffect();
+
+                if (this.lives <= 0) {
+                    this.endGame();
+                }
+            } else if (bee.y > this.canvas.height) {
+                this.bees.splice(index, 1);
+            }
+        });
+    }
+
+    checkCatch(pot) {
+        return pot.y > this.canvas.height - 100 &&
+               pot.x > this.poohX - 40 &&
+               pot.x < this.poohX + 40;
+    }
+
+    checkCollision(bee) {
+        return bee.y > this.canvas.height - 100 &&
+               bee.x > this.poohX - 40 &&
+               bee.x < this.poohX + 40;
+    }
+
+    spawnObjects() {
+        if (Math.random() < 0.05) {
+            this.honeyPots.push({
+                x: Math.random() * (this.canvas.width - 30) + 15,
+                y: 0,
+                speed: 2 + Math.random() * 2
+            });
+        }
+
+        if (Math.random() < 0.02) {
+            this.bees.push({
+                x: Math.random() * (this.canvas.width - 30) + 15,
+                y: 0,
+                speed: 3 + Math.random() * 2
+            });
+        }
+    }
+
+    showCatchEffect() {
+        this.ctx.fillStyle = 'rgba(255, 215, 0, 0.5)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    showCollisionEffect() {
+        this.ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    draw() {
+        this.drawBackground();
+        this.drawPooh();
+        this.drawHoneyPots();
+        this.drawBees();
+        this.drawUI();
     }
 
     drawBackground() {
-        this.ctx.fillStyle = '#b0d0e3';
-        this.ctx.fillRect(0, 0, this.width, this.height);
+        // Sky
+        this.ctx.fillStyle = '#87CEEB';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // Clouds
+        this.drawClouds();
         
-        // Gradient ground
-        const ground = this.ctx.createLinearGradient(0, this.height - 60, 0, this.height);
-        ground.addColorStop(0, '#f6e7c1');
-        ground.addColorStop(1, '#e8d7a8');
-        this.ctx.fillStyle = ground;
-        this.ctx.fillRect(0, this.height - 60, this.width, 60);
+        // Ground
+        this.ctx.fillStyle = '#8FBC8F';
+        this.ctx.fillRect(0, this.canvas.height - 50, this.canvas.width, 50);
+        
+        // Grass and trees
+        this.drawEnvironment();
     }
 
-    drawPlayer() {
-        // Player shadow
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-        this.ctx.fillRect(
-            this.player.x - this.player.width / 2 + 4, 
-            this.height - this.player.height - 4, 
-            this.player.width, 
-            this.player.height
-        );
+    drawClouds() {
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
         
-        // Player body
-        this.ctx.fillStyle = '#e8a73c';
-        this.ctx.fillRect(
-            this.player.x - this.player.width / 2, 
-            this.height - this.player.height - 8, 
-            this.player.width, 
-            this.player.height
-        );
-        
-        // Player detail
-        this.ctx.fillStyle = '#8b5a2b';
-        this.ctx.fillRect(
-            this.player.x - this.player.width / 2 + 8, 
-            this.height - this.player.height - 12, 
-            this.player.width - 16, 
-            6
-        );
+        // Cloud 1
+        this.ctx.beginPath();
+        this.ctx.arc(100, 80, 30, 0, Math.PI * 2);
+        this.ctx.arc(130, 70, 35, 0, Math.PI * 2);
+        this.ctx.arc(160, 80, 30, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // Cloud 2
+        this.ctx.beginPath();
+        this.ctx.arc(400, 60, 25, 0, Math.PI * 2);
+        this.ctx.arc(430, 50, 30, 0, Math.PI * 2);
+        this.ctx.arc(460, 60, 25, 0, Math.PI * 2);
+        this.ctx.fill();
     }
 
-    drawItems() {
-        this.items.forEach((item) => {
-            // Item shadow
-            this.ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    drawEnvironment() {
+        // Grass
+        this.ctx.fillStyle = '#7CFC00';
+        for (let i = 0; i < this.canvas.width; i += 10) {
+            this.ctx.fillRect(i, this.canvas.height - 50, 3, -10 - Math.random() * 10);
+        }
+
+        // Trees
+        this.drawTree(100, 150, 30, 200);
+        this.drawTree(400, 180, 30, 170);
+    }
+
+    drawTree(x, y, width, height) {
+        // Trunk
+        this.ctx.fillStyle = '#8B4513';
+        this.ctx.fillRect(x, y, width, height);
+        
+        // Leaves
+        this.ctx.fillStyle = '#228B22';
+        this.ctx.beginPath();
+        this.ctx.arc(x + width/2, y - 30, 50, 0, Math.PI * 2);
+        this.ctx.fill();
+    }
+
+    drawPooh() {
+        // Body
+        this.ctx.fillStyle = '#FFB347';
+        this.ctx.beginPath();
+        this.ctx.arc(this.poohX, this.canvas.height - 70, 30, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // Shirt
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillRect(this.poohX - 25, this.canvas.height - 70, 50, 30);
+
+        // Face and details
+        this.drawPoohFace();
+        this.drawPoohDetails();
+    }
+
+    drawPoohFace() {
+        // Face
+        this.ctx.fillStyle = '#FFB347';
+        this.ctx.beginPath();
+        this.ctx.arc(this.poohX, this.canvas.height - 100, 25, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // Eyes
+        this.ctx.fillStyle = 'black';
+        this.ctx.beginPath();
+        this.ctx.arc(this.poohX - 10, this.canvas.height - 105, 5, 0, Math.PI * 2);
+        this.ctx.arc(this.poohX + 10, this.canvas.height - 105, 5, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // Nose
+        this.ctx.beginPath();
+        this.ctx.arc(this.poohX, this.canvas.height - 95, 8, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // Smile
+        this.ctx.strokeStyle = 'black';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.arc(this.poohX, this.canvas.height - 90, 10, 0.2, Math.PI - 0.2, false);
+        this.ctx.stroke();
+
+        // Ears
+        this.ctx.fillStyle = '#FFB347';
+        this.ctx.beginPath();
+        this.ctx.arc(this.poohX - 20, this.canvas.height - 120, 10, 0, Math.PI * 2);
+        this.ctx.arc(this.poohX + 20, this.canvas.height - 120, 10, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // Arms
+        this.ctx.fillRect(this.poohX - 40, this.canvas.height - 80, 15, 10);
+        this.ctx.fillRect(this.poohX + 25, this.canvas.height - 80, 15, 10);
+    }
+
+    drawPoohDetails() {
+        // Shirt detail
+        this.ctx.strokeStyle = '#8B4513';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.poohX, this.canvas.height - 70);
+        this.ctx.lineTo(this.poohX, this.canvas.height - 40);
+        this.ctx.stroke();
+    }
+
+    drawHoneyPots() {
+        this.honeyPots.forEach(pot => {
+            // Pot body
+            this.ctx.fillStyle = '#FFD700';
             this.ctx.beginPath();
-            this.ctx.arc(item.x + 2, item.y + 2, 
-                        item.type === 'honey' ? 12 : 10, 0, Math.PI * 2);
+            this.ctx.arc(pot.x, pot.y, 15, 0, Math.PI * 2);
             this.ctx.fill();
-            
-            if (item.type === 'honey') {
-                // Honey pot
-                this.ctx.fillStyle = '#ffda79';
-                this.ctx.beginPath();
-                this.ctx.arc(item.x, item.y, 12, 0, Math.PI * 2);
-                this.ctx.fill();
-                
-                this.ctx.fillStyle = '#8b5a2b';
-                this.ctx.fillRect(item.x - 8, item.y - 6, 16, 6);
+
+            // Outline
+            this.ctx.strokeStyle = '#8B4513';
+            this.ctx.lineWidth = 3;
+            this.ctx.stroke();
+
+            // Handle
+            this.ctx.beginPath();
+            this.ctx.arc(pot.x, pot.y - 15, 5, 0, Math.PI, false);
+            this.ctx.stroke();
+
+            // Honey drip
+            this.ctx.fillStyle = '#FFA500';
+            this.ctx.beginPath();
+            this.ctx.moveTo(pot.x - 5, pot.y + 10);
+            this.ctx.bezierCurveTo(
+                pot.x - 2, pot.y + 15,
+                pot.x + 2, pot.y + 15,
+                pot.x + 5, pot.y + 10
+            );
+            this.ctx.fill();
+        });
+    }
+
+    drawBees() {
+        this.bees.forEach(bee => {
+            // Body
+            this.ctx.fillStyle = '#FFD700';
+            this.ctx.beginPath();
+            this.ctx.arc(bee.x, bee.y, 10, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Stripes
+            this.ctx.fillStyle = 'black';
+            this.ctx.fillRect(bee.x - 10, bee.y - 3, 5, 6);
+            this.ctx.fillRect(bee.x, bee.y - 3, 5, 6);
+
+            // Wings
+            this.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            this.ctx.beginPath();
+            this.ctx.arc(bee.x - 5, bee.y - 10, 8, 0, Math.PI * 2);
+            this.ctx.arc(bee.x + 5, bee.y - 10, 8, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Stinger
+            this.ctx.fillStyle = 'black';
+            this.ctx.beginPath();
+            this.ctx.moveTo(bee.x + 10, bee.y);
+            this.ctx.lineTo(bee.x + 15, bee.y);
+            this.ctx.lineTo(bee.x + 10, bee.y - 3);
+            this.ctx.fill();
+        });
+    }
+
+    drawUI() {
+        this.ctx.fillStyle = '#5c3d0a';
+        this.ctx.font = 'bold 20px Arial';
+        this.ctx.fillText(`Score: ${this.score}`, 20, 30);
+        this.ctx.fillText(`Time: ${this.timeLeft}s`, this.canvas.width - 100, 30);
+        this.ctx.fillText(`Lives: ${this.lives}`, this.canvas.width / 2 - 40, 30);
+    }
+
+    updateUI() {
+        document.getElementById('score-count').textContent = this.score;
+        document.getElementById('time-count').textContent = this.timeLeft;
+        document.getElementById('catch-lives').textContent = this.lives;
+    }
+
+    endGame() {
+        this.gameRunning = false;
+        clearInterval(this.gameInterval);
+        clearInterval(this.timerInterval);
+
+        const message = this.lives <= 0 ? 
+            `Oh bother! You got stung too many times! Final score: ${this.score}` :
+            `Time's up! You collected ${this.score} honey points!`;
+        
+        alert(message);
+    }
+
+    handleResize() {
+        // Handle canvas resize if needed
+        const rect = this.canvas.getBoundingClientRect();
+        this.canvas.width = rect.width;
+        this.canvas.height = rect.height;
+        this.draw();
+    }
+}
+
+// Tower Defense Game Class
+class TowerDefenseGame {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.init();
+    }
+
+    init() {
+        this.gameState = {
+            honey: 100,
+            lives: 10,
+            wave: 1,
+            selectedTower: 'pooh',
+            towers: [],
+            enemies: [],
+            projectiles: [],
+            isWaveActive: false,
+            lastSpawnTime: 0
+        };
+
+        this.towerTypes = this.createTowerTypes();
+        this.enemyTypes = this.createEnemyTypes();
+        this.path = this.createPath();
+
+        this.setupEventListeners();
+        this.draw();
+        this.gameInterval = setInterval(() => this.gameLoop(), 16);
+    }
+
+    createTowerTypes() {
+        return {
+            pooh: { cost: 20, damage: 10, range: 100, fireRate: 1000, color: '#FFB347', character: '🐻' },
+            tigger: { cost: 30, damage: 15, range: 80, fireRate: 800, color: '#FF8C42', character: '🐯' },
+            rabbit: { cost: 40, damage: 20, range: 120, fireRate: 1500, color: '#C1E1C1', character: '🐰' },
+            piglet: { cost: 25, damage: 8, range: 90, fireRate: 600, color: '#FFB6C1', character: '🐷' },
+            eeyore: { cost: 35, damage: 25, range: 110, fireRate: 2000, color: '#C0C0C0', character: '🐴' }
+        };
+    }
+
+    createEnemyTypes() {
+        return {
+            heffalump: { health: 50, speed: 1, color: '#8A2BE2', points: 10, character: '🐘' },
+            woozle: { health: 30, speed: 2, color: '#FF4500', points: 15, character: '🐺' },
+            bee: { health: 20, speed: 3, color: '#FFD700', points: 5, character: '🐝' }
+        };
+    }
+
+    createPath() {
+        return [
+            { x: 0, y: 200 },
+            { x: 200, y: 200 },
+            { x: 200, y: 100 },
+            { x: 400, y: 100 },
+            { x: 400, y: 300 },
+            { x: 520, y: 300 }
+        ];
+    }
+
+    setupEventListeners() {
+        // Tower placement
+        this.canvas.addEventListener('click', (e) => this.placeTower(e));
+
+        // Tower selection
+        document.querySelectorAll('.tower-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.tower-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                option.classList.add('selected');
+                this.gameState.selectedTower = option.getAttribute('data-tower');
+            });
+        });
+
+        // Game controls
+        document.getElementById('start-defense')?.addEventListener('click', () => this.startWave());
+        document.getElementById('upgrade-tower')?.addEventListener('click', () => this.upgradeTowers());
+    }
+
+    gameLoop() {
+        this.update();
+        this.draw();
+    }
+
+    update() {
+        if (!this.gameState.isWaveActive) return;
+
+        this.moveEnemies();
+        this.handleTowerShooting();
+        this.moveProjectiles();
+        this.spawnEnemies();
+        this.checkWaveComplete();
+        this.checkGameOver();
+    }
+
+    moveEnemies() {
+        this.gameState.enemies.forEach((enemy, index) => {
+            const nextPoint = this.path[enemy.pathIndex];
+            const dx = nextPoint.x - enemy.x;
+            const dy = nextPoint.y - enemy.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 1) {
+                enemy.pathIndex++;
+                if (enemy.pathIndex >= this.path.length) {
+                    this.gameState.lives--;
+                    this.updateUI();
+                    this.gameState.enemies.splice(index, 1);
+                    return;
+                }
             } else {
-                // Bee
-                this.ctx.fillStyle = '#f05d5e';
-                this.ctx.beginPath();
-                this.ctx.arc(item.x, item.y, 10, 0, Math.PI * 2);
-                this.ctx.fill();
-                
-                this.ctx.fillStyle = '#000';
-                this.ctx.fillRect(item.x - 6, item.y - 2, 12, 4);
-                
-                // Bee wings
-                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-                this.ctx.beginPath();
-                this.ctx.arc(item.x - 6, item.y - 8, 5, 0, Math.PI * 2);
-                this.ctx.arc(item.x + 6, item.y - 8, 5, 0, Math.PI * 2);
-                this.ctx.fill();
+                enemy.x += (dx / distance) * enemy.speed;
+                enemy.y += (dy / distance) * enemy.speed;
             }
         });
     }
 
-    updateHud() {
-        if (this.scoreEl) this.scoreEl.textContent = this.score;
-        if (this.timeEl) this.timeEl.textContent = Math.max(0, Math.ceil(this.timeRemaining));
-        if (this.livesEl) this.livesEl.textContent = this.lives;
-    }
-
-    loop(timestamp) {
-        if (!this.active) return;
-        
-        const delta = Math.min(0.05, (timestamp - this.lastTime) / 1000);
-        this.lastTime = timestamp;
-
-        this.drawBackground();
-        
-        if (this.running) {
-            this.timeRemaining -= delta;
-            this.spawnTimer += delta;
-            
-            if (this.spawnTimer > 0.9 - Math.min(0.5, this.score * 0.001)) {
-                this.spawnItem();
-                this.spawnTimer = 0;
+    handleTowerShooting() {
+        this.gameState.towers.forEach(tower => {
+            if (tower.cooldown > 0) {
+                tower.cooldown -= 16;
+                return;
             }
 
-            this.updatePlayer(delta);
-            this.updateItems(delta);
-
-            if (this.timeRemaining <= 0 || this.lives <= 0) {
-                this.running = false;
-                this.overlay.classList.remove('hidden');
-                
-                if (this.lives <= 0) {
-                    this.countdown.textContent = 'Game over – the bees won this round.';
-                } else {
-                    this.countdown.textContent = `Time's up! Final score: ${this.score}`;
-                    
-                    // Save high score
-                    try {
-                        const highScores = JSON.parse(localStorage.getItem('honeyCatchHighScores') || '[]');
-                        highScores.push({
-                            score: this.score,
-                            date: new Date().toISOString()
-                        });
-                        // Keep only top 5 scores
-                        highScores.sort((a, b) => b.score - a.score);
-                        if (highScores.length > 5) highScores.length = 5;
-                        localStorage.setItem('honeyCatchHighScores', JSON.stringify(highScores));
-                    } catch (e) {
-                        console.log('Could not save high score');
-                    }
-                }
-                
-                this.hint.textContent = 'Press start to try again and set a new score.';
+            const target = this.findTarget(tower);
+            if (target) {
+                this.createProjectile(tower, target);
+                tower.cooldown = tower.fireRate;
             }
+        });
+    }
+
+    findTarget(tower) {
+        let target = null;
+        let minDistance = tower.range;
+
+        this.gameState.enemies.forEach(enemy => {
+            const dx = enemy.x - tower.x;
+            const dy = enemy.y - tower.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                target = enemy;
+            }
+        });
+
+        return target;
+    }
+
+    createProjectile(tower, target) {
+        this.gameState.projectiles.push({
+            x: tower.x,
+            y: tower.y,
+            startX: tower.x,
+            startY: tower.y,
+            target: target,
+            damage: tower.damage,
+            color: tower.color,
+            speed: 5
+        });
+    }
+
+    moveProjectiles() {
+        this.gameState.projectiles.forEach((projectile, index) => {
+            if (!projectile.target || projectile.target.health <= 0) {
+                this.gameState.projectiles.splice(index, 1);
+                return;
+            }
+
+            const dx = projectile.target.x - projectile.x;
+            const dy = projectile.target.y - projectile.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 10) {
+                this.handleProjectileHit(projectile, index);
+            } else {
+                projectile.x += (dx / distance) * projectile.speed;
+                projectile.y += (dy / distance) * projectile.speed;
+            }
+        });
+    }
+
+    handleProjectileHit(projectile, index) {
+        projectile.target.health -= projectile.damage;
+
+        if (projectile.target.health <= 0) {
+            this.gameState.honey += projectile.target.points;
+            this.updateUI();
+            const enemyIndex = this.gameState.enemies.indexOf(projectile.target);
+            if (enemyIndex > -1) {
+                this.gameState.enemies.splice(enemyIndex, 1);
+            }
+        }
+
+        this.gameState.projectiles.splice(index, 1);
+    }
+
+    spawnEnemies() {
+        const currentTime = Date.now();
+        if (currentTime - this.gameState.lastSpawnTime > 1000 && 
+            this.gameState.enemies.length < 5 + this.gameState.wave * 2) {
             
-            this.updateHud();
+            this.gameState.lastSpawnTime = currentTime;
+            this.createRandomEnemy();
         }
-
-        this.drawItems();
-        this.drawPlayer();
-
-        requestAnimationFrame((time) => this.loop(time));
     }
 
-    cleanup() {
-        this.active = false;
-        this.cleanupFunctions.forEach(fn => fn());
-        this.cleanupFunctions = [];
-    }
-}
+    createRandomEnemy() {
+        const enemyTypesArray = ['heffalump', 'woozle', 'bee'];
+        const randomType = enemyTypesArray[Math.floor(Math.random() * enemyTypesArray.length)];
+        const enemyProps = this.enemyTypes[randomType];
 
-// Global cleanup function
-function cleanupAll() {
-    if (window.towerDefenseGame) {
-        window.towerDefenseGame.cleanup();
-        delete window.towerDefenseGame;
+        this.gameState.enemies.push({
+            x: this.path[0].x,
+            y: this.path[0].y,
+            pathIndex: 1,
+            health: enemyProps.health,
+            maxHealth: enemyProps.health,
+            speed: enemyProps.speed,
+            color: enemyProps.color,
+            points: enemyProps.points,
+            character: enemyProps.character
+        });
     }
-    
-    if (window.honeyCatchGame) {
-        window.honeyCatchGame.cleanup();
-        delete window.honeyCatchGame;
-    }
-    
-    // Clean up navigation handlers
-    if (window.navHandlers) {
-        const navToggle = document.getElementById('navToggle');
-        if (navToggle && window.navHandlers.toggleHandler) {
-            navToggle.removeEventListener('click', window.navHandlers.toggleHandler);
+
+    checkWaveComplete() {
+        const currentTime = Date.now();
+        if (this.gameState.enemies.length === 0 && currentTime - this.gameState.lastSpawnTime > 3000) {
+            this.gameState.isWaveActive = false;
+            this.gameState.wave++;
+            this.gameState.honey += 30;
+            this.updateUI();
         }
-        
-        if (window.navHandlers.scrollHandler) {
-            window.removeEventListener('scroll', window.navHandlers.scrollHandler);
+    }
+
+    checkGameOver() {
+        if (this.gameState.lives <= 0) {
+            clearInterval(this.gameInterval);
+            alert("Oh bother! The Heffalumps and Woozles got all your honey! Game Over!");
+            this.reset();
         }
-        
-        if (window.navHandlers.itemHandlers) {
-            window.navHandlers.itemHandlers.forEach((handler, item) => {
-                item.removeEventListener('click', handler);
+    }
+
+    placeTower(event) {
+        if (this.gameState.isWaveActive) return;
+
+        const rect = this.canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        if (this.isValidPosition(x, y) && this.canAffordTower()) {
+            this.gameState.honey -= this.towerTypes[this.gameState.selectedTower].cost;
+            this.updateUI();
+
+            this.gameState.towers.push({
+                x: x,
+                y: y,
+                type: this.gameState.selectedTower,
+                damage: this.towerTypes[this.gameState.selectedTower].damage,
+                range: this.towerTypes[this.gameState.selectedTower].range,
+                fireRate: this.towerTypes[this.gameState.selectedTower].fireRate,
+                color: this.towerTypes[this.gameState.selectedTower].color,
+                character: this.towerTypes[this.gameState.selectedTower].character,
+                cooldown: 0,
+                level: 1,
+                selected: false
             });
         }
-        
-        delete window.navHandlers;
     }
-    
-    // Clean up modal handlers
-    const modal = document.getElementById('characterModal');
-    if (modal) {
-        if (modal._trapFocusHandler) {
-            modal.removeEventListener('keydown', modal._trapFocusHandler);
-            delete modal._trapFocusHandler;
+
+    isValidPosition(x, y) {
+        // Check if position is not on path
+        for (let i = 0; i < this.path.length - 1; i++) {
+            const p1 = this.path[i];
+            if (Math.abs(x - p1.x) < 30 && Math.abs(y - p1.y) < 30) {
+                return false;
+            }
         }
-        if (modal.clickHandler) {
-            modal.removeEventListener('click', modal.clickHandler);
-            delete modal.clickHandler;
+        return true;
+    }
+
+    canAffordTower() {
+        return this.gameState.honey >= this.towerTypes[this.gameState.selectedTower].cost;
+    }
+
+    startWave() {
+        if (this.gameState.isWaveActive) return;
+
+        this.gameState.isWaveActive = true;
+        this.gameState.lastSpawnTime = Date.now();
+    }
+
+    upgradeTowers() {
+        if (this.gameState.honey >= 50) {
+            this.gameState.honey -= 50;
+            this.updateUI();
+
+            this.gameState.towers.forEach(tower => {
+                tower.damage += 5;
+                tower.range += 10;
+                tower.level++;
+            });
         }
-        if (modal.keydownHandler) {
-            document.removeEventListener('keydown', modal.keydownHandler);
-            delete modal.keydownHandler;
+    }
+
+    reset() {
+        this.gameState = {
+            honey: 100,
+            lives: 10,
+            wave: 1,
+            selectedTower: 'pooh',
+            towers: [],
+            enemies: [],
+            projectiles: [],
+            isWaveActive: false,
+            lastSpawnTime: 0
+        };
+
+        this.updateUI();
+        this.gameInterval = setInterval(() => this.gameLoop(), 16);
+    }
+
+    updateUI() {
+        document.getElementById('honey-count').textContent = this.gameState.honey;
+        document.getElementById('lives-count').textContent = this.gameState.lives;
+        document.getElementById('wave-count').textContent = this.gameState.wave;
+    }
+
+    draw() {
+        this.drawBackground();
+        this.drawTowers();
+        this.drawEnemies();
+        this.drawProjectiles();
+    }
+
+    drawBackground() {
+        // Sky
+        this.ctx.fillStyle = '#87CEEB';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // Clouds
+        this.drawClouds();
+        
+        // Ground
+        this.ctx.fillStyle = '#8FBC8F';
+        this.ctx.fillRect(0, this.canvas.height - 100, this.canvas.width, 100);
+        
+        // Path
+        this.drawPath();
+        
+        // Trees and honey pot
+        this.drawEnvironment();
+    }
+
+    drawClouds() {
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        
+        // Cloud 1
+        this.ctx.beginPath();
+        this.ctx.arc(100, 80, 30, 0, Math.PI * 2);
+        this.ctx.arc(130, 70, 35, 0, Math.PI * 2);
+        this.ctx.arc(160, 80, 30, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // Cloud 2
+        this.ctx.beginPath();
+        this.ctx.arc(400, 60, 25, 0, Math.PI * 2);
+        this.ctx.arc(430, 50, 30, 0, Math.PI * 2);
+        this.ctx.arc(460, 60, 25, 0, Math.PI * 2);
+        this.ctx.fill();
+    }
+
+    drawPath() {
+        // Main path
+        this.ctx.strokeStyle = '#D2B48C';
+        this.ctx.lineWidth = 40;
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.path[0].x, this.path[0].y);
+        for (let i = 1; i < this.path.length; i++) {
+            this.ctx.lineTo(this.path[i].x, this.path[i].y);
         }
+        this.ctx.stroke();
+
+        // Path border
+        this.ctx.strokeStyle = '#8B4513';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.path[0].x, this.path[0].y);
+        for (let i = 1; i < this.path.length; i++) {
+            this.ctx.lineTo(this.path[i].x, this.path[i].y);
+        }
+        this.ctx.stroke();
+    }
+
+    drawEnvironment() {
+        // Trees
+        this.drawTree(50, 50, 20, 100);
+        this.drawTree(350, 250, 20, 100);
+
+        // Honey pot
+        this.drawHoneyPot();
+    }
+
+    drawTree(x, y, width, height) {
+        // Trunk
+        this.ctx.fillStyle = '#8B4513';
+        this.ctx.fillRect(x, y, width, height);
+        
+        // Leaves
+        this.ctx.fillStyle = '#228B22';
+        this.ctx.beginPath();
+        this.ctx.arc(x + width/2, y - 10, 40, 0, Math.PI * 2);
+        this.ctx.fill();
+    }
+
+    drawHoneyPot() {
+        const endX = this.canvas.width - 30;
+        const endY = this.path[this.path.length - 1].y;
+
+        // Honey pot
+        this.ctx.fillStyle = '#FFD700';
+        this.ctx.beginPath();
+        this.ctx.arc(endX, endY, 20, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // Outline
+        this.ctx.strokeStyle = '#8B4513';
+        this.ctx.lineWidth = 3;
+        this.ctx.stroke();
+
+        // Honey drip
+        this.ctx.fillStyle = '#FFA500';
+        this.ctx.beginPath();
+        this.ctx.moveTo(endX, endY + 20);
+        this.ctx.bezierCurveTo(
+            endX - 5, endY + 30,
+            endX + 5, endY + 40,
+            endX, endY + 50
+        );
+        this.ctx.fill();
+    }
+
+    drawTowers() {
+        this.gameState.towers.forEach(tower => {
+            // Base
+            this.ctx.fillStyle = tower.color;
+            this.ctx.beginPath();
+            this.ctx.arc(tower.x, tower.y, 20, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Border
+            this.ctx.strokeStyle = '#8B4513';
+            this.ctx.lineWidth = 2;
+            this.ctx.stroke();
+
+            // Character
+            this.ctx.font = '24px Arial';
+            this.ctx.fillStyle = '#000';
+            this.ctx.fillText(tower.character, tower.x - 10, tower.y + 8);
+
+            // Level
+            this.ctx.fillStyle = '#8B4513';
+            this.ctx.font = '12px Arial';
+            this.ctx.fillText(`Lv.${tower.level}`, tower.x - 10, tower.y - 25);
+
+            // Range indicator
+            if (tower.selected) {
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                this.ctx.beginPath();
+                this.ctx.arc(tower.x, tower.y, tower.range, 0, Math.PI * 2);
+                this.ctx.stroke();
+            }
+        });
+    }
+
+    drawEnemies() {
+        this.gameState.enemies.forEach(enemy => {
+            // Body
+            this.ctx.fillStyle = enemy.color;
+            this.ctx.beginPath();
+            this.ctx.arc(enemy.x, enemy.y, 15, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Border
+            this.ctx.strokeStyle = '#000';
+            this.ctx.lineWidth = 1;
+            this.ctx.stroke();
+
+            // Character
+            this.ctx.font = '16px Arial';
+            this.ctx.fillStyle = '#000';
+            this.ctx.fillText(enemy.character, enemy.x - 8, enemy.y + 5);
+
+            // Health bar
+            this.drawHealthBar(enemy);
+        });
+    }
+
+    drawHealthBar(enemy) {
+        // Background
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillRect(enemy.x - 15, enemy.y - 25, 30, 5);
+
+        // Health
+        this.ctx.fillStyle = 'green';
+        const healthWidth = 30 * (enemy.health / enemy.maxHealth);
+        this.ctx.fillRect(enemy.x - 15, enemy.y - 25, healthWidth, 5);
+    }
+
+    drawProjectiles() {
+        this.gameState.projectiles.forEach(projectile => {
+            // Projectile
+            this.ctx.fillStyle = projectile.color;
+            this.ctx.beginPath();
+            this.ctx.arc(projectile.x, projectile.y, 5, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Trail
+            this.ctx.strokeStyle = projectile.color;
+            this.ctx.lineWidth = 2;
+            this.ctx.beginPath();
+            this.ctx.moveTo(projectile.startX, projectile.startY);
+            this.ctx.lineTo(projectile.x, projectile.y);
+            this.ctx.stroke();
+        });
+    }
+
+    handleResize() {
+        // Handle canvas resize if needed
+        const rect = this.canvas.getBoundingClientRect();
+        this.canvas.width = rect.width;
+        this.canvas.height = rect.height;
+        this.draw();
     }
 }
 
-// Initialize everything when DOM is loaded
+// Initialize the game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    setupLoadingScreen();
-    setupNavigation();
-    setupReadingProgress();
-    setupButtons();
-    setupRSVPForm();
-    setupMotionToggle();
-    setupMusicToggle();
-    setupScrollAnimations();
-    setupModalControls();
-
-    // Initialize games
-    const defenseCanvas = document.getElementById('defense-game');
-    const catchCanvas = document.getElementById('honey-game');
-    
-    if (defenseCanvas) {
-        window.towerDefenseGame = new TowerDefenseGame(defenseCanvas);
-    }
-    
-    if (catchCanvas) {
-        window.honeyCatchGame = new HoneyCatchGame(catchCanvas);
-    }
+    window.game = new HundredAcreGame();
 });
 
-// Call cleanup when page is being unloaded
-window.addEventListener('beforeunload', cleanupAll);
+// Global functions for inline event handlers
+window.showCharacterModal = function(character) {
+    if (window.game) {
+        window.game.showCharacterModal(character);
+    }
+};
 
-// Make functions available globally
-window.showCharacterModal = showCharacterModal;
-window.playWoodlandSound = playWoodlandSound;
-window.closeCharacterModal = closeCharacterModal;
+window.showGameInstructions = function(gameType) {
+    if (window.game) {
+        window.game.showGameInstructions(gameType);
+    }
+};
+
+window.playWoodlandSound = function(event) {
+    if (window.game) {
+        window.game.playWoodlandSound(event);
+    }
+};
+
+window.editRSVP = function() {
+    if (window.game) {
+        window.game.editRSVP();
+    }
+};
+
+// Add CSS animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes honeyPop {
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    
+    @keyframes bounce {
+        0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+        40%, 43% { transform: translate3d(0,-20px,0); }
+        70% { transform: translate3d(0,-10px,0); }
+        90% { transform: translate3d(0,-4px,0); }
+    }
+    
+    @keyframes confetti-fall {
+        0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+    
+    .confetti {
+        animation: confetti-fall 3s ease-in forwards;
+        position: absolute;
+    }
+`;
+document.head.appendChild(style);
