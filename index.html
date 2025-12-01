@@ -472,7 +472,8 @@
 
                             <div class="games-container" aria-label="Pooh-themed mini games">
                                 <!-- Tower Defense Game -->
-                                <article class="game-card game-card--primary" aria-labelledby="defenseTitle">
+                                <article class="game-card game-card--primary" aria-labelledby="defenseTitle"
+                                    id="defense-card">
                                     <div class="game-ribbon">Cozy Strategy</div>
                                     <div class="game-character piglet" aria-hidden="true">🐷</div>
                                     <div class="game-character eeyore" aria-hidden="true">🐴</div>
@@ -500,6 +501,9 @@
                                             <span class="stat-value"><span id="wave-count">1</span>🌊</span>
                                         </div>
                                     </div>
+
+                                    <div class="game-status-badge" id="defense-alert" role="status"
+                                        aria-live="polite">The honey path is peaceful. Prepare your friends.</div>
 
                                     <div class="tower-selector" aria-label="Choose a defender">
                                         <button class="tower-option selected" type="button" data-tower="pooh"
@@ -535,6 +539,7 @@
                                         <div class="game-overlay-hint">
                                             Tap or click on the path to place your friends.
                                         </div>
+                                        <div class="game-overlay-status" id="defense-wave-status">Wave 1 ready</div>
                                     </div>
 
                                     <div class="controls controls--stack">
@@ -560,7 +565,8 @@
                                 </article>
 
                                 <!-- Honey Catch Game -->
-                                <article class="game-card game-card--secondary" aria-labelledby="catchTitle">
+                                <article class="game-card game-card--secondary" aria-labelledby="catchTitle"
+                                    id="catch-card">
                                     <div class="game-ribbon game-ribbon--blue">Quick &amp; Silly</div>
                                     <div class="game-character rabbit" aria-hidden="true">🐰</div>
 
@@ -592,6 +598,10 @@
                                             aria-label="Pooh catching falling honey pots"></canvas>
                                         <div class="game-overlay-hint">
                                             Tap left or right (or use arrow keys) to move Pooh.
+                                        </div>
+                                        <div class="game-overlay-status" id="catch-overlay">
+                                            <div class="status-line" id="catch-countdown">Ready when you are.</div>
+                                            <div class="status-sub" id="catch-hint">Press start to begin a calm 60 second run.</div>
                                         </div>
                                     </div>
 

@@ -201,6 +201,19 @@ h1 {
     opacity: 1;
 }
 
+.game-status-badge {
+    background: linear-gradient(135deg, rgba(255, 196, 43, 0.18), rgba(255, 255, 255, 0.92));
+    color: #8b5a2b;
+    border: 1px dashed rgba(217, 170, 81, 0.7);
+    padding: 12px 14px;
+    border-radius: 14px;
+    text-align: center;
+    margin: 14px auto 10px;
+    max-width: 460px;
+    font-weight: 700;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
+}
+
 .game-title {
     font-size: 2rem;
     color: var(--storybook-brown);
@@ -437,6 +450,12 @@ button:disabled {
     box-shadow: 0 0 16px rgba(230, 168, 73, 0.9);
 }
 
+.tower-option.unaffordable {
+    filter: grayscale(0.3);
+    opacity: 0.65;
+    box-shadow: none;
+}
+
 .tower-icon {
     font-size: 2.5rem;
 }
@@ -493,6 +512,39 @@ button:disabled {
     border-color: rgba(63, 118, 160, 0.35);
 }
 
+.game-overlay-status {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 18px;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.88) 0, rgba(255, 255, 255, 0.65) 50%, rgba(255, 255, 255, 0.05) 100%);
+    color: #5a3d1e;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.game-overlay-status.active {
+    opacity: 1;
+}
+
+.status-line {
+    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+    margin-bottom: 6px;
+}
+
+.status-sub {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #7a6245;
+}
+
 .legend-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -519,6 +571,37 @@ button:disabled {
     place-items: center;
     background: linear-gradient(135deg, #fff3c6, #f7c948);
     font-size: 1.5rem;
+}
+
+#defense-card.shake,
+#catch-card.shake {
+    animation: card-shake 0.4s ease;
+}
+
+@keyframes card-shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-6px);
+    }
+
+    40% {
+        transform: translateX(6px);
+    }
+
+    60% {
+        transform: translateX(-4px);
+    }
+
+    80% {
+        transform: translateX(4px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
 .legend-copy strong {
