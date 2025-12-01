@@ -6,11 +6,30 @@ document.addEventListener('DOMContentLoaded', function() {
   initHoneyGame();
 });
 
+function drawRoundedRect(ctx, x, y, width, height, radius) {
+  // Use native roundRect when available (most modern browsers), otherwise draw manually
+  ctx.beginPath();
+  if (typeof ctx.roundRect === 'function') {
+    ctx.roundRect(x, y, width, height, radius);
+  } else {
+    const r = Math.min(radius, width / 2, height / 2);
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + width - r, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+    ctx.lineTo(x + width, y + height - r);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+    ctx.lineTo(x + r, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+  }
+}
+
 // Tower Defense Game Visuals
 function initDefenseGame() {
   const canvas = document.getElementById('defense-game');
   if (!canvas) return;
-  
+
   const ctx = canvas.getContext('2d');
   const width = canvas.width;
   const height = canvas.height;
@@ -21,8 +40,7 @@ function initDefenseGame() {
     
     // Path background
     ctx.fillStyle = '#FFF0C2';
-    ctx.beginPath();
-    ctx.roundRect(50, 150, width - 100, 100, 20);
+    drawRoundedRect(ctx, 50, 150, width - 100, 100, 20);
     ctx.fill();
     
     // Path border
