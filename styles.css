@@ -2008,3 +2008,18 @@ canvas {
         background: rgba(50, 45, 40, 0.9);
     }
 }
+/* Add to your styles.css */
+.music-btn.active,
+.accessibility-btn.active {
+    background: radial-gradient(circle at top, #ffdba0 0, #f59e0b 40%, #c05621 100%);
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(214, 46, 46, 0.4);
+}
+
+/* Make sure the reduce-motion class works */
+.reduce-motion * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
