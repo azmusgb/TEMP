@@ -304,8 +304,53 @@ class HundredAcreApp {
     }
 
     openCharacterModal(character) {
-        // ... (same as before) ...
-    }
+    const { characterModal, characterModalIcon, characterModalTitle, 
+            characterModalQuote, characterModalBio } = this.el;
+    
+    if (!characterModal) return;
+
+    const characterData = {
+        pooh: {
+            icon: `<img src="Images/Characters/honey-bear.png" alt="Winnie the Pooh" style="width: 80px; height: auto;">`,
+            name: "Winnie the Pooh",
+            quote: "\"Sometimes the smallest things take up the most room in your heart.\"",
+            bio: "As Honey Supervisor, Pooh is making sure every jar is filled to the brim with the sweetest honey for our celebration. He's also in charge of the snack table (for quality control purposes)."
+        },
+        piglet: {
+            icon: `<img src="Images/Characters/piglet.png" alt="Piglet" style="width: 80px; height: auto;">`,
+            name: "Piglet",
+            quote: "\"Even the littlest friend can bring the greatest joy.\"",
+            bio: "Our Cozy Coordinator, Piglet is making sure every blanket is soft, every hug is available, and that no one feels too small at our big celebration."
+        },
+        tigger: {
+            icon: `<img src="Images/Characters/tigger.png" alt="Tigger" style="width: 80px; height: auto;">`,
+            name: "Tigger",
+            quote: "\"New babies are what Tiggers like best!\"",
+            bio: "As Bounce Director, Tigger is planning all the fun activities and making sure there's plenty of bounce in our step. He's also testing all the rocking chairs for optimal bounce."
+        },
+        eeyore: {
+            icon: `<img src="Images/Characters/eeyore.png" alt="Eeyore" style="width: 80px; height: auto;">`,
+            name: "Eeyore",
+            quote: "\"Not that I'm complaining, but it will be rather nice to have someone new around.\"",
+            bio: "Our Photo Spot Curator, Eeyore has found the perfect spot for pictures (with just the right amount of shade) and is making sure every memory is properly documented."
+        }
+    };
+
+    const data = characterData[character];
+    if (!data) return;
+
+    characterModalIcon.innerHTML = data.icon;
+    characterModalTitle.textContent = data.name;
+    characterModalQuote.textContent = data.quote;
+    characterModalBio.textContent = data.bio;
+    
+    characterModal.style.display = 'flex';
+    characterModal.setAttribute('aria-hidden', 'false');
+    
+    // Focus trap for accessibility
+    const closeBtn = this.el.characterModalClose;
+    closeBtn.focus();
+}
 
     closeCharacterModal() {
         const { characterModal } = this.el;
@@ -362,20 +407,36 @@ class HundredAcreApp {
     }
 
     bindGlobals() {
-        const self = this;
-        window.showCharacterModal = function (character) {
-            self.openCharacterModal(character);
-        };
-        window.showGameInstructions = function (type) {
-            self.openGameInstructions(type);
-        };
-        window.playWoodlandSound = function (event) {
-            self.playWoodlandSound(event);
-        };
-        window.editRSVP = function () {
-            self.editRSVP();
-        };
+    const self = this;
+    window.showCharacterModal = function (character) {
+        self.openCharacterModal(character);
+    };
+    window.showGameInstructions = function (type) {
+        self.openGameInstructions(type);
+    };
+    window.playWoodlandSound = function (event) {
+        self.playWoodlandSound(event);
+    };
+    window.editRSVP = function () {
+        self.editRSVP();
+    };
+    
+    // Add close modal handlers
+    if (this.el.characterModalClose) {
+        this.el.characterModalClose.addEventListener('click', () => this.closeCharacterModal());
     }
+    if (this.el.gameInstructionClose) {
+        this.el.gameInstructionClose.addEventListener('click', () => this.closeGameInstructions());
+    }
+    
+    // Close modals on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            this.closeCharacterModal();
+            this.closeGameInstructions();
+        }
+    });
+}
 }
 
 /* ========= ENHANCED VISUALS HONEY CATCH GAME ========= */
