@@ -630,13 +630,118 @@
                                 </div>
                                 
                                 <div class="game-card-footer">
-                                    <div class="high-score">
-                                        <i class="fas fa-crown" aria-hidden="true"></i>
-                                        <span>Best Lap: 0:45</span>
-                                    </div>
+                                <div class="high-score">
+                                    <i class="fas fa-crown" aria-hidden="true"></i>
+                                    <span>Best Lap: 0:45</span>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Live Play Area -->
+                    <div class="games-play-area">
+                        <div class="play-column">
+                            <header class="play-header">
+                                <div>
+                                    <p class="eyebrow">Arcade</p>
+                                    <h3>Honey Hunt Live Arena</h3>
+                                    <p class="eyebrow">Instantly start collecting honey pots</p>
+                                </div>
+                                <div class="play-hud">
+                                    <div><strong id="honey-score">0</strong><span>Score</span></div>
+                                    <div><strong id="honey-time">60s</strong><span>Time</span></div>
+                                    <div><strong id="honey-lives">3</strong><span>Lives</span></div>
+                                    <div><strong id="honey-combo">1x</strong><span>Combo</span></div>
+                                </div>
+                            </header>
+
+                            <div class="game-surface">
+                                <canvas id="honey-game" aria-label="Honey Hunt live playfield"></canvas>
+                                <div class="game-overlay" id="catch-overlay">
+                                    <div class="overlay-inner">
+                                        <p id="catch-countdown">Ready When You Are</p>
+                                        <p id="catch-hint">Press start to catch honey for 60 seconds!</p>
+                                        <p id="catch-status">Ready to Start</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="play-controls">
+                                <button class="magical-btn" id="start-catch" aria-label="Start honey hunt">
+                                    <i class="fas fa-play" aria-hidden="true"></i>
+                                    <span>Start Hunt</span>
+                                </button>
+                                <button class="ghost-btn" id="pause-catch" aria-label="Pause honey hunt">
+                                    <i class="fas fa-pause" aria-hidden="true"></i>
+                                    <span>Pause</span>
+                                </button>
+                                <div class="hud-badge">
+                                    <i class="fas fa-crown" aria-hidden="true"></i>
+                                    <span id="catch-high-score-display">0 points</span>
+                                    <span class="sr-only" id="catch-high-score">0</span>
+                                </div>
+                            </div>
+
+                            <div class="mobile-controls-panel">
+                                <p class="eyebrow">Touch Controls</p>
+                                <div class="touch-buttons">
+                                    <button class="ghost-btn" id="mobileLeftBtn" aria-label="Move left">
+                                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                                        <span>Left</span>
+                                    </button>
+                                    <button class="ghost-btn" id="mobileRightBtn" aria-label="Move right">
+                                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                                        <span>Right</span>
+                                    </button>
+                                </div>
+                                <p class="tiny-text">Use touch or the buttons to dodge bees and grab honey.</p>
+                            </div>
+                        </div>
+
+                        <div class="play-column">
+                            <header class="play-header">
+                                <div>
+                                    <p class="eyebrow">Strategy</p>
+                                    <h3>Heffalump Defense Simulator</h3>
+                                    <p class="eyebrow">Keep the honey safe wave after wave</p>
+                                </div>
+                                <div class="play-hud">
+                                    <div><strong id="honey-count">500</strong><span>Honey</span></div>
+                                    <div><strong id="lives-count">3</strong><span>Lives</span></div>
+                                    <div><strong id="wave-count">1</strong><span>Wave</span></div>
+                                    <div><strong id="defense-high-score">0</strong><span>High Score</span></div>
+                                </div>
+                            </header>
+
+                            <div class="game-surface">
+                                <canvas id="defense-game" aria-label="Tower defense playfield"></canvas>
+                                <div class="game-overlay" id="defense-overlay">
+                                    <div class="overlay-inner">
+                                        <p id="defense-alert">Tap start to begin defending the meadow.</p>
+                                        <p id="defense-wave-status">Wave ready</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="play-controls">
+                                <button class="magical-btn" id="start-defense" aria-label="Start defense game">
+                                    <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                    <span>Start Defense</span>
+                                </button>
+                                <button class="ghost-btn" id="upgrade-tower" aria-label="Upgrade tower">
+                                    <i class="fas fa-level-up-alt" aria-hidden="true"></i>
+                                    <span>Upgrade</span>
+                                </button>
+                                <div class="tower-options" aria-label="Tower quick select">
+                                    <button class="tower-option" data-type="rapid">Rapid</button>
+                                    <button class="tower-option" data-type="frost">Frost</button>
+                                    <button class="tower-option" data-type="splash">Splash</button>
+                                </div>
+                            </div>
+
+                            <p class="tiny-text">Performance meter: <span id="game-speed">1.0x</span></p>
+                        </div>
+                    </div>
 
                         <!-- Game Details Area -->
                         <div class="game-details-area" id="gameDetails" style="display: none;">
