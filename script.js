@@ -150,20 +150,6 @@ const pageTitles = {
 
 let audioContext;
 
-// Ensure the Pooh sprite readiness flag always exists in the global scope to avoid
-// ReferenceErrors if older cached scripts are present alongside this one.
-if (typeof window.poohSpriteReady === 'undefined') {
-  window.poohSpriteReady = false;
-}
-
-const poohSprite = new Image();
-poohSprite.src = 'Images/Characters/honey-bear.png';
-poohSprite.onload = () => { window.poohSpriteReady = true; };
-
-function isPoohReady() {
-  return Boolean(window.poohSpriteReady) || (poohSprite?.complete && poohSprite.naturalWidth > 0);
-}
-
 function getAudioContext() {
   if (audioContext) return audioContext;
   try {
@@ -411,7 +397,7 @@ function drawPlayer() {
   const x = state.player.x;
   const y = canvas.height - 70;
 
-  if (isPoohReady()) {
+  if (poohSpriteReady) {
     ctx.save();
     ctx.shadowColor = 'rgba(179, 119, 46, 0.35)';
     ctx.shadowBlur = 18;
