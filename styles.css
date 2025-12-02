@@ -231,3 +231,6 @@ textarea { min-height: 120px; resize: vertical; }
   main { padding: 100px 18px 60px; }
   .nav { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
+
+.combo-ring { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; border: 2px solid #FFD166; border-radius: 50%; transform: translate(-50%, -50%); animation: ringExpand 0.8s ease-out forwards; pointer-events: none; }
+@keyframes ringExpand { to { width: 200px; height: 200px; opacity: 0; border-width: 1px; } }
