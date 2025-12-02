@@ -125,6 +125,10 @@
     return ids.map(id => document.getElementById(id)).find(Boolean) || null;
   }
 
+  function getElementByIds(ids) {
+    return ids.map(id => document.getElementById(id)).find(Boolean) || null;
+  }
+
   // =========== AUDIO SYSTEM ===========
   class AudioSystem {
     constructor() {
@@ -704,9 +708,8 @@
     rightBtn = document.getElementById('rightBtn');
     dropBtn = document.getElementById('dropBtn');
 
-    // Initialize audio system (store locally and on window for debugging)
-    audioSystem = new AudioSystem();
-    window.audioSystem = audioSystem;
+    // Initialize audio system
+    window.audioSystem = new AudioSystem();
 
     // Respect any timer hint in the DOM (e.g., 45s embedded mode)
     const initialTimerText = timerEl?.textContent;
