@@ -1,55 +1,33 @@
-// honey-hunt.js – Honey Hunt mini-game (shared by index.html + honey-hunt.html)
+// js/honey-hunt.js
+// Simple honey catch mini-game tuned to your HTML (canvas #honey-game, HUD IDs)
 
-(() => {
-  const canvas = document.getElementById('honeyCanvas');
-  const container = document.getElementById('canvasContainer');
-  if (!canvas || !container) return; // Game not present on this page
+(function () {
+  "use strict";
 
-  const ctx = canvas.getContext('2d');
+  const canvas = document.getElementById("honey-game");
+  if (!canvas) return; // no game on this page
 
-  // HUD elements
-  const scoreEl = document.getElementById('scoreValue');
-  const timeEl = document.getElementById('timeValue');
-  const livesEl = document.getElementById('livesValue');
-  const comboEl = document.getElementById('comboValue');
-  const bestEl = document.getElementById('bestValue');
-  const bestLabelEl = document.getElementById('bestLabel');
-  const statusTextEl = document.getElementById('statusText');
-  const statusBarEl = document.getElementById('statusBar');
-  const comboPillEl = document.getElementById('comboPill');
+  const ctx = canvas.getContext("2d");
 
-  // Controls
-  const startBtn = document.getElementById('startBtn');
-  const pauseBtn = document.getElementById('pauseBtn');
-  const resetBtn = document.getElementById('resetBtn');
-  const difficultySelect = document.getElementById('difficultySelect');
-  const streakSoundToggle = document.getElementById('streakSoundToggle'); // future use
-  const arcadeModeBtn = document.getElementById('arcadeModeBtn');
+  const scoreEl = document.getElementById("score");
+  const timerEl = document.getElementById("timer");
+  const livesEl = document.getElementById("lives");
+  const bestEl = document.getElementById("best");
 
-  // Touch controls (mobile)
-  const leftBtn = document.getElementById('leftBtn');
-  const rightBtn = document.getElementById('rightBtn');
-  const dropBtn = document.getElementById('dropBtn');
-
-  const bearBadge = document.getElementById('bearBadge');
-
-  // Canvas + game state
-  let width = 400;
-  let height = 300;
-  let lastTime = 0;
-  let frameRequest = null;
+  const startBtn = document.getElementById("startGame");
+  const pauseBtn = document.getElementById("pauseGame");
+  const resetBtn = document.getElementById("resetGame");
 
   const state = {
     running: false,
     paused: false,
-    timer: 45,
     score: 0,
     lives: 3,
-    combo: 1,
-    comboTimer: 0,
+    timer: 45,
     best: 0,
-    arcadeMode: false,
-    difficulty: 'normal',
+    lastTime: 0,
+    width: 400,
+    height: 300,
     player: null,
     drops: [],
     leaves: [],
@@ -59,195 +37,135 @@
     }
   };
 
-  const DIFFICULTY_SETTINGS = {
-    easy:   { dropRate: 0.9,  leafRate: 0.25, dropSpeed: [60, 90],   leafSpeed: [80, 110] },
-    normal: { dropRate: 1.1,  leafRate: 0.35, dropSpeed: [80, 120],  leafSpeed: [100, 140] },
-    hard:   { dropRate: 1.5,  leafRate: 0.55, dropSpeed: [110, 150], leafSpeed: [130, 180] }
-  };
-
-  function rand(min, max) {
-    return Math.random() * (max - min) + min;
+  function clamp(v, min, max) {
+    return Math.max(min, Math.min(max, v));
   }
 
-  /* ========= RESIZE & PLAYER ========= */
-
   function resizeCanvas() {
-    const rect = container.getBoundingClientRect();
-    const targetWidth = Math.max(rect.width, 200);  // guard for tiny layouts
-    const targetHeight = targetWidth * 0.75;        // maintain 4:3 ratio
+    const wrapper = canvas.parentElement;
+    if (!wrapper) return;
 
-    canvas.width = targetWidth * 2;   // high-res rendering
-    canvas.height = targetHeight * 2;
-    canvas.style.height = `${targetHeight}px`;
+    const rect = wrapper.getBoundingClientRect();
+    const displayWidth = Math.max(rect.width, 220);
+    const displayHeight = displayWidth * 0.75;
 
-    width = canvas.width;
-    height = canvas.height;
+    canvas.width = displayWidth * 2; // hi-dpi
+    canvas.height = displayHeight * 2;
+    canvas.style.height = displayHeight + "px";
+
+    state.width = canvas.width;
+    state.height = canvas.height;
 
     if (state.player) {
-      state.player.y = height - state.player.height - 24;
+      state.player.y = state.height - state.player.height - 28;
     }
   }
 
-  function resetPlayer() {
-    const w = width * 0.12;
-    const h = height * 0.12;
-
+  function createPlayer() {
+    const w = state.width * 0.14;
+    const h = state.height * 0.16;
     state.player = {
+      x: state.width / 2 - w / 2,
+      y: state.height - h - 28,
       width: w,
       height: h,
-      x: width / 2 - w / 2,
-      y: height - h - 24,
-      speed: width * 0.35
+      speed: state.width * 0.4
     };
   }
 
   function resetGameValues() {
-    state.timer = state.arcadeMode ? 999 : 45;
     state.score = 0;
     state.lives = 3;
-    state.combo = 1;
-    state.comboTimer = 0;
+    state.timer = 45;
     state.drops = [];
     state.leaves = [];
     state.paused = false;
+    state.lastTime = 0;
     updateHUD();
   }
 
-  /* ========= BEST SCORE ========= */
-
-  function loadBestScore() {
+  function loadBest() {
     try {
-      const stored = localStorage.getItem('honey_best_score');
-      if (stored) {
-        state.best = parseInt(stored, 10) || 0;
-      }
+      const stored = localStorage.getItem("honeyGameBest");
+      state.best = stored ? parseInt(stored, 10) || 0 : 0;
     } catch {
       state.best = 0;
     }
-
     if (bestEl) bestEl.textContent = state.best.toString();
-    if (bestLabelEl) bestLabelEl.textContent = `Best: ${state.best} pts`;
   }
 
-  function saveBestScore() {
+  function saveBest() {
     if (state.score > state.best) {
       state.best = state.score;
-      try {
-        localStorage.setItem('honey_best_score', String(state.best));
-      } catch {
-        // ignore storage errors
-      }
       if (bestEl) bestEl.textContent = state.best.toString();
-      if (bestLabelEl) bestLabelEl.textContent = `Best: ${state.best} pts`;
+      try {
+        localStorage.setItem("honeyGameBest", String(state.best));
+      } catch {
+        // ignore
+      }
     }
   }
-
-  /* ========= HUD & STATUS ========= */
 
   function updateHUD() {
     if (scoreEl) scoreEl.textContent = state.score.toString();
-
-    if (timeEl) {
-      const t = state.arcadeMode ? '∞' : `${Math.max(0, Math.floor(state.timer))}s`;
-      timeEl.textContent = t;
-    }
-
     if (livesEl) livesEl.textContent = state.lives.toString();
-    if (comboEl) comboEl.textContent = `x${state.combo}`;
+    if (timerEl) timerEl.textContent = Math.max(0, Math.floor(state.timer)) + "s";
   }
-
-  function setStatus(message, tone = 'neutral') {
-    if (!statusTextEl || !statusBarEl) return;
-    statusTextEl.textContent = message;
-    statusBarEl.dataset.tone = tone; // CSS uses [data-tone]
-  }
-
-  function pulseCombo() {
-    if (!comboPillEl) return;
-    comboPillEl.classList.remove('combo-pulse');
-    // force reflow
-    void comboPillEl.offsetWidth;
-    comboPillEl.classList.add('combo-pulse');
-  }
-
-  function flashStatus() {
-    if (!statusBarEl) return;
-    statusBarEl.style.transition = 'background 0.18s ease';
-    const original = statusBarEl.style.background;
-    statusBarEl.style.background = 'rgba(214,46,46,0.16)';
-    setTimeout(() => {
-      statusBarEl.style.background = original || '';
-    }, 160);
-  }
-
-  /* ========= OBJECT SPAWNING ========= */
 
   function spawnDrop() {
-    const s = DIFFICULTY_SETTINGS[state.difficulty] || DIFFICULTY_SETTINGS.normal;
-    const size = rand(height * 0.04, height * 0.06);
-
+    const s = state.height * 0.05;
     state.drops.push({
-      x: rand(size, width - size),
-      y: -size,
-      radius: size,
-      vy: rand(s.dropSpeed[0], s.dropSpeed[1]),
-      wobblePhase: Math.random() * Math.PI * 2,
-      wobbleAmp: size * 0.25
+      x: Math.random() * (state.width - s * 2) + s,
+      y: -s,
+      r: s,
+      vy: state.height * (0.25 + Math.random() * 0.15)
     });
   }
 
   function spawnLeaf() {
-    const s = DIFFICULTY_SETTINGS[state.difficulty] || DIFFICULTY_SETTINGS.normal;
-    const size = rand(height * 0.04, height * 0.06);
-
+    const w = state.width * 0.11;
+    const h = state.height * 0.055;
     state.leaves.push({
-      x: rand(size, width - size),
-      y: -size,
-      w: size * 1.4,
-      h: size * 0.9,
-      vy: rand(s.leafSpeed[0], s.leafSpeed[1]),
-      rot: rand(-0.4, 0.4)
+      x: Math.random() * (state.width - w * 2) + w,
+      y: -h,
+      w,
+      h,
+      vy: state.height * (0.22 + Math.random() * 0.2),
+      rot: Math.random() * Math.PI * 2
     });
   }
-
-  /* ========= GAME LOGIC ========= */
 
   function movePlayer(dt) {
     if (!state.player) return;
     let dir = 0;
     if (state.keys.left) dir -= 1;
     if (state.keys.right) dir += 1;
+    if (!dir) return;
 
-    if (dir !== 0) {
-      state.player.x += dir * state.player.speed * dt;
-      const margin = state.player.width * 0.5;
-      state.player.x = Math.max(
-        margin,
-        Math.min(width - margin - state.player.width, state.player.x)
-      );
-    }
+    state.player.x += dir * state.player.speed * dt;
+    const margin = state.player.width * 0.4;
+    state.player.x = clamp(
+      state.player.x,
+      margin,
+      state.width - margin - state.player.width
+    );
   }
 
   function updateObjects(dt) {
-    const s = DIFFICULTY_SETTINGS[state.difficulty] || DIFFICULTY_SETTINGS.normal;
+    // spawn
+    if (Math.random() < 1.2 * dt) spawnDrop();
+    if (Math.random() < 0.4 * dt) spawnLeaf();
 
-    // spawn logic (probability per second)
-    if (Math.random() < s.dropRate * dt) spawnDrop();
-    if (Math.random() < s.leafRate * dt) spawnLeaf();
-
-    state.drops.forEach(d => {
+    state.drops.forEach((d) => {
       d.y += d.vy * dt;
-      d.wobblePhase += dt * 4;
-      d.x += Math.sin(d.wobblePhase) * d.wobbleAmp * dt;
     });
-
-    state.leaves.forEach(l => {
+    state.leaves.forEach((l) => {
       l.y += l.vy * dt;
       l.rot += dt * 0.8;
     });
 
-    state.drops = state.drops.filter(d => d.y < height + d.radius * 2);
-    state.leaves = state.leaves.filter(l => l.y < height + l.h * 2);
+    state.drops = state.drops.filter((d) => d.y < state.height + d.r * 2);
+    state.leaves = state.leaves.filter((l) => l.y < state.height + l.h * 2);
   }
 
   function checkCollisions() {
@@ -256,108 +174,82 @@
     const px = p.x + p.width / 2;
     const py = p.y + p.height / 2;
 
-    // honey jars
+    // Honey drops: circle vs box
     for (let i = state.drops.length - 1; i >= 0; i--) {
       const d = state.drops[i];
-      const dx = (d.x - px) / (p.width * 0.6);
-      const dy = (d.y - py) / (p.height * 0.6);
+      const dx = (d.x - px) / (p.width * 0.55);
+      const dy = (d.y - py) / (p.height * 0.55);
       if (dx * dx + dy * dy < 1) {
         state.drops.splice(i, 1);
-        handleHoneyCatch();
+        state.score += 10;
+        updateHUD();
       }
     }
 
-    // leaves
+    // Leaves: simple AABB
     for (let i = state.leaves.length - 1; i >= 0; i--) {
       const l = state.leaves[i];
-      const lx = l.x;
-      const ly = l.y;
-      if (
-        lx < p.x + p.width * 0.8 &&
-        lx + l.w > p.x + p.width * 0.2 &&
-        ly < p.y + p.height &&
-        ly + l.h > p.y + p.height * 0.4
-      ) {
+      const lx1 = l.x - l.w / 2;
+      const lx2 = l.x + l.w / 2;
+      const ly1 = l.y - l.h / 2;
+      const ly2 = l.y + l.h / 2;
+
+      const px1 = p.x + p.width * 0.15;
+      const px2 = p.x + p.width * 0.85;
+      const py1 = p.y + p.height * 0.3;
+      const py2 = p.y + p.height;
+
+      if (lx1 < px2 && lx2 > px1 && ly1 < py2 && ly2 > py1) {
         state.leaves.splice(i, 1);
-        handleLeafHit();
+        state.lives -= 1;
+        updateHUD();
+        if (state.lives <= 0) {
+          endGame();
+          return;
+        }
       }
-    }
-  }
-
-  function handleHoneyCatch() {
-    state.score += 10 * state.combo;
-    state.combo += 1;
-    state.comboTimer = 2.0;
-    updateHUD();
-    pulseCombo();
-  }
-
-  function handleLeafHit() {
-    state.lives -= 1;
-    state.combo = 1;
-    state.comboTimer = 0;
-    updateHUD();
-    flashStatus();
-
-    if (state.lives <= 0 && !state.arcadeMode) {
-      endGame("Pooh took one tumble too many. Round over.", "end");
-    } else {
-      setStatus("Whoops! Leaves are not for catching.", "warn");
     }
   }
 
   function updateTimer(dt) {
-    if (!state.arcadeMode) {
-      state.timer -= dt;
-      if (state.timer <= 0) {
-        state.timer = 0;
-        updateHUD();
-        endGame("Time's up! Tallying the honey jars.", "end");
-        return;
-      }
-    }
-
-    if (state.combo > 1) {
-      state.comboTimer -= dt;
-      if (state.comboTimer <= 0) {
-        state.combo = 1;
-        state.comboTimer = 0;
-        updateHUD();
-      }
+    state.timer -= dt;
+    if (state.timer <= 0) {
+      state.timer = 0;
+      endGame();
     }
   }
 
   /* ========= DRAWING ========= */
-
   function drawBackground() {
-    ctx.clearRect(0, 0, width, height);
+    const w = state.width;
+    const h = state.height;
+    ctx.clearRect(0, 0, w, h);
 
-    // sky gradient
-    const g = ctx.createLinearGradient(0, 0, 0, height);
+    const g = ctx.createLinearGradient(0, 0, 0, h);
     g.addColorStop(0, "#fffef6");
     g.addColorStop(0.4, "#ffeec4");
     g.addColorStop(1, "#f6d9b0");
     ctx.fillStyle = g;
-    ctx.fillRect(0, 0, width, height);
+    ctx.fillRect(0, 0, w, h);
 
-    // simple clouds
+    // clouds
     ctx.fillStyle = "rgba(255,255,255,0.9)";
     const clouds = [
-      { x: width * 0.18, y: height * 0.14, r: 32 },
-      { x: width * 0.3,  y: height * 0.10, r: 24 },
-      { x: width * 0.75, y: height * 0.16, r: 28 }
+      { x: w * 0.2, y: h * 0.16, r: 32 },
+      { x: w * 0.3, y: h * 0.12, r: 26 },
+      { x: w * 0.75, y: h * 0.18, r: 30 }
     ];
-    clouds.forEach(c => {
+    clouds.forEach((c) => {
       ctx.beginPath();
       ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
       ctx.arc(c.x + c.r * 0.8, c.y + c.r * 0.1, c.r * 0.85, 0, Math.PI * 2);
-      ctx.arc(c.x - c.r * 0.7, c.y + c.r * 0.15, c.r * 0.7, 0, Math.PI * 2);
+      ctx.arc(c.x - c.r * 0.7, c.y + c.r * 0.18, c.r * 0.7, 0, Math.PI * 2);
       ctx.fill();
     });
 
     // ground
     ctx.fillStyle = "#d1e0c0";
-    ctx.fillRect(0, height * 0.8, width, height * 0.2);
+    ctx.fillRect(0, h * 0.8, w, h * 0.2);
   }
 
   function drawPlayer() {
@@ -370,7 +262,7 @@
     const h = p.height;
 
     // body
-    ctx.fillStyle = "#f1c05d";
+    ctx.fillStyle = "#f3c562";
     ctx.beginPath();
     if (ctx.roundRect) {
       ctx.roundRect(x, y + h * 0.2, w, h * 0.7, h * 0.18);
@@ -426,30 +318,27 @@
     }
     ctx.fill();
 
-    // honey on top
     ctx.fillStyle = "#f0c96e";
     ctx.fillRect(jx, jy, jarW, jarH * 0.26);
   }
 
   function drawDrops() {
-    state.drops.forEach(d => {
-      ctx.save();
+    ctx.fillStyle = "#f4c048";
+    state.drops.forEach((d) => {
       ctx.beginPath();
-      ctx.fillStyle = "#f4c048";
-      ctx.moveTo(d.x, d.y - d.radius * 0.6);
-      ctx.quadraticCurveTo(d.x - d.radius, d.y, d.x, d.y + d.radius);
-      ctx.quadraticCurveTo(d.x + d.radius, d.y, d.x, d.y - d.radius * 0.6);
+      ctx.moveTo(d.x, d.y - d.r * 0.6);
+      ctx.quadraticCurveTo(d.x - d.r, d.y, d.x, d.y + d.r);
+      ctx.quadraticCurveTo(d.x + d.r, d.y, d.x, d.y - d.r * 0.6);
       ctx.fill();
-      ctx.restore();
     });
   }
 
   function drawLeaves() {
-    state.leaves.forEach(l => {
+    ctx.fillStyle = "#9cad90";
+    state.leaves.forEach((l) => {
       ctx.save();
-      ctx.translate(l.x + l.w / 2, l.y + l.h / 2);
+      ctx.translate(l.x, l.y);
       ctx.rotate(l.rot);
-      ctx.fillStyle = "#9cad90";
       ctx.beginPath();
       ctx.moveTo(-l.w / 2, 0);
       ctx.quadraticCurveTo(0, -l.h / 2, l.w / 2, 0);
@@ -466,107 +355,69 @@
     drawPlayer();
   }
 
-  /* ========= LOOP & LIFECYCLE ========= */
+  /* ========= LOOP ========= */
+  let frameId = null;
 
   function gameLoop(timestamp) {
     if (!state.running) return;
 
-    const dt = lastTime ? (timestamp - lastTime) / 1000 : 0;
-    lastTime = timestamp;
+    const dt = state.lastTime ? (timestamp - state.lastTime) / 1000 : 0;
+    state.lastTime = timestamp;
 
     if (!state.paused) {
       movePlayer(dt);
       updateObjects(dt);
-      updateTimer(dt);
       checkCollisions();
+      updateTimer(dt);
+      updateHUD();
     }
 
     draw();
 
     if (state.running) {
-      frameRequest = requestAnimationFrame(gameLoop);
+      frameId = requestAnimationFrame(gameLoop);
     }
   }
 
   function startGame() {
-    resetPlayer();
+    if (!state.player) createPlayer();
     resetGameValues();
     state.running = true;
     state.paused = false;
-    lastTime = 0;
-
-    setStatus("Catch the honey, dodge the leaves. Short and sweet!", "start");
-
-    if (frameRequest) cancelAnimationFrame(frameRequest);
-    frameRequest = requestAnimationFrame(gameLoop);
+    if (frameId) cancelAnimationFrame(frameId);
+    state.lastTime = 0;
+    frameId = requestAnimationFrame(gameLoop);
   }
 
   function pauseGame() {
     if (!state.running) return;
     state.paused = !state.paused;
-
-    setStatus(
-      state.paused
-        ? "Game paused. Pooh is catching his breath."
-        : "Back to the honey chase!",
-      "neutral"
-    );
   }
 
   function resetGame() {
     state.running = false;
     state.paused = false;
-    if (frameRequest) cancelAnimationFrame(frameRequest);
-
-    resetPlayer();
+    if (frameId) cancelAnimationFrame(frameId);
     resetGameValues();
-    drawBackground();
-    drawPlayer();
-    setStatus("Ready for another round whenever you are.", "neutral");
+    createPlayer();
+    draw();
   }
 
-  function endGame(message, tone) {
+  function endGame() {
     state.running = false;
     state.paused = false;
-    if (frameRequest) cancelAnimationFrame(frameRequest);
-    saveBestScore();
-    setStatus(message, tone);
+    saveBest();
+    if (frameId) cancelAnimationFrame(frameId);
+    draw(); // final state
   }
 
-  function handleArcadeToggle() {
-    state.arcadeMode = !state.arcadeMode;
-
-    if (arcadeModeBtn) {
-      arcadeModeBtn.classList.toggle('btn--primary', state.arcadeMode);
-      arcadeModeBtn.classList.toggle('btn--ghost', !state.arcadeMode);
-    }
-
-    resetGame();
-
-    if (!state.arcadeMode) {
-      setStatus("Arcade Mode off. Back to cozy story rounds.", "neutral");
-    } else {
-      setStatus("Arcade Mode on. Endless honey until lives run out!", "start");
-    }
-  }
-
-  function handleDifficultyChange() {
-    const value = difficultySelect ? difficultySelect.value : 'normal';
-    if (['easy', 'normal', 'hard'].includes(value)) {
-      state.difficulty = value;
-      resetGame();
-      setStatus(`Difficulty set to ${value}.`, "neutral");
-    }
-  }
-
-  /* ========= INPUT HANDLERS ========= */
-
+  /* ========= INPUT ========= */
   function onKeyDown(e) {
-    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+    if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
       state.keys.left = true;
-    } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+    } else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
       state.keys.right = true;
-    } else if (e.key === ' ' || e.code === 'Space') {
+    } else if (e.key === " " || e.code === "Space") {
       e.preventDefault();
       if (!state.running) {
         startGame();
@@ -577,83 +428,53 @@
   }
 
   function onKeyUp(e) {
-    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+    if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
       state.keys.left = false;
-    } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+    } else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
       state.keys.right = false;
     }
   }
 
-  function attachEvents() {
-    if (startBtn) startBtn.addEventListener('click', startGame);
-    if (pauseBtn) pauseBtn.addEventListener('click', pauseGame);
-    if (resetBtn) resetBtn.addEventListener('click', resetGame);
-    if (difficultySelect) difficultySelect.addEventListener('change', handleDifficultyChange);
-    if (arcadeModeBtn) arcadeModeBtn.addEventListener('click', handleArcadeToggle);
-
-    // Touch controls (mobile)
-    if (leftBtn) {
-      leftBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        state.keys.left = true;
-      });
-      leftBtn.addEventListener('touchend', () => {
-        state.keys.left = false;
-      });
+  function onCanvasClick(evt) {
+    // Simple mobile-friendly: tap left/right half to move
+    const rect = canvas.getBoundingClientRect();
+    const x = evt.clientX - rect.left;
+    const mid = rect.width / 2;
+    if (x < mid) {
+      state.keys.left = true;
+      state.keys.right = false;
+      setTimeout(() => (state.keys.left = false), 120);
+    } else {
+      state.keys.right = true;
+      state.keys.left = false;
+      setTimeout(() => (state.keys.right = false), 120);
     }
-
-    if (rightBtn) {
-      rightBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        state.keys.right = true;
-      });
-      rightBtn.addEventListener('touchend', () => {
-        state.keys.right = false;
-      });
-    }
-
-    if (dropBtn) {
-      dropBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        if (!state.running) {
-          startGame();
-        } else {
-          pauseGame();
-        }
-      });
-    }
-
-    window.addEventListener('keydown', onKeyDown);
-    window.addEventListener('keyup', onKeyUp);
-    window.addEventListener('resize', () => {
-      resizeCanvas();
-      if (!state.running) {
-        drawBackground();
-        drawPlayer();
-      }
-    });
   }
 
   /* ========= INIT ========= */
-
   function init() {
     resizeCanvas();
-    resetPlayer();
-    loadBestScore();
+    createPlayer();
+    loadBest();
     updateHUD();
-    drawBackground();
-    drawPlayer();
-    setStatus("Press Start when you're ready for a little honey hunt.", "neutral");
+    draw();
 
-    if (bearBadge) {
-      bearBadge.setAttribute('title', 'New mini-game for Baby Gunner!');
-    }
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      if (!state.running) draw();
+    });
 
-    attachEvents();
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    canvas.addEventListener("click", onCanvasClick);
+
+    if (startBtn) startBtn.addEventListener("click", startGame);
+    if (pauseBtn) pauseBtn.addEventListener("click", pauseGame);
+    if (resetBtn) resetBtn.addEventListener("click", resetGame);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
   } else {
     init();
   }
