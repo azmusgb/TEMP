@@ -507,14 +507,14 @@
             padding: 20px;
         }
 
-        #catch-countdown, #defense-alert {
+        #catch-countdown {
             font-size: 1.5rem;
             font-weight: bold;
             margin-bottom: 10px;
             color: var(--primary-gold);
         }
 
-        #catch-hint, #defense-wave-status {
+        #catch-hint {
             font-size: 1.1rem;
             margin-bottom: 10px;
         }
@@ -578,26 +578,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .tower-options {
-            display: flex;
-            gap: 10px;
-            margin-left: auto;
-        }
-
-        .tower-option {
-            background: var(--primary-brown);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .tower-option:hover {
-            background: var(--primary-gold);
         }
 
         .mobile-controls-panel {
@@ -864,7 +844,7 @@
         }
 
         /* Game Canvas Placeholders */
-        #honey-game, #defense-game, #gamePreview, #fullscreenCanvas {
+        #honey-game, #gamePreview, #fullscreenCanvas {
             background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
             display: flex;
             align-items: center;
@@ -875,12 +855,6 @@
 
         #honey-game::before {
             content: "🎯 Honey Hunt Game Area";
-            font-size: 1.5rem;
-            text-align: center;
-        }
-
-        #defense-game::before {
-            content: "🏰 Defense Game Area";
             font-size: 1.5rem;
             text-align: center;
         }
@@ -1862,10 +1836,10 @@
                                 </div>
                             </article>
 
-                            <!-- Game 3: Memory Match -->
-                            <article class="game-card">
+                            <!-- Game 2: Memory Match (Recommended) -->
+                            <article class="game-card featured">
                                 <div class="game-card-header">
-                                    <div class="game-badge">Memory</div>
+                                    <div class="game-badge">Recommended</div>
                                     <div class="game-character-icon">🎴</div>
                                     <div class="game-rating">
                                         <i class="fas fa-star"></i>
@@ -2048,49 +2022,6 @@
                                 </div>
                             </div>
 
-                            <div class="play-column">
-                                <header class="play-header">
-                                    <div>
-                                        <p class="eyebrow">Strategy</p>
-                                        <h3>Heffalump Defense Simulator</h3>
-                                        <p class="eyebrow">Keep the honey safe wave after wave</p>
-                                    </div>
-                                    <div class="play-hud">
-                                        <div><strong id="honey-count">500</strong><span>Honey</span></div>
-                                        <div><strong id="lives-count">3</strong><span>Lives</span></div>
-                                        <div><strong id="wave-count">1</strong><span>Wave</span></div>
-                                        <div><strong id="defense-high-score">0</strong><span>High Score</span></div>
-                                    </div>
-                                </header>
-
-                                <div class="game-surface">
-                                    <canvas id="defense-game"></canvas>
-                                    <div class="game-overlay" id="defense-overlay">
-                                        <div class="overlay-inner">
-                                            <p id="defense-alert">Tap start to begin defending the meadow.</p>
-                                            <p id="defense-wave-status">Wave ready</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="play-controls">
-                                    <button class="magical-btn" id="start-defense">
-                                        <i class="fas fa-shield-alt"></i>
-                                        <span>Start Defense</span>
-                                    </button>
-                                    <button class="ghost-btn" id="upgrade-tower">
-                                        <i class="fas fa-level-up-alt"></i>
-                                        <span>Upgrade</span>
-                                    </button>
-                                    <div class="tower-options">
-                                        <button class="tower-option" data-type="rapid">Rapid</button>
-                                        <button class="tower-option" data-type="frost">Frost</button>
-                                        <button class="tower-option" data-type="splash">Splash</button>
-                                    </div>
-                                </div>
-
-                                <p class="tiny-text">Performance meter: <span id="game-speed">1.0x</span></p>
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -2332,39 +2263,6 @@
             if(honeyScore > currentHighScore) {
                 document.getElementById('catch-high-score-display').textContent = honeyScore + ' points (New High Score!)';
             }
-        }
-
-        // Defense Game
-        let defenseScore = 0;
-        let defenseHoney = 500;
-        let defenseLives = 3;
-        let defenseWave = 1;
-
-        document.getElementById('start-defense').addEventListener('click', function() {
-            document.getElementById('defense-overlay').style.display = 'none';
-            // Simulate game starting
-            setTimeout(() => {
-                defenseScore += 100;
-                defenseHoney -= 50;
-                updateDefenseHUD();
-            }, 1000);
-        });
-
-        document.querySelectorAll('.tower-option').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const type = this.getAttribute('data-type');
-                // Simulate tower placement
-                defenseHoney -= 100;
-                updateDefenseHUD();
-                alert(`Placed ${type} tower!`);
-            });
-        });
-
-        function updateDefenseHUD() {
-            document.getElementById('honey-count').textContent = defenseHoney;
-            document.getElementById('lives-count').textContent = defenseLives;
-            document.getElementById('wave-count').textContent = defenseWave;
-            document.getElementById('defense-high-score').textContent = defenseScore;
         }
 
         // Mobile Controls
