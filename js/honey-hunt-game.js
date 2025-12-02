@@ -119,6 +119,11 @@
   let startBtn, pauseBtn, resetBtn, arcadeBtn, soundToggle, effectsToggle;
   let difficultySelect, leftBtn, rightBtn, dropBtn;
   let gameOverlay, gameMessage;
+  let audioSystem;
+
+  function getElementByIds(ids) {
+    return ids.map(id => document.getElementById(id)).find(Boolean) || null;
+  }
 
   function getElementByIds(ids) {
     return ids.map(id => document.getElementById(id)).find(Boolean) || null;
