@@ -110,6 +110,7 @@ const promptBtn = document.getElementById('promptButton');
 const promptText = document.getElementById('promptText');
 const playBtn = document.getElementById('startGame');
 const pauseBtn = document.getElementById('pauseGame');
+const openInstructions = document.getElementById('openInstructions');
 const leftBtn = document.getElementById('leftBtn');
 const rightBtn = document.getElementById('rightBtn');
 const chime = document.getElementById('chime');
@@ -185,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
   hideLoader();
   bestEl.textContent = state.best;
   timerEl.textContent = `${state.time}s`;
+  instructionOverlay?.setAttribute('aria-hidden', 'true');
 
   // Initialize enhanced visuals once the DOM is ready
   setTimeout(initEnhancedVisuals, 100);
@@ -271,6 +273,17 @@ function startGame() {
   spawn();
   startTimer();
   loop();
+}
+
+function showInstructions() {
+  instructionOverlay?.classList.remove('is-hidden');
+  instructionOverlay?.removeAttribute('aria-hidden');
+  if (state.playing) {
+    state.paused = true;
+    clearInterval(state.timerId);
+    gameStatus.textContent = 'Paused for a quick refresher. Tap resume when ready!';
+    pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i> Resume';
+  }
 }
 
 function endGame() {
@@ -383,33 +396,43 @@ function drawGround() {
 function drawPlayer() {
   const x = state.player.x;
   const y = canvas.height - 70;
-  
+
+  if (poohSpriteReady) {
+    ctx.save();
+    ctx.shadowColor = 'rgba(179, 119, 46, 0.35)';
+    ctx.shadowBlur = 18;
+    ctx.shadowOffsetY = 6;
+    ctx.drawImage(poohSprite, x - 10, y - 56, 84, 116);
+    ctx.restore();
+    return;
+  }
+
   // Save context state
   ctx.save();
-  
+
   // Shadow effect
   ctx.shadowColor = 'rgba(179, 119, 46, 0.4)';
   ctx.shadowBlur = 15;
   ctx.shadowOffsetY = 5;
-  
+
   // Main honey pot body
   const gradient = ctx.createLinearGradient(x, y, x + 60, y + 48);
   gradient.addColorStop(0, '#FFD166');
   gradient.addColorStop(0.3, '#FFE87C');
   gradient.addColorStop(0.7, '#FFD166');
   gradient.addColorStop(1, '#F9C152');
-  
+
   ctx.fillStyle = gradient;
   ctx.beginPath();
   ctx.roundRect(x, y, 60, 48, [20, 20, 10, 10]);
   ctx.fill();
-  
+
   // Honey level with shine
   ctx.fillStyle = '#FFE87C';
   ctx.beginPath();
   ctx.roundRect(x + 8, y + 20, 44, 24, [8, 8, 8, 8]);
   ctx.fill();
-  
+
   // Honey texture
   ctx.fillStyle = 'rgba(255, 209, 102, 0.3)';
   for (let i = 0; i < 5; i++) {
@@ -417,7 +440,7 @@ function drawPlayer() {
     ctx.arc(x + 15 + i * 8, y + 32, 2, 0, Math.PI * 2);
     ctx.fill();
   }
-  
+
   // Pot lid with metallic shine
   const lidGradient = ctx.createLinearGradient(x + 15, y - 8, x + 45, y + 2);
   lidGradient.addColorStop(0, '#184e35');
@@ -425,30 +448,30 @@ function drawPlayer() {
   lidGradient.addColorStop(0.5, '#3D9970');
   lidGradient.addColorStop(0.7, '#2a6f4e');
   lidGradient.addColorStop(1, '#184e35');
-  
+
   ctx.fillStyle = lidGradient;
   ctx.beginPath();
   ctx.roundRect(x + 15, y - 8, 30, 10, [8, 8, 0, 0]);
   ctx.fill();
-  
+
   // Lid highlight
   ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
   ctx.beginPath();
   ctx.roundRect(x + 17, y - 6, 10, 4, [4, 4, 0, 0]);
   ctx.fill();
-  
+
   // Pot handle
   ctx.strokeStyle = '#8B7355';
   ctx.lineWidth = 4;
   ctx.beginPath();
   ctx.arc(x + 30, y - 15, 12, 0.8 * Math.PI, 2.2 * Math.PI);
   ctx.stroke();
-  
+
   // Reset shadow
   ctx.shadowColor = 'transparent';
   ctx.shadowBlur = 0;
   ctx.shadowOffsetY = 0;
-  
+
   // Restore context
   ctx.restore();
 }
@@ -913,6 +936,7 @@ form.addEventListener('submit', (e) => {
 closeInstructions.addEventListener('click', () => startGame());
 playAgain.addEventListener('click', () => { gameOverOverlay.classList.remove('is-visible'); startGame(); });
 closeGameOver.addEventListener('click', () => gameOverOverlay.classList.remove('is-visible'));
+openInstructions?.addEventListener('click', showInstructions);
 
 document.querySelectorAll('.character-card').forEach(card => {
   card.addEventListener('click', () => openCharacter(card.dataset.character));
