@@ -704,8 +704,9 @@
     rightBtn = document.getElementById('rightBtn');
     dropBtn = document.getElementById('dropBtn');
 
-    // Initialize audio system
-    window.audioSystem = new AudioSystem();
+      // Initialize audio system
+      audioSystem = new AudioSystem();
+      window.audioSystem = audioSystem;
 
     // Respect any timer hint in the DOM (e.g., 45s embedded mode)
     const initialTimerText = timerEl?.textContent;
