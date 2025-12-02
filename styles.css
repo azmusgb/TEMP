@@ -19,12 +19,6 @@ body {
   overflow-x: hidden;
 }
 
-.fireflies { position: fixed; inset: 0; pointer-events: none; z-index: 2; }
-.fireflies span { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle, #fef7d1, #ffcf4d);
-  filter: blur(0.5px); opacity: 0.7; animation: drift 9s ease-in-out infinite; box-shadow: 0 0 20px rgba(247, 201, 72, 0.7);
-}
-.fireflies span:nth-child(odd) { animation-duration: 12s; }
-
 .reveal { opacity: 0; transform: translateY(18px); }
 
 main { max-width: 1100px; margin: 0 auto; padding: 120px 24px 80px; }
@@ -111,17 +105,13 @@ main { max-width: 1100px; margin: 0 auto; padding: 120px 24px 80px; }
 .character-card__hint { margin: 2px 0 0; color: var(--muted); }
 .character-card__btn { padding: 10px 12px; }
 
-.game { background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,247,230,0.95)); border-radius: 18px; padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(24,78,53,0.08); display: grid; gap: 12px; position: relative; overflow: hidden; }
+.game { background: #fff; border-radius: 18px; padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(24,78,53,0.08); display: grid; gap: 12px; }
 .game__hud { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 10px; }
 .game__hud div { background: linear-gradient(135deg, rgba(247,201,72,0.15), rgba(223,241,208,0.55)); border-radius: 12px; padding: 10px; font-weight: 700; color: var(--forest); display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
 .game__combo strong { color: #b76b1d; }
 .game__controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
 .touch { display: flex; gap: 8px; }
-canvas { width: 100%; border-radius: 14px; background: radial-gradient(circle at 20% 20%, rgba(247,201,72,0.28), transparent 35%),
-  radial-gradient(circle at 80% 40%, rgba(24,78,53,0.12), transparent 40%),
-  linear-gradient(180deg, #fff7e6, #f0e2b1);
-  box-shadow: inset 0 0 0 1px rgba(24,78,53,0.07), 0 10px 30px rgba(24,78,53,0.08);
-}
+canvas { width: 100%; border-radius: 14px; background: linear-gradient(180deg, #fff7e6, #f0e2b1); box-shadow: inset 0 0 0 1px rgba(24,78,53,0.07); }
 .game__status { margin: 4px 0 0; font-weight: 700; color: var(--forest); }
 
 .game__overlay { position: absolute; inset: 0; background: var(--overlay); display: grid; place-items: center; opacity: 1; transition: opacity 0.35s ease; z-index: 2; }
@@ -190,7 +180,6 @@ textarea { min-height: 120px; resize: vertical; }
 .loader.is-hidden { opacity: 0; pointer-events: none; }
 
 @keyframes buzz { 0%,100% { transform: translate(0,0) rotate(0deg);} 25% { transform: translate(-10px,-8px) rotate(-5deg);} 50% { transform: translate(6px,2px) rotate(6deg);} 75% { transform: translate(-4px,10px) rotate(-4deg);} }
-@keyframes drift { 0% { transform: translate3d(0,0,0) scale(1); opacity: 0.6; } 50% { transform: translate3d(40px,-30px,0) scale(1.1); opacity: 1; } 100% { transform: translate3d(-30px,20px,0) scale(0.95); opacity: 0.4; } }
 @keyframes drip { 0% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0.4); } }
 @keyframes dripDown { 0% { transform: translateY(-8px); height: 20px; } 50% { transform: translateY(8px); height: 40px; } 100% { transform: translateY(-8px); height: 20px; } }
 @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
