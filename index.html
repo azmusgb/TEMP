@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gunner's Woodland Baby Shower</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Patrick+Hand&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Gunner's Woodland Adventure - A Winnie the Pooh Storybook Shower</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Patrick+Hand&family=Playfair+Display:wght@700&family=Schoolbell&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Loader -->
-    <div id="loader" class="loader">
-        <div class="loader__pooh">
+    <!-- Storybook Loader -->
+    <div id="loader" class="loader storybook-loader">
+        <div class="loader__pooh storybook-loader__pooh">
             <div class="loader__ears loader__ears--left"></div>
             <div class="loader__ears loader__ears--right"></div>
             <div class="loader__face">
@@ -23,449 +23,838 @@
                 <div class="loader__drip"></div>
             </div>
         </div>
-        <p class="loader__text">Warming up the honey pot...</p>
+        <div class="storybook-loader__text-container">
+            <p class="storybook-loader__text">Turning the pages...</p>
+            <div class="storybook-loader__book">
+                <div class="book-page"></div>
+                <div class="book-page"></div>
+                <div class="book-page"></div>
+            </div>
+        </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav__brand">Gunner's Woodland Shower</div>
-        <div class="nav__links">
-            <a href="#hero">Welcome</a>
-            <a href="#story">Story</a>
-            <a href="#details">Details</a>
-            <a href="#game">Game</a>
-            <a href="#rsvp">RSVP</a>
+    <!-- Storybook Navigation -->
+    <nav class="nav storybook-nav">
+        <div class="storybook-nav__book">
+            <div class="storybook-nav__book-spine"></div>
+            <div class="storybook-nav__book-cover">
+                <div class="storybook-nav__title">The Adventures of</div>
+                <div class="storybook-nav__main-title">Gunner & Friends</div>
+                <div class="storybook-nav__subtitle">A Woodland Storybook</div>
+            </div>
+        </div>
+        <div class="nav__links storybook-nav__links">
+            <a href="#hero" class="storybook-nav__link">
+                <i class="fas fa-book-open"></i>
+                <span>Begin Story</span>
+            </a>
+            <a href="#story" class="storybook-nav__link">
+                <i class="fas fa-feather-alt"></i>
+                <span>The Tale</span>
+            </a>
+            <a href="#characters" class="storybook-nav__link">
+                <i class="fas fa-paw"></i>
+                <span>Meet Friends</span>
+            </a>
+            <a href="#game" class="storybook-nav__link">
+                <i class="fas fa-gamepad"></i>
+                <span>Honey Hunt</span>
+            </a>
+            <a href="#rsvp" class="storybook-nav__link">
+                <i class="fas fa-pencil-alt"></i>
+                <span>Join Story</span>
+            </a>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero reveal">
-            <div class="hero__content">
-                <p class="eyebrow">A Celebration in the Hundred Acre Wood</p>
-                <h1>Welcome to Gunner's Woodland Baby Shower</h1>
-                <p class="lead">Join Winnie the Pooh and friends for a honey-sweet celebration filled with stories, games, and cozy moments as we welcome little Gunner to the world.</p>
-                <div class="hero__cta">
-                    <button class="btn" id="openInstructions">
-                        <i class="fas fa-gamepad"></i> Play Honey Hunt
+    <!-- Main Storybook Content -->
+    <main class="storybook-main">
+        <!-- Hero Section - Storybook Cover -->
+        <section id="hero" class="hero storybook-cover reveal">
+            <div class="storybook-cover__decoration storybook-cover__decoration--left">
+                <div class="storybook-vine"></div>
+                <div class="storybook-vine"></div>
+            </div>
+            <div class="storybook-cover__decoration storybook-cover__decoration--right">
+                <div class="storybook-vine"></div>
+                <div class="storybook-vine"></div>
+            </div>
+            
+            <div class="hero__content storybook-cover__content">
+                <div class="storybook-cover__title-container">
+                    <div class="storybook-cover__eyebrow">A Storybook Celebration</div>
+                    <h1 class="storybook-cover__title">Gunner's Woodland Welcome</h1>
+                    <div class="storybook-cover__subtitle">Featuring Winnie the Pooh & Friends</div>
+                </div>
+                
+                <div class="storybook-cover__quote">
+                    <div class="storybook-quote-mark storybook-quote-mark--left">"</div>
+                    <p class="storybook-cover__quote-text">Sometimes the smallest things take up the most room in your heart.</p>
+                    <div class="storybook-quote-mark storybook-quote-mark--right">"</div>
+                    <div class="storybook-cover__quote-author">— Winnie the Pooh</div>
+                </div>
+                
+                <div class="hero__cta storybook-cover__cta">
+                    <button class="btn storybook-btn" id="openInstructions">
+                        <i class="fas fa-book"></i>
+                        <span>Begin Adventure</span>
                     </button>
-                    <button class="btn btn--ghost" id="promptButton">
-                        <i class="fas fa-quote-right"></i> Get a Writing Prompt
+                    <button class="btn storybook-btn storybook-btn--secondary" id="promptButton">
+                        <i class="fas fa-magic"></i>
+                        <span>Story Prompt</span>
                     </button>
                 </div>
-                <div class="hero__stats">
-                    <div>
-                        <strong>Date</strong>
-                        <span>April 15, 2024</span>
+                
+                <div class="hero__stats storybook-cover__stats">
+                    <div class="storybook-stat">
+                        <div class="storybook-stat__icon">📖</div>
+                        <div class="storybook-stat__content">
+                            <strong>Chapter One</strong>
+                            <span>The Arrival</span>
+                        </div>
                     </div>
-                    <div>
-                        <strong>Time</strong>
-                        <span>2:00 PM - 5:00 PM</span>
+                    <div class="storybook-stat">
+                        <div class="storybook-stat__icon">🍯</div>
+                        <div class="storybook-stat__content">
+                            <strong>Sweet Treats</strong>
+                            <span>Honey & Cakes</span>
+                        </div>
                     </div>
-                    <div>
-                        <strong>Theme</strong>
-                        <span>Hundred Acre Wood</span>
+                    <div class="storybook-stat">
+                        <div class="storybook-stat__icon">🐻</div>
+                        <div class="storybook-stat__content">
+                            <strong>Special Guest</strong>
+                            <span>Winnie the Pooh</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="hero__art">
-                <div class="honey-drip"></div>
-                <div class="bee">🐝</div>
-                <div class="floating-notes">
-                    <span>Little adventures begin</span>
-                    <span>Honey-sweet moments</span>
-                    <span>Welcome, little one!</span>
+            
+            <div class="hero__art storybook-cover__art">
+                <div class="storybook-pooh-character">
+                    <div class="pooh-character">
+                        <div class="pooh-head">
+                            <div class="pooh-ear pooh-ear--left"></div>
+                            <div class="pooh-ear pooh-ear--right"></div>
+                            <div class="pooh-face">
+                                <div class="pooh-eyes">
+                                    <div class="pooh-eye"></div>
+                                    <div class="pooh-eye"></div>
+                                </div>
+                                <div class="pooh-snout"></div>
+                                <div class="pooh-mouth"></div>
+                            </div>
+                        </div>
+                        <div class="pooh-body">
+                            <div class="pooh-arm pooh-arm--left"></div>
+                            <div class="pooh-arm pooh-arm--right"></div>
+                            <div class="pooh-honey-pot">
+                                <div class="honey-pot">
+                                    <div class="honey-pot__body"></div>
+                                    <div class="honey-pot__handle"></div>
+                                    <div class="honey-pot__lid"></div>
+                                    <div class="honey-drips">
+                                        <div class="honey-drip"></div>
+                                        <div class="honey-drip"></div>
+                                        <div class="honey-drip"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="floating-notes storybook-notes">
+                    <div class="storybook-note storybook-note--1">
+                        <div class="storybook-note__pin"></div>
+                        <div class="storybook-note__content">Oh, bother! Someone's coming!</div>
+                    </div>
+                    <div class="storybook-note storybook-note--2">
+                        <div class="storybook-note__pin"></div>
+                        <div class="storybook-note__content">Time for a little smackerel</div>
+                    </div>
+                    <div class="storybook-note storybook-note--3">
+                        <div class="storybook-note__pin"></div>
+                        <div class="storybook-note__content">Welcome to our Wood</div>
+                    </div>
+                </div>
+                
+                <div class="bee storybook-bee">
+                    <div class="bee-body">
+                        <div class="bee-wing bee-wing--left"></div>
+                        <div class="bee-wing bee-wing--right"></div>
+                        <div class="bee-stripe"></div>
+                        <div class="bee-stripe"></div>
+                        <div class="bee-stripe"></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Path Navigation -->
-        <div class="path">
-            <div class="path__title">
-                <p class="eyebrow">Your Adventure Map</p>
-                <h2>Explore the Wood</h2>
-                <p>Click any step to jump to that part of our celebration</p>
-            </div>
-            <div class="path__steps">
-                <div class="path__step" data-target="story">📖 Read the Story</div>
-                <div class="path__step" data-target="details">📅 Event Details</div>
-                <div class="path__step" data-target="experiences">🎨 Immersive Moments</div>
-                <div class="path__step" data-target="characters">🐻 Meet the Crew</div>
-                <div class="path__step" data-target="game">🎮 Play Honey Hunt</div>
-                <div class="path__step" data-target="rsvp">✏️ Send RSVP</div>
+        <!-- Storybook Page Turns -->
+        <div class="storybook-page-turn">
+            <div class="storybook-page-turn__content">
+                <div class="storybook-page-turn__icon">📖</div>
+                <p>Turn the page to continue the story...</p>
             </div>
         </div>
 
-        <!-- Story Section -->
-        <section id="story" class="panel reveal">
-            <div class="panel__header">
-                <p class="eyebrow">Once Upon a Time in the Wood</p>
-                <h2>The Story of Gunner's Arrival</h2>
-                <p>In the heart of the Hundred Acre Wood, where honey pots sparkle in the sun and friends gather under ancient trees, we're preparing for the most wonderful arrival.</p>
+        <!-- Story Navigation - Table of Contents -->
+        <div class="storybook-toc">
+            <div class="storybook-toc__header">
+                <h2 class="storybook-toc__title">Table of Contents</h2>
+                <p class="storybook-toc__subtitle">Choose a chapter to begin your adventure</p>
             </div>
-            <div class="cards">
-                <div class="card">
-                    <div class="card__icon">🐝</div>
-                    <h3>The Buzz Begins</h3>
-                    <p>Word spread through the wood about a new little friend who would soon join our adventures.</p>
-                </div>
-                <div class="card">
-                    <div class="card__icon">🍯</div>
-                    <h3>Honey-Sweet Preparations</h3>
-                    <p>Pooh organized extra honey pots, Piglet practiced being extra brave, and Tigger perfected his welcoming bounce.</p>
-                </div>
-                <div class="card">
-                    <div class="card__icon">📖</div>
-                    <h3>Storybook Welcome</h3>
-                    <p>Owl began writing tales of adventure, Rabbit planned the garden, and Eeyore found the sunniest spot for naps.</p>
-                </div>
-                <div class="card">
-                    <div class="card__icon">✨</div>
-                    <h3>Your Part in the Story</h3>
-                    <p>Now we invite you to share in the warmth, wisdom, and wonder as we welcome Gunner to our woodland family.</p>
-                </div>
+            <div class="storybook-toc__chapters">
+                <a href="#story" class="storybook-toc__chapter">
+                    <div class="storybook-toc__number">01</div>
+                    <div class="storybook-toc__content">
+                        <h3>The Beginning of the Tale</h3>
+                        <p>How Gunner's story starts in the Hundred Acre Wood</p>
+                    </div>
+                    <div class="storybook-toc__arrow">→</div>
+                </a>
+                <a href="#details" class="storybook-toc__chapter">
+                    <div class="storybook-toc__number">02</div>
+                    <div class="storybook-toc__content">
+                        <h3>Celebration Details</h3>
+                        <p>When and where the woodland gathering happens</p>
+                    </div>
+                    <div class="storybook-toc__arrow">→</div>
+                </a>
+                <a href="#experiences" class="storybook-toc__chapter">
+                    <div class="storybook-toc__number">03</div>
+                    <div class="storybook-toc__content">
+                        <h3>Storybook Activities</h3>
+                        <p>Interactive pages for you to write upon</p>
+                    </div>
+                    <div class="storybook-toc__arrow">→</div>
+                </a>
+                <a href="#characters" class="storybook-toc__chapter">
+                    <div class="storybook-toc__number">04</div>
+                    <div class="storybook-toc__content">
+                        <h3>Meet the Characters</h3>
+                        <p>All your friends from the Hundred Acre Wood</p>
+                    </div>
+                    <div class="storybook-toc__arrow">→</div>
+                </a>
+                <a href="#game" class="storybook-toc__chapter">
+                    <div class="storybook-toc__number">05</div>
+                    <div class="storybook-toc__content">
+                        <h3>The Honey Hunt Game</h3>
+                        <p>Help Pooh find honey in this interactive story</p>
+                    </div>
+                    <div class="storybook-toc__arrow">→</div>
+                </a>
+                <a href="#rsvp" class="storybook-toc__chapter">
+                    <div class="storybook-toc__number">06</div>
+                    <div class="storybook-toc__content">
+                        <h3>Join the Story</h3>
+                        <p>Add your name to our woodland guestbook</p>
+                    </div>
+                    <div class="storybook-toc__arrow">→</div>
+                </a>
             </div>
-        </section>
+        </div>
 
-        <!-- Details Section -->
-        <section id="details" class="panel panel--alt reveal">
-            <div class="panel__header">
-                <p class="eyebrow">All the Important Bits</p>
-                <h2>Event Details</h2>
-                <p>Everything you need to know about our woodland celebration</p>
-            </div>
-            <div class="detail-grid">
-                <div class="detail">
-                    <h3><i class="fas fa-calendar"></i> When</h3>
-                    <p><strong>April 15, 2024</strong><br>2:00 PM - 5:00 PM</p>
-                    <small>Arrive anytime after 1:30 PM for honey-sweet treats!</small>
+        <!-- Story Section - Chapter 1 -->
+        <section id="story" class="panel storybook-panel storybook-chapter reveal">
+            <div class="storybook-chapter__header">
+                <div class="storybook-chapter__number">Chapter 1</div>
+                <h2 class="storybook-chapter__title">The Beginning of Gunner's Tale</h2>
+                <div class="storybook-chapter__illustration">
+                    <div class="storybook-tree"></div>
+                    <div class="storybook-tree storybook-tree--small"></div>
+                    <div class="storybook-bird"></div>
                 </div>
-                <div class="detail">
-                    <h3><i class="fas fa-map-marker-alt"></i> Where</h3>
-                    <p><strong>The Hundred Acre Wood</strong><br>123 Forest Lane, Woodland Valley</p>
-                    <small>Look for the red balloon at the entrance!</small>
-                </div>
-                <div class="detail">
-                    <h3><i class="fas fa-utensils"></i> Food & Drinks</h3>
-                    <p>Honey-glazed treats, seasonal fruits, Rabbit's garden veggies, and Pooh's favorite honey cakes</p>
-                    <small>Please let us know about dietary needs in your RSVP</small>
-                </div>
-                <div class="detail">
-                    <h3><i class="fas fa-gift"></i> Gifts</h3>
-                    <p>Your presence is gift enough! If you wish to bring something, books for Gunner's library or contributions to his adventure fund are cherished.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experiences Section -->
-        <section id="experiences" class="panel reveal">
-            <div class="panel__header">
-                <p class="eyebrow">Cozy & Interactive</p>
-                <h2>Immersive Moments</h2>
-                <p>Join in these sweet activities during our celebration</p>
-            </div>
-            <div class="experience-grid">
-                <div class="experience">
-                    <div class="experience__top">
-                        <span class="badge badge--gold">Writing Activity</span>
-                        <h3>Wishes for Gunner</h3>
-                    </div>
-                    <p>Share a hope, a lullaby, or a bit of wisdom for Gunner's adventures ahead.</p>
-                    <button class="prompt-btn" id="promptButton2">Get a Prompt</button>
-                    <p class="prompt" id="promptText">"Share the coziest lullaby you know for Pooh to hum."</p>
-                </div>
-                <div class="experience">
-                    <div class="experience__top">
-                        <span class="badge badge--leaf">Memory Making</span>
-                        <h3>Adventure Book</h3>
-                    </div>
-                    <p>Contribute to Gunner's storybook with your favorite woodland memory or advice.</p>
-                    <ul class="list">
-                        <li><i class="fas fa-feather-alt"></i> Write a short story</li>
-                        <li><i class="fas fa-palette"></i> Draw a picture</li>
-                        <li><i class="fas fa-heart"></i> Share a wish</li>
-                    </ul>
-                </div>
-                <div class="experience">
-                    <div class="experience__top">
-                        <span class="badge">Interactive</span>
-                        <h3>Woodland Sounds</h3>
-                    </div>
-                    <p>Immerse yourself in the sounds of the Hundred Acre Wood during the celebration.</p>
-                    <div class="chip-row">
-                        <span class="chip"><i class="fas fa-volume-up"></i> Bee buzz</span>
-                        <span class="chip"><i class="fas fa-wind"></i> Rustling leaves</span>
-                        <span class="chip"><i class="fas fa-music"></i> Gentle streams</span>
-                    </div>
-                    <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
-                        <input type="checkbox" id="playChime" checked>
-                        <label for="playChime" style="font-size: 14px;">Enable game sounds</label>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Characters Section -->
-        <section id="characters" class="panel panel--characters reveal">
-            <div class="panel__header">
-                <p class="eyebrow">Meet Your Hosts</p>
-                <h2>The Hundred Acre Crew</h2>
-                <p>Click on any friend to learn about their gift for Gunner</p>
-            </div>
-            <div class="character-grid">
-                <div class="character-card" data-character="pooh">
-                    <div class="character-card__avatar">🐻</div>
-                    <div>
-                        <h4 class="character-card__name">Winnie the Pooh</h4>
-                        <p class="character-card__hint">Gentle host + honey connoisseur</p>
-                    </div>
-                    <button class="btn btn--ghost character-card__btn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                <div class="character-card" data-character="piglet">
-                    <div class="character-card__avatar">🐷</div>
-                    <div>
-                        <h4 class="character-card__name">Piglet</h4>
-                        <p class="character-card__hint">Brave best friend</p>
-                    </div>
-                    <button class="btn btn--ghost character-card__btn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                <div class="character-card" data-character="tigger">
-                    <div class="character-card__avatar">🐯</div>
-                    <div>
-                        <h4 class="character-card__name">Tigger</h4>
-                        <p class="character-card__hint">Boundless joy & bounce</p>
-                    </div>
-                    <button class="btn btn--ghost character-card__btn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                <div class="character-card" data-character="eeyore">
-                    <div class="character-card__avatar">🐴</div>
-                    <div>
-                        <h4 class="character-card__name">Eeyore</h4>
-                        <p class="character-card__hint">Thoughtful and steady</p>
-                    </div>
-                    <button class="btn btn--ghost character-card__btn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                <div class="character-card" data-character="rabbit">
-                    <div class="character-card__avatar">🐰</div>
-                    <div>
-                        <h4 class="character-card__name">Rabbit</h4>
-                        <p class="character-card__hint">Garden planner & organizer</p>
-                    </div>
-                    <button class="btn btn--ghost character-card__btn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                <div class="character-card" data-character="owl">
-                    <div class="character-card__avatar">🦉</div>
-                    <div>
-                        <h4 class="character-card__name">Owl</h4>
-                        <p class="character-card__hint">Resident storyteller</p>
-                    </div>
-                    <button class="btn btn--ghost character-card__btn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Game Section -->
-        <section id="game" class="panel reveal">
-            <div class="panel__header">
-                <p class="eyebrow">Interactive Fun</p>
-                <h2>Honey Hunt Game</h2>
-                <p>Help Pooh collect honey while avoiding bees! Use arrow keys or the buttons below.</p>
             </div>
             
-            <div class="game">
-                <!-- Game HUD -->
-                <div class="game__hud">
-                    <div>
-                        <span>Score</span>
-                        <strong id="score">0</strong>
+            <div class="storybook-chapter__content">
+                <div class="storybook-text">
+                    <p class="storybook-dropcap">In the heart of the Hundred Acre Wood, where the sunlight dances through the leaves and the river sings a gentle song, a wonderful rumor began to spread...</p>
+                    
+                    <p>A new little friend was coming to join their adventures. The bees buzzed it from flower to flower, the wind whispered it through the trees, and soon everyone in the Wood knew: Gunner was on his way.</p>
+                    
+                    <div class="storybook-quote storybook-quote--inline">
+                        <div class="storybook-quote__content">
+                            "Oh, how exciting!" said Pooh, nearly dropping his honey pot. "We must prepare the coziest welcome!"
+                        </div>
                     </div>
-                    <div>
-                        <span>Time</span>
-                        <strong id="timer">45s</strong>
+                    
+                    <p>And so began the preparations. Pooh organized extra honey pots (just in case), Piglet practiced being extra brave (for both of them), and Tigger perfected his most wonderful welcoming bounce.</p>
+                </div>
+                
+                <div class="cards storybook-cards">
+                    <div class="card storybook-card">
+                        <div class="card__icon storybook-card__icon">📝</div>
+                        <h3>The First Page</h3>
+                        <p>Every great story begins with a first page, and this one starts with hope, honey, and wonderful friends.</p>
                     </div>
-                    <div>
-                        <span>Lives</span>
-                        <strong id="lives">3</strong>
+                    <div class="card storybook-card">
+                        <div class="card__icon storybook-card__icon">✨</div>
+                        <h3>Magical Preparations</h3>
+                        <p>Owl began writing stories, Rabbit planned the perfect garden party, and Eeyore found the sunniest spot for naps.</p>
                     </div>
-                    <div class="game__combo">
-                        <span>Combo</span>
-                        <strong id="comboCount">x1</strong>
-                    </div>
-                    <div>
-                        <span>Best</span>
-                        <strong id="best">0</strong>
+                    <div class="card storybook-card">
+                        <div class="card__icon storybook-card__icon">❤️</div>
+                        <h3>Your Chapter</h3>
+                        <p>Now we invite you to add your words to Gunner's storybook, sharing wishes, wisdom, and woodland wonders.</p>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Game Canvas Container -->
-                <div class="canvas-container">
-                    <canvas id="honeyCanvas" width="800" height="500"></canvas>
-                    <div class="combo-display" id="comboDisplay">
-                        <i class="fas fa-bolt"></i>
-                        <span id="comboStreak">x1</span>
+        <!-- Details Section - Chapter 2 -->
+        <section id="details" class="panel storybook-panel storybook-chapter storybook-chapter--alt reveal">
+            <div class="storybook-chapter__header">
+                <div class="storybook-chapter__number">Chapter 2</div>
+                <h2 class="storybook-chapter__title">The Celebration Details</h2>
+                <div class="storybook-chapter__illustration">
+                    <div class="storybook-sun"></div>
+                    <div class="storybook-cloud"></div>
+                </div>
+            </div>
+            
+            <div class="storybook-chapter__content">
+                <div class="detail-grid storybook-details">
+                    <div class="detail storybook-detail">
+                        <div class="storybook-detail__icon">📅</div>
+                        <h3>When We Gather</h3>
+                        <p><strong>April 15, 2024</strong><br>2:00 PM - 5:00 PM</p>
+                        <small>Arrive early for a smackerel of something!</small>
+                    </div>
+                    <div class="detail storybook-detail">
+                        <div class="storybook-detail__icon">📍</div>
+                        <h3>Where We Meet</h3>
+                        <p><strong>The Hundred Acre Wood</strong><br>Under the great oak tree</p>
+                        <small>Follow the red balloons and honey scent</small>
+                    </div>
+                    <div class="detail storybook-detail">
+                        <div class="storybook-detail__icon">🍽️</div>
+                        <h3>Woodland Feast</h3>
+                        <p>Honey cakes, garden treats, and all of Pooh's favorite snacks</p>
+                        <small>Let us know about any dietary needs</small>
+                    </div>
+                    <div class="detail storybook-detail">
+                        <div class="storybook-detail__icon">🎁</div>
+                        <h3>Storybook Gifts</h3>
+                        <p>Your presence is the best gift! Books for Gunner's library or contributions to his adventure fund are cherished.</p>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Game Controls -->
-                <div class="game__controls">
-                    <button class="btn" id="startGame">
-                        <i class="fas fa-play"></i> Start Game
-                    </button>
-                    <button class="btn btn--ghost" id="pauseGame">
-                        <i class="fas fa-pause"></i> Pause
-                    </button>
-                    <div class="touch">
-                        <button class="btn btn--ghost" id="leftBtn">
-                            <i class="fas fa-arrow-left"></i> Left
-                        </button>
-                        <button class="btn btn--ghost" id="rightBtn">
-                            <i class="fas fa-arrow-right"></i> Right
-                        </button>
-                    </div>
+        <!-- Experiences Section - Chapter 3 -->
+        <section id="experiences" class="panel storybook-panel storybook-chapter reveal">
+            <div class="storybook-chapter__header">
+                <div class="storybook-chapter__number">Chapter 3</div>
+                <h2 class="storybook-chapter__title">Interactive Story Pages</h2>
+                <div class="storybook-chapter__illustration">
+                    <div class="storybook-quill"></div>
+                    <div class="storybook-ink-spot"></div>
                 </div>
-
-                <!-- Game Status -->
-                <p class="game__status" id="gameStatus">Ready to hunt some honey? Press Start!</p>
-
-                <!-- Instructions Overlay -->
-                <div id="instructionOverlay" class="game__overlay">
-                    <div class="game__overlay-card">
-                        <h3>How to Play Honey Hunt</h3>
-                        <ul class="game__instructions">
-                            <li><strong>← →</strong> or <strong>A D</strong> keys to move Pooh's honey pot</li>
-                            <li><strong>Click/tap</strong> the left/right buttons on mobile</li>
-                            <li><strong>Catch honey drops</strong> to score points</li>
-                            <li><strong>Avoid bees</strong> to keep your lives</li>
-                            <li><strong>Build combos</strong> by catching consecutive honey drops</li>
-                            <li><strong>Space bar</strong> to pause/resume the game</li>
+            </div>
+            
+            <div class="storybook-chapter__content">
+                <div class="experience-grid storybook-experiences">
+                    <div class="experience storybook-experience">
+                        <div class="experience__top">
+                            <span class="badge badge--gold storybook-badge">Write Your Page</span>
+                            <h3>Wishes for Gunner</h3>
+                        </div>
+                        <p>Add your words to Gunner's storybook. Share a hope, a lullaby, or woodland wisdom for his adventures ahead.</p>
+                        <div class="storybook-prompt">
+                            <button class="prompt-btn storybook-prompt-btn" id="promptButton2">
+                                <i class="fas fa-feather"></i>
+                                Get a Writing Prompt
+                            </button>
+                            <p class="prompt storybook-prompt-text" id="promptText">
+                                "Share the coziest lullaby you know for Pooh to hum to Gunner."
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="experience storybook-experience">
+                        <div class="experience__top">
+                            <span class="badge badge--leaf storybook-badge">Memory Book</span>
+                            <h3>Adventure Pages</h3>
+                        </div>
+                        <p>Contribute to Gunner's growing storybook with your favorite woodland memory or piece of advice.</p>
+                        <ul class="list storybook-list">
+                            <li><i class="fas fa-book"></i> Write a short bedtime story</li>
+                            <li><i class="fas fa-palette"></i> Draw a woodland creature</li>
+                            <li><i class="fas fa-heart"></i> Share a special wish</li>
+                            <li><i class="fas fa-star"></i> Suggest an adventure</li>
                         </ul>
-                        <p class="game__protip">🎯 Tip: The more honey you catch in a row, the higher your combo multiplier!</p>
-                        <div class="game__overlay-actions">
-                            <button class="btn" id="closeInstructions">Start Hunting!</button>
-                        </div>
                     </div>
-                </div>
-
-                <!-- Game Over Overlay -->
-                <div id="gameOverOverlay" class="game__overlay game__overlay--end">
-                    <div class="game__overlay-card">
-                        <div class="confetti">🎉</div>
-                        <h3>Honey Hunt Complete!</h3>
-                        <p class="game__highlight">Your Score: <span id="finalScore">0</span></p>
-                        <div id="highScoreBadge" class="high-score-badge" style="display: none;">
-                            <i class="fas fa-trophy"></i> New High Score!
+                    
+                    <div class="experience storybook-experience">
+                        <div class="experience__top">
+                            <span class="badge storybook-badge">Story Sounds</span>
+                            <h3>Woodland Atmosphere</h3>
                         </div>
-                        <p class="game__share" id="sharePrompt">Share your score with friends!</p>
-                        <div class="game__overlay-actions">
-                            <button class="btn" id="playAgain">
-                                <i class="fas fa-redo"></i> Play Again
-                            </button>
-                            <button class="btn btn--ghost" id="closeGameOver">
-                                Back to Shower
-                            </button>
+                        <p>Immerse yourself in the sounds of the Hundred Acre Wood as you explore our storybook celebration.</p>
+                        <div class="chip-row storybook-chip-row">
+                            <span class="chip storybook-chip"><i class="fas fa-bug"></i> Buzzing bees</span>
+                            <span class="chip storybook-chip"><i class="fas fa-leaf"></i> Rustling leaves</span>
+                            <span class="chip storybook-chip"><i class="fas fa-water"></i> Babbling brook</span>
+                        </div>
+                        <div class="storybook-sound-toggle">
+                            <label class="storybook-sound-toggle__label">
+                                <input type="checkbox" id="playChime" checked>
+                                <span class="storybook-sound-toggle__slider"></span>
+                                <span class="storybook-sound-toggle__text">Enable storybook sounds</span>
+                            </label>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- RSVP Section -->
-        <section id="rsvp" class="panel panel--alt reveal">
-            <div class="panel__header">
-                <p class="eyebrow">Join the Celebration</p>
-                <h2>RSVP for Gunner's Shower</h2>
-                <p>Let us know you're coming! We'll send a honey-sweet confirmation.</p>
+        <!-- Characters Section - Chapter 4 -->
+        <section id="characters" class="panel storybook-panel storybook-chapter storybook-chapter--characters reveal">
+            <div class="storybook-chapter__header">
+                <div class="storybook-chapter__number">Chapter 4</div>
+                <h2 class="storybook-chapter__title">Meet the Woodland Friends</h2>
+                <div class="storybook-chapter__illustration">
+                    <div class="storybook-paw-print"></div>
+                    <div class="storybook-paw-print"></div>
+                    <div class="storybook-paw-print"></div>
+                </div>
             </div>
-            <form id="rsvpForm" class="form">
-                <label>
-                    <span>Your Name</span>
-                    <input type="text" placeholder="Christopher Robin" required>
-                </label>
-                <label>
-                    <span>Email</span>
-                    <input type="email" placeholder="christopher@hundredacrewood.com" required>
-                </label>
-                <label>
-                    <span>Number of Guests</span>
-                    <select id="guests">
-                        <option value="1">Just me</option>
-                        <option value="2">2 guests</option>
-                        <option value="3">3 guests</option>
-                        <option value="4">4 guests</option>
-                    </select>
-                </label>
-                <label>
-                    <span>Message for Gunner (optional)</span>
-                    <textarea placeholder="Share a hope, a story, or some wisdom for Gunner's adventures..."></textarea>
-                </label>
-                <button type="submit" class="btn">
-                    <i class="fas fa-paper-plane"></i> Send my RSVP
-                </button>
-                <p class="form__status" id="formStatus"></p>
-            </form>
-            <div style="margin-top: 24px; text-align: center;">
-                <p><strong><span id="guestCount">0</span> friends</strong> have RSVP'd so far!</p>
+            
+            <div class="storybook-chapter__content">
+                <div class="character-grid storybook-characters">
+                    <!-- Winnie the Pooh -->
+                    <div class="character-card storybook-character-card" data-character="pooh">
+                        <div class="character-card__avatar storybook-character-avatar storybook-character-avatar--pooh">
+                            <div class="storybook-pooh-mini">
+                                <div class="pooh-mini-ear"></div>
+                                <div class="pooh-mini-ear"></div>
+                                <div class="pooh-mini-face"></div>
+                            </div>
+                        </div>
+                        <div class="storybook-character-info">
+                            <h4 class="character-card__name">Winnie the Pooh</h4>
+                            <p class="character-card__hint">Gentle bear with a heart full of honey</p>
+                            <div class="storybook-character-quote">"Oh, bother!"</div>
+                        </div>
+                        <button class="btn btn--ghost character-card__btn storybook-character-btn">
+                            <i class="fas fa-book-open"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Piglet -->
+                    <div class="character-card storybook-character-card" data-character="piglet">
+                        <div class="character-card__avatar storybook-character-avatar storybook-character-avatar--piglet">🐷</div>
+                        <div class="storybook-character-info">
+                            <h4 class="character-card__name">Piglet</h4>
+                            <p class="character-card__hint">Small but incredibly brave friend</p>
+                            <div class="storybook-character-quote">"Oh, d-d-dear!"</div>
+                        </div>
+                        <button class="btn btn--ghost character-card__btn storybook-character-btn">
+                            <i class="fas fa-book-open"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Tigger -->
+                    <div class="character-card storybook-character-card" data-character="tigger">
+                        <div class="character-card__avatar storybook-character-avatar storybook-character-avatar--tigger">🐯</div>
+                        <div class="storybook-character-info">
+                            <h4 class="character-card__name">Tigger</h4>
+                            <p class="character-card__hint">Bounciest friend in the Wood</p>
+                            <div class="storybook-character-quote">"TTFN! Ta-ta for now!"</div>
+                        </div>
+                        <button class="btn btn--ghost character-card__btn storybook-character-btn">
+                            <i class="fas fa-book-open"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Eeyore -->
+                    <div class="character-card storybook-character-card" data-character="eeyore">
+                        <div class="character-card__avatar storybook-character-avatar storybook-character-avatar--eeyore">🐴</div>
+                        <div class="storybook-character-info">
+                            <h4 class="character-card__name">Eeyore</h4>
+                            <p class="character-card__hint">Thoughtful donkey with a steady heart</p>
+                            <div class="storybook-character-quote">"Thanks for noticing me."</div>
+                        </div>
+                        <button class="btn btn--ghost character-card__btn storybook-character-btn">
+                            <i class="fas fa-book-open"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Rabbit -->
+                    <div class="character-card storybook-character-card" data-character="rabbit">
+                        <div class="character-card__avatar storybook-character-avatar storybook-character-avatar--rabbit">🐰</div>
+                        <div class="storybook-character-info">
+                            <h4 class="character-card__name">Rabbit</h4>
+                            <p class="character-card__hint">Organized gardener and planner</p>
+                            <div class="storybook-character-quote">"Now let's be sensible."</div>
+                        </div>
+                        <button class="btn btn--ghost character-card__btn storybook-character-btn">
+                            <i class="fas fa-book-open"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Owl -->
+                    <div class="character-card storybook-character-card" data-character="owl">
+                        <div class="character-card__avatar storybook-character-avatar storybook-character-avatar--owl">🦉</div>
+                        <div class="storybook-character-info">
+                            <h4 class="character-card__name">Owl</h4>
+                            <p class="character-card__hint">Wise storyteller of the Wood</p>
+                            <div class="storybook-character-quote">"Ahem, as I was saying..."</div>
+                        </div>
+                        <button class="btn btn--ghost character-card__btn storybook-character-btn">
+                            <i class="fas fa-book-open"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Section - Chapter 5 -->
+        <section id="game" class="panel storybook-panel storybook-chapter storybook-chapter--game reveal">
+            <div class="storybook-chapter__header">
+                <div class="storybook-chapter__number">Chapter 5</div>
+                <h2 class="storybook-chapter__title">The Great Honey Hunt</h2>
+                <div class="storybook-chapter__illustration">
+                    <div class="storybook-honeycomb"></div>
+                    <div class="storybook-honey-drip"></div>
+                </div>
+            </div>
+            
+            <div class="storybook-chapter__content">
+                <div class="storybook-game-intro">
+                    <p>Help Winnie the Pooh collect honey drops while avoiding the busy bees! Use your keyboard arrows or the buttons below to guide Pooh through the Wood.</p>
+                    <div class="storybook-game-instruction">
+                        <div class="storybook-game-keys">
+                            <kbd>←</kbd>
+                            <kbd>→</kbd>
+                        </div>
+                        <span>or</span>
+                        <div class="storybook-game-keys">
+                            <kbd>A</kbd>
+                            <kbd>D</kbd>
+                        </div>
+                        <span>to move Pooh</span>
+                    </div>
+                </div>
+                
+                <div class="game storybook-game">
+                    <!-- Game HUD -->
+                    <div class="game__hud storybook-game-hud">
+                        <div class="storybook-game-stat">
+                            <span>Story Score</span>
+                            <strong id="score">0</strong>
+                        </div>
+                        <div class="storybook-game-stat">
+                            <span>Chapter Time</span>
+                            <strong id="timer">45s</strong>
+                        </div>
+                        <div class="storybook-game-stat">
+                            <span>Pooh's Energy</span>
+                            <strong id="lives">3</strong>
+                        </div>
+                        <div class="storybook-game-stat storybook-game-stat--combo">
+                            <span>Honey Streak</span>
+                            <strong id="comboCount">x1</strong>
+                        </div>
+                        <div class="storybook-game-stat storybook-game-stat--best">
+                            <span>Best Tale</span>
+                            <strong id="best">0</strong>
+                        </div>
+                    </div>
+
+                    <!-- Game Canvas Container -->
+                    <div class="canvas-container storybook-game-canvas">
+                        <canvas id="honeyCanvas" width="800" height="500"></canvas>
+                        <div class="combo-display storybook-combo-display" id="comboDisplay">
+                            <i class="fas fa-bolt"></i>
+                            <span id="comboStreak">x1</span>
+                            <div class="storybook-combo-text">Honey Streak!</div>
+                        </div>
+                        <!-- Pooh Character in Game -->
+                        <div class="storybook-game-pooh" id="gamePooh">
+                            <div class="game-pooh">
+                                <div class="game-pooh__head">
+                                    <div class="game-pooh__ear game-pooh__ear--left"></div>
+                                    <div class="game-pooh__ear game-pooh__ear--right"></div>
+                                    <div class="game-pooh__face">
+                                        <div class="game-pooh__eyes">
+                                            <div class="game-pooh__eye"></div>
+                                            <div class="game-pooh__eye"></div>
+                                        </div>
+                                        <div class="game-pooh__snout"></div>
+                                        <div class="game-pooh__mouth"></div>
+                                    </div>
+                                </div>
+                                <div class="game-pooh__body">
+                                    <div class="game-pooh__arm game-pooh__arm--left"></div>
+                                    <div class="game-pooh__arm game-pooh__arm--right"></div>
+                                    <div class="game-pooh__honey-pot">
+                                        <div class="game-honey-pot">
+                                            <div class="game-honey-pot__body"></div>
+                                            <div class="game-honey-pot__handle"></div>
+                                            <div class="game-honey-pot__lid"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Controls -->
+                    <div class="game__controls storybook-game-controls">
+                        <button class="btn storybook-game-btn" id="startGame">
+                            <i class="fas fa-play"></i>
+                            <span>Start Story</span>
+                        </button>
+                        <button class="btn storybook-game-btn storybook-game-btn--secondary" id="pauseGame">
+                            <i class="fas fa-pause"></i>
+                            <span>Pause Tale</span>
+                        </button>
+                        <div class="touch storybook-game-touch">
+                            <button class="btn storybook-game-btn storybook-game-btn--touch" id="leftBtn">
+                                <i class="fas fa-arrow-left"></i>
+                                <span>Left</span>
+                            </button>
+                            <button class="btn storybook-game-btn storybook-game-btn--touch" id="rightBtn">
+                                <i class="fas fa-arrow-right"></i>
+                                <span>Right</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Game Status -->
+                    <p class="game__status storybook-game-status" id="gameStatus">Ready to help Pooh find honey? Press Start Story!</p>
+
+                    <!-- Instructions Overlay -->
+                    <div id="instructionOverlay" class="game__overlay storybook-game-overlay">
+                        <div class="game__overlay-card storybook-game-overlay-card">
+                            <h3 class="storybook-game-overlay-title">How to Play The Honey Hunt</h3>
+                            <ul class="game__instructions storybook-game-instructions">
+                                <li><strong>← →</strong> or <strong>A D</strong> keys to guide Pooh through the Wood</li>
+                                <li><strong>Tap the arrows</strong> on mobile devices</li>
+                                <li><strong>Catch honey drops</strong> to increase your story score</li>
+                                <li><strong>Avoid bees</strong> to keep Pooh's energy up</li>
+                                <li><strong>Build honey streaks</strong> for bonus points</li>
+                                <li><strong>Space bar</strong> to pause/resume the story</li>
+                            </ul>
+                            <p class="game__protip storybook-game-protip">🍯 Tip: The more honey you catch in a row, the sweeter your streak bonus becomes!</p>
+                            <div class="game__overlay-actions storybook-game-overlay-actions">
+                                <button class="btn storybook-game-btn" id="closeInstructions">
+                                    <i class="fas fa-search"></i>
+                                    Begin Honey Hunt
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay -->
+                    <div id="gameOverOverlay" class="game__overlay game__overlay--end storybook-game-overlay">
+                        <div class="game__overlay-card storybook-game-overlay-card">
+                            <div class="confetti storybook-confetti">🎉</div>
+                            <h3 class="storybook-game-overlay-title">Chapter Complete!</h3>
+                            <p class="game__highlight storybook-game-highlight">Your Story Score: <span id="finalScore">0</span></p>
+                            <div id="highScoreBadge" class="high-score-badge storybook-high-score-badge" style="display: none;">
+                                <i class="fas fa-crown"></i> New Best Tale!
+                            </div>
+                            <p class="game__share storybook-game-share" id="sharePrompt">Share your honey hunt score with friends!</p>
+                            <div class="game__overlay-actions storybook-game-overlay-actions">
+                                <button class="btn storybook-game-btn" id="playAgain">
+                                    <i class="fas fa-redo"></i>
+                                    <span>Play Chapter Again</span>
+                                </button>
+                                <button class="btn storybook-game-btn storybook-game-btn--secondary" id="closeGameOver">
+                                    <i class="fas fa-book"></i>
+                                    <span>Continue Story</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section - Chapter 6 -->
+        <section id="rsvp" class="panel storybook-panel storybook-chapter storybook-chapter--rsvp reveal">
+            <div class="storybook-chapter__header">
+                <div class="storybook-chapter__number">Chapter 6</div>
+                <h2 class="storybook-chapter__title">Join Our Storybook</h2>
+                <div class="storybook-chapter__illustration">
+                    <div class="storybook-envelope"></div>
+                    <div class="storybook-pen"></div>
+                </div>
+            </div>
+            
+            <div class="storybook-chapter__content">
+                <div class="storybook-rsvp-intro">
+                    <p>Add your name to our woodland guestbook! Let us know you're joining Gunner's story, and we'll send you a honey-sweet confirmation with more details about the celebration.</p>
+                </div>
+                
+                <form id="rsvpForm" class="form storybook-form">
+                    <div class="storybook-form-group">
+                        <label class="storybook-form-label">
+                            <span class="storybook-form-label-text">Your Storybook Name</span>
+                            <input type="text" placeholder="Christopher Robin" required class="storybook-form-input">
+                            <div class="storybook-form-underline"></div>
+                        </label>
+                    </div>
+                    
+                    <div class="storybook-form-group">
+                        <label class="storybook-form-label">
+                            <span class="storybook-form-label-text">Owl's Post (Email)</span>
+                            <input type="email" placeholder="christopher@hundredacrewood.com" required class="storybook-form-input">
+                            <div class="storybook-form-underline"></div>
+                        </label>
+                    </div>
+                    
+                    <div class="storybook-form-group">
+                        <label class="storybook-form-label">
+                            <span class="storybook-form-label-text">Number of Adventurers</span>
+                            <select id="guests" class="storybook-form-select">
+                                <option value="1">Just me</option>
+                                <option value="2">2 friends</option>
+                                <option value="3">3 friends</option>
+                                <option value="4">4 friends</option>
+                                <option value="5">5 or more</option>
+                            </select>
+                            <div class="storybook-form-underline"></div>
+                        </label>
+                    </div>
+                    
+                    <div class="storybook-form-group">
+                        <label class="storybook-form-label">
+                            <span class="storybook-form-label-text">Your Page in Gunner's Book (Optional)</span>
+                            <textarea placeholder="Write a message for Gunner, share a story, or offer some woodland wisdom..." class="storybook-form-textarea"></textarea>
+                            <div class="storybook-form-underline"></div>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn storybook-form-submit">
+                        <i class="fas fa-feather-alt"></i>
+                        <span>Add My Name to the Story</span>
+                    </button>
+                    
+                    <p class="form__status storybook-form-status" id="formStatus"></p>
+                </form>
+                
+                <div class="storybook-guest-count">
+                    <div class="storybook-guest-count__icon">📖</div>
+                    <div class="storybook-guest-count__content">
+                        <p><strong><span id="guestCount">0</span> friends</strong> have joined our woodland story!</p>
+                        <small>We can't wait to welcome you to the Wood</small>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>Made with 🍯 for Gunner's woodland welcome</p>
-        <p style="font-size: 0.9rem; margin-top: 8px;">© 2024 Hundred Acre Wood Celebrations</p>
+    <!-- Storybook Footer -->
+    <footer class="footer storybook-footer">
+        <div class="storybook-footer__content">
+            <div class="storybook-footer__book">
+                <div class="storybook-footer__book-spine"></div>
+                <div class="storybook-footer__book-pages">
+                    <div class="storybook-footer__page"></div>
+                    <div class="storybook-footer__page"></div>
+                    <div class="storybook-footer__page"></div>
+                </div>
+            </div>
+            <div class="storybook-footer__text">
+                <p>Made with <span class="storybook-heart">❤️</span> and <span class="storybook-honey">🍯</span> for Gunner's woodland welcome</p>
+                <p class="storybook-footer__copyright">© 2024 The Hundred Acre Wood Storybook Society</p>
+            </div>
+            <div class="storybook-footer__signature">
+                <div class="storybook-paw-signature"></div>
+                <p>With love from all your friends in the Wood</p>
+            </div>
+        </div>
     </footer>
 
     <!-- Character Modal -->
-    <div id="characterModal" class="modal">
-        <div class="modal__backdrop"></div>
-        <div class="modal__card">
-            <button id="closeModal" class="modal__close">×</button>
-            <h3 id="modalName">Winnie the Pooh</h3>
-            <p><em id="modalTrait">Gentle host + honey connoisseur</em></p>
-            <p class="modal__quote" id="modalQuote">"Sometimes the smallest things take up the most room in your heart."</p>
-            <p class="modal__gift" id="modalGift">A forever supply of calm, cozy mornings and a jar of courage for every new adventure.</p>
+    <div id="characterModal" class="modal storybook-modal">
+        <div class="modal__backdrop storybook-modal-backdrop"></div>
+        <div class="modal__card storybook-modal-card">
+            <button id="closeModal" class="modal__close storybook-modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="storybook-modal-header">
+                <h3 id="modalName" class="storybook-modal-title">Winnie the Pooh</h3>
+                <p id="modalTrait" class="storybook-modal-subtitle">Gentle bear with a heart full of honey</p>
+            </div>
+            <div class="storybook-modal-character">
+                <div class="storybook-modal-avatar storybook-modal-avatar--pooh">
+                    <div class="modal-pooh">
+                        <div class="modal-pooh__ear modal-pooh__ear--left"></div>
+                        <div class="modal-pooh__ear modal-pooh__ear--right"></div>
+                        <div class="modal-pooh__face">
+                            <div class="modal-pooh__eyes">
+                                <div class="modal-pooh__eye"></div>
+                                <div class="modal-pooh__eye"></div>
+                            </div>
+                            <div class="modal-pooh__snout"></div>
+                            <div class="modal-pooh__mouth"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="storybook-modal-quote">
+                <div class="storybook-modal-quote-mark">"</div>
+                <p id="modalQuote" class="modal__quote storybook-modal-quote-text">"Sometimes the smallest things take up the most room in your heart."</p>
+                <div class="storybook-modal-quote-mark">"</div>
+            </div>
+            <div class="storybook-modal-gift">
+                <div class="storybook-modal-gift-icon">🎁</div>
+                <div class="storybook-modal-gift-content">
+                    <h4>Pooh's Gift for Gunner</h4>
+                    <p id="modalGift" class="modal__gift">A forever supply of calm, cozy mornings and a jar of courage for every new adventure.</p>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- RSVP Banner -->
-    <div id="rsvpBanner" class="rsvp-banner">
-        <div class="rsvp-banner__content">
-            <span class="rsvp-banner__icon">🎉</span>
-            <p class="rsvp-banner__text">Thank you for your RSVP! Check your email for confirmation.</p>
+    <div id="rsvpBanner" class="rsvp-banner storybook-rsvp-banner">
+        <div class="rsvp-banner__content storybook-rsvp-banner-content">
+            <span class="rsvp-banner__icon storybook-rsvp-banner-icon">🎉</span>
+            <div class="storybook-rsvp-banner-text">
+                <p class="rsvp-banner__text storybook-rsvp-banner-main">Thank you for joining our story!</p>
+                <p class="storybook-rsvp-banner-sub">Check your inbox for a special woodland confirmation.</p>
+            </div>
         </div>
-        <button id="bannerClose" class="rsvp-banner__close">×</button>
+        <button id="bannerClose" class="rsvp-banner__close storybook-rsvp-banner-close">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
 
     <!-- Page Turns -->
-    <div id="pageTurns" class="page-turns">
-        <button id="prevPage" class="page-turns__btn" disabled>
-            <i class="fas fa-arrow-left"></i> Previous
+    <div id="pageTurns" class="page-turns storybook-page-turns">
+        <button id="prevPage" class="page-turns__btn storybook-page-turn-btn" disabled>
+            <i class="fas fa-chevron-left"></i>
+            <span>Previous Page</span>
         </button>
-        <div class="page-turns__status">
-            <span class="page-turns__dot"></span>
-            <span id="pageIndicator">Welcome</span>
+        <div class="page-turns__status storybook-page-turn-status">
+            <span class="storybook-page-turn-icon">📄</span>
+            <span id="pageIndicator" class="storybook-page-turn-text">Cover Page</span>
         </div>
-        <button id="nextPage" class="page-turns__btn">
-            Next <i class="fas fa-arrow-right"></i>
+        <button id="nextPage" class="page-turns__btn storybook-page-turn-btn">
+            <span>Next Page</span>
+            <i class="fas fa-chevron-right"></i>
         </button>
     </div>
 
     <!-- Audio Element -->
     <audio id="chime" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Honey Hunt Sound Effects -->
+    <audio id="honeyCollectSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="beeHitSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-game-over-470.mp3" type="audio/mpeg">
     </audio>
 
     <!-- External JavaScript -->
