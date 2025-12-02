@@ -1,3 +1,20 @@
+const CONFIG = {
+  GAME: {
+    INITIAL_TIME: 45,
+    INITIAL_LIVES: 3,
+    DROP_SPAWN_INTERVAL: 900,
+    COMBO_DECAY_MS: 3400,
+    PARTICLE_COUNT: 15,
+    PLAYER_WIDTH: 60,
+    PLAYER_HEIGHT: 48
+  },
+  VISUALS: {
+    AMBIENT_INTERVAL: 450,
+    TRAIL_LIFETIME: 24,
+    DRIP_LIFETIME: 40
+  }
+};
+
 const prompts = [
   'Share the coziest lullaby you know for Pooh to hum.',
   'Offer a bit of advice for rainy days in the Wood.',
@@ -45,11 +62,20 @@ const characters = {
   }
 };
 
+function loadBestScore() {
+  try {
+    return Number(localStorage.getItem('honeyBest') || 0);
+  } catch (err) {
+    console.warn('Unable to read best score from storage', err);
+    return 0;
+  }
+}
+
 const state = {
   score: 0,
-  best: Number(localStorage.getItem('honeyBest') || 0),
-  time: 45,
-  lives: 3,
+  best: loadBestScore(),
+  time: CONFIG.GAME.INITIAL_TIME,
+  lives: CONFIG.GAME.INITIAL_LIVES,
   combo: 1,
   comboTime: 0,
   playing: false,
@@ -60,10 +86,12 @@ const state = {
   particles: [],
   hitFlash: 0,
   timerId: null,
+  ambientTimer: null,
 };
 
 const canvas = document.getElementById('honeyCanvas');
 const ctx = canvas.getContext('2d');
+const canvasContainer = document.querySelector('.canvas-container');
 const loader = document.getElementById('loader');
 const loaderStart = performance.now();
 
@@ -82,6 +110,7 @@ const promptBtn = document.getElementById('promptButton');
 const promptText = document.getElementById('promptText');
 const playBtn = document.getElementById('startGame');
 const pauseBtn = document.getElementById('pauseGame');
+const openInstructions = document.getElementById('openInstructions');
 const leftBtn = document.getElementById('leftBtn');
 const rightBtn = document.getElementById('rightBtn');
 const chime = document.getElementById('chime');
@@ -119,6 +148,42 @@ const pageTitles = {
   rsvp: 'RSVP'
 };
 
+let audioContext;
+
+// Ensure the Pooh sprite readiness flag always exists in the global scope to avoid
+// ReferenceErrors if older cached scripts are present alongside this one.
+if (typeof window.poohSpriteReady === 'undefined') {
+  window.poohSpriteReady = false;
+}
+
+// Also create a var-based global so any legacy references to "poohSpriteReady"
+// won't throw a ReferenceError before this script assigns the window property.
+// Keep both values in sync whenever the sprite finishes loading.
+// eslint-disable-next-line no-var
+var poohSpriteReady = window.poohSpriteReady;
+
+const poohSprite = new Image();
+poohSprite.src = 'Images/Characters/honey-bear.png';
+poohSprite.onload = () => {
+  window.poohSpriteReady = true;
+  poohSpriteReady = true;
+};
+
+function isPoohReady() {
+  return Boolean(window.poohSpriteReady) || (poohSprite?.complete && poohSprite.naturalWidth > 0);
+}
+
+function getAudioContext() {
+  if (audioContext) return audioContext;
+  try {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    return audioContext;
+  } catch (err) {
+    console.warn('AudioContext unavailable', err);
+    return null;
+  }
+}
+
 
 function hideLoader() {
   const elapsed = performance.now() - loaderStart;
@@ -144,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
   hideLoader();
   bestEl.textContent = state.best;
   timerEl.textContent = `${state.time}s`;
+  instructionOverlay?.setAttribute('aria-hidden', 'true');
 
   // Initialize enhanced visuals once the DOM is ready
   setTimeout(initEnhancedVisuals, 100);
@@ -189,15 +255,15 @@ chimeToggle.addEventListener('click', () => {
 
 function resetGame() {
   state.score = 0;
-  state.time = 45;
-  state.lives = 3;
+  state.time = CONFIG.GAME.INITIAL_TIME;
+  state.lives = CONFIG.GAME.INITIAL_LIVES;
   state.combo = 1;
   state.comboTime = 0;
   state.drops = [];
   state.bees = [];
   state.particles = [];
   state.hitFlash = 0;
-  state.player.x = canvas.width / 2 - 30;
+  state.player.x = canvas.width / 2 - CONFIG.GAME.PLAYER_WIDTH / 2;
   state.paused = false;
   updateHud();
   updateComboDisplay();
@@ -232,12 +298,27 @@ function startGame() {
   loop();
 }
 
+function showInstructions() {
+  instructionOverlay?.classList.remove('is-hidden');
+  instructionOverlay?.removeAttribute('aria-hidden');
+  if (state.playing) {
+    state.paused = true;
+    clearInterval(state.timerId);
+    gameStatus.textContent = 'Paused for a quick refresher. Tap resume when ready!';
+    pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i> Resume';
+  }
+}
+
 function endGame() {
   state.playing = false;
   clearInterval(state.timerId);
   const previousBest = state.best;
   state.best = Math.max(state.best, state.score);
-  localStorage.setItem('honeyBest', state.best);
+  try {
+    localStorage.setItem('honeyBest', state.best);
+  } catch (err) {
+    console.warn('Unable to save best score', err);
+  }
   bestEl.textContent = state.best;
   finalScoreEl.textContent = state.score;
   highScoreBadge.style.display = state.score > previousBest ? 'block' : 'none';
@@ -252,11 +333,12 @@ function endGame() {
 function spawn() {
   state.drops.push({ x: Math.random() * (canvas.width - 24), y: -20, speed: 2 + Math.random() * 2 });
   if (Math.random() > 0.6) state.bees.push({ x: Math.random() * (canvas.width - 18), y: -30, speed: 2.2 + Math.random() * 2 });
-  if (state.playing) setTimeout(spawn, 900);
+  if (state.playing) setTimeout(spawn, CONFIG.GAME.DROP_SPAWN_INTERVAL);
 }
 
 function movePlayer(dir) {
-  state.player.x = Math.max(6, Math.min(canvas.width - 66, state.player.x + dir));
+  const maxX = canvas.width - (CONFIG.GAME.PLAYER_WIDTH + 6);
+  state.player.x = Math.max(6, Math.min(maxX, state.player.x + dir));
 }
 
 function handleInput(e) {
@@ -337,33 +419,43 @@ function drawGround() {
 function drawPlayer() {
   const x = state.player.x;
   const y = canvas.height - 70;
-  
+
+  if (isPoohReady()) {
+    ctx.save();
+    ctx.shadowColor = 'rgba(179, 119, 46, 0.35)';
+    ctx.shadowBlur = 18;
+    ctx.shadowOffsetY = 6;
+    ctx.drawImage(poohSprite, x - 10, y - 56, 84, 116);
+    ctx.restore();
+    return;
+  }
+
   // Save context state
   ctx.save();
-  
+
   // Shadow effect
   ctx.shadowColor = 'rgba(179, 119, 46, 0.4)';
   ctx.shadowBlur = 15;
   ctx.shadowOffsetY = 5;
-  
+
   // Main honey pot body
   const gradient = ctx.createLinearGradient(x, y, x + 60, y + 48);
   gradient.addColorStop(0, '#FFD166');
   gradient.addColorStop(0.3, '#FFE87C');
   gradient.addColorStop(0.7, '#FFD166');
   gradient.addColorStop(1, '#F9C152');
-  
+
   ctx.fillStyle = gradient;
   ctx.beginPath();
   ctx.roundRect(x, y, 60, 48, [20, 20, 10, 10]);
   ctx.fill();
-  
+
   // Honey level with shine
   ctx.fillStyle = '#FFE87C';
   ctx.beginPath();
   ctx.roundRect(x + 8, y + 20, 44, 24, [8, 8, 8, 8]);
   ctx.fill();
-  
+
   // Honey texture
   ctx.fillStyle = 'rgba(255, 209, 102, 0.3)';
   for (let i = 0; i < 5; i++) {
@@ -371,7 +463,7 @@ function drawPlayer() {
     ctx.arc(x + 15 + i * 8, y + 32, 2, 0, Math.PI * 2);
     ctx.fill();
   }
-  
+
   // Pot lid with metallic shine
   const lidGradient = ctx.createLinearGradient(x + 15, y - 8, x + 45, y + 2);
   lidGradient.addColorStop(0, '#184e35');
@@ -379,30 +471,30 @@ function drawPlayer() {
   lidGradient.addColorStop(0.5, '#3D9970');
   lidGradient.addColorStop(0.7, '#2a6f4e');
   lidGradient.addColorStop(1, '#184e35');
-  
+
   ctx.fillStyle = lidGradient;
   ctx.beginPath();
   ctx.roundRect(x + 15, y - 8, 30, 10, [8, 8, 0, 0]);
   ctx.fill();
-  
+
   // Lid highlight
   ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
   ctx.beginPath();
   ctx.roundRect(x + 17, y - 6, 10, 4, [4, 4, 0, 0]);
   ctx.fill();
-  
+
   // Pot handle
   ctx.strokeStyle = '#8B7355';
   ctx.lineWidth = 4;
   ctx.beginPath();
   ctx.arc(x + 30, y - 15, 12, 0.8 * Math.PI, 2.2 * Math.PI);
   ctx.stroke();
-  
+
   // Reset shadow
   ctx.shadowColor = 'transparent';
   ctx.shadowBlur = 0;
   ctx.shadowOffsetY = 0;
-  
+
   // Restore context
   ctx.restore();
 }
@@ -449,7 +541,7 @@ function updateDrops() {
     }
     
     // Collision detection
-    if (d.y > canvas.height - 70 && d.x > state.player.x && d.x < state.player.x + 60) {
+    if (d.y > canvas.height - 70 && d.x > state.player.x && d.x < state.player.x + CONFIG.GAME.PLAYER_WIDTH) {
       // Collection effects
       state.score += 5 + state.combo;
       state.combo = Math.min(state.combo + 1, 12);
@@ -596,17 +688,19 @@ function updateComboDisplay() {
   }
 }
 
-function spawnParticles(x, y, color) {
-  for (let i = 0; i < 15; i++) {
+function spawnParticles(x, y, color, overrides = {}) {
+  for (let i = 0; i < CONFIG.GAME.PARTICLE_COUNT; i++) {
     state.particles.push({
       x, y,
       life: 30 + Math.random() * 20,
       color,
       dx: (Math.random() - 0.5) * 6,
       dy: -2 - Math.random() * 3,
+      gravity: 0.05,
       size: 2 + Math.random() * 5,
       rotation: Math.random() * Math.PI * 2,
-      rotationSpeed: (Math.random() - 0.5) * 0.2
+      rotationSpeed: (Math.random() - 0.5) * 0.2,
+      ...overrides
     });
   }
 }
@@ -615,6 +709,7 @@ function drawParticles() {
   state.particles.forEach((p, idx) => {
     p.x += p.dx;
     p.y += p.dy;
+    if (p.gravity) p.dy += p.gravity;
     p.life -= 1;
     p.rotation += p.rotationSpeed;
 
@@ -655,7 +750,7 @@ function renderHitFlash() {
 }
 
 function decayCombo() {
-  if (state.combo > 1 && performance.now() - state.comboTime > 3400) {
+  if (state.combo > 1 && performance.now() - state.comboTime > CONFIG.GAME.COMBO_DECAY_MS) {
     state.combo = 1;
     updateHud();
     updateComboDisplay();
@@ -677,7 +772,7 @@ function initEnhancedVisuals() {
 function createClouds() {
   const sky = document.querySelector('.sky-background') || document.createElement('div');
   sky.className = 'sky-background';
-  document.querySelector('.canvas-container')?.prepend(sky);
+  canvasContainer?.prepend(sky);
 
   for (let i = 0; i < 3; i++) {
     const cloud = document.createElement('div');
@@ -695,7 +790,7 @@ function createClouds() {
 function createGrass() {
   const ground = document.querySelector('.ground-container') || document.createElement('div');
   ground.className = 'ground-container';
-  document.querySelector('.canvas-container')?.appendChild(ground);
+  canvasContainer?.appendChild(ground);
 
   for (let i = 0; i < 50; i++) {
     const blade = document.createElement('div');
@@ -709,88 +804,94 @@ function createGrass() {
 function createHoneycombPattern() {
   const pattern = document.createElement('div');
   pattern.className = 'honeycomb-pattern';
-  document.querySelector('.canvas-container')?.appendChild(pattern);
+  canvasContainer?.appendChild(pattern);
 }
 
 // Create ambient particles
 function createAmbientParticles() {
-  setInterval(() => {
+  if (state.ambientTimer) clearInterval(state.ambientTimer);
+
+  state.ambientTimer = setInterval(() => {
     if (!state.playing || state.paused) return;
 
-    const particle = document.createElement('div');
-    particle.className = 'sparkle';
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.top = `${Math.random() * 100}%`;
-    particle.style.background = `radial-gradient(circle at 30% 30%, 
-      rgba(255, 255, 255, 0.9) 0%,
-      ${Math.random() > 0.5 ? 'var(--honey-gold)' : 'var(--leaf-green)'} 50%,
-      transparent 70%
-    )`;
-
-    document.querySelector('.canvas-container')?.appendChild(particle);
-    setTimeout(() => particle.remove(), 1200);
-  }, 300);
+    const color = Math.random() > 0.5 ? '#FFD166' : '#74C69D';
+    spawnParticles(
+      Math.random() * canvas.width,
+      Math.random() * (canvas.height * 0.6),
+      color,
+      {
+        life: 20 + Math.random() * 10,
+        size: 1 + Math.random() * 2,
+        dx: (Math.random() - 0.5) * 1.4,
+        dy: -0.5 - Math.random() * 0.4,
+        gravity: 0
+      }
+    );
+  }, CONFIG.VISUALS.AMBIENT_INTERVAL);
 }
 
 // Create honey drip visual effect
 function createHoneyDrip(x, y) {
-  const drip = document.createElement('div');
-  drip.className = 'honey-drip';
-  drip.style.left = `${x}px`;
-  drip.style.top = `${y}px`;
-  drip.style.opacity = 0.6 + Math.random() * 0.4;
-  drip.style.animationDuration = `${1 + Math.random() * 2}s`;
-  document.querySelector('.canvas-container')?.appendChild(drip);
-
-  setTimeout(() => drip.remove(), 3000);
+  spawnParticles(x, y, '#FFD166', {
+    life: CONFIG.VISUALS.DRIP_LIFETIME,
+    size: 2 + Math.random() * 2,
+    dx: (Math.random() - 0.5) * 1.5,
+    dy: 0.6 + Math.random() * 0.8,
+    gravity: 0.05
+  });
 }
 
 // Create bee trail effect
 function createBeeTrail(x, y) {
-  const trail = document.createElement('div');
-  trail.className = 'bee-trail';
-  trail.style.left = `${x}px`;
-  trail.style.top = `${y}px`;
-  trail.style.animationDuration = `${0.5 + Math.random() * 0.3}s`;
-  document.querySelector('.canvas-container')?.appendChild(trail);
-
-  setTimeout(() => trail.remove(), 800);
+  spawnParticles(x, y, '#F0A500', {
+    life: CONFIG.VISUALS.TRAIL_LIFETIME,
+    size: 1.5 + Math.random() * 1.5,
+    dx: (Math.random() - 0.5) * 2,
+    dy: -0.8 - Math.random() * 0.4,
+    gravity: 0
+  });
 }
 
 // Create honey collection effect
 function createCollectionEffect(x, y) {
-  const effect = document.createElement('div');
-  effect.className = 'honey-collect';
-  effect.style.left = `${x - 12}px`;
-  effect.style.top = `${y - 12}px`;
-  document.querySelector('.canvas-container')?.appendChild(effect);
-
-  setTimeout(() => effect.remove(), 600);
+  spawnParticles(x, y, '#FFE87C', {
+    life: 26 + Math.random() * 10,
+    size: 3 + Math.random() * 2,
+    dx: (Math.random() - 0.5) * 3,
+    dy: -1.5 - Math.random() * 1.5,
+    gravity: 0.04
+  });
 }
 
 // Play collection sound
 function playCollectionSound() {
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  const oscillator = audioContext.createOscillator();
-  const gainNode = audioContext.createGain();
+  const context = getAudioContext();
+  if (!context) return;
 
-  oscillator.connect(gainNode);
-  gainNode.connect(audioContext.destination);
+  try {
+    context.resume();
+    const oscillator = context.createOscillator();
+    const gainNode = context.createGain();
 
-  oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-  oscillator.frequency.exponentialRampToValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+    oscillator.connect(gainNode);
+    gainNode.connect(context.destination);
 
-  gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+    oscillator.frequency.setValueAtTime(523.25, context.currentTime); // C5
+    oscillator.frequency.exponentialRampToValueAtTime(659.25, context.currentTime + 0.1); // E5
 
-  oscillator.start(audioContext.currentTime);
-  oscillator.stop(audioContext.currentTime + 0.2);
+    gainNode.gain.setValueAtTime(0.1, context.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.2);
+
+    oscillator.start(context.currentTime);
+    oscillator.stop(context.currentTime + 0.2);
+  } catch (err) {
+    console.warn('Unable to play collection sound', err);
+  }
 }
 
 // Create special effects for high combos
 function createSpecialEffect(combo) {
-  const container = document.querySelector('.canvas-container');
-  if (!container) return;
+  if (!canvasContainer) return;
 
   if (combo >= 8) {
     // Star burst effect
@@ -803,7 +904,7 @@ function createSpecialEffect(combo) {
       star.style.height = '12px';
       star.style.background = 'radial-gradient(circle, #FFD166, #FF9E00)';
       star.style.animation = 'sparklePop 1s ease-out forwards';
-      container.appendChild(star);
+      canvasContainer.appendChild(star);
 
       // Animate stars outward
       setTimeout(() => {
@@ -818,32 +919,8 @@ function createSpecialEffect(combo) {
   } else if (combo >= 5) {
     // Ring effect
     const ring = document.createElement('div');
-    ring.style.cssText = `
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 20px;
-      height: 20px;
-      border: 2px solid #FFD166;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      animation: ringExpand 0.8s ease-out forwards;
-    `;
-
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes ringExpand {
-        to {
-          width: 200px;
-          height: 200px;
-          opacity: 0;
-          border-width: 1px;
-        }
-      }
-    `;
-
-    document.head.appendChild(style);
-    container.appendChild(ring);
+    ring.className = 'combo-ring';
+    canvasContainer.appendChild(ring);
     setTimeout(() => ring.remove(), 800);
   }
 }
@@ -882,6 +959,7 @@ form.addEventListener('submit', (e) => {
 closeInstructions.addEventListener('click', () => startGame());
 playAgain.addEventListener('click', () => { gameOverOverlay.classList.remove('is-visible'); startGame(); });
 closeGameOver.addEventListener('click', () => gameOverOverlay.classList.remove('is-visible'));
+openInstructions?.addEventListener('click', showInstructions);
 
 document.querySelectorAll('.character-card').forEach(card => {
   card.addEventListener('click', () => openCharacter(card.dataset.character));
