@@ -103,6 +103,18 @@ const prevPage = document.getElementById('prevPage');
 const nextPage = document.getElementById('nextPage');
 const pageIndicator = document.getElementById('pageIndicator');
 
+const pages = ['hero','story','details','experiences','characters','game','rsvp'].map(id => document.getElementById(id));
+const pageTitles = {
+  hero: 'Welcome',
+  story: 'Story',
+  details: 'Details',
+  experiences: 'Immersive moments',
+  characters: 'Meet the crew',
+  game: 'Honey Hunt',
+  rsvp: 'RSVP'
+};
+
+
 function hideLoader() {
   const elapsed = performance.now() - loaderStart;
   const remaining = Math.max(2200 - elapsed, 0);
@@ -425,17 +437,6 @@ function showBanner() {
 }
 
 bannerClose.addEventListener('click', () => rsvpBanner.classList.remove('is-visible'));
-
-const pages = ['hero','story','details','experiences','characters','game','rsvp'].map(id => document.getElementById(id));
-const pageTitles = {
-  hero: 'Welcome',
-  story: 'Story',
-  details: 'Details',
-  experiences: 'Immersive moments',
-  characters: 'Meet the crew',
-  game: 'Honey Hunt',
-  rsvp: 'RSVP'
-};
 
 function updatePageTurns() {
   const heroRect = document.getElementById('hero').getBoundingClientRect();
