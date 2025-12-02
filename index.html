@@ -608,7 +608,7 @@
                             </div>
 
                             <div class="game-section">
-                                <div class="game-container">
+                                <div class="game-container" id="defense-game-wrapper" data-game-title="Honey Defense">
                                     <h2 class="game-title">🐝 Honey Defense</h2>
                                     <p>Place towers to defend the hive from bees! Click towers to see their range.</p>
                                     <canvas id="defense-game" width="800" height="500"></canvas>
@@ -618,10 +618,11 @@
                                         <span>Speed: <button onclick="window.defenseGame.state.gameSpeed = Math.max(0.5, window.defenseGame.state.gameSpeed - 0.5)">-</button>
                                         <span id="game-speed">1x</span>
                                         <button onclick="window.defenseGame.state.gameSpeed = Math.min(3, window.defenseGame.state.gameSpeed + 0.5)">+</button></span>
+                                        <button class="game-fullscreen-trigger" data-fullscreen-target="defense-game-wrapper" data-fullscreen-title="Honey Defense">Full Screen</button>
                                     </div>
                                 </div>
 
-                                <div class="game-container">
+                                <div class="game-container" id="honey-game-wrapper" data-game-title="Honey Catch">
                                     <h2 class="game-title">🍯 Honey Catch</h2>
                                     <p>Move Pooh to catch honey pots, avoid rocks! Use arrow keys or click to move.</p>
                                     <canvas id="honey-game" width="800" height="500"></canvas>
@@ -639,6 +640,9 @@
                                         <button class="control-btn" id="mobile-move-right" aria-label="Move right">
                                             <span aria-hidden="true">➡️</span>
                                         </button>
+                                    </div>
+                                    <div class="game-controls">
+                                        <button class="game-fullscreen-trigger" data-fullscreen-target="honey-game-wrapper" data-fullscreen-title="Honey Catch">Full Screen</button>
                                     </div>
                                 </div>
                             </div>
@@ -824,7 +828,7 @@
                             <div class="games-stack" aria-label="Winnie the Pooh themed mini games">
                                 
                                 <!-- Tower Defense Game -->
-                                <article class="stacked-game-card" id="defense-card" aria-labelledby="defenseTitle">
+                                <article class="stacked-game-card" id="defense-card" aria-labelledby="defenseTitle" data-game-title="Honey Hive Defense">
                                     <div class="game-card-header">
                                         <div class="game-ribbon game-ribbon--gold">Strategy Challenge</div>
                                         <div class="game-character-group">
@@ -978,6 +982,7 @@
                                                 <span class="info-tag" id="defense-wave-status">Wave 1 Ready</span>
                                                 <span class="info-tag">⏱️ 0:00</span>
                                             </div>
+                                            <button class="game-fullscreen-trigger" data-fullscreen-target="defense-card" data-fullscreen-title="Honey Hive Defense">Full Screen</button>
                                         </div>
                                         <div class="game-canvas-container legacy-canvas">
                                             <canvas id="defense-game-legacy" width="800" height="400"
@@ -1050,7 +1055,7 @@
                                 </article>
 
                                 <!-- Honey Catch Game -->
-                                <article class="stacked-game-card" id="catch-card" aria-labelledby="catchTitle">
+                                <article class="stacked-game-card" id="catch-card" aria-labelledby="catchTitle" data-game-title="Honey Pot Catch">
                                     <div class="game-card-header">
                                         <div class="game-ribbon game-ribbon--blue">Arcade Action</div>
                                         <div class="game-character-group">
@@ -1162,6 +1167,7 @@
                                                 <span class="info-tag" id="catch-status">Ready to Start</span>
                                                 <span class="info-tag">High Score: 0</span>
                                             </div>
+                                            <button class="game-fullscreen-trigger" data-fullscreen-target="catch-card" data-fullscreen-title="Honey Pot Catch">Full Screen</button>
                                         </div>
                                         <div class="game-canvas-container legacy-canvas">
                                             <canvas id="honey-game-legacy" width="800" height="400"
@@ -1347,6 +1353,24 @@
             </div>
             <div class="modal-character-quote" id="gameInstructionQuote"></div>
             <ul class="modal-character-list" id="gameInstructionList"></ul>
+        </div>
+    </div>
+
+    <!-- Full Screen Game Modal -->
+    <div class="game-fullscreen" id="gameFullscreen" aria-hidden="true" role="dialog"
+         aria-labelledby="gameFullscreenTitle">
+        <div class="game-fullscreen__backdrop" id="gameFullscreenBackdrop"></div>
+        <div class="game-fullscreen__content">
+            <div class="game-fullscreen__header">
+                <div>
+                    <p class="game-fullscreen__eyebrow">Mobile Optimized</p>
+                    <h3 class="game-fullscreen__title" id="gameFullscreenTitle">Full Screen Play</h3>
+                </div>
+                <button class="game-fullscreen__close" id="closeGameFullscreen" aria-label="Close full screen game">
+                    <span aria-hidden="true">✕</span>
+                </button>
+            </div>
+            <div class="game-fullscreen__body" id="gameFullscreenBody" aria-live="polite"></div>
         </div>
     </div>
 

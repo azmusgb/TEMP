@@ -14,6 +14,7 @@ class HundredAcreApp {
         this.initPreferences();
         this.initRSVP();
         this.initGameControls();
+        this.setupFullscreenGames();
         this.bindGlobals();
         this.startLoading();
 
@@ -73,6 +74,12 @@ class HundredAcreApp {
             gameInstructionList: document.getElementById('gameInstructionList'),
             gameInstructionClose: document.getElementById('closeGameModal'),
 
+            gameFullscreen: document.getElementById('gameFullscreen'),
+            gameFullscreenBody: document.getElementById('gameFullscreenBody'),
+            gameFullscreenTitle: document.getElementById('gameFullscreenTitle'),
+            gameFullscreenBackdrop: document.getElementById('gameFullscreenBackdrop'),
+            gameFullscreenClose: document.getElementById('closeGameFullscreen'),
+
             honeyCanvas: document.getElementById('honey-game'),
             defenseCanvas: document.getElementById('defense-game'),
 
@@ -115,6 +122,12 @@ class HundredAcreApp {
             highScore: 0,
             running: false,
             timerId: null
+        };
+
+        this.fullscreenState = {
+            active: false,
+            placeholder: null,
+            content: null
         };
     }
 
@@ -161,6 +174,76 @@ class HundredAcreApp {
         if (catchHint) catchHint.textContent = 'Press start to catch honey for 60 seconds!';
         if (catchStatus) catchStatus.textContent = 'Ready to Start';
         this.updateCatchUI();
+    }
+
+    setupFullscreenGames() {
+        this.fullscreenTriggers = document.querySelectorAll('.game-fullscreen-trigger');
+
+        this.fullscreenTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => this.openGameFullscreen(trigger));
+        });
+
+        if (this.el.gameFullscreenBackdrop) {
+            this.el.gameFullscreenBackdrop.addEventListener('click', () => this.closeGameFullscreen());
+        }
+
+        if (this.el.gameFullscreenClose) {
+            this.el.gameFullscreenClose.addEventListener('click', () => this.closeGameFullscreen());
+        }
+
+        this.el.gameFullscreen?.setAttribute('aria-hidden', 'true');
+
+        document.addEventListener('keydown', (evt) => {
+            if (evt.key === 'Escape' && this.fullscreenState.active) {
+                this.closeGameFullscreen();
+            }
+        });
+    }
+
+    openGameFullscreen(trigger) {
+        const targetId = typeof trigger === 'string' ? trigger : trigger?.dataset?.fullscreenTarget;
+        if (!targetId || this.fullscreenState.active) return;
+
+        const target = document.getElementById(targetId);
+        if (!target || !this.el.gameFullscreenBody) return;
+
+        this.fullscreenState.placeholder = document.createComment('game-fullscreen-placeholder');
+        target.parentNode?.insertBefore(this.fullscreenState.placeholder, target);
+
+        this.el.gameFullscreenBody.appendChild(target);
+        this.fullscreenState.content = target;
+        this.fullscreenState.active = true;
+
+        const title = trigger?.dataset?.fullscreenTitle || target.dataset?.gameTitle || 'Full Screen Play';
+        if (this.el.gameFullscreenTitle) this.el.gameFullscreenTitle.textContent = title;
+
+        document.body.classList.add('game-fullscreen-open');
+        this.el.gameFullscreen?.setAttribute('aria-hidden', 'false');
+
+        requestAnimationFrame(() => {
+            this.el.gameFullscreen?.classList.add('is-visible');
+            window.defenseGame?.handleResize?.();
+            window.honeyGame?.handleResize?.();
+            this.el.gameFullscreenClose?.focus({ preventScroll: true });
+        });
+    }
+
+    closeGameFullscreen() {
+        if (!this.fullscreenState.active) return;
+
+        if (this.fullscreenState.placeholder && this.fullscreenState.placeholder.parentNode && this.fullscreenState.content) {
+            this.fullscreenState.placeholder.parentNode.insertBefore(this.fullscreenState.content, this.fullscreenState.placeholder);
+            this.fullscreenState.placeholder.remove();
+        }
+
+        this.fullscreenState = { active: false, placeholder: null, content: null };
+
+        document.body.classList.remove('game-fullscreen-open');
+        this.el.gameFullscreen?.classList.remove('is-visible');
+        this.el.gameFullscreen?.setAttribute('aria-hidden', 'true');
+
+        window.defenseGame?.handleResize?.();
+        window.honeyGame?.handleResize?.();
     }
 
     startCatchGame() {
