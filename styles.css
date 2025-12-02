@@ -150,6 +150,7 @@ canvas { width: 100%; border-radius: 14px; background: linear-gradient(180deg, #
 .game__overlay-card { background: linear-gradient(140deg, #fffdf6, #f7e8c4); padding: 22px; border-radius: 18px; max-width: 540px; box-shadow: var(--shadow); text-align: left; border: 1px solid rgba(59,47,37,0.14); }
 .game__overlay-card h3 { margin: 6px 0 10px; color: var(--forest); }
 .game__instructions { list-style: none; padding: 0; margin: 0 0 14px; display: grid; gap: 8px; color: var(--text); }
+.game__protip { margin: 0 0 12px; color: var(--muted-ink); font-style: italic; font-family: 'Patrick Hand', cursive; }
 .game__overlay.is-hidden { opacity: 0; pointer-events: none; }
 .game__overlay--end { display: none; }
 .game__overlay--end.is-visible { display: grid; }

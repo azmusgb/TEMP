@@ -207,10 +207,25 @@ function resetGame() {
 }
 
 function startGame() {
+  instructionOverlay?.classList.add('is-hidden');
+  instructionOverlay?.setAttribute('aria-hidden', 'true');
+  gameOverOverlay?.classList.remove('is-visible');
+
+  // If we're resuming after a pause/end, keep momentum
+  if (state.playing) {
+    state.paused = false;
+    gameStatus.textContent = 'Back to hunting honey!';
+    pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+    startTimer();
+    loop();
+    return;
+  }
+
   resetGame();
   state.playing = true;
-  instructionOverlay.classList.add('is-hidden');
-  gameOverOverlay.classList.remove('is-visible');
+  state.paused = false;
+  instructionOverlay?.classList.add('is-hidden');
+  instructionOverlay?.setAttribute('aria-hidden', 'true');
   gameStatus.textContent = 'Hunt honey and dodge the bees!';
   spawn();
   startTimer();
@@ -245,6 +260,12 @@ function movePlayer(dir) {
 }
 
 function handleInput(e) {
+  const startKeys = [' ', 'ArrowLeft', 'ArrowRight', 'a', 'd'];
+  if (!state.playing && startKeys.includes(e.key)) {
+    e.preventDefault();
+    startGame();
+    return;
+  }
   if (e.key === ' ' && state.playing) {
     e.preventDefault();
     togglePause();
@@ -260,6 +281,7 @@ leftBtn.addEventListener('pointerdown', () => { if (state.playing && !state.paus
 rightBtn.addEventListener('pointerdown', () => { if (state.playing && !state.paused) movePlayer(26); });
 playBtn.addEventListener('click', startGame);
 pauseBtn.addEventListener('click', togglePause);
+canvas.addEventListener('pointerdown', () => { if (!state.playing) startGame(); });
 
 function startTimer() {
   clearInterval(state.timerId);
