@@ -52,8 +52,6 @@ const state = {
   lives: 3,
   playing: false,
   paused: false,
-  combo: 1,
-  comboTime: 0,
   player: { x: 320 },
   drops: [],
   bees: [],
@@ -65,9 +63,7 @@ const state = {
 const canvas = document.getElementById('honeyCanvas');
 const ctx = canvas.getContext('2d');
 const loader = document.getElementById('loader');
-const loaderText = document.getElementById('loaderText');
 const loaderStart = performance.now();
-const fireflyLayer = document.getElementById('fireflies');
 
 const scoreEl = document.getElementById('score');
 const timerEl = document.getElementById('timer');
@@ -106,44 +102,14 @@ const pageTurns = document.getElementById('pageTurns');
 const prevPage = document.getElementById('prevPage');
 const nextPage = document.getElementById('nextPage');
 const pageIndicator = document.getElementById('pageIndicator');
-const pathSteps = document.querySelectorAll('.path__step');
-let pages = [];
-const pageTitles = {
-  hero: 'Welcome',
-  story: 'Story',
-  details: 'Details',
-  experiences: 'Immersive moments',
-  characters: 'Meet the crew',
-  game: 'Honey Hunt',
-  rsvp: 'RSVP'
-};
-
-let loaderProgress = 0;
-const loaderInterval = setInterval(() => {
-  loaderProgress = Math.min(loaderProgress + 7, 96);
-  loaderText.textContent = `Stirring up something sweet... ${loaderProgress}%`;
-}, 260);
 
 function hideLoader() {
   const elapsed = performance.now() - loaderStart;
   const remaining = Math.max(2200 - elapsed, 0);
   setTimeout(() => {
-    loaderText.textContent = 'Ready for the Wood! 100%';
-    clearInterval(loaderInterval);
     loader.classList.add('is-hidden');
     setTimeout(() => loader.remove(), 400);
   }, remaining);
-}
-
-function createFireflies() {
-  if (!fireflyLayer) return;
-  for (let i = 0; i < 14; i += 1) {
-    const dot = document.createElement('span');
-    dot.style.left = `${Math.random() * 100}%`;
-    dot.style.top = `${Math.random() * 100}%`;
-    dot.style.animationDelay = `${Math.random() * 3}s`;
-    fireflyLayer.appendChild(dot);
-  }
 }
 
 function revealOnScroll() {
@@ -155,53 +121,9 @@ function revealOnScroll() {
   });
 }
 
-function highlightPath() {
-  if (!pages.length) return;
-  const scrollPos = window.scrollY + window.innerHeight * 0.3;
-  let activeId = pages[0].id;
-  pages.forEach(section => {
-    if (section.offsetTop <= scrollPos) activeId = section.id;
-  });
-  pathSteps.forEach(btn => btn.classList.toggle('is-active', btn.dataset.target === activeId));
-}
-
-function updatePageTurns() {
-  if (!pages.length) return;
-  const heroRect = document.getElementById('hero').getBoundingClientRect();
-  if (heroRect.bottom < 60) {
-    pageTurns.classList.add('is-visible');
-  } else {
-    pageTurns.classList.remove('is-visible');
-  }
-
-  const scrollPos = window.scrollY + window.innerHeight * 0.35;
-  let activeIndex = 0;
-  pages.forEach((section, idx) => {
-    if (section.offsetTop <= scrollPos) activeIndex = idx;
-  });
-
-  const currentId = pages[activeIndex].id;
-  pageIndicator.textContent = pageTitles[currentId];
-  prevPage.disabled = activeIndex === 0;
-  nextPage.disabled = activeIndex === pages.length - 1;
-
-  prevPage.onclick = () => {
-    if (activeIndex > 0) pages[activeIndex - 1].scrollIntoView({ behavior: 'smooth' });
-  };
-  nextPage.onclick = () => {
-    if (activeIndex < pages.length - 1) pages[activeIndex + 1].scrollIntoView({ behavior: 'smooth' });
-  };
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.panel, .card, .experience, .detail, .character-card').forEach(el => el.classList.add('reveal'));
-  pages = ['hero','story','details','experiences','characters','game','rsvp']
-    .map(id => document.getElementById(id))
-    .filter(Boolean);
   revealOnScroll();
-  highlightPath();
-  updatePageTurns();
-  createFireflies();
   hideLoader();
   bestEl.textContent = state.best;
   timerEl.textContent = `${state.time}s`;
@@ -210,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('scroll', () => {
   revealOnScroll();
   updatePageTurns();
-  highlightPath();
 });
 
 promptBtn.addEventListener('click', () => {
@@ -504,3 +425,43 @@ function showBanner() {
 }
 
 bannerClose.addEventListener('click', () => rsvpBanner.classList.remove('is-visible'));
+
+const pages = ['hero','story','details','experiences','characters','game','rsvp'].map(id => document.getElementById(id));
+const pageTitles = {
+  hero: 'Welcome',
+  story: 'Story',
+  details: 'Details',
+  experiences: 'Immersive moments',
+  characters: 'Meet the crew',
+  game: 'Honey Hunt',
+  rsvp: 'RSVP'
+};
+
+function updatePageTurns() {
+  const heroRect = document.getElementById('hero').getBoundingClientRect();
+  if (heroRect.bottom < 60) {
+    pageTurns.classList.add('is-visible');
+  } else {
+    pageTurns.classList.remove('is-visible');
+  }
+
+  const scrollPos = window.scrollY + window.innerHeight * 0.35;
+  let activeIndex = 0;
+  pages.forEach((section, idx) => {
+    if (section.offsetTop <= scrollPos) activeIndex = idx;
+  });
+
+  const currentId = pages[activeIndex].id;
+  pageIndicator.textContent = pageTitles[currentId];
+  prevPage.disabled = activeIndex === 0;
+  nextPage.disabled = activeIndex === pages.length - 1;
+
+  prevPage.onclick = () => {
+    if (activeIndex > 0) pages[activeIndex - 1].scrollIntoView({ behavior: 'smooth' });
+  };
+  nextPage.onclick = () => {
+    if (activeIndex < pages.length - 1) pages[activeIndex + 1].scrollIntoView({ behavior: 'smooth' });
+  };
+}
+
+updatePageTurns();
