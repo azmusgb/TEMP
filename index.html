@@ -400,447 +400,453 @@
                             </div>
                         </div>
 
-                        <!-- Main Games Area -->
-                        <div class="game-section">
-                            <!-- Honey Hunt Game -->
-                            <div class="game-container" data-game="honey-hunt">
-                                <h3 class="game-title">Honey Hunt Adventure</h3>
-                                <p>Help Pooh collect honey pots while avoiding the bees!</p>
-                                <canvas id="honey-game" width="800" height="500" aria-label="Honey Hunt Game">
-                                    Your browser does not support the canvas element. Please try a modern browser.
-                                </canvas>
-                                <div class="game-instructions">
-                                    Use arrow keys to move Pooh. Collect honey pots (yellow) and avoid bees (black/yellow).
-                                </div>
-                                <div class="mobile-hint">
-                                    On mobile? Touch and drag Pooh to move him around.
-                                </div>
-                                <div class="game-controls">
-                                    <button id="start-honey-game" class="game-btn">
-                                        <i class="fas fa-play"></i> Start Game
-                                    </button>
-                                    <button id="pause-honey-game" class="game-btn">
-                                        <i class="fas fa-pause"></i> Pause
-                                    </button>
-                                    <button class="game-fullscreen-trigger" data-game="honey-hunt">
-                                        <i class="fas fa-expand"></i> Full Screen
-                                    </button>
-                                </div>
-                            </div>
+            <!-- Games Section - Improved Version -->
+<section id="games" class="content-section" aria-labelledby="games-title">
+    <div class="content-section-inner">
+        <div class="section-number" aria-hidden="true">4</div>
+        <div class="section-header">
+            <h2 id="games-title" class="story-title">
+                <i class="fas fa-gamepad"></i>
+                Woodland Games
+            </h2>
+            <p class="story-intro">Join the adventure with these fun interactive games for all ages</p>
+        </div>
 
-                            <!-- Tower Defense Game -->
-                            <div class="game-container" data-game="tower-defense">
-                                <h3 class="game-title">Heffalump Tower Defense</h3>
-                                <p>Defend the Hundred Acre Wood from Heffalump invasions!</p>
-                                <canvas id="defense-game" width="800" height="500" aria-label="Tower Defense Game">
-                                    Your browser does not support the canvas element. Please try a modern browser.
-                                </canvas>
-                                <div class="game-instructions">
-                                    Place towers by clicking. Upgrade by clicking on placed towers. Survive all waves!
-                                </div>
-                                <div class="mobile-hint">
-                                    On mobile? Touch empty spots to place towers.
-                                </div>
-                                <div class="game-controls">
-                                    <button id="start-defense-game" class="game-btn">
-                                        <i class="fas fa-play"></i> Start Wave
-                                    </button>
-                                    <button id="speed-defense-game" class="game-btn">
-                                        <i class="fas fa-forward"></i> Speed Up
-                                    </button>
-                                    <button class="game-fullscreen-trigger" data-game="tower-defense">
-                                        <i class="fas fa-expand"></i> Full Screen
-                                    </button>
-                                </div>
-                            </div>
+        <!-- Game Stats Banner -->
+        <div class="game-stats-banner">
+            <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <span>Active Players: <strong>24</strong></span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-trophy"></i>
+                <span>High Score: <strong>12,450</strong></span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-clock"></i>
+                <span>Total Playtime: <strong>342h</strong></span>
+            </div>
+        </div>
+
+        <!-- Games Grid -->
+        <div class="games-grid">
+            <!-- Game 1: Honey Hunt -->
+            <div class="game-card featured" data-game="honey-hunt">
+                <div class="game-card-header">
+                    <div class="game-badge">Most Popular</div>
+                    <div class="game-character-icon">🐻</div>
+                    <div class="game-rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.8</span>
+                    </div>
+                </div>
+                
+                <div class="game-card-body">
+                    <div class="game-icon-large">🍯</div>
+                    <h3 class="game-title">Honey Hunt Adventure</h3>
+                    <p class="game-description">
+                        Help Winnie the Pooh collect honey pots while avoiding bees in the Hundred Acre Wood.
+                    </p>
+                    
+                    <div class="game-stats">
+                        <div class="stat">
+                            <i class="fas fa-signal"></i>
+                            <span>Easy</span>
                         </div>
-
-                        <!-- Games Stack -->
-                        <div class="games-stack">
-                            <!-- Honey Hunt Card -->
-                            <div class="stacked-game-card" data-game="honey-hunt">
-                                <div class="game-card-header">
-                                    <div class="game-character-group">
-                                        <span class="game-character">🐻</span>
-                                        <span class="game-character">🍯</span>
-                                    </div>
-                                    <div class="game-ribbon game-ribbon--gold">Active Game</div>
-                                </div>
-                                
-                                <div class="game-card-content">
-                                    <div class="game-intro">
-                                        <div class="game-icon-title">
-                                            <div class="game-main-icon">🍯</div>
-                                            <div>
-                                                <h3 class="game-title">Honey Hunt Adventure</h3>
-                                                <p class="game-subtitle">Help Pooh find all the honey!</p>
-                                            </div>
-                                        </div>
-                                        <button class="game-favorite-btn" aria-label="Add to favorites">
-                                            <i class="far fa-heart"></i>
-                                        </button>
-                                    </div>
-                                    
-                                    <div class="game-quick-info">
-                                        <div class="info-item">
-                                            <span class="info-label">Difficulty:</span>
-                                            <span class="info-value">Easy</span>
-                                        </div>
-                                        <div class="info-item">
-                                            <span class="info-label">Players:</span>
-                                            <span class="info-value">1</span>
-                                        </div>
-                                        <div class="info-item">
-                                            <span class="info-label">Time:</span>
-                                            <span class="info-value">5 min</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <p class="game-description">
-                                        Guide Winnie the Pooh through the Hundred Acre Wood collecting delicious honey pots. 
-                                        Watch out for bees! Perfect for all ages.
-                                    </p>
-                                    
-                                    <div class="game-stats-grid">
-                                        <div class="stat-card">
-                                            <div class="stat-header">
-                                                <span class="stat-icon">🎯</span>
-                                                <span class="stat-name">High Score</span>
-                                            </div>
-                                            <div class="stat-value">1,250</div>
-                                        </div>
-                                        <div class="stat-card">
-                                            <div class="stat-header">
-                                                <span class="stat-icon">🏆</span>
-                                                <span class="stat-name">Plays</span>
-                                            </div>
-                                            <div class="stat-value">342</div>
-                                        </div>
-                                        <div class="stat-card">
-                                            <div class="stat-header">
-                                                <span class="stat-icon">⭐</span>
-                                                <span class="stat-name">Rating</span>
-                                            </div>
-                                            <div class="stat-value">4.8</div>
-                                        </div>
-                                        <div class="stat-card">
-                                            <div class="stat-header">
-                                                <span class="stat-icon">⏱️</span>
-                                                <span class="stat-name">Best Time</span>
-                                            </div>
-                                            <div class="stat-value">2:34</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Tower Defense Card -->
-                            <div class="stacked-game-card" data-game="tower-defense">
-                                <div class="game-card-header">
-                                    <div class="game-character-group">
-                                        <span class="game-character">🐘</span>
-                                        <span class="game-character">🏰</span>
-                                    </div>
-                                    <div class="game-ribbon game-ribbon--blue">Strategy</div>
-                                </div>
-                                
-                                <div class="game-card-content">
-                                    <div class="game-intro">
-                                        <div class="game-icon-title">
-                                            <div class="game-main-icon">🏰</div>
-                                            <div>
-                                                <h3 class="game-title">Heffalump Defense</h3>
-                                                <p class="game-subtitle">Protect the Wood from invaders!</p>
-                                            </div>
-                                        </div>
-                                        <button class="game-favorite-btn" aria-label="Add to favorites">
-                                            <i class="far fa-heart"></i>
-                                        </button>
-                                    </div>
-                                    
-                                    <div class="game-quick-info">
-                                        <div class="info-item">
-                                            <span class="info-label">Difficulty:</span>
-                                            <span class="info-value">Medium</span>
-                                        </div>
-                                        <div class="info-item">
-                                            <span class="info-label">Players:</span>
-                                            <span class="info-value">1</span>
-                                        </div>
-                                        <div class="info-item">
-                                            <span class="info-label">Waves:</span>
-                                            <span class="info-value">10</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <p class="game-description">
-                                        Strategic tower defense game. Place your towers wisely to stop the Heffalump 
-                                        invasion. Each tower has unique abilities!
-                                    </p>
-                                    
-                                    <div class="tower-selection-section">
-                                        <h4 class="section-title">
-                                            <i class="fas fa-chess-rook"></i>
-                                            Available Towers
-                                        </h4>
-                                        
-                                        <div class="tower-scroll-container">
-                                            <div class="tower-grid">
-                                                <!-- Tower 1 -->
-                                                <button class="tower-card selected" data-tower="pooh">
-                                                    <div class="tower-avatar">🐻</div>
-                                                    <div class="tower-info">
-                                                        <h4 class="tower-name">Pooh Bear</h4>
-                                                        <div class="tower-stats">
-                                                            <div class="stat">Damage: Medium</div>
-                                                            <div class="stat">Range: Short</div>
-                                                            <div class="stat">Special: Honey Slow</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tower-cost">
-                                                        <span class="cost-icon">🍯</span>
-                                                        <span>15</span>
-                                                    </div>
-                                                </button>
-                                                
-                                                <!-- Tower 2 -->
-                                                <button class="tower-card" data-tower="rabbit">
-                                                    <div class="tower-avatar">🐰</div>
-                                                    <div class="tower-info">
-                                                        <h4 class="tower-name">Rabbit</h4>
-                                                        <div class="tower-stats">
-                                                            <div class="stat">Damage: Low</div>
-                                                            <div class="stat">Range: Long</div>
-                                                            <div class="stat">Special: Carrot Throw</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tower-cost">
-                                                        <span class="cost-icon">🍯</span>
-                                                        <span>20</span>
-                                                    </div>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="game-display-area">
-                                        <div class="game-area-header">
-                                            <div class="area-title">Game Arena</div>
-                                            <div class="area-info">
-                                                <div class="info-tag">
-                                                    <i class="fas fa-heart"></i>
-                                                    <span>Lives: 20</span>
-                                                </div>
-                                                <div class="info-tag">
-                                                    <i class="fas fa-coins"></i>
-                                                    <span>Honey: 100</span>
-                                                </div>
-                                                <div class="info-tag">
-                                                    <i class="fas fa-wave-square"></i>
-                                                    <span>Wave: 1/10</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="game-canvas-container legacy-canvas">
-                                            <canvas id="defense-game-canvas" width="800" height="400"></canvas>
-                                            <div class="canvas-overlay">
-                                                <div class="overlay-content">
-                                                    <h3 class="overlay-title">Ready to Defend?</h3>
-                                                    <p class="overlay-subtitle">
-                                                        Place towers along the path to stop Heffalumps from reaching 
-                                                        the end. Each defeated enemy gives you more honey to build more towers!
-                                                    </p>
-                                                    <div class="overlay-highscore">
-                                                        <span class="highscore-label">High Score:</span>
-                                                        <span class="highscore-value">8,450</span>
-                                                    </div>
-                                                </div>
-                                                <div class="overlay-hint">
-                                                    <i class="fas fa-mouse-pointer"></i>
-                                                    Click anywhere on the path to place a tower
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="game-controls-stack">
-                                        <div class="primary-controls-row">
-                                            <button class="btn-game-start">
-                                                <span class="btn-icon">▶️</span>
-                                                <span class="btn-text">Start Next Wave</span>
-                                                <span class="btn-subtext">Wave 1 of 10</span>
-                                            </button>
-                                            <button class="btn-game-action">
-                                                <span class="btn-icon">⚡</span>
-                                                <span class="btn-text">Speed Up</span>
-                                                <span class="btn-subtext">2x Speed</span>
-                                            </button>
-                                        </div>
-                                        
-                                        <div class="secondary-controls-row">
-                                            <button class="btn-game-utility">
-                                                <i class="fas fa-undo"></i>
-                                                <span>Undo</span>
-                                            </button>
-                                            <button class="btn-game-utility">
-                                                <i class="fas fa-sync-alt"></i>
-                                                <span>Restart</span>
-                                            </button>
-                                            <button class="btn-game-utility">
-                                                <i class="fas fa-music"></i>
-                                                <span>Sound</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="shortcuts-panel">
-                                        <button class="shortcuts-toggle">
-                                            <i class="fas fa-keyboard toggle-icon"></i>
-                                            <span>Keyboard Shortcuts</span>
-                                            <i class="fas fa-chevron-down"></i>
-                                        </button>
-                                        <div class="shortcuts-content">
-                                            <div class="shortcut-item">
-                                                <kbd class="shortcut-key">P</kbd>
-                                                <span class="shortcut-desc">Pause/Play</span>
-                                            </div>
-                                            <div class="shortcut-item">
-                                                <kbd class="shortcut-key">Space</kbd>
-                                                <span class="shortcut-desc">Speed Up</span>
-                                            </div>
-                                            <div class="shortcut-item">
-                                                <kbd class="shortcut-key">1-4</kbd>
-                                                <span class="shortcut-desc">Select Tower</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="powerups-section">
-                                        <h4 class="section-title">
-                                            <i class="fas fa-bolt"></i>
-                                            Power-ups
-                                        </h4>
-                                        <div class="powerups-grid">
-                                            <div class="powerup-item">
-                                                <div class="powerup-icon">🍯</div>
-                                                <div>
-                                                    <div class="powerup-name">Honey Boost</div>
-                                                    <div class="powerup-desc">Double honey for 30 seconds</div>
-                                                </div>
-                                            </div>
-                                            <div class="powerup-item">
-                                                <div class="powerup-icon">⏱️</div>
-                                                <div>
-                                                    <div class="powerup-name">Time Freeze</div>
-                                                    <div class="powerup-desc">Freeze enemies for 5 seconds</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="stat">
+                            <i class="fas fa-user"></i>
+                            <span>1 Player</span>
                         </div>
+                        <div class="stat">
+                            <i class="fas fa-clock"></i>
+                            <span>5 min</span>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button class="btn-play-game" data-game="honey-hunt" data-fullscreen="true">
+                            <i class="fas fa-play"></i>
+                            <span>Play Fullscreen</span>
+                        </button>
+                        <button class="btn-play-game" data-game="honey-hunt" data-fullscreen="false">
+                            <i class="fas fa-expand-alt"></i>
+                            <span>Play Here</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-card-footer">
+                    <div class="high-score">
+                        <i class="fas fa-crown"></i>
+                        High Score: 1,250
+                    </div>
+                </div>
+            </div>
 
-                        <!-- Mobile Controls Panel -->
-                        <div class="mobile-controls-panel">
-                            <div class="mobile-controls-header">
-                                <div class="controls-label">
-                                    <i class="fas fa-gamepad"></i>
-                                    Mobile Controls
-                                </div>
-                                <button class="controls-toggle">
-                                    <i class="fas fa-chevron-up toggle-icon"></i>
+            <!-- Game 2: Tower Defense -->
+            <div class="game-card" data-game="tower-defense">
+                <div class="game-card-header">
+                    <div class="game-badge">Strategy</div>
+                    <div class="game-character-icon">🐘</div>
+                    <div class="game-rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.5</span>
+                    </div>
+                </div>
+                
+                <div class="game-card-body">
+                    <div class="game-icon-large">🏰</div>
+                    <h3 class="game-title">Heffalump Defense</h3>
+                    <p class="game-description">
+                        Defend the Hundred Acre Wood from Heffalump invasions with strategic tower placement.
+                    </p>
+                    
+                    <div class="game-stats">
+                        <div class="stat">
+                            <i class="fas fa-signal"></i>
+                            <span>Medium</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-user"></i>
+                            <span>1 Player</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-wave-square"></i>
+                            <span>10 Waves</span>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button class="btn-play-game" data-game="tower-defense" data-fullscreen="true">
+                            <i class="fas fa-play"></i>
+                            <span>Play Fullscreen</span>
+                        </button>
+                        <button class="btn-play-game" data-game="tower-defense" data-fullscreen="false">
+                            <i class="fas fa-expand-alt"></i>
+                            <span>Play Here</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-card-footer">
+                    <div class="high-score">
+                        <i class="fas fa-crown"></i>
+                        High Score: 8,450
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game 3: Memory Match -->
+            <div class="game-card" data-game="memory-game">
+                <div class="game-card-header">
+                    <div class="game-badge">Memory</div>
+                    <div class="game-character-icon">🎴</div>
+                    <div class="game-rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.7</span>
+                    </div>
+                </div>
+                
+                <div class="game-card-body">
+                    <div class="game-icon-large">🧠</div>
+                    <h3 class="game-title">Memory Match</h3>
+                    <p class="game-description">
+                        Match pairs of Hundred Acre Wood characters in this memory-boosting game.
+                    </p>
+                    
+                    <div class="game-stats">
+                        <div class="stat">
+                            <i class="fas fa-signal"></i>
+                            <span>Easy</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <span>1-2 Players</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-clock"></i>
+                            <span>3 min</span>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button class="btn-play-game" data-game="memory-game" data-fullscreen="true">
+                            <i class="fas fa-play"></i>
+                            <span>Play Fullscreen</span>
+                        </button>
+                        <button class="btn-play-game" data-game="memory-game" data-fullscreen="false">
+                            <i class="fas fa-expand-alt"></i>
+                            <span>Play Here</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-card-footer">
+                    <div class="high-score">
+                        <i class="fas fa-crown"></i>
+                        Best Time: 1:23
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game 4: Tigger Race -->
+            <div class="game-card" data-game="racing">
+                <div class="game-card-header">
+                    <div class="game-badge">Action</div>
+                    <div class="game-character-icon">🐯</div>
+                    <div class="game-rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.6</span>
+                    </div>
+                </div>
+                
+                <div class="game-card-body">
+                    <div class="game-icon-large">🏎️</div>
+                    <h3 class="game-title">Tigger Bounce Race</h3>
+                    <p class="game-description">
+                        Bounce with Tigger through the woodlands in this fast-paced racing game.
+                    </p>
+                    
+                    <div class="game-stats">
+                        <div class="stat">
+                            <i class="fas fa-signal"></i>
+                            <span>Medium</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-user"></i>
+                            <span>1-4 Players</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-flag-checkered"></i>
+                            <span>3 Tracks</span>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button class="btn-play-game" data-game="racing" data-fullscreen="true">
+                            <i class="fas fa-play"></i>
+                            <span>Play Fullscreen</span>
+                        </button>
+                        <button class="btn-play-game" data-game="racing" data-fullscreen="false">
+                            <i class="fas fa-expand-alt"></i>
+                            <span>Play Here</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-card-footer">
+                    <div class="high-score">
+                        <i class="fas fa-crown"></i>
+                        Best Lap: 0:45
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Details Area -->
+        <div class="game-details-area" id="gameDetails">
+            <div class="details-header">
+                <h3 class="details-title">
+                    <span class="details-game-icon">🍯</span>
+                    <span class="details-game-name">Honey Hunt Adventure</span>
+                </h3>
+                <button class="close-details" aria-label="Close details">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="details-content">
+                <div class="details-main">
+                    <div class="details-image">
+                        <div class="game-preview">
+                            <canvas id="gamePreview" width="600" height="300"></canvas>
+                            <div class="preview-overlay">
+                                <button class="btn-play-preview" data-game="honey-hunt">
+                                    <i class="fas fa-play-circle"></i>
+                                    <span>Try Now</span>
                                 </button>
-                            </div>
-                            <div class="mobile-controls-content">
-                                <div class="mobile-controls-grid">
-                                    <button class="mobile-control-btn" data-action="left">
-                                        <span class="control-icon">←</span>
-                                        <span class="control-label">Left</span>
-                                    </button>
-                                    <button class="mobile-control-btn" data-action="jump">
-                                        <span class="control-icon">↑</span>
-                                        <span class="control-label">Jump</span>
-                                    </button>
-                                    <button class="mobile-control-btn" data-action="right">
-                                        <span class="control-icon">→</span>
-                                        <span class="control-label">Right</span>
-                                    </button>
-                                </div>
-                                <div class="mobile-tip">
-                                    <i class="fas fa-lightbulb tip-icon"></i>
-                                    <span class="tip-text">Tip: You can also touch and drag on the game screen!</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Games Footer -->
-                        <div class="games-footer">
-                            <div class="footer-content">
-                                <div class="footer-section">
-                                    <h3 class="footer-title">
-                                        <i class="fas fa-trophy"></i>
-                                        Leaderboard
-                                    </h3>
-                                    <div class="leaderboard-preview">
-                                        <div class="leaderboard-item">
-                                            <div class="rank">1</div>
-                                            <div class="player">Christopher R.</div>
-                                            <div class="score">12,450</div>
-                                        </div>
-                                        <div class="leaderboard-item">
-                                            <div class="rank">2</div>
-                                            <div class="player">Winnie P.</div>
-                                            <div class="score">10,230</div>
-                                        </div>
-                                        <div class="leaderboard-item">
-                                            <div class="rank">3</div>
-                                            <div class="player">Piglet S.</div>
-                                            <div class="score">9,870</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn-view-leaderboard">
-                                        <i class="fas fa-chart-line"></i>
-                                        View Full Leaderboard
-                                    </button>
-                                </div>
-                                
-                                <div class="footer-section">
-                                    <h3 class="footer-title">
-                                        <i class="fas fa-info-circle"></i>
-                                        Game Features
-                                    </h3>
-                                    <ul class="footer-features">
-                                        <li>All games are family-friendly</li>
-                                        <li>No downloads required</li>
-                                        <li>Progress saved automatically</li>
-                                        <li>Works on all devices</li>
-                                        <li>Perfect for all ages</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                            <div class="footer-bottom">
-                                <p class="footer-note">
-                                    Games are best experienced on larger screens with keyboard/mouse. 
-                                    On mobile, use touch controls. All games are for entertainment 
-                                    purposes only and don't require any purchases.
-                                </p>
-                                <div class="footer-actions">
-                                    <button class="btn-footer-action">
-                                        <i class="fas fa-question-circle action-icon"></i>
-                                        How to Play Guide
-                                    </button>
-                                    <button class="btn-footer-action">
-                                        <i class="fas fa-cog action-icon"></i>
-                                        Game Settings
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>
-                </section>
+                    
+                    <div class="details-info">
+                        <h4>How to Play</h4>
+                        <ul class="instructions-list">
+                            <li>Use arrow keys or touch controls to move Pooh</li>
+                            <li>Collect all honey pots to complete each level</li>
+                            <li>Avoid bees - they'll slow you down!</li>
+                            <li>Find hidden honeycombs for bonus points</li>
+                        </ul>
+                        
+                        <div class="mobile-specific">
+                            <h5><i class="fas fa-mobile-alt"></i> Mobile Controls</h5>
+                            <p>On touch devices, use the on-screen joystick or tap to move Pooh around.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="details-footer">
+                    <div class="powerups-section">
+                        <h5>Power-ups</h5>
+                        <div class="powerups-grid">
+                            <div class="powerup">
+                                <div class="powerup-icon">🍯</div>
+                                <div class="powerup-name">Honey Speed</div>
+                                <div class="powerup-desc">Move faster for 10 seconds</div>
+                            </div>
+                            <div class="powerup">
+                                <div class="powerup-icon">🛡️</div>
+                                <div class="powerup-name">Bee Shield</div>
+                                <div class="powerup-desc">Protection from bees</div>
+                            </div>
+                            <div class="powerup">
+                                <div class="powerup-icon">⭐</div>
+                                <div class="powerup-name">Star Power</div>
+                                <div class="powerup-desc">Collect all honey on screen</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-actions">
+                        <button class="btn-leaderboard">
+                            <i class="fas fa-chart-line"></i>
+                            View Leaderboard
+                        </button>
+                        <button class="btn-share-score">
+                            <i class="fas fa-share-alt"></i>
+                            Share Score
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Game Controls Panel -->
+        <div class="mobile-game-controls">
+            <div class="controls-header">
+                <h4><i class="fas fa-gamepad"></i> Mobile Controls</h4>
+                <button class="toggle-controls" aria-label="Toggle controls">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
+            </div>
+            
+            <div class="controls-content">
+                <!-- D-pad Controls -->
+                <div class="d-pad-container">
+                    <div class="d-pad">
+                        <button class="dpad-btn up" data-action="up">
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                        <button class="dpad-btn left" data-action="left">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="dpad-btn center" data-action="action">
+                            <i class="fas fa-circle"></i>
+                        </button>
+                        <button class="dpad-btn right" data-action="right">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <button class="dpad-btn down" data-action="down">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn primary" data-action="jump">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>Jump</span>
+                        </button>
+                        <button class="action-btn secondary" data-action="action">
+                            <i class="fas fa-bolt"></i>
+                            <span>Power</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Touch Instructions -->
+                <div class="touch-instructions">
+                    <p><i class="fas fa-hand-point-up"></i> Tip: You can also touch and drag on the game screen to move characters.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fullscreen Game Container -->
+        <div class="fullscreen-game-container" id="fullscreenGame">
+            <div class="fullscreen-header">
+                <div class="game-info">
+                    <span class="game-icon">🍯</span>
+                    <div>
+                        <h3 class="game-title-fullscreen">Honey Hunt Adventure</h3>
+                        <p class="game-stats-fullscreen">Score: <span id="currentScore">0</span> | Lives: <span id="currentLives">3</span></p>
+                    </div>
+                </div>
+                
+                <div class="fullscreen-controls">
+                    <button class="btn-pause" aria-label="Pause game">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button class="btn-sound" aria-label="Toggle sound">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <button class="btn-exit-fullscreen" aria-label="Exit fullscreen">
+                        <i class="fas fa-compress"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="fullscreen-game-area">
+                <canvas id="fullscreenCanvas" width="800" height="600"></canvas>
+                <div class="fullscreen-overlay" id="fullscreenOverlay">
+                    <div class="overlay-content">
+                        <h2>Get Ready!</h2>
+                        <p>Game starting in <span id="countdown">3</span></p>
+                        <div class="overlay-instructions">
+                            <p><strong>Controls:</strong> Use arrow keys or touch controls to move</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="fullscreen-footer">
+                <div class="game-time">
+                    <i class="fas fa-clock"></i>
+                    <span>Time: <span id="gameTimer">00:00</span></span>
+                </div>
+                <div class="game-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span>Level <span id="currentLevel">1</span>/10</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Games Help Section -->
+        <div class="games-help">
+            <details class="help-accordion">
+                <summary>
+                    <i class="fas fa-question-circle"></i>
+                    Need Help?
+                    <span class="summary-arrow"></span>
+                </summary>
+                <div class="help-content">
+                    <div class="help-item">
+                        <h5><i class="fas fa-mobile-alt"></i> Mobile Play</h5>
+                        <p>All games are optimized for touch screens. Use the mobile controls panel or touch directly on the game screen.</p>
+                    </div>
+                    <div class="help-item">
+                        <h5><i class="fas fa-expand-arrows-alt"></i> Fullscreen Mode</h5>
+                        <p>For the best experience, use fullscreen mode on mobile devices by tapping the "Play Fullscreen" button.</p>
+                    </div>
+                    <div class="help-item">
+                        <h5><i class="fas fa-save"></i> Save Progress</h5>
+                        <p>Your high scores are automatically saved. You can continue where you left off anytime.</p>
+                    </div>
+                </div>
+            </details>
+        </div>
+    </div>
+</section>
 
                 <!-- RSVP Section -->
                 <section id="rsvp" class="content-section" aria-labelledby="rsvp-title">
