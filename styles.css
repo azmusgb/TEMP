@@ -5,6 +5,9 @@
   --leaf-green: #4eaf6c;
   --forest: #184e35;
   --cream: #fff7e6;
+  --parchment: #fbf1d2;
+  --ink: #3b2f25;
+  --muted-ink: #6a5a4a;
   --text: #2d2a32;
   --muted: #6b646e;
   --card: rgba(255,255,255,0.9);
@@ -16,7 +19,10 @@
 body {
   margin: 0;
   font-family: 'Nunito', system-ui, -apple-system, sans-serif;
-  background: linear-gradient(135deg, #fffdf6, #fdf1d6);
+  background: radial-gradient(circle at 12% 18%, rgba(247, 201, 72, 0.12), transparent 32%),
+    radial-gradient(circle at 80% 12%, rgba(78, 175, 108, 0.08), transparent 28%),
+    radial-gradient(circle at 40% 80%, rgba(228, 182, 120, 0.14), transparent 40%),
+    #fdf8ee;
   color: var(--text);
   overflow-x: hidden;
 }
@@ -66,7 +72,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 120px 24px 80px; }
 .floating-notes span { background: #fff; padding: 8px 10px; border-radius: 12px; box-shadow: var(--shadow); }
 
 .eyebrow { text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted); font-size: 12px; font-weight: 700; margin: 0; }
-.panel { margin-top: 70px; background: var(--card); border-radius: 22px; padding: 32px; box-shadow: var(--shadow); }
+.panel { margin-top: 70px; background: linear-gradient(145deg, #fffdf6, var(--parchment)); border-radius: 22px; padding: 32px; box-shadow: 0 18px 45px rgba(59, 47, 37, 0.08), inset 0 0 0 1px rgba(59, 47, 37, 0.08); border: 1px solid rgba(59, 47, 37, 0.12); }
 .panel--alt { background: linear-gradient(135deg, rgba(255,247,230,0.9), rgba(223,241,208,0.9)); }
 .panel--characters { background: linear-gradient(135deg, rgba(255,247,230,0.9), rgba(255, 224, 164, 0.65)); position: relative; overflow: hidden; }
 .panel--characters::after { content: '🐝'; position: absolute; right: 22px; top: 18px; opacity: 0.3; font-size: 48px; }
@@ -107,9 +113,10 @@ main { max-width: 1100px; margin: 0 auto; padding: 120px 24px 80px; }
 .character-card__hint { margin: 2px 0 0; color: var(--muted); }
 .character-card__btn { padding: 10px 12px; }
 
-.game { background: #fff; border-radius: 18px; padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(24,78,53,0.08); display: grid; gap: 12px; }
+.game { background: linear-gradient(160deg, rgba(251, 241, 210, 0.9), rgba(255, 255, 255, 0.92)); border-radius: 18px; padding: 16px; box-shadow: 0 18px 40px rgba(59, 47, 37, 0.12); border: 1px solid rgba(59,47,37,0.16); display: grid; gap: 12px; position: relative; overflow: hidden; }
+.game::before { content: ''; position: absolute; inset: 12px; border: 1px dashed rgba(59,47,37,0.18); border-radius: 14px; pointer-events: none; opacity: 0.7; }
 .game__hud { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 10px; }
-.game__hud div { background: linear-gradient(135deg, rgba(247,201,72,0.15), rgba(223,241,208,0.55)); border-radius: 12px; padding: 10px; font-weight: 700; color: var(--forest); display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.game__hud div { background: linear-gradient(135deg, rgba(247,201,72,0.15), rgba(223,241,208,0.55)); border-radius: 12px; padding: 10px; font-weight: 700; color: var(--forest); display: flex; flex-direction: column; gap: 4px; align-items: flex-start; box-shadow: inset 0 0 0 1px rgba(59,47,37,0.08); }
 .game__combo strong { color: #b76b1d; }
 .game__controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
 .touch { display: flex; gap: 8px; }
@@ -140,7 +147,7 @@ canvas { width: 100%; border-radius: 14px; background: linear-gradient(180deg, #
 
 .game__overlay { position: absolute; inset: 0; background: var(--overlay); display: grid; place-items: center; opacity: 1; transition: opacity 0.35s ease; z-index: 2; }
 .panel#game { position: relative; overflow: hidden; }
-.game__overlay-card { background: #fff; padding: 22px; border-radius: 18px; max-width: 540px; box-shadow: var(--shadow); text-align: left; }
+.game__overlay-card { background: linear-gradient(140deg, #fffdf6, #f7e8c4); padding: 22px; border-radius: 18px; max-width: 540px; box-shadow: var(--shadow); text-align: left; border: 1px solid rgba(59,47,37,0.14); }
 .game__overlay-card h3 { margin: 6px 0 10px; color: var(--forest); }
 .game__instructions { list-style: none; padding: 0; margin: 0 0 14px; display: grid; gap: 8px; color: var(--text); }
 .game__overlay.is-hidden { opacity: 0; pointer-events: none; }

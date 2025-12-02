@@ -857,7 +857,7 @@ form.addEventListener('submit', (e) => {
   }, 600);
 });
 
-closeInstructions.addEventListener('click', () => instructionOverlay.classList.add('is-hidden'));
+closeInstructions.addEventListener('click', () => startGame());
 playAgain.addEventListener('click', () => { gameOverOverlay.classList.remove('is-visible'); startGame(); });
 closeGameOver.addEventListener('click', () => gameOverOverlay.classList.remove('is-visible'));
 
