@@ -29,44 +29,37 @@ class HundredAcreApp {
         this.el = {
             body: document.body,
             loadingScreen: document.getElementById('loadingScreen'),
-            readingProgress: document.getElementById('readingProgress'),
+            readingProgress: document.querySelector('.reading-progress'),
             mainContent: document.getElementById('mainContent'),
-            storybookCover: document.getElementById('storybookCover'),
-            openBookBtn: document.getElementById('openBookBtn'),
+            storybookCover: document.getElementById('cover'),
+            openBookBtn: document.querySelector('.open-book-btn'),
 
-            navToggle: document.getElementById('navToggle'),
-            navMenu: document.getElementById('navMenu'),
+            navToggle: document.querySelector('.nav-toggle'),
+            navMenu: document.querySelector('.nav-menu'),
             navItems: document.querySelectorAll('.nav-item'),
 
-            persistentRsvpBtn: document.getElementById('persistentRsvpBtn'),
-            scrollTopFab: document.getElementById('scrollTopFab'),
-            scrollRsvpFab: document.getElementById('scrollRsvpFab'),
+            persistentRsvpBtn: document.querySelector('.persistent-rsvp'),
+            scrollTopFab: document.querySelector('.fab[aria-label="Scroll to Top"]'),
+            scrollRsvpFab: document.querySelector('.fab[aria-label="Share Celebration"]'),
 
-            musicToggle: document.getElementById('musicToggle'),
-            motionToggle: document.getElementById('motionToggle'),
+            musicToggle: document.querySelector('.music-controls .music-btn'),
+            motionToggle: document.querySelector('.music-controls .accessibility-btn'),
             bgMusic: document.getElementById('bgMusic'),
 
-            rsvpSection: document.getElementById('section2'),
+            rsvpSection: document.getElementById('rsvp'),
             rsvpForm: document.getElementById('rsvpForm'),
-            rsvpStatus: document.getElementById('rsvpStatus'),
-            rsvpCount: document.getElementById('rsvpCount'),
+            rsvpStatus: document.querySelector('.form-status'),
+            rsvpCount: document.getElementById('rsvp-count'),
             rsvpAnchor: document.getElementById('rsvp'),
 
-            sections: [
-                document.getElementById('section1'),
-                document.getElementById('section2'),
-                document.getElementById('section6'),
-                document.getElementById('section3'),
-                document.getElementById('section5'),
-                document.getElementById('games')
-            ],
+            sections: Array.from(document.querySelectorAll('.content-section')),
 
             characterModal: document.getElementById('characterModal'),
-            characterModalIcon: document.getElementById('modalCharacterIcon'),
-            characterModalTitle: document.getElementById('characterModalTitle'),
-            characterModalQuote: document.getElementById('modalCharacterQuote'),
-            characterModalBio: document.getElementById('modalCharacterBio'),
-            characterModalClose: document.getElementById('closeCharacterModal'),
+            characterModalIcon: document.querySelector('#characterModal .modal-character-icon i'),
+            characterModalTitle: document.querySelector('#characterModal .modal-character-name'),
+            characterModalQuote: document.querySelector('#characterModal .modal-character-quote'),
+            characterModalBio: document.querySelector('#characterModal .modal-character-bio'),
+            characterModalClose: document.querySelector('#characterModal .close-modal'),
 
             gameInstructionModal: document.getElementById('gameInstructionModal'),
             gameInstructionTitle: document.getElementById('gameInstructionTitle'),
@@ -75,10 +68,10 @@ class HundredAcreApp {
             gameInstructionClose: document.getElementById('closeGameModal'),
 
             gameFullscreen: document.getElementById('gameFullscreen'),
-            gameFullscreenBody: document.getElementById('gameFullscreenBody'),
-            gameFullscreenTitle: document.getElementById('gameFullscreenTitle'),
-            gameFullscreenBackdrop: document.getElementById('gameFullscreenBackdrop'),
-            gameFullscreenClose: document.getElementById('closeGameFullscreen'),
+            gameFullscreenBody: document.querySelector('#gameFullscreen .game-fullscreen__body'),
+            gameFullscreenTitle: document.querySelector('#gameFullscreen .game-fullscreen__title'),
+            gameFullscreenBackdrop: document.querySelector('#gameFullscreen .game-fullscreen__backdrop'),
+            gameFullscreenClose: document.querySelector('#gameFullscreen .game-fullscreen__close'),
 
             honeyCanvas: document.getElementById('honey-game'),
             defenseCanvas: document.getElementById('defense-game'),
@@ -95,7 +88,7 @@ class HundredAcreApp {
             catchHighScore: document.getElementById('catch-high-score'),
             catchHighScoreDisplay: document.getElementById('catch-high-score-display'),
 
-            mobileControls: document.getElementById('mobileControls'),
+            mobileControls: document.querySelector('.mobile-controls-panel'),
             mobileLeftBtn: document.getElementById('mobileLeftBtn'),
             mobileRightBtn: document.getElementById('mobileRightBtn'),
 
@@ -682,7 +675,7 @@ class HundredAcreApp {
         const form = e.target;
         const formData = new FormData(form);
         const name = formData.get('guestName');
-        const count = formData.get('guestCount');
+        const count = formData.get('partySize');
         const note = formData.get('guestNote');
 
         // Validation
@@ -691,8 +684,8 @@ class HundredAcreApp {
             return;
         }
 
-        if (!count || count < 1 || count > 5) {
-            this.showFormStatus('Please select 1-5 guests', 'error');
+        if (!count || count < 1 || count > 6) {
+            this.showFormStatus('Please select 1-6 guests', 'error');
             return;
         }
 
