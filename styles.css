@@ -4064,8 +4064,10 @@ textarea:focus-visible {
   flex: 1;
   padding: 16px;
   display: flex;
+  flex-direction: column;
   align-items: stretch;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 12px;
   overflow: auto;
 }
 
@@ -4073,18 +4075,18 @@ textarea:focus-visible {
 .game-fullscreen__body .game-display-area,
 .game-fullscreen__body .stacked-game-card {
   width: 100%;
-  height: 100%;
+  height: auto;
   margin: 0;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 14px;
-  overflow: hidden;
+  overflow: auto;
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .game-fullscreen__body canvas {
-  height: 100% !important;
-  max-height: calc(100vh - 200px);
+  height: auto !important;
+  max-height: none;
 }
 
 .game-fullscreen__body .game-canvas-container.legacy-canvas {
