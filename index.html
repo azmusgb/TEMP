@@ -39,6 +39,7 @@
             --success-green: #4CAF50;
             --warning-orange: #FF9800;
             --info-blue: #2196F3;
+            --danger-red: #c62828;
         }
         
         * {
@@ -64,10 +65,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Nunito", system-ui, sans-serif;
-            background:
-                radial-gradient(circle at top left, #ffe9c4 0, transparent 50%),
-                radial-gradient(circle at bottom right, #ffd9b0 0, transparent 50%),
-                linear-gradient(135deg, #f7e0c2, #f2d6a9);
+            background: linear-gradient(180deg, #fffaf0, #f6e7d7);
             color: var(--ink-brown);
             min-height: 100vh;
             min-height: -webkit-fill-available;
@@ -833,45 +831,40 @@
         /* Mobile-specific controls */
         .mobile-controls {
             display: none;
-            position: relative;
-            margin-top: 15px;
-            height: 140px;
-            touch-action: none;
+            margin-top: 12px;
+            gap: 10px;
+            justify-content: center;
+            background: #fff7e2;
+            border: 1px solid rgba(153, 110, 56, 0.16);
+            border-radius: 16px;
+            padding: 10px;
+            box-shadow: 0 8px 20px rgba(96, 63, 32, 0.12);
         }
-        
+
         .mobile-controls.active {
-            display: block;
-        }
-        
-        .control-pad {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
             display: flex;
-            justify-content: space-between;
         }
-        
-        .control-btn {
-            width: 76px;
-            height: 76px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--pooh-yellow), var(--pooh-yellow-dark));
-            display: flex;
+
+        .mobile-btn {
+            flex: 1;
+            min-width: 0;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            gap: 6px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--pooh-yellow), var(--pooh-yellow-dark));
             color: var(--ink-brown);
-            box-shadow: var(--shadow-lg);
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            opacity: 0.9;
+            font-weight: 800;
+            font-size: 1rem;
+            border: none;
+            box-shadow: var(--shadow-sm);
             transition: var(--transition);
-            -webkit-tap-highlight-color: transparent;
         }
-        
-        .control-btn:active {
-            transform: scale(0.9);
-            opacity: 1;
+
+        .mobile-btn:active {
+            transform: translateY(1px);
         }
         
         /* Footer */
@@ -902,10 +895,18 @@
                 margin: 8px 0;
                 max-width: 540px;
             }
-            
+
             .page {
                 padding: 18px 14px 22px;
                 margin: 4px;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "game"
+                    "story";
+                padding: 16px;
             }
 
             .content-grid {
@@ -963,7 +964,7 @@
                 flex-direction: column;
                 gap: 8px;
             }
-            
+
             .btn {
                 width: 100%;
                 padding: 16px 18px;
@@ -977,9 +978,9 @@
                 gap: 8px;
                 font-size: 0.9rem;
             }
-            
+
             .mobile-controls.active {
-                display: block;
+                display: flex;
             }
             
             .toast-container {
@@ -1351,20 +1352,18 @@
         .game-container {
             width: 100%;
             max-width: 1200px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 248, 229, 0.98));
+            background: #fffdf8;
             border-radius: var(--radius-lg);
-            box-shadow: 0 24px 60px rgba(96, 63, 32, 0.28);
-            border: 1px solid rgba(153, 110, 56, 0.2);
+            box-shadow: 0 16px 40px rgba(96, 63, 32, 0.18);
+            border: 1px solid rgba(153, 110, 56, 0.16);
             overflow: hidden;
             position: relative;
         }
 
         .hero-header {
-            background: radial-gradient(circle at 20% 20%, #fff0c7, transparent 35%),
-                        radial-gradient(circle at 80% 10%, #ffe2b3, transparent 30%),
-                        linear-gradient(120deg, #fbe6c3, #ffd9a2);
+            background: linear-gradient(120deg, #fff7e2, #ffe8bd);
             padding: 32px 28px;
-            border-bottom: 1px solid rgba(153, 110, 56, 0.18);
+            border-bottom: 1px solid rgba(153, 110, 56, 0.14);
         }
 
         .hero-content {
@@ -1407,17 +1406,20 @@
 
         .main-grid {
             display: grid;
-            grid-template-columns: 320px 1fr;
+            grid-template-columns: 1fr 320px;
+            grid-template-areas: "game story";
             gap: 18px;
             padding: 22px;
+            align-items: start;
         }
 
         .story-card {
+            grid-area: story;
             background: white;
             border-radius: var(--radius-md);
             padding: 18px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid rgba(153, 110, 56, 0.18);
+            box-shadow: 0 8px 26px rgba(96, 63, 32, 0.12);
+            border: 1px solid rgba(153, 110, 56, 0.12);
             display: flex;
             flex-direction: column;
             gap: 14px;
@@ -1436,6 +1438,8 @@
         .story-text {
             line-height: 1.6;
             color: var(--ink-soft);
+            text-align: left;
+            max-width: 46ch;
         }
 
         .story-details {
@@ -1461,9 +1465,26 @@
         .detail-value { color: var(--ink-soft); }
 
         .game-area {
+            grid-area: game;
             display: flex;
             flex-direction: column;
             gap: 14px;
+        }
+
+        .inline-tip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: #fff6dc;
+            border: 1px solid rgba(247, 201, 72, 0.5);
+            color: var(--ink-soft);
+            font-weight: 700;
+        }
+
+        .inline-tip .tip-icon {
+            font-size: 1.2rem;
         }
 
         .stats-dashboard {
@@ -1581,12 +1602,23 @@
 
         .canvas-container {
             position: relative;
-            background: #fef8e9;
+            background: #fffaf0;
             border-radius: var(--radius-lg);
-            border: 1px solid rgba(153, 110, 56, 0.2);
+            border: 1px solid rgba(153, 110, 56, 0.18);
             overflow: hidden;
             min-height: 360px;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 12px 32px rgba(96, 63, 32, 0.14);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .canvas-container.damage {
+            border-color: rgba(198, 40, 40, 0.5);
+            box-shadow: 0 12px 32px rgba(198, 40, 40, 0.28);
+        }
+
+        .canvas-container.combo {
+            border-color: rgba(247, 201, 72, 0.6);
+            box-shadow: 0 14px 34px rgba(247, 201, 72, 0.22);
         }
 
         #gameCanvas {
@@ -1637,16 +1669,32 @@
 
         .mobile-controls {
             display: none;
-            justify-content: center;
+            margin-top: 12px;
             gap: 10px;
+            justify-content: center;
+            background: #fff7e2;
+            border: 1px solid rgba(153, 110, 56, 0.16);
+            border-radius: 16px;
+            padding: 10px;
+            box-shadow: 0 8px 20px rgba(96, 63, 32, 0.12);
         }
 
         .mobile-btn {
-            background: white;
-            border: 1px solid rgba(153, 110, 56, 0.22);
-            border-radius: 12px;
-            padding: 12px 16px;
+            flex: 1;
+            min-width: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--pooh-yellow), var(--pooh-yellow-dark));
+            color: var(--ink-brown);
+            font-weight: 800;
+            font-size: 1rem;
+            border: none;
             box-shadow: var(--shadow-sm);
+            transition: var(--transition);
         }
 
         .game-controls {
@@ -1850,40 +1898,6 @@
         </header>
 
         <div class="main-grid">
-            <!-- Story Card -->
-            <aside class="story-card">
-                <div class="story-header">
-                    <div class="story-icon">📖</div>
-                    <h2>The Story</h2>
-                </div>
-                <p class="story-text">
-                    Once upon an afternoon in the Hundred Acre Wood, Pooh Bear found his honey cupboard terribly empty. So he picked up his very best barrel, stepped out into the sunshine, and waited for the honeybees to share a few drippy drops from the sky.
-                </p>
-                <div class="story-details">
-                    <div class="detail-item">
-                        <div class="detail-icon">📅</div>
-                        <div class="detail-content">
-                            <div class="detail-label">When</div>
-                            <div class="detail-value">April 24 · 2:00–5:00 PM</div>
-                        </div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-icon">📍</div>
-                        <div class="detail-content">
-                            <div class="detail-label">Where</div>
-                            <div class="detail-value">The Hundred Acre Wood</div>
-                        </div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-icon">🎯</div>
-                        <div class="detail-content">
-                            <div class="detail-label">Your Mission</div>
-                            <div class="detail-value">Help Pooh catch honey drops!</div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
             <!-- Game Area -->
             <main class="game-area" id="main">
                 <!-- Stats Dashboard -->
@@ -2001,6 +2015,11 @@
                     </div>
                 </div>
 
+                <div class="inline-tip" id="inlineTip" role="note">
+                    <span class="tip-icon">✨</span>
+                    <span id="inlineTipText">Tap Start to begin. New here? Quick tips will appear while you play.</span>
+                </div>
+
                 <!-- Mobile Controls -->
                 <div class="mobile-controls" id="mobileControls">
                     <button class="mobile-btn mobile-btn--left" id="leftBtn" aria-label="Move left">
@@ -2043,6 +2062,40 @@
                     <span id="statusText">Press Start to begin your honey-catching adventure!</span>
                 </div>
             </main>
+
+            <!-- Story Card -->
+            <aside class="story-card">
+                <div class="story-header">
+                    <div class="story-icon">📖</div>
+                    <h2>The Story</h2>
+                </div>
+                <p class="story-text">
+                    Once upon an afternoon in the Hundred Acre Wood, Pooh Bear found his honey cupboard terribly empty. So he picked up his very best barrel, stepped out into the sunshine, and waited for the honeybees to share a few drippy drops from the sky.
+                </p>
+                <div class="story-details">
+                    <div class="detail-item">
+                        <div class="detail-icon">📅</div>
+                        <div class="detail-content">
+                            <div class="detail-label">When</div>
+                            <div class="detail-value">April 24 · 2:00–5:00 PM</div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">📍</div>
+                        <div class="detail-content">
+                            <div class="detail-label">Where</div>
+                            <div class="detail-value">The Hundred Acre Wood</div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">🎯</div>
+                        <div class="detail-content">
+                            <div class="detail-label">Your Mission</div>
+                            <div class="detail-value">Help Pooh catch honey drops!</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </div>
 
         <!-- Footer -->
@@ -2116,7 +2169,8 @@
                 ACHIEVEMENTS: 'pooh_honey_barrel_achievements',
                 LEVELS: 'pooh_honey_barrel_levels',
                 SELECTED_LEVEL: 'pooh_honey_barrel_selected_level',
-                MULTIPLAYER: 'pooh_honey_barrel_multiplayer'
+                MULTIPLAYER: 'pooh_honey_barrel_multiplayer',
+                ONBOARDING: 'pooh_honey_barrel_onboarding_seen'
             };
 
             const ACHIEVEMENTS = {
@@ -2421,6 +2475,7 @@
                     // DOM Elements
                     this.canvas = document.getElementById('gameCanvas');
                     this.ctx = this.canvas.getContext('2d');
+                    this.canvasContainer = this.canvas.parentElement;
                     
                     this.scoreEl = document.getElementById('score');
                     this.timeEl = document.getElementById('time');
@@ -2428,6 +2483,8 @@
                     this.bestEl = document.getElementById('best');
                     this.streakEl = document.getElementById('streak');
                     this.statusText = document.getElementById('statusText');
+                    this.inlineTip = document.getElementById('inlineTip');
+                    this.inlineTipText = document.getElementById('inlineTipText');
                     this.overlay = document.getElementById('overlay');
                     this.overlayTitle = document.getElementById('overlayTitle');
                     this.overlayText = document.getElementById('overlayText');
@@ -2479,6 +2536,9 @@
                     this.currentPlayerIndex = 0;
                     this.playerScores = [0, 0];
                     this.playerNames = ['Player 1', 'Player 2'];
+                    this.onboardingSeen = false;
+                    this.comboTimeout = null;
+                    this.damageTimeout = null;
                     
                     // Game objects
                     this.entities = [];
@@ -2528,9 +2588,15 @@
                     if (this.isMobile) {
                         this.statusText.textContent = 'Tap Start, then drag Pooh or use the on-screen buttons to move.';
                         this.overlayText.innerHTML = 'Tap <strong>Start</strong>, then drag Pooh or use the arrow buttons. Catch <strong>honey drops</strong>, avoid <strong>bees</strong>.';
+                        if (!this.onboardingSeen) {
+                            this.syncInlineTip('Tap Start, then drag Pooh or use the on-screen arrows. Avoid bees!');
+                        }
                     } else {
                         this.statusText.textContent = 'Click Start, then use arrow keys or drag with mouse to move Pooh.';
                         this.overlayText.innerHTML = 'Click <strong>Start</strong>, then use arrow keys or drag with mouse. Catch <strong>honey drops</strong>, avoid <strong>bees</strong>.';
+                        if (!this.onboardingSeen) {
+                            this.syncInlineTip('Click Start, then use your arrow keys or mouse to move Pooh.');
+                        }
                     }
                 }
                 
@@ -2541,6 +2607,7 @@
                     this.loadLevels();
                     this.loadAchievements();
                     this.loadMultiplayerSettings();
+                    this.loadOnboardingState();
                     this.populateLevelSelect();
                     this.renderAchievements();
                     this.renderPlayers();
@@ -2796,7 +2863,11 @@
                 // ==================== Game State Management ====================
                 start() {
                     if (this.gameState === 'running') return;
-                    
+
+                    if (!this.onboardingSeen) {
+                        this.dismissOnboarding();
+                    }
+
                     this.gameState = 'countdown';
                     this.countdown = 3;
                     
@@ -3181,6 +3252,13 @@
                     this.updateStats();
                     this.streakEl.classList.add('pulse');
                     setTimeout(() => this.streakEl.classList.remove('pulse'), 500);
+
+                    if (this.canvasContainer && this.multiplier > 1) {
+                        this.canvasContainer.classList.remove('damage');
+                        this.canvasContainer.classList.add('combo');
+                        clearTimeout(this.comboTimeout);
+                        this.comboTimeout = setTimeout(() => this.canvasContainer.classList.remove('combo'), 350);
+                    }
                     
                     // Create popup
                     this.popups.push({
@@ -3242,6 +3320,12 @@
                     this.beeHitTimer = 0.3;
                     this.canvas.parentElement.classList.add('shake');
                     setTimeout(() => this.canvas.parentElement.classList.remove('shake'), 500);
+                    if (this.canvasContainer) {
+                        this.canvasContainer.classList.remove('combo');
+                        this.canvasContainer.classList.add('damage');
+                        clearTimeout(this.damageTimeout);
+                        this.damageTimeout = setTimeout(() => this.canvasContainer.classList.remove('damage'), 450);
+                    }
                     
                     // Play sound
                     this.audioManager.playBeeHitSound();
@@ -3944,6 +4028,37 @@
 
                     this.saveAchievements();
                     this.renderAchievements();
+                }
+
+                loadOnboardingState() {
+                    try {
+                        this.onboardingSeen = localStorage.getItem(STORAGE_KEYS.ONBOARDING) === 'true';
+                    } catch (e) {
+                        this.onboardingSeen = false;
+                    }
+                    this.syncInlineTip();
+                }
+
+                saveOnboardingState() {
+                    try {
+                        localStorage.setItem(STORAGE_KEYS.ONBOARDING, this.onboardingSeen.toString());
+                    } catch (e) {}
+                }
+
+                syncInlineTip(message) {
+                    if (!this.inlineTip) return;
+                    if (message && this.inlineTipText) {
+                        this.inlineTipText.textContent = message;
+                    }
+                    this.inlineTip.style.display = this.onboardingSeen ? 'none' : 'flex';
+                }
+
+                dismissOnboarding() {
+                    this.onboardingSeen = true;
+                    this.saveOnboardingState();
+                    if (this.inlineTip) {
+                        this.inlineTip.style.display = 'none';
+                    }
                 }
 
                 loadMultiplayerSettings() {
