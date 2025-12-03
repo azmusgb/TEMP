@@ -2226,6 +2226,14 @@
             function lerp(start, end, amount) {
                 return start + (end - start) * amount;
             }
+
+            function debounce(fn, delay = 200) {
+                let timeout;
+                return (...args) => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => fn(...args), delay);
+                };
+            }
             
             // ==================== Audio Manager ====================
             class AudioManager {
@@ -2326,8 +2334,9 @@
                     this.ctx = canvas.getContext('2d');
                     this.particles = [];
                     this.resize();
-                    
-                    window.addEventListener('resize', () => this.resize());
+
+                    this.handleResize = debounce(() => this.resize(), 200);
+                    window.addEventListener('resize', this.handleResize);
                 }
                 
                 resize() {
@@ -2436,11 +2445,16 @@
                 show(message, type = 'info', duration = 3000) {
                     const toast = document.createElement('div');
                     toast.className = `toast ${type}`;
-                    toast.innerHTML = `
-                        <i class="fas ${this.getIconForType(type)}"></i>
-                        <span>${message}</span>
-                    `;
-                    
+
+                    const icon = document.createElement('i');
+                    icon.className = `fas ${this.getIconForType(type)}`;
+
+                    const text = document.createElement('span');
+                    text.textContent = message;
+
+                    toast.appendChild(icon);
+                    toast.appendChild(text);
+
                     this.container.appendChild(toast);
                     
                     setTimeout(() => {
@@ -2467,6 +2481,9 @@
             // ==================== Main Game Class ====================
             class PoohHoneyBarrelGame {
                 constructor() {
+                    // Event management
+                    this.eventListeners = [];
+
                     // Device capabilities
                     this.isMobile = isMobile;
                     this.isTouchDevice = isTouchDevice;
@@ -2566,6 +2583,7 @@
                     this.countdown = 3;
                     this.controlUpdateInterval = null;
                     this.countdownInterval = null;
+                    this.animationFrame = null;
                     
                     // Systems - NEED TO INITIALIZE THESE
                     this.audioManager = new AudioManager();
@@ -2584,6 +2602,18 @@
                     this.init();
                 }
                 
+                registerListener(element, type, handler, options) {
+                    element.addEventListener(type, handler, options);
+                    this.eventListeners.push({ element, type, handler, options });
+                }
+
+                cleanupEventListeners() {
+                    this.eventListeners.forEach(({ element, type, handler, options }) => {
+                        element.removeEventListener(type, handler, options);
+                    });
+                    this.eventListeners = [];
+                }
+
                 setDeviceSpecificText() {
                     if (this.isMobile) {
                         this.statusText.textContent = 'Tap Start, then drag Pooh or use the on-screen buttons to move.';
@@ -2614,8 +2644,9 @@
                     
                     // Set up canvas
                     this.resizeCanvas();
-                    window.addEventListener('resize', () => this.resizeCanvas());
-                    window.addEventListener('orientationchange', () => {
+                    this.canvasResizeHandler = debounce(() => this.resizeCanvas(), 250);
+                    this.registerListener(window, 'resize', this.canvasResizeHandler);
+                    this.registerListener(window, 'orientationchange', () => {
                         setTimeout(() => {
                             this.isLandscape = window.innerWidth > window.innerHeight;
                             this.resizeCanvas();
@@ -2667,75 +2698,77 @@
                 }
                 
                 setupEventListeners() {
+                    const add = (...args) => this.registerListener(...args);
+
                     // Input handling for both mouse and touch
-                    this.canvas.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: false });
-                    this.canvas.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: false });
-                    this.canvas.addEventListener('touchend', (e) => this.handleTouchEnd(e));
-                    this.canvas.addEventListener('touchcancel', (e) => this.handleTouchEnd(e));
-                    
-                    this.canvas.addEventListener('mousedown', (e) => this.handleMouseDown(e));
-                    this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-                    this.canvas.addEventListener('mouseup', () => this.handleMouseUp());
-                    this.canvas.addEventListener('mouseleave', () => this.handleMouseUp());
-                    
+                    add(this.canvas, 'touchstart', (e) => this.handleTouchStart(e), { passive: false });
+                    add(this.canvas, 'touchmove', (e) => this.handleTouchMove(e), { passive: false });
+                    add(this.canvas, 'touchend', (e) => this.handleTouchEnd(e));
+                    add(this.canvas, 'touchcancel', (e) => this.handleTouchEnd(e));
+
+                    add(this.canvas, 'mousedown', (e) => this.handleMouseDown(e));
+                    add(this.canvas, 'mousemove', (e) => this.handleMouseMove(e));
+                    add(this.canvas, 'mouseup', () => this.handleMouseUp());
+                    add(this.canvas, 'mouseleave', () => this.handleMouseUp());
+
                     // Keyboard controls
-                    document.addEventListener('keydown', (e) => this.handleKeyDown(e));
-                    document.addEventListener('keyup', (e) => this.handleKeyUp(e));
-                    
+                    add(document, 'keydown', (e) => this.handleKeyDown(e));
+                    add(document, 'keyup', (e) => this.handleKeyUp(e));
+
                     // Mobile control buttons
                     if (this.leftBtn && this.rightBtn) {
-                        this.leftBtn.addEventListener('touchstart', (e) => {
+                        add(this.leftBtn, 'touchstart', (e) => {
                             e.preventDefault();
                             this.player.moveLeft = true;
                         }, { passive: false });
-                        
-                        this.leftBtn.addEventListener('touchend', (e) => {
+
+                        add(this.leftBtn, 'touchend', (e) => {
                             e.preventDefault();
                             this.player.moveLeft = false;
                         }, { passive: false });
-                        
-                        this.leftBtn.addEventListener('touchcancel', (e) => {
+
+                        add(this.leftBtn, 'touchcancel', (e) => {
                             e.preventDefault();
                             this.player.moveLeft = false;
                         }, { passive: false });
-                        
-                        this.rightBtn.addEventListener('touchstart', (e) => {
+
+                        add(this.rightBtn, 'touchstart', (e) => {
                             e.preventDefault();
                             this.player.moveRight = true;
                         }, { passive: false });
-                        
-                        this.rightBtn.addEventListener('touchend', (e) => {
+
+                        add(this.rightBtn, 'touchend', (e) => {
                             e.preventDefault();
                             this.player.moveRight = false;
                         }, { passive: false });
-                        
-                        this.rightBtn.addEventListener('touchcancel', (e) => {
+
+                        add(this.rightBtn, 'touchcancel', (e) => {
                             e.preventDefault();
                             this.player.moveRight = false;
                         }, { passive: false });
-                        
+
                         // For testing on desktop
-                        this.leftBtn.addEventListener('mousedown', () => this.player.moveLeft = true);
-                        this.leftBtn.addEventListener('mouseup', () => this.player.moveLeft = false);
-                        this.leftBtn.addEventListener('mouseleave', () => this.player.moveLeft = false);
-                        
-                        this.rightBtn.addEventListener('mousedown', () => this.player.moveRight = true);
-                        this.rightBtn.addEventListener('mouseup', () => this.player.moveRight = false);
-                        this.rightBtn.addEventListener('mouseleave', () => this.player.moveRight = false);
+                        add(this.leftBtn, 'mousedown', () => this.player.moveLeft = true);
+                        add(this.leftBtn, 'mouseup', () => this.player.moveLeft = false);
+                        add(this.leftBtn, 'mouseleave', () => this.player.moveLeft = false);
+
+                        add(this.rightBtn, 'mousedown', () => this.player.moveRight = true);
+                        add(this.rightBtn, 'mouseup', () => this.player.moveRight = false);
+                        add(this.rightBtn, 'mouseleave', () => this.player.moveRight = false);
                     }
-                    
+
                     // Button controls
-                    this.startBtn.addEventListener('click', () => this.handleStartClick());
-                    this.pauseBtn.addEventListener('click', () => this.handlePauseClick());
-                    this.helpBtn.addEventListener('click', () => this.showInstructions());
-                    
+                    add(this.startBtn, 'click', () => this.handleStartClick());
+                    add(this.pauseBtn, 'click', () => this.handlePauseClick());
+                    add(this.helpBtn, 'click', () => this.showInstructions());
+
                     // Settings
-                    this.difficultySelect.addEventListener('change', () => {
+                    add(this.difficultySelect, 'change', () => {
                         this.saveDifficulty();
                         this.toastManager.show(`Difficulty set to: ${this.difficultySelect.options[this.difficultySelect.selectedIndex].text}`, 'info');
                     });
 
-                    this.levelSelect.addEventListener('change', () => {
+                    add(this.levelSelect, 'change', () => {
                         this.currentLevelId = parseInt(this.levelSelect.value, 10);
                         this.saveSelectedLevel();
                         const level = this.getSelectedLevel();
@@ -2744,7 +2777,7 @@
                         }
                     });
 
-                    this.multiplayerToggle.addEventListener('click', () => {
+                    add(this.multiplayerToggle, 'click', () => {
                         this.multiplayerEnabled = !this.multiplayerEnabled;
                         this.saveMultiplayerSettings();
                         this.updateMultiplayerToggle();
@@ -2754,31 +2787,31 @@
                         this.toastManager.show(stateMessage, 'info');
                     });
 
-                    this.achievementsBtn.addEventListener('click', () => this.showAchievements());
-                    this.closeAchievements.addEventListener('click', () => this.hideAchievements());
-                    this.achievementsModal.addEventListener('click', (e) => {
+                    add(this.achievementsBtn, 'click', () => this.showAchievements());
+                    add(this.closeAchievements, 'click', () => this.hideAchievements());
+                    add(this.achievementsModal, 'click', (e) => {
                         if (e.target === this.achievementsModal) {
                             this.hideAchievements();
                         }
                     });
 
-                    this.shareBtn.addEventListener('click', () => this.shareScore());
-                    
-                    this.soundToggle.addEventListener('click', () => {
+                    add(this.shareBtn, 'click', () => this.shareScore());
+
+                    add(this.soundToggle, 'click', () => {
                         const isEnabled = this.audioManager.toggle();
                         this.soundToggle.classList.toggle('active', isEnabled);
                         this.soundToggle.querySelector('span:first-child').textContent = isEnabled ? 'On' : 'Off';
                         this.toastManager.show(`Sound effects ${isEnabled ? 'enabled' : 'disabled'}`, 'info');
                     });
-                    
+
                     // Instructions modal
-                    this.instructionsClose.addEventListener('click', () => this.hideInstructions());
-                    this.startFromInstructions.addEventListener('click', () => {
+                    add(this.instructionsClose, 'click', () => this.hideInstructions());
+                    add(this.startFromInstructions, 'click', () => {
                         this.hideInstructions();
                         this.handleStartClick();
                     });
-                    
-                    this.instructionsModal.addEventListener('click', (e) => {
+
+                    add(this.instructionsModal, 'click', (e) => {
                         if (e.target === this.instructionsModal || e.target === this.instructionsBackdrop) {
                             this.hideInstructions();
                         }
@@ -2945,7 +2978,7 @@
                     
                     // Start game loop
                     this.lastFrameTime = performance.now();
-                    requestAnimationFrame((time) => this.gameLoop(time));
+                    this.animationFrame = requestAnimationFrame((time) => this.gameLoop(time));
                 }
                 
                 startControlUpdates() {
@@ -2997,7 +3030,7 @@
                     }
                     
                     this.lastFrameTime = performance.now();
-                    requestAnimationFrame((time) => this.gameLoop(time));
+                    this.animationFrame = requestAnimationFrame((time) => this.gameLoop(time));
                 }
                 
                 restart() {
@@ -3025,6 +3058,15 @@
                         clearInterval(this.countdownInterval);
                         this.countdownInterval = null;
                     }
+
+                    if (this.animationFrame) {
+                        cancelAnimationFrame(this.animationFrame);
+                        this.animationFrame = null;
+                    }
+
+                    this.entities.length = 0;
+                    this.popups.length = 0;
+                    this.particles.length = 0;
                     
                     // Update best score
                     this.updateBestScore();
@@ -3451,7 +3493,10 @@
                 
                 // ==================== Rendering ====================
                 gameLoop(currentTime) {
-                    if (this.gameState !== 'running') return;
+                    if (this.gameState !== 'running') {
+                        this.animationFrame = null;
+                        return;
+                    }
                     
                     // Calculate delta time
                     const deltaTime = Math.min((currentTime - this.lastFrameTime) / 1000, 0.1);
@@ -3475,7 +3520,7 @@
                     this.draw();
                     
                     // Continue game loop
-                    requestAnimationFrame((time) => this.gameLoop(time));
+                    this.animationFrame = requestAnimationFrame((time) => this.gameLoop(time));
                 }
                 
                 draw() {
