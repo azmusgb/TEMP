@@ -1027,6 +1027,81 @@
             text-shadow: 0 0 12px rgba(255, 116, 66, 0.5);
         }
 
+        /* Objective tracker */
+        .objective-tracker {
+            margin-top: 14px;
+            padding: 14px 16px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(120deg, rgba(255, 196, 43, 0.14), rgba(255, 255, 255, 0.94));
+            box-shadow: var(--shadow-subtle);
+            border: 1px dashed rgba(255, 156, 27, 0.45);
+        }
+        .objective-tracker__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .objective-tracker__kicker {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.06em;
+            color: rgba(67, 48, 42, 0.7);
+            font-weight: 800;
+            margin: 0 0 4px;
+        }
+        .objective-tracker__title {
+            margin: 0;
+            font-weight: 800;
+            font-size: 1rem;
+        }
+        .objective-tracker__badge {
+            font-size: 0.85rem;
+            padding: 6px 10px;
+            border-radius: var(--radius-pill);
+            background: rgba(124, 179, 66, 0.18);
+            color: #4f6d2c;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+        }
+        .objective-tracker__badge i {
+            color: #7cb342;
+        }
+        .objective-tracker__badge--alert {
+            background: rgba(255, 82, 82, 0.12);
+            color: #8a1c1c;
+        }
+        .objective-tracker__badge--alert i {
+            color: #ff5252;
+        }
+        .objective-tracker__bar {
+            position: relative;
+            width: 100%;
+            height: 12px;
+            background: rgba(67, 48, 42, 0.07);
+            border-radius: var(--radius-pill);
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .objective-tracker__fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            border-radius: var(--radius-pill);
+            background: linear-gradient(90deg, #ffc42b, #ff9800);
+            transition: width 0.35s ease;
+        }
+        .objective-tracker__note {
+            margin: 0;
+            font-size: 0.9rem;
+            color: rgba(67, 48, 42, 0.8);
+        }
+
         /* HUD Elements */
         .honey-hud {
             display: grid;
@@ -1995,6 +2070,22 @@
                                     <div class="streak-meter__fill" id="streakFill"></div>
                                 </div>
                             </div>
+
+                            <div class="objective-tracker" aria-live="polite">
+                                <div class="objective-tracker__header">
+                                    <div>
+                                        <p class="objective-tracker__kicker">Quest progress</p>
+                                        <p class="objective-tracker__title" id="objectiveLabel">0 / 10 pots</p>
+                                    </div>
+                                    <span class="objective-tracker__badge objective-tracker__badge--alert" id="shieldStatus">
+                                        <i class="fas fa-shield-alt"></i> No bee shield
+                                    </span>
+                                </div>
+                                <div class="objective-tracker__bar" aria-hidden="true">
+                                    <div class="objective-tracker__fill" id="objectiveFill"></div>
+                                </div>
+                                <p class="objective-tracker__note" id="objectiveNote">Collect 10 pots to earn the Honey Hunter Certificate.</p>
+                            </div>
                         </div>
 
                         <!-- Status Bar -->
@@ -2343,6 +2434,16 @@
         const overlay = document.getElementById('gameOverlay');
         const overlayText = document.getElementById('overlayText');
         const overlayHint = document.getElementById('overlayHint');
+        const objectiveFill = document.getElementById('objectiveFill');
+        const objectiveLabel = document.getElementById('objectiveLabel');
+        const objectiveNote = document.getElementById('objectiveNote');
+        const shieldStatus = document.getElementById('shieldStatus');
+
+        const milestoneRewards = [
+            { count: 10, title: 'Honey Hunter Certificate' },
+            { count: 15, title: 'Golden Honey Badge' },
+            { count: 20, title: 'Master Collector Trophy' }
+        ];
 
         // Game state
         let game = {
@@ -2356,7 +2457,7 @@
             gameOver: false,
             animationId: null,
             lastTime: 0,
-            highScore: localStorage.getItem('poohHighScore') || 0,
+            highScore: Number(localStorage.getItem('poohHighScore')) || 0,
             difficulty: 'medium',
             streakMultiplier: 1,
             lastCollectTime: 0,
@@ -2364,7 +2465,9 @@
             clickPulses: [],
             countingDown: false,
             countdown: 0,
-            countdownInterval: null
+            countdownInterval: null,
+            shieldActiveUntil: 0,
+            lastMilestoneNotified: 0
         };
 
         // Honey pot class
@@ -2522,6 +2625,44 @@
             overlay.classList.remove('game-overlay--visible', 'game-overlay--alert');
         }
 
+        function updateShieldStatus() {
+            const now = performance.now();
+            const shieldSeconds = Math.max(0, Math.ceil((game.shieldActiveUntil - now) / 1000));
+            const shieldActive = shieldSeconds > 0;
+
+            shieldStatus.classList.toggle('objective-tracker__badge--alert', !shieldActive);
+            shieldStatus.innerHTML = shieldActive
+                ? `<i class="fas fa-shield-alt"></i> Shield ${shieldSeconds}s`
+                : '<i class="fas fa-shield-alt"></i> No bee shield';
+        }
+
+        function updateObjectiveProgress() {
+            const collected = game.potsCollected;
+            const upcoming = milestoneRewards.find(reward => collected < reward.count);
+            const target = upcoming ? upcoming.count : milestoneRewards[milestoneRewards.length - 1].count;
+            const progress = Math.min(100, (collected / target) * 100);
+
+            objectiveFill.style.width = `${Math.max(progress, 4)}%`;
+            objectiveLabel.textContent = `${Math.min(collected, target)} / ${target} pots`;
+
+            if (!upcoming && collected >= target) {
+                objectiveNote.textContent = 'All chapter rewards unlocked! Keep tapping to chase a new high score.';
+            } else if (upcoming) {
+                const remaining = Math.max(0, upcoming.count - collected);
+                objectiveNote.textContent = `Collect ${remaining} more to earn the ${upcoming.title}.`;
+            }
+        }
+
+        function announceMilestone(collected) {
+            const reward = milestoneRewards.find(milestone => milestone.count === collected);
+            if (!reward || game.lastMilestoneNotified === collected) return;
+
+            game.lastMilestoneNotified = collected;
+            showOverlay('Milestone!', `${reward.title} unlocked at ${collected} pots!`, '');
+            setTimeout(hideOverlay, 1200);
+            statusText.textContent = `${reward.title} unlocked! Keep the rhythm going for the next reward.`;
+        }
+
         function resetRoundState() {
             game.score = 0;
             game.timeLeft = 60;
@@ -2536,6 +2677,8 @@
             game.clickPulses = [];
             game.countingDown = false;
             game.countdown = 0;
+            game.shieldActiveUntil = 0;
+            game.lastMilestoneNotified = 0;
 
             if (game.countdownInterval) {
                 clearInterval(game.countdownInterval);
@@ -2858,7 +3001,11 @@
         }
 
         function addClickPulse(x, y, type = 'honey') {
-            const pulseColor = type === 'bee' ? 'rgba(255, 82, 82, 0.7)' : 'rgba(255, 196, 43, 0.8)';
+            const pulseColor = type === 'bee'
+                ? 'rgba(255, 82, 82, 0.7)'
+                : type === 'shield'
+                    ? 'rgba(124, 179, 66, 0.65)'
+                    : 'rgba(255, 196, 43, 0.8)';
             game.clickPulses.push({
                 x,
                 y,
@@ -2999,6 +3146,9 @@
             streakElement.classList.toggle('streak-hot', game.streakMultiplier >= 3);
             streakHint.textContent = game.streakMultiplier >= 3 ? 'Hot streak! Watch for surprise gold.' : 'Keep a rhythm for golden pots';
 
+            updateObjectiveProgress();
+            updateShieldStatus();
+
             // Add animation to score
             scoreElement.classList.add('score-updated');
             setTimeout(() => scoreElement.classList.remove('score-updated'), 300);
@@ -3011,6 +3161,7 @@
             const rect = canvas.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
+            const shieldActive = performance.now() < game.shieldActiveUntil;
 
             addClickPulse(x, y, 'honey');
 
@@ -3019,13 +3170,20 @@
             game.bees.forEach(bee => {
                 if (bee.isClicked(x, y)) {
                     beeHit = true;
-                    game.score = Math.max(0, game.score - 150);
-                    game.timeLeft = Math.max(0, game.timeLeft - 3);
-                    game.streakMultiplier = 1;
-                    statusText.textContent = 'Ouch! The bees buzzed away some honey. Watch your taps!';
-                    addClickPulse(x, y, 'bee');
-                    showOverlay('Buzz!', 'Bees stole honey. Aim for the pots!', 'game-overlay--alert');
-                    setTimeout(hideOverlay, 600);
+                    if (shieldActive) {
+                        statusText.textContent = 'Shield active! The bees were blocked from stealing honey.';
+                        addClickPulse(x, y, 'shield');
+                        showOverlay('Protected!', 'Your honey shield deflected the bees.', '');
+                        setTimeout(hideOverlay, 600);
+                    } else {
+                        game.score = Math.max(0, game.score - 150);
+                        game.timeLeft = Math.max(0, game.timeLeft - 3);
+                        game.streakMultiplier = 1;
+                        statusText.textContent = 'Ouch! The bees buzzed away some honey. Watch your taps!';
+                        addClickPulse(x, y, 'bee');
+                        showOverlay('Buzz!', 'Bees stole honey. Aim for the pots!', 'game-overlay--alert');
+                        setTimeout(hideOverlay, 600);
+                    }
                 }
             });
 
@@ -3050,6 +3208,13 @@
                     game.timeLeft = Math.min(120, game.timeLeft + timeBonus);
                     game.potsCollected++;
 
+                    if (pot.type === 'golden') {
+                        const shieldDuration = 4500;
+                        game.shieldActiveUntil = performance.now() + shieldDuration;
+                        showOverlay('Shielded!', 'Golden honey granted a brief bee shield.', '');
+                        setTimeout(hideOverlay, 800);
+                    }
+
                     // Play collection animation
                     playCollectionAnimation(x, y);
 
@@ -3059,6 +3224,7 @@
                         statusText.textContent = `Sweet! Streak x${game.streakMultiplier} for ${basePoints * game.streakMultiplier} points.`;
                     }
 
+                    announceMilestone(game.potsCollected);
                     if (game.potsCollected % 5 === 0) {
                         statusText.textContent += ' Bonus cheer from Pooh!';
                     }
