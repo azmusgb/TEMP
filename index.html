@@ -885,20 +885,51 @@
         /* Responsive adjustments - MOBILE FIRST */
         @media (max-width: 768px) {
             body {
-                padding: 10px;
-                align-items: flex-start;
+                padding: 0;
+                align-items: stretch;
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
             }
 
             .page-frame {
-                margin: 8px 0;
-                max-width: 540px;
+                margin: 0;
+                max-width: 100%;
+                border-radius: 0;
             }
 
             .page {
-                padding: 18px 14px 22px;
-                margin: 4px;
+                padding: 16px 14px 110px;
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .game-container {
+                gap: 12px;
+            }
+
+            .hero-header {
+                position: sticky;
+                top: 0;
+                z-index: 6;
+                padding: 16px 14px;
+                border-radius: 18px;
+                background: linear-gradient(135deg, #fff4ce, #ffe7a3);
+                box-shadow: 0 10px 26px rgba(96, 63, 32, 0.14);
+                border: 1px solid rgba(224, 168, 27, 0.3);
+            }
+
+            .hero-title {
+                font-size: 1.7rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .mobile-quick-overview {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 8px;
             }
 
             .main-grid {
@@ -906,99 +937,153 @@
                 grid-template-areas:
                     "game"
                     "story";
-                padding: 16px;
+                gap: 14px;
+                padding: 0;
             }
 
-            .content-grid {
-                gap: 14px;
+            .game-area {
+                display: grid;
+                grid-template-areas:
+                    "stats"
+                    "tip"
+                    "canvas"
+                    "move"
+                    "controls"
+                    "settings"
+                    "status";
+                gap: 12px;
             }
-            
-            h1 {
-                font-size: 1.8rem;
+
+            .stats-dashboard {
+                grid-area: stats;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
-            
-            .logo-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 2.2rem;
+
+            .inline-tip {
+                grid-area: tip;
             }
-            
-            .game-shell h2 {
-                font-size: 1.4rem;
+
+            .canvas-container {
+                grid-area: canvas;
+                background: white;
+                border-radius: 18px;
+                border: 1px solid rgba(153, 110, 56, 0.18);
+                padding: 12px;
+                box-shadow: 0 12px 30px rgba(96, 63, 32, 0.14);
             }
-            
-            .story-text {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-            
-            .stats-row {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-            }
-            
-            .stat-pill {
-                padding: 8px 12px;
-                min-height: 56px;
-            }
-            
-            .stat-pill--highlight {
-                grid-column: span 3;
-                order: -1;
-            }
-            
-            .settings-row {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .settings-group {
-                min-width: 100%;
-            }
-            
+
             .canvas-inner {
-                aspect-ratio: 1 / 1.4;
+                aspect-ratio: 3 / 4;
             }
-            
-            .controls-row {
-                flex-direction: column;
-                gap: 8px;
+
+            .mobile-controls {
+                grid-area: move;
+                display: none;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                background: #fff7e2;
+                border: 1px solid rgba(153, 110, 56, 0.16);
+                border-radius: 14px;
+                padding: 10px;
+                box-shadow: 0 8px 20px rgba(96, 63, 32, 0.12);
+            }
+
+            .mobile-controls.active {
+                display: grid;
+            }
+
+            .game-controls {
+                grid-area: controls;
+                position: sticky;
+                bottom: 12px;
+                background: #fff9e6;
+                border: 1px solid rgba(153, 110, 56, 0.22);
+                border-radius: 16px;
+                padding: 12px;
+                box-shadow: 0 12px 26px rgba(96, 63, 32, 0.18);
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                z-index: 5;
             }
 
             .btn {
                 width: 100%;
-                padding: 16px 18px;
-                font-size: 1.1rem;
-                min-height: 56px;
-            }
-            
-            .status {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-                font-size: 0.9rem;
+                padding: 14px 16px;
+                font-size: 1rem;
+                min-height: 52px;
             }
 
-            .mobile-controls.active {
-                display: flex;
+            .btn-primary {
+                grid-column: span 2;
             }
-            
+
+            .game-settings {
+                grid-area: settings;
+                background: white;
+                border-radius: 16px;
+                padding: 12px;
+                border: 1px solid rgba(153, 110, 56, 0.18);
+                box-shadow: 0 10px 22px rgba(96, 63, 32, 0.12);
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .status-bar {
+                grid-area: status;
+                align-items: flex-start;
+                line-height: 1.4;
+                padding: 12px 14px;
+                border-radius: 14px;
+                box-shadow: 0 8px 18px rgba(96, 63, 32, 0.12);
+            }
+
+            .story-card {
+                padding: 14px;
+                border-radius: 18px;
+                box-shadow: 0 12px 26px rgba(96, 63, 32, 0.14);
+                background: linear-gradient(180deg, #fff8e6, #fff3d6);
+                border: 1px solid rgba(153, 110, 56, 0.18);
+            }
+
+            .story-header {
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .story-toggle {
+                padding: 8px 12px;
+            }
+
+            .story-card.is-collapsed .story-body {
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+                transform: translateY(-4px);
+                padding-top: 0;
+            }
+
+            .story-card.is-expanded .story-body {
+                max-height: 1000px;
+                opacity: 1;
+            }
+
             .toast-container {
                 top: 10px;
                 right: 10px;
                 left: 10px;
                 max-width: 100%;
             }
-            
+
             .toast {
                 padding: 12px 16px;
                 font-size: 0.9rem;
             }
-            
+
             .instructions-modal {
                 padding: 10px;
             }
-            
+
             .instructions-content {
                 padding: 20px;
             }
@@ -1404,6 +1489,36 @@
             max-width: 720px;
         }
 
+        .mobile-quick-overview {
+            display: none;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .quick-stat-card {
+            background: #fff9e6;
+            border: 1px solid rgba(153, 110, 56, 0.18);
+            border-radius: 14px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .quick-label {
+            font-size: 0.85rem;
+            color: var(--ink-soft);
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+
+        .quick-value {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--ink-brown);
+        }
+
         .main-grid {
             display: grid;
             grid-template-columns: 1fr 320px;
@@ -1429,6 +1544,45 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .story-heading {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .story-kicker {
+            font-size: 0.85rem;
+            color: var(--ink-soft);
+            font-weight: 700;
+        }
+
+        .story-toggle {
+            margin-left: auto;
+            background: #fff4ce;
+            border: 1px solid rgba(224, 168, 27, 0.35);
+            color: var(--ink-brown);
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .story-toggle i { font-size: 0.9rem; }
+
+        .story-toggle:hover { background: #ffe7a3; }
+
+        .story-body {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: var(--transition);
         }
 
         .story-icon {
@@ -1797,11 +1951,11 @@
         }
 
         @media (max-width: 720px) {
-            body { padding: 10px; }
-            .hero-header { padding: 22px 18px; }
-            .main-grid { padding: 16px; }
+            body { padding: 0; }
+            .hero-header { padding: 16px 14px; }
+            .main-grid { padding: 0; }
             .game-controls { justify-content: center; }
-            .mobile-controls { display: flex; }
+            .mobile-controls { display: grid; }
         }
     </style>
 </head>
@@ -1894,6 +2048,20 @@
                     Pooh's Honey Barrel
                 </h1>
                 <p class="hero-subtitle">Catch the falling honey drops and avoid the busy bees in the Hundred Acre Wood</p>
+                <div class="mobile-quick-overview" aria-label="Mobile quick stats">
+                    <div class="quick-stat-card">
+                        <span class="quick-label">Score</span>
+                        <span class="quick-value" id="scoreMobile">0</span>
+                    </div>
+                    <div class="quick-stat-card">
+                        <span class="quick-label">Time</span>
+                        <span class="quick-value" id="timeMobile">60s</span>
+                    </div>
+                    <div class="quick-stat-card">
+                        <span class="quick-label">Streak</span>
+                        <span class="quick-value" id="streakMobile">x1</span>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -2067,31 +2235,40 @@
             <aside class="story-card">
                 <div class="story-header">
                     <div class="story-icon">📖</div>
-                    <h2>The Story</h2>
+                    <div class="story-heading">
+                        <h2>The Story</h2>
+                        <p class="story-kicker">A cozy recap you can tuck away on mobile</p>
+                    </div>
+                    <button class="story-toggle" id="storyToggle" aria-expanded="false">
+                        <span class="toggle-text">Show story</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
                 </div>
-                <p class="story-text">
-                    Once upon an afternoon in the Hundred Acre Wood, Pooh Bear found his honey cupboard terribly empty. So he picked up his very best barrel, stepped out into the sunshine, and waited for the honeybees to share a few drippy drops from the sky.
-                </p>
-                <div class="story-details">
-                    <div class="detail-item">
-                        <div class="detail-icon">📅</div>
-                        <div class="detail-content">
-                            <div class="detail-label">When</div>
-                            <div class="detail-value">April 24 · 2:00–5:00 PM</div>
+                <div class="story-body">
+                    <p class="story-text">
+                        Once upon an afternoon in the Hundred Acre Wood, Pooh Bear found his honey cupboard terribly empty. So he picked up his very best barrel, stepped out into the sunshine, and waited for the honeybees to share a few drippy drops from the sky.
+                    </p>
+                    <div class="story-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">📅</div>
+                            <div class="detail-content">
+                                <div class="detail-label">When</div>
+                                <div class="detail-value">April 24 · 2:00–5:00 PM</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-icon">📍</div>
-                        <div class="detail-content">
-                            <div class="detail-label">Where</div>
-                            <div class="detail-value">The Hundred Acre Wood</div>
+                        <div class="detail-item">
+                            <div class="detail-icon">📍</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Where</div>
+                                <div class="detail-value">The Hundred Acre Wood</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-icon">🎯</div>
-                        <div class="detail-content">
-                            <div class="detail-label">Your Mission</div>
-                            <div class="detail-value">Help Pooh catch honey drops!</div>
+                        <div class="detail-item">
+                            <div class="detail-icon">🎯</div>
+                            <div class="detail-content">
+                                <div class="detail-label">Your Mission</div>
+                                <div class="detail-value">Help Pooh catch honey drops!</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2499,6 +2676,9 @@
                     this.caughtEl = document.getElementById('caught');
                     this.bestEl = document.getElementById('best');
                     this.streakEl = document.getElementById('streak');
+                    this.scoreMobileEl = document.getElementById('scoreMobile');
+                    this.timeMobileEl = document.getElementById('timeMobile');
+                    this.streakMobileEl = document.getElementById('streakMobile');
                     this.statusText = document.getElementById('statusText');
                     this.inlineTip = document.getElementById('inlineTip');
                     this.inlineTipText = document.getElementById('inlineTipText');
@@ -2525,6 +2705,8 @@
                     this.instructionsContent = this.instructionsModal.querySelector('.instructions-content');
                     this.instructionsBackdrop = document.getElementById('instructionsBackdrop');
                     this.startFromInstructions = document.getElementById('startFromInstructions');
+                    this.storyCard = document.querySelector('.story-card');
+                    this.storyToggle = document.getElementById('storyToggle');
                     this.achievementsModal = document.getElementById('achievementsModal');
                     this.achievementsGrid = document.getElementById('achievementsGrid');
                     this.closeAchievements = document.getElementById('closeAchievements');
@@ -2554,6 +2736,7 @@
                     this.playerScores = [0, 0];
                     this.playerNames = ['Player 1', 'Player 2'];
                     this.onboardingSeen = false;
+                    this.lastStoryLayoutBreakpoint = null;
                     this.comboTimeout = null;
                     this.damageTimeout = null;
                     
@@ -2629,6 +2812,31 @@
                         }
                     }
                 }
+
+                setStoryState(expanded) {
+                    if (!this.storyCard || !this.storyToggle) return;
+
+                    this.storyCard.classList.toggle('is-expanded', expanded);
+                    this.storyCard.classList.toggle('is-collapsed', !expanded);
+                    this.storyToggle.setAttribute('aria-expanded', expanded.toString());
+
+                    const toggleText = this.storyToggle.querySelector('.toggle-text');
+                    if (toggleText) {
+                        toggleText.textContent = expanded ? 'Hide story' : 'Show story';
+                    }
+                }
+
+                applyStoryLayoutForViewport(force = false) {
+                    if (!this.storyCard || !this.storyToggle) return;
+
+                    const isMobileLayout = window.innerWidth <= 768;
+                    if (!force && this.lastStoryLayoutBreakpoint === isMobileLayout) {
+                        return;
+                    }
+
+                    this.lastStoryLayoutBreakpoint = isMobileLayout;
+                    this.setStoryState(!isMobileLayout);
+                }
                 
                 init() {
                     // Load saved data
@@ -2641,22 +2849,28 @@
                     this.populateLevelSelect();
                     this.renderAchievements();
                     this.renderPlayers();
-                    
+
                     // Set up canvas
                     this.resizeCanvas();
-                    this.canvasResizeHandler = debounce(() => this.resizeCanvas(), 250);
+                    this.canvasResizeHandler = debounce(() => {
+                        this.resizeCanvas();
+                        this.toggleMobileControls();
+                        this.applyStoryLayoutForViewport();
+                    }, 250);
                     this.registerListener(window, 'resize', this.canvasResizeHandler);
                     this.registerListener(window, 'orientationchange', () => {
                         setTimeout(() => {
                             this.isLandscape = window.innerWidth > window.innerHeight;
                             this.resizeCanvas();
                             this.toggleMobileControls();
+                            this.applyStoryLayoutForViewport();
                         }, 250);
                     });
-                    
+
                     // Set up event listeners
                     this.setupEventListeners();
-                    
+                    this.setupStoryToggle();
+
                     // Initialize audio context on first user interaction
                     this.setupAudioActivation();
                     
@@ -2692,11 +2906,22 @@
                         document.removeEventListener('click', activateAudio);
                         document.removeEventListener('touchstart', activateAudio);
                     };
-                    
+
                     document.addEventListener('click', activateAudio);
                     document.addEventListener('touchstart', activateAudio);
                 }
-                
+
+                setupStoryToggle() {
+                    if (!this.storyToggle || !this.storyCard) return;
+
+                    this.applyStoryLayoutForViewport(true);
+
+                    this.registerListener(this.storyToggle, 'click', () => {
+                        const expanded = !this.storyCard.classList.contains('is-expanded');
+                        this.setStoryState(expanded);
+                    });
+                }
+
                 setupEventListeners() {
                     const add = (...args) => this.registerListener(...args);
 
@@ -3878,6 +4103,18 @@
                     this.timeEl.textContent = this.timeLeft;
                     this.caughtEl.textContent = this.caught;
                     this.streakEl.textContent = `x${this.multiplier}`;
+
+                    if (this.scoreMobileEl) {
+                        this.scoreMobileEl.textContent = this.score;
+                    }
+
+                    if (this.timeMobileEl) {
+                        this.timeMobileEl.textContent = `${this.timeLeft}s`;
+                    }
+
+                    if (this.streakMobileEl) {
+                        this.streakMobileEl.textContent = `x${this.multiplier}`;
+                    }
                 }
                 
                 updateBestScore() {
