@@ -1,3256 +1,1815 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Baby Gunner's Honey Barrel Shower – Woodland Baby Shower Game</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="A honey-catching game for Baby Gunner's woodland baby shower. Celebrate the arrival of our little honey bear with this storybook-style mini game." />
-  <meta name="theme-color" content="#3498db" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta charset="UTF-8">
+  <title>Baby Gunner's Hundred Acre Wood Adventure</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Playfair+Display:wght@400;600;700&family=Schoolbell&display=swap" rel="stylesheet" />
+  <!-- Storybook fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Schoolbell&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --pooh-yellow: #f7c948;
-      --pooh-deep-yellow: #f2a93b;
-      --pooh-red: #e65a3b;
-      --pooh-brown: #5a3b21;
-      --pooh-brown-soft: #7a5533;
-      --baby-blue: #3498db;
-      --baby-blue-light: #b9e6ff;
-      --baby-blue-pale: #e6f7ff;
-      --honey-gold: #ffdd75;
-      --honey-amber: #f3b547;
-      --honey-light: #fff7dd;
-      --forest-green: #7fbf7f;
-      --sky-blue: #b9e6ff;
-      --cream: #fffaf0;
-      --ink: #2b1b12;
-      --muted-ink: #5b4637;
-      --page-shadow: 0 24px 60px rgba(44, 20, 6, 0.25);
-      --card-shadow: 0 16px 40px rgba(44, 20, 6, 0.2);
-      --soft-shadow: 0 10px 28px rgba(44, 20, 6, 0.18);
-      --radius-lg: 26px;
-      --radius-md: 18px;
-      --radius-pill: 999px;
-      --transition-fast: 0.18s ease-out;
-      --transition-med: 0.28s cubic-bezier(0.19, 1, 0.22, 1);
-      --success: #3fbf6b;
-      --danger: #f25c54;
-      --warning: #ffb347;
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
-    html, body {
-      height: 100%;
+    :root {
+      --parchment: #fbf4e4;
+      --parchment-dark: #e8dcc5;
+      --ink: #2b1810;
+      --honey: #f4a944;
+      --honey-dark: #d48a1f;
+      --pooh-red: #d32f2f;
+      --forest-green: #5a7c3e;
+      --baby-blue: #6ba3d4;
+      --shadow: rgba(43, 24, 16, 0.18);
     }
 
     body {
-      font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: 'Playfair Display', 'Georgia', 'Garamond', serif;
+      background:
+        radial-gradient(circle at top, #f7e3b8 0, transparent 55%),
+        radial-gradient(circle at bottom, #3a291c 0, #1e1410 55%);
       color: var(--ink);
-      background:
-        radial-gradient(circle at top left, #ffe9b8 0, transparent 55%),
-        radial-gradient(circle at bottom right, #c5ecff 0, transparent 55%),
-        linear-gradient(180deg, #fffaf0 0, #ffeccd 45%, #fffaf0 100%);
       min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      padding: 0.75rem;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 12% 0, rgba(255, 255, 255, 0.5) 0, transparent 55%),
-        radial-gradient(circle at 88% 0, rgba(255, 255, 255, 0.4) 0, transparent 50%);
-      opacity: 0.7;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    .skip-link {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%, -200%);
-      background: var(--ink);
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-pill);
-      z-index: 50;
-      transition: transform var(--transition-fast), opacity var(--transition-fast);
-      opacity: 0;
-    }
-
-    .skip-link:focus-visible {
-      transform: translate(-50%, 0.5rem);
-      opacity: 1;
-      outline: none;
-    }
-
-    .shell {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: rgba(255, 247, 230, 0.96);
-      border-radius: 32px;
-      box-shadow: var(--page-shadow);
-      padding: 1.25rem 1.25rem 1.5rem;
-      position: relative;
-      overflow: hidden;
-      background-image:
-        linear-gradient(90deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.22)),
-        url("https://www.transparenttextures.com/patterns/aged-paper.png");
-    }
-
-    .shell::before {
-      content: "";
-      position: absolute;
-      inset: -80px -20px auto;
-      height: 130px;
-      background:
-        linear-gradient(180deg, rgba(247, 201, 72, 0.92), rgba(241, 153, 57, 0.92));
-      clip-path: polygon(0 0, 100% 0, 100% 75%, 90% 100%, 80% 80%, 70% 100%, 60% 80%, 50% 100%, 40% 78%, 30% 100%, 20% 77%, 10% 100%, 0 75%);
-      opacity: 0.9;
-      z-index: -1;
-    }
-
-    .shell::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 12% 0, rgba(255, 255, 255, 0.5) 0, transparent 45%),
-        radial-gradient(circle at 88% 0, rgba(255, 255, 255, 0.4) 0, transparent 50%);
-      pointer-events: none;
-      opacity: 0.9;
-      z-index: -1;
-    }
-
-    header.story-hero {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.2rem;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text y="20" font-size="20">🍯</text></svg>'), auto;
+    }
+
+    /* Stage around the book */
+    .stage {
+      max-width: 1320px;
+      width: 100%;
       position: relative;
       z-index: 1;
     }
 
-    .hero-text {
-      flex: 1.1;
-      color: #3b2414;
+    .stage::before {
+      /* soft spotlight behind the book */
+      content: '';
+      position: absolute;
+      inset: -60px;
+      margin: auto;
+      max-width: 1100px;
+      max-height: 700px;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.18), transparent 70%);
+      z-index: -1;
     }
 
-    .hero-kicker {
-      font-family: "Schoolbell", system-ui;
-      font-size: 0.95rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #4f2b14;
-      margin-bottom: 0.4rem;
+    .table-shadow {
+      position: absolute;
+      bottom: -40px;
+      left: 10%;
+      right: 10%;
+      height: 80px;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.35), transparent 70%);
+      filter: blur(4px);
+      z-index: 0;
     }
 
-    .hero-title {
-      font-family: "Playfair Display", "Times New Roman", serif;
-      font-weight: 700;
-      font-size: clamp(1.9rem, 3vw, 2.3rem);
-      line-height: 1.1;
-      margin-bottom: 0.35rem;
-      text-shadow: 0 3px 0 rgba(255, 255, 255, 0.6);
+    /* Floating elements background */
+    .ambient-scene {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
     }
 
-    .hero-subtitle {
-      font-size: 0.98rem;
-      color: var(--muted-ink);
-      max-width: 30rem;
+    .butterfly {
+      position: absolute;
+      font-size: 24px;
+      animation: flutter 8s ease-in-out infinite;
+      opacity: 0.6;
     }
 
-    .hero-party-details {
+    .butterfly:nth-child(1) { top: 16%; left: 8%; animation-delay: 0s; }
+    .butterfly:nth-child(2) { top: 60%; right: 10%; animation-delay: 2s; }
+    .butterfly:nth-child(3) { top: 38%; left: 72%; animation-delay: 4s; }
+
+    @keyframes flutter {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(30px, -20px) rotate(5deg); }
+      50% { transform: translate(60px, 10px) rotate(-5deg); }
+      75% { transform: translate(30px, 30px) rotate(3deg); }
+    }
+
+    .floating-leaf {
+      position: absolute;
+      font-size: 20px;
+      animation: fall 15s linear infinite;
+      opacity: 0.5;
+    }
+
+    .floating-leaf:nth-child(4) { left: 20%; animation-delay: 0s; }
+    .floating-leaf:nth-child(5) { left: 50%; animation-delay: 5s; }
+    .floating-leaf:nth-child(6) { left: 80%; animation-delay: 10s; }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .bee-ambient {
+      position: absolute;
+      font-size: 18px;
+      animation: buzz 14s linear infinite;
+      opacity: 0.85;
+    }
+
+    .bee-ambient:nth-child(7) { top: 28%; animation-delay: 1s; }
+    .bee-ambient:nth-child(8) { top: 72%; animation-delay: 6s; }
+
+    @keyframes buzz {
+      0% { left: -60px; transform: translateY(0); }
+      50% { transform: translateY(-26px); }
+      100% { left: calc(100% + 60px); transform: translateY(0); }
+    }
+
+    /* Parallax clouds */
+    .cloud-layer {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .cloud {
+      position: absolute;
+      font-size: 44px;
+      opacity: 0.25;
+      animation: drift 60s linear infinite;
+    }
+
+    .cloud:nth-child(1) { top: 8%; animation-duration: 80s; }
+    .cloud:nth-child(2) { top: 30%; animation-duration: 100s; animation-delay: -20s; }
+    .cloud:nth-child(3) { top: 50%; animation-duration: 90s; animation-delay: -40s; }
+
+    @keyframes drift {
+      from { transform: translateX(-120px); }
+      to { transform: translateX(100vw); }
+    }
+
+    /* Book */
+    .book-container {
+      width: 100%;
+      perspective: 2500px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .book {
+      background: linear-gradient(135deg, #3b2a1a, #2b1d12);
+      padding: 36px 32px 28px;
+      border-radius: 18px;
+      box-shadow:
+        0 26px 60px rgba(0,0,0,0.75),
+        0 0 0 2px rgba(255,255,255,0.05);
+      position: relative;
+      transform-style: preserve-3d;
+    }
+
+    /* Book spine decoration */
+    .book::before {
+      content: '';
+      position: absolute;
+      left: -14px;
+      top: 9%;
+      bottom: 12%;
+      width: 12px;
+      background: linear-gradient(180deg, #24160b, #4b3a26);
+      border-radius: 6px 0 0 6px;
+      box-shadow:
+        inset -2px 0 5px rgba(0,0,0,0.6),
+        4px 0 10px rgba(0,0,0,0.5);
+    }
+
+    /* Honey drips along top edge of book */
+    .book::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 16%;
+      right: 18%;
+      height: 18px;
+      background: radial-gradient(circle at 20% 0, #ffd87c 0, #f4a944 40%, transparent 72%);
+      opacity: 0.9;
+      clip-path: polygon(0 40%, 10% 0, 20% 36%, 32% 10%, 42% 40%, 52% 6%, 64% 34%, 74% 8%, 86% 42%, 100% 12%, 100% 100%, 0 100%);
+      pointer-events: none;
+    }
+
+    .book-header {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.8rem;
-    }
-
-    .pill {
-      display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      padding: 0.25rem 0.7rem;
-      border-radius: var(--radius-pill);
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 6px 16px rgba(101, 67, 33, 0.18);
-      color: #5d3a1f;
-      white-space: nowrap;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, rgba(250, 237, 205, 0.28), rgba(238, 212, 170, 0.1));
+      color: #fdf7ec;
+      font-family: 'Schoolbell', system-ui, sans-serif;
+      letter-spacing: 0.6px;
+      border: 1px solid rgba(255,255,255,0.18);
     }
 
-    .party-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.35rem 0.9rem;
-      border-radius: var(--radius-pill);
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 6px 16px rgba(101, 67, 33, 0.25);
-      border: 2px solid rgba(52, 152, 219, 0.3);
-      color: #2b1b12;
-      white-space: nowrap;
-      font-weight: 600;
-      font-size: 0.85rem;
-    }
-
-    .hero-tag-row {
+    .book-header-title {
+      font-size: 1.35rem;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.5rem;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .book-header-title span:first-child {
       font-size: 0.8rem;
+      text-transform: uppercase;
+      opacity: 0.8;
     }
 
-    .pill i {
-      font-size: 0.9em;
+    .book-header-title span:last-child {
+      font-size: 1.2rem;
     }
 
-    .hero-figure {
-      flex: 0.9;
+    .book-header-badge {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(244,169,68,0.18);
+      border: 1px dashed rgba(244,169,68,0.5);
+      font-size: 0.85rem;
       display: flex;
-      justify-content: flex-end;
       align-items: center;
+      gap: 6px;
+    }
+
+    .pages-wrapper {
+      display: flex;
+      min-height: 560px;
       position: relative;
     }
 
-    .baby-badge {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      background: var(--baby-blue);
-      color: white;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      box-shadow: 0 10px 25px rgba(52, 152, 219, 0.5);
-      z-index: 10;
-      border: 3px solid white;
-      animation: float 3s ease-in-out infinite;
+    .page {
+      flex: 1;
+      background: var(--parchment);
+      padding: 34px 32px 30px;
+      border-radius: 10px;
+      box-shadow:
+        inset 0 0 30px rgba(139, 111, 71, 0.12),
+        0 10px 26px var(--shadow);
+      position: relative;
+      overflow-y: auto;
+      max-height: 72vh;
+      display: none;
+      transform-style: preserve-3d;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 31px,
+          rgba(139, 111, 71, 0.05) 31px,
+          rgba(139, 111, 71, 0.05) 32px
+        );
     }
 
-    @keyframes float {
+    .page.active {
+      display: block;
+      animation: pageEnter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .page.exiting {
+      animation: pageExit 0.6s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    }
+
+    @keyframes pageEnter {
+      0% {
+        transform: rotateY(-90deg);
+        opacity: 0;
+        transform-origin: left center;
+      }
+      100% {
+        transform: rotateY(0deg);
+        opacity: 1;
+        transform-origin: left center;
+      }
+    }
+
+    @keyframes pageExit {
+      0% {
+        transform: rotateY(0deg);
+        opacity: 1;
+        transform-origin: left center;
+      }
+      100% {
+        transform: rotateY(90deg);
+        opacity: 0;
+        transform-origin: left center;
+      }
+    }
+
+    /* Decorative page vignette */
+    .page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top, rgba(244, 169, 68, 0.08), transparent 60%),
+        radial-gradient(circle at bottom, rgba(90,124,62,0.08), transparent 55%);
+      pointer-events: none;
+    }
+
+    /* Chapter decorative headers */
+    .chapter-header {
+      text-align: center;
+      margin-bottom: 26px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--honey);
+      position: relative;
+      z-index: 1;
+    }
+
+    .chapter-header::before,
+    .chapter-header::after {
+      content: '🌿';
+      position: absolute;
+      bottom: -14px;
+      font-size: 22px;
+      animation: sway 3s ease-in-out infinite;
+    }
+
+    .chapter-header::before {
+      left: 20px;
+    }
+
+    .chapter-header::after {
+      right: 20px;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes sway {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    .chapter-number {
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      color: var(--honey-dark);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    .chapter-title {
+      font-size: 1.9rem;
+      color: var(--pooh-red);
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-style: italic;
+      animation: fadeInUp 1s ease;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.18);
+    }
+
+    .chapter-subtitle {
+      font-size: 0.95rem;
+      color: var(--ink);
+      opacity: 0.75;
+      animation: fadeIn 1.2s ease;
+      font-family: 'Schoolbell', system-ui, sans-serif;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .story-text {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      margin-bottom: 18px;
+      text-indent: 2em;
+      text-align: justify;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .story-text:first-of-type::first-letter {
+      font-size: 3.4rem;
+      float: left;
+      line-height: 0.9;
+      margin: 4px 10px 0 0;
+      color: var(--pooh-red);
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.22);
+    }
+
+    .illustration-box {
+      border: 3px solid var(--honey);
+      padding: 18px 22px;
+      margin: 26px 0;
+      background: #fffdf7;
+      text-align: center;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      animation: slideIn 1s ease;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    }
+
+    @keyframes slideIn {
+      from { transform: scale(0.96); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .illustration-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+      animation: shine 3.5s ease-in-out infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .bear-illustration {
+      font-size: 78px;
+      margin: 14px 0;
+      animation: bounce 2.2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
 
-    .bear-card {
-      position: relative;
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, #ffe7b0 0, #f7c948 35%, #f3a645 55%, #e07b39 90%);
-      box-shadow: 0 18px 40px rgba(59, 27, 9, 0.4);
-      overflow: hidden;
+    .party-details {
+      background: #fffdf7;
+      padding: 22px 22px 20px;
+      border-radius: 10px;
+      border: 2px solid var(--baby-blue);
+      margin: 16px 0 10px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+      animation: fadeIn 1.8s ease;
     }
 
-    .bear-inner {
-      position: absolute;
-      inset: 10px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 20% 0, #ffeec1 0, #f9c35b 40%, #f3a645 75%);
+    .party-details h3 {
+      color: var(--baby-blue);
+      margin-bottom: 14px;
+      text-align: center;
+      font-weight: 600;
     }
 
-    .bear-ears::before,
-    .bear-ears::after {
-      content: "";
-      position: absolute;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: #f5b639;
-      top: 6px;
-      box-shadow: inset 0 0 0 4px rgba(255, 237, 190, 0.9);
-    }
-
-    .bear-ears::before {
-      left: 30px;
-    }
-
-    .bear-ears::after {
-      right: 30px;
-    }
-
-    .bear-face {
-      position: absolute;
-      inset: 42px 34px 40px;
-      border-radius: 40px;
-      background: radial-gradient(circle at 50% 0, #ffe9b2 0, #f5c35c 72%);
-      box-shadow: 0 8px 20px rgba(102, 72, 39, 0.35);
-    }
-
-    .bear-eyes::before,
-    .bear-eyes::after {
-      content: "";
-      position: absolute;
-      top: 26px;
-      width: 7px;
-      height: 14px;
-      border-radius: 7px;
-      background: #3b2414;
-      box-shadow: 0 4px 0 rgba(255, 210, 140, 0.7);
-    }
-
-    .bear-eyes::before {
-      left: 22px;
-    }
-
-    .bear-eyes::after {
-      right: 22px;
-    }
-
-    .bear-nose {
-      position: absolute;
-      top: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 28px;
-      height: 22px;
-      background: radial-gradient(circle at 50% 0, #7c4a2a 0, #3b2414 65%);
-      border-radius: 16px 16px 18px 18px;
-      box-shadow: 0 6px 10px rgba(102, 72, 39, 0.5);
-    }
-
-    .bear-mouth {
-      position: absolute;
-      top: 55px;
-      left: 50%;
-      width: 54px;
-      height: 26px;
-      border-radius: 0 0 40px 40px;
-      border-bottom: 3px solid #3b2414;
-      border-left: 3px solid transparent;
-      border-right: 3px solid transparent;
-      transform: translateX(-50%);
-    }
-
-    .bear-shirt {
-      position: absolute;
-      bottom: -4px;
-      left: -8px;
-      right: -8px;
-      height: 54px;
-      background: linear-gradient(180deg, var(--baby-blue) 0, #2980b9 90%);
-      border-radius: 26px 26px 40px 40px;
-      box-shadow: 0 -6px 12px rgba(255, 211, 156, 0.7);
-    }
-
-    .bear-barrel {
-      position: absolute;
-      bottom: -4px;
-      right: -10px;
-      width: 70px;
-      height: 70px;
-      border-radius: 30px;
-      background: radial-gradient(circle at 20% 20%, #ffe7b0 0, #f3a645 40%, #c06a2b 80%);
-      box-shadow: 0 10px 24px rgba(59, 27, 9, 0.55);
-      transform: rotate(-12deg);
-      overflow: hidden;
-    }
-
-    .bear-barrel::before {
-      content: "";
-      position: absolute;
-      inset: 18px 8px 16px;
-      border-radius: 18px;
-      border: 3px solid rgba(85, 40, 12, 0.55);
-      box-shadow: 0 0 0 3px rgba(255, 221, 165, 0.7) inset;
-    }
-
-    .bear-barrel::after {
-      content: "";
-      position: absolute;
-      inset: auto 10px 0;
-      height: 18px;
-      border-radius: 14px 14px 0 0;
-      background: linear-gradient(180deg, #ffd76b 0, #f2a93b 60%, #e26f33 100%);
-    }
-
-    main {
-      position: relative;
-      z-index: 1;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
-      gap: 1.25rem;
-      align-items: stretch;
-    }
-
-    .panel {
-      background: linear-gradient(145deg, rgba(255, 252, 244, 0.98), rgba(255, 239, 207, 0.98));
-      border-radius: var(--radius-lg);
-      box-shadow: var(--card-shadow);
-      border: 1px solid rgba(163, 126, 83, 0.18);
-      padding: 1rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.75) 0, transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.32) 0, transparent 55%);
-      pointer-events: none;
-      opacity: 0.9;
-    }
-
-    .panel-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .panel-header {
+    .detail-item {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 0.6rem;
-      margin-bottom: 0.75rem;
+      gap: 14px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--parchment-dark);
+      transition: transform 0.25s ease, background-color 0.25s ease;
     }
 
-    .panel-title {
-      font-family: "Playfair Display", serif;
-      font-size: 1.18rem;
+    .detail-item:hover {
+      transform: translateX(4px);
+      background-color: rgba(239, 229, 208, 0.4);
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .detail-icon {
+      font-size: 1.45rem;
+      width: 40px;
+      text-align: center;
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    /* Game Canvas Styling */
+    .game-container {
+      background: #fffdf7;
+      padding: 18px 20px 22px;
+      border-radius: 10px;
+      margin: 18px 0;
+      border: 3px solid var(--honey);
+      animation: fadeIn 2s ease;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.1);
+    }
+
+    #gameCanvas {
+      display: block;
+      width: 100%;
+      max-width: 520px;
+      height: 400px;
+      margin: 0 auto;
+      border: 2px solid var(--parchment-dark);
+      border-radius: 6px;
+      background: linear-gradient(#8cd3ff, #87CEEB 40%, #d1f3ff 75%);
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+    }
+
+    #gameCanvas:hover {
+      box-shadow: 0 0 20px rgba(244, 169, 68, 0.55);
+      transform: translateY(-2px);
+    }
+
+    .game-stats {
       display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      color: #4b2f1a;
-    }
-
-    .panel-title span.icon {
-      display: inline-flex;
-      width: 30px;
-      height: 30px;
-      border-radius: 999px;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 30% 10%, #fff7cd 0, #f7c948 38%, #f2a93b 70%);
-      box-shadow: 0 6px 16px rgba(59, 27, 9, 0.4);
-      font-size: 1.15rem;
-    }
-
-    .badge-soft {
-      font-size: 0.72rem;
-      padding: 0.2rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px dashed rgba(141, 94, 58, 0.45);
-      color: #6a4831;
-      white-space: nowrap;
-    }
-
-    .game-shell {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .stat-row {
-      display: flex;
+      justify-content: space-around;
+      margin: 14px 0 10px;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
-      justify-content: space-between;
+      gap: 10px;
     }
 
-    .stat-group-main {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .stat-chip {
+    .stat {
+      text-align: center;
+      padding: 8px 10px;
+      background: var(--parchment);
+      border-radius: 999px;
       min-width: 90px;
-      padding: 0.45rem 0.75rem;
-      border-radius: var(--radius-pill);
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: var(--soft-shadow);
-      border: 1px solid rgba(161, 118, 75, 0.19);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .stat:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+      background-color: #fffaf0;
     }
 
     .stat-label {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
+      color: var(--honey-dark);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #8a6647;
-      margin-bottom: 0.1rem;
+      letter-spacing: 1px;
+      font-family: 'Schoolbell', system-ui, sans-serif;
     }
 
     .stat-value {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #3c2515;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-top: 2px;
     }
 
-    .stat-value span.small {
-      font-size: 0.8em;
-      font-weight: 500;
-      margin-left: 0.15rem;
-      color: #8a6647;
-    }
-
-    .lives-indicator {
+    .game-controls {
       display: flex;
-      gap: 0.15rem;
-      align-items: center;
-    }
-
-    .heart {
-      width: 14px;
-      height: 12px;
-      background:
-        radial-gradient(circle at 30% 30%, #ffe4d9 0, #ff7d7d 40%, #e94057 80%);
-      clip-path: path("M7 12 C 5 10, 1 7.5, 1 4.5 C 1 2.5, 2.5 1, 4 1 C 5 1, 6 1.5, 7 2.4 C 8 1.5, 9 1, 10 1 C 11.5 1, 13 2.5, 13 4.5 C 13 7.5, 9 10, 7 12 Z");
-      box-shadow: 0 3px 6px rgba(233, 64, 87, 0.45);
-    }
-
-    .heart.lost {
-      filter: grayscale(0.85);
-      opacity: 0.35;
-      box-shadow: none;
-    }
-
-    .chip-secondary {
-      padding: 0.35rem 0.7rem;
-      border-radius: var(--radius-pill);
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px dashed rgba(151, 110, 70, 0.6);
-      font-size: 0.78rem;
-      color: #6a4831;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      white-space: nowrap;
-    }
-
-    .chip-secondary svg {
-      width: 14px;
-      height: 14px;
-    }
-
-    .game-canvas-shell {
-      position: relative;
-      border-radius: 24px;
-      padding: 0.6rem;
-      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.85) 0, transparent 50%),
-                  radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.7) 0, transparent 55%),
-                  linear-gradient(180deg, #ffeccb, #ffd38f);
-      box-shadow: var(--card-shadow);
-      border: 1px solid rgba(156, 118, 76, 0.35);
-    }
-
-    .game-canvas-wrapper {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      background: linear-gradient(180deg, #b6e5ff 0, #fef7d4 40%, #ffe3a0 80%, #f3b261 100%);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75);
-      aspect-ratio: 16 / 9;
-    }
-
-    canvas#gameCanvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .game-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      gap: 10px;
       justify-content: center;
-      text-align: center;
-      padding: 1rem;
-      background: radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.92) 0, rgba(255, 250, 236, 0.96) 50%, rgba(255, 246, 223, 0.98) 100%);
-      color: #4f321d;
-      transition: opacity var(--transition-med), visibility var(--transition-med);
-    }
-
-    .game-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .overlay-title {
-      font-family: "Playfair Display", serif;
-      font-size: 1.4rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .overlay-subtitle {
-      font-size: 0.9rem;
-      color: #7a5533;
-      max-width: 21rem;
-      margin: 0 auto 0.75rem;
-    }
-
-    .overlay-stat-row {
-      display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 0.8rem;
-      font-size: 0.85rem;
-    }
-
-    .overlay-stat {
-      padding: 0.4rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.95);
-      border: 1px solid rgba(151, 110, 70, 0.4);
-      box-shadow: 0 6px 14px rgba(101, 67, 33, 0.18);
-    }
-
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      justify-content: center;
+      margin-top: 12px;
     }
 
     .btn {
-      --btn-bg: #f7c948;
-      --btn-bg-hover: #f2a93b;
-      --btn-color: #3b2414;
-      border: none;
-      background: linear-gradient(135deg, var(--btn-bg), var(--btn-bg-hover));
-      color: var(--btn-color);
-      padding: 0.46rem 0.95rem;
-      border-radius: var(--radius-pill);
-      font-size: 0.9rem;
-      font-weight: 700;
+      padding: 11px 22px;
+      border: 2px solid var(--ink);
+      background: var(--honey);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.98rem;
       cursor: pointer;
+      border-radius: 999px;
+      transition: all 0.3s;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      box-shadow: 0 10px 20px rgba(153, 96, 38, 0.4);
-      transform: translateY(0);
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast), background var(--transition-med);
+      justify-content: center;
+      gap: 6px;
+      min-width: 120px;
     }
 
-    .btn span.icon {
-      font-size: 1rem;
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:hover::before {
+      width: 260px;
+      height: 260px;
     }
 
     .btn:hover {
-      transform: translateY(-1.5px);
-      box-shadow: 0 14px 26px rgba(153, 96, 38, 0.46);
-      filter: brightness(1.02);
+      background: var(--honey-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px var(--shadow);
     }
 
     .btn:active {
-      transform: translateY(1px);
-      box-shadow: 0 6px 14px rgba(153, 96, 38, 0.38);
-      filter: brightness(0.98);
+      transform: translateY(0);
+      box-shadow: none;
     }
 
-    .btn-ghost {
-      --btn-bg: rgba(255, 255, 255, 0.9);
-      --btn-bg-hover: rgba(255, 255, 255, 1);
-      --btn-color: #6a4831;
-      border: 1px dashed rgba(161, 118, 75, 0.7);
-      box-shadow: 0 6px 14px rgba(101, 67, 33, 0.26);
-      padding-inline: 0.85rem;
-      font-weight: 600;
+    .btn-secondary {
+      background: var(--parchment-dark);
     }
 
-    .btn-small {
-      font-size: 0.78rem;
-      padding: 0.32rem 0.7rem;
-      box-shadow: 0 7px 14px rgba(101, 67, 33, 0.3);
+    .btn-secondary:hover {
+      background: #d9ccb0;
     }
 
-    .btn-primary {
-      --btn-bg: #f2a93b;
-      --btn-bg-hover: #f2b84d;
-    }
-
-    .btn-danger {
-      --btn-bg: #f25c54;
-      --btn-bg-hover: #f27c54;
-      --btn-color: #fff;
-    }
-
-    .btn-baby-blue {
-      --btn-bg: var(--baby-blue);
-      --btn-bg-hover: #2980b9;
-      --btn-color: white;
-    }
-
-    .control-row {
+    .difficulty-selector {
       display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin: 12px 0 6px;
       flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      margin-top: 0.65rem;
     }
 
-    .control-group-main {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      align-items: center;
-    }
-
-    .control-group-secondary {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      align-items: center;
-    }
-
-    .difficulty-toggle {
-      display: inline-flex;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: var(--radius-pill);
-      padding: 0.18rem;
-      box-shadow: 0 7px 18px rgba(101, 67, 33, 0.22);
-    }
-
-    .difficulty-toggle button {
+    .difficulty-btn {
+      padding: 7px 14px;
+      border: 1px solid var(--ink);
+      background: white;
+      cursor: pointer;
+      font-family: 'Schoolbell', system-ui, sans-serif;
+      font-size: 0.84rem;
+      transition: all 0.25s;
       border-radius: 999px;
+    }
+
+    .difficulty-btn.active {
+      background: var(--forest-green);
+      color: white;
+      border-color: var(--forest-green);
+      transform: scale(1.06);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.18);
+    }
+
+    /* Navigation with page curl effect */
+    .book-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 2px solid var(--honey);
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-btn {
+      padding: 9px 18px;
+      background: var(--pooh-red);
+      color: white;
       border: none;
-      background: transparent;
-      padding: 0.24rem 0.6rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #7a5533;
-      cursor: pointer;
-      transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
-    }
-
-    .difficulty-toggle button.active {
-      background: linear-gradient(135deg, #f2a93b, #f2b84d);
-      color: #3b2414;
-      box-shadow: 0 6px 12px rgba(153, 96, 38, 0.5);
-    }
-
-    .toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      cursor: pointer;
-      font-size: 0.8rem;
-      color: #7a5533;
-    }
-
-    .toggle input {
-      display: none;
-    }
-
-    .toggle-pill {
-      width: 32px;
-      height: 18px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(163, 126, 83, 0.65);
-      position: relative;
-      box-shadow: 0 4px 10px rgba(101, 67, 33, 0.25) inset;
-    }
-
-    .toggle-thumb {
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      top: 1.2px;
-      left: 2px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ffe9b2, #f7c948);
-      box-shadow: 0 4px 10px rgba(99, 66, 33, 0.7);
-      transition: transform var(--transition-fast);
-    }
-
-    .toggle input:checked + .toggle-pill .toggle-thumb {
-      transform: translateX(12px);
-    }
-
-    .mobile-controls {
-      display: none;
-      margin-top: 0.55rem;
-      gap: 0.4rem;
-    }
-
-    .mobile-controls button {
-      flex: 1;
-      padding: 0.7rem 0.4rem;
-      font-size: 1rem;
-      border-radius: 16px;
-    }
-
-    .story-shell {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .storybook-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .chapter-controls {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.8rem;
-      padding: 0.35rem 0.5rem;
-      background: rgba(255, 255, 255, 0.82);
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(179, 141, 103, 0.35);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6), var(--soft-shadow);
-    }
-
-    .chapter-btn {
+      cursor: pointer;
+      font-family: 'Schoolbell', system-ui, sans-serif;
+      font-size: 0.98rem;
+      transition: all 0.3s;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      padding: 0.55rem 0.9rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(90, 59, 33, 0.2);
-      background: linear-gradient(180deg, #fff7e0, #f4e1b8);
-      color: #3b2414;
-      font-weight: 700;
-      box-shadow: 0 6px 14px rgba(59, 27, 9, 0.15);
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+      gap: 8px;
+      position: relative;
     }
 
-    .chapter-btn:disabled {
-      opacity: 0.6;
+    .nav-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      transition: all 0.3s;
+    }
+
+    .nav-btn.next:hover::after {
+      width: 18px;
+      height: 18px;
+      border-width: 0 18px 18px 0;
+      border-color: transparent rgba(255,255,255,0.35) transparent transparent;
+    }
+
+    .nav-btn:hover {
+      background: #b02626;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.35;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
     }
 
-    .chapter-btn:not(:disabled):hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(59, 27, 9, 0.18);
-    }
-
-    .chapter-meta {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.15rem;
-    }
-
-    .chapter-meta .label {
-      font-family: "Schoolbell", system-ui;
-      letter-spacing: 0.08em;
-      color: #6a4a2b;
-      font-size: 0.85rem;
-    }
-
-    .chapter-meta .current-chapter {
-      font-family: "Playfair Display", serif;
-      font-weight: 700;
-      font-size: 1.15rem;
-      color: #3b2414;
-    }
-
-    .chapter-dots {
-      display: flex;
-      gap: 0.4rem;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .chapter-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(122, 85, 51, 0.25);
-      border: 1px solid rgba(90, 59, 33, 0.25);
-      transition: transform var(--transition-fast), background var(--transition-fast);
-    }
-
-    .chapter-dot.active {
-      background: linear-gradient(180deg, var(--honey-light), var(--honey-gold));
-      box-shadow: 0 0 0 3px rgba(255, 221, 117, 0.35);
-      transform: scale(1.1);
-    }
-
-    .page-window {
-      position: relative;
-      min-height: 300px;
-      overflow: hidden;
-      border-radius: 26px;
-      border: 2px solid rgba(90, 59, 33, 0.18);
-      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.9), rgba(255, 232, 192, 0.75));
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75), var(--page-shadow);
-    }
-
-    .page-window::before,
-    .page-window::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url("https://www.transparenttextures.com/patterns/old-wall.png");
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .page-window::after {
-      opacity: 0.3;
-      filter: sepia(0.15);
-    }
-
-    .page-track {
-      position: relative;
-      min-height: 100%;
-    }
-
-    .chapter-page {
-      display: none;
-      padding: 1.1rem;
-      position: relative;
-      min-height: 100%;
-      animation: fadeIn var(--transition-med);
-    }
-
-    .chapter-page.active {
-      display: block;
-    }
-
-    .chapter-banner {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 0.8rem;
-      border-radius: var(--radius-pill);
-      background: linear-gradient(90deg, rgba(247, 201, 72, 0.35), rgba(52, 152, 219, 0.35));
-      color: #3b2414;
-      margin-bottom: 0.35rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .chapter-title {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-      margin-bottom: 0.4rem;
-      color: #2b1b12;
-    }
-
-    .chapter-lede {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #5a3b21;
-      margin-bottom: 0.6rem;
-    }
-
-    .quote-card {
-      margin: 0.6rem 0 0.8rem;
-      padding: 0.75rem 0.9rem;
-      border-radius: var(--radius-md);
-      border: 1px dashed rgba(90, 59, 33, 0.25);
-      background: rgba(255, 255, 255, 0.78);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
-      font-family: "Schoolbell", system-ui;
-      color: #4f2b14;
-    }
-
-    .quote-card .attribution {
-      display: block;
-      margin-top: 0.3rem;
-      font-size: 0.9rem;
-      color: #7a5533;
-      letter-spacing: 0.04em;
-    }
-
-    .pooh-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 0.8rem;
-      margin-top: 0.8rem;
-    }
-
-    .pooh-card {
-      padding: 0.8rem;
-      border-radius: var(--radius-md);
-      background: rgba(255, 255, 255, 0.86);
-      border: 1px solid rgba(179, 141, 103, 0.38);
-      box-shadow: var(--soft-shadow);
-    }
-
-    .pooh-card h4 {
-      font-size: 1rem;
-      color: #3b2414;
-      margin-bottom: 0.25rem;
-    }
-
-    .pooh-card p {
-      color: #5a3b21;
-      line-height: 1.5;
-      font-size: 0.92rem;
-    }
-
-    .registry-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 0.75rem;
-    }
-
-    .guestbook {
-      background: rgba(255, 255, 255, 0.86);
-      border: 1px solid rgba(179, 141, 103, 0.35);
-      border-radius: var(--radius-md);
-      padding: 0.9rem;
-      box-shadow: var(--soft-shadow);
-    }
-
-    .guestbook form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .guestbook label {
-      font-weight: 700;
-      color: #3b2414;
-      font-size: 0.92rem;
-    }
-
-    .guestbook input,
-    .guestbook textarea {
-      width: 100%;
-      padding: 0.65rem 0.75rem;
-      border-radius: 14px;
-      border: 1px solid rgba(90, 59, 33, 0.22);
-      background: rgba(255, 255, 255, 0.9);
-      font-family: inherit;
-      font-size: 0.95rem;
-      color: #2b1b12;
-    }
-
-    .guestbook textarea { min-height: 110px; resize: vertical; }
-
-    .guestbook button {
-      align-self: flex-start;
-      padding: 0.65rem 1.1rem;
-      border-radius: var(--radius-pill);
-      background: linear-gradient(90deg, var(--baby-blue), #5dade2);
-      border: 1px solid rgba(52, 152, 219, 0.3);
-      color: #fff;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
-    }
-
-    .guestbook-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .wish-card {
-      padding: 0.7rem 0.75rem;
-      border-radius: 14px;
-      background: rgba(255, 248, 230, 0.92);
-      border: 1px dashed rgba(90, 59, 33, 0.2);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
-    }
-
-    .wish-card .from {
-      font-weight: 700;
-      color: #3b2414;
-      margin-bottom: 0.15rem;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .wish-card .message {
-      color: #5a3b21;
-      line-height: 1.45;
-    }
-
-    .wish-card .time {
-      font-size: 0.78rem;
-      color: #7a5533;
-      margin-top: 0.2rem;
-    }
-
-    .swipe-hint {
-      display: none;
+    .page-indicator {
       text-align: center;
-      font-size: 0.85rem;
-      color: #7a5533;
-      margin-top: 0.25rem;
+      color: var(--honey-dark);
+      font-size: 0.92rem;
+      animation: fadeIn 2s ease;
+      font-family: 'Schoolbell', system-ui, sans-serif;
     }
 
-    .swipe-hint span {
-      font-family: "Schoolbell", system-ui;
-      color: #3b2414;
-    }
-
-    .storybook-card {
-      background: repeating-linear-gradient(
-        90deg,
-        rgba(255, 248, 230, 0.95) 0,
-        rgba(255, 248, 230, 0.95) 12px,
-        rgba(252, 228, 196, 0.9) 12px,
-        rgba(252, 228, 196, 0.9) 13px
-      );
-      border-radius: 22px;
-      box-shadow: var(--soft-shadow);
-      border: 1px solid rgba(179, 141, 103, 0.35);
-      padding: 0.8rem 0.9rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .storybook-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.7) 0, transparent 55%);
-      pointer-events: none;
-    }
-
-    .storybook-heading {
-      font-family: "Schoolbell", system-ui;
-      font-size: 1rem;
-      margin-bottom: 0.2rem;
-      color: #4f2b14;
-    }
-
-    .storybook-title {
-      font-family: "Playfair Display", serif;
-      font-size: 1.15rem;
-      margin-bottom: 0.25rem;
-      color: #3b2414;
-    }
-
-    .storybook-body {
-      font-size: 0.9rem;
-      color: #5a3b21;
-      line-height: 1.45;
-    }
-
-    .storybook-body p + p {
-      margin-top: 0.35rem;
-    }
-
-    .storybook-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0.5rem;
-      font-size: 0.8rem;
-      color: #7a5533;
-    }
-
-    .storybook-tagline {
-      font-style: italic;
-    }
-
-    .shower-stats-card {
-      background: linear-gradient(135deg, var(--baby-blue-pale), #f0f9ff);
-      border-radius: var(--radius-md);
-      padding: 0.9rem;
-      margin: 0.5rem 0;
-      border: 2px dashed var(--baby-blue-light);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .shower-stats-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: 
-        radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.7) 0, transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.4) 0, transparent 55%);
-      pointer-events: none;
-    }
-
-    .tip-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      font-size: 0.85rem;
-      color: #5d3a1f;
-    }
-
-    .tip-item {
-      display: flex;
-      gap: 0.35rem;
-      align-items: flex-start;
-    }
-
-    .tip-icon {
-      margin-top: 0.08rem;
-      font-size: 0.9rem;
-    }
-
-    .tip-label {
-      font-weight: 600;
-    }
-
-    .status-bar {
-      margin-top: 0.6rem;
-      padding: 0.4rem 0.7rem;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 8px 18px rgba(116, 81, 52, 0.15);
-      font-size: 0.78rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #7a5533;
-      gap: 0.4rem;
-    }
-
-    .status-bar span.label {
-      font-weight: 600;
-      color: #4f2b14;
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--success);
-      box-shadow: 0 0 0 4px rgba(63, 191, 107, 0.25);
-    }
-
-    .status-bar[data-state="paused"] .status-dot {
-      background: var(--warning);
-      box-shadow: 0 0 0 4px rgba(255, 179, 71, 0.25);
-    }
-
-    .status-bar[data-state="idle"] .status-dot {
-      background: #bbb09a;
-      box-shadow: 0 0 0 4px rgba(187, 176, 154, 0.25);
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 1rem;
-      transform: translateX(-50%) translateY(120%);
-      background: rgba(59, 27, 9, 0.94);
-      color: #fff7e0;
-      padding: 0.55rem 0.9rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      box-shadow: 0 16px 40px rgba(30, 10, 3, 0.7);
-      z-index: 40;
-      pointer-events: none;
-      opacity: 0;
-      transition: transform var(--transition-med), opacity var(--transition-med);
-    }
-
-    .toast.visible {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
-    .toast span.icon {
-      font-size: 0.95rem;
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(41, 24, 12, 0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 30;
-      padding: 1rem;
-    }
-
-    .modal-backdrop.visible {
-      display: flex;
-    }
-
-    .modal {
-      max-width: 420px;
-      width: 100%;
-      background: linear-gradient(145deg, #fff8ec, #ffe7c4);
-      border-radius: 22px;
-      box-shadow: 0 26px 70px rgba(26, 8, 0, 0.9);
-      border: 1px solid rgba(160, 118, 78, 0.4);
-      padding: 0.9rem 0.95rem 0.9rem;
-      position: relative;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.35rem;
-      gap: 0.4rem;
-    }
-
-    .modal-title {
-      font-family: "Playfair Display", serif;
-      font-size: 1.05rem;
-      color: #3b2414;
-    }
-
-    .modal-close {
-      border: none;
-      background: transparent;
-      font-size: 1rem;
-      cursor: pointer;
-      color: #7a5533;
-    }
-
-    .modal-body {
-      font-size: 0.86rem;
-      color: #5d3a1f;
-      line-height: 1.5;
-      max-height: 60vh;
-      overflow-y: auto;
-      padding-right: 0.2rem;
-    }
-
-    .modal-body h4 {
-      font-size: 0.9rem;
-      margin: 0.35rem 0 0.1rem;
-      color: #4f2b14;
-    }
-
-    .modal-body p {
-      margin-bottom: 0.2rem;
-    }
-
-    .key-hints {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-top: 0.2rem;
-    }
-
-    .key-chip {
-      padding: 0.2rem 0.4rem;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.95);
-      border: 1px dashed rgba(160, 118, 78, 0.6);
-      font-size: 0.75rem;
-      color: #6a4831;
-    }
-
-    .achievements-list {
-      list-style: none;
-      margin: 0.3rem 0 0;
-      padding: 0;
-    }
-
-    .achievements-list li {
-      padding: 0.22rem 0;
-      display: flex;
-      justify-content: space-between;
-      gap: 0.4rem;
-      border-bottom: 1px dashed rgba(173, 135, 98, 0.3);
-      font-size: 0.84rem;
-    }
-
-    .achievements-list li span.label {
-      font-weight: 500;
-    }
-
-    .achievements-list li span.status {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .achievements-list li span.status.unlocked {
-      color: var(--success);
-    }
-
-    .achievements-list li span.status.locked {
-      color: #b39a7d;
-    }
-
+    /* Registry Section */
     .registry-links {
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 1rem;
+      gap: 15px;
+      justify-content: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
     }
 
     .registry-link {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.7rem;
-      border-radius: var(--radius-md);
+      gap: 10px;
+      padding: 13px 22px;
+      background: white;
+      border: 2px solid var(--baby-blue);
+      border-radius: 999px;
       text-decoration: none;
+      color: var(--ink);
+      transition: all 0.3s;
       font-weight: 600;
-      transition: transform var(--transition-fast);
+      font-size: 0.96rem;
     }
 
     .registry-link:hover {
-      transform: translateY(-2px);
-    }
-
-    .registry-link.target {
-      background: linear-gradient(135deg, #cc0000, #ff3333);
+      background: var(--baby-blue);
       color: white;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 20px var(--shadow);
     }
 
-    .registry-link.amazon {
-      background: linear-gradient(135deg, #ff9900, #ffcc00);
-      color: #111;
+    /* Wishes Form */
+    .wishes-form {
+      background: #fffdf7;
+      padding: 22px 22px 20px;
+      border-radius: 10px;
+      margin: 18px 0 6px;
+      animation: fadeIn 2.2s ease;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      border: 2px solid rgba(244,169,68,0.35);
     }
 
-    .qr-placeholder {
-      width: 180px;
-      height: 180px;
-      background: #f5f5f5;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0.5rem auto;
-      border: 2px dashed #ddd;
-      color: #999;
-      font-size: 0.8rem;
+    .form-group {
+      margin-bottom: 18px;
     }
 
-    footer.page-footer {
-      margin-top: 0.8rem;
-      font-size: 0.78rem;
-      text-align: center;
-      color: #7a5533;
-      opacity: 0.88;
-    }
-
-    footer.page-footer span {
-      font-family: "Schoolbell", system-ui;
-      color: var(--baby-blue);
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
       font-weight: 600;
+      color: var(--honey-dark);
+      font-size: 0.96rem;
     }
 
-    @media (max-width: 960px) {
-      .shell {
-        padding: 1rem 0.9rem 1.2rem;
-        border-radius: 26px;
-      }
-
-      .chapter-controls {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
-      }
-
-      .chapter-meta {
-        order: 3;
-      }
-
-      header.story-hero {
-        flex-direction: row;
-        align-items: flex-start;
-      }
-
-      .hero-text {
-        flex: 1.2;
-      }
-
-      .hero-figure {
-        flex: 0.8;
-        justify-content: flex-end;
-      }
-
-      .layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .layout > .panel.game-panel {
-        order: -1;
-      }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 2px solid var(--parchment-dark);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.98rem;
+      transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+      background-color: #fffdf8;
     }
 
-    @media (max-width: 720px) {
-      body {
-        padding: 0.5rem;
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--honey);
+      box-shadow: 0 0 10px rgba(244, 169, 68, 0.3);
+      background-color: #fffaf0;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 24px 0 10px;
+      color: var(--honey);
+      font-size: 1.4rem;
+      animation: fadeIn 2.5s ease;
+    }
+
+    /* Sparkle effect on hover */
+    .sparkle {
+      position: relative;
+    }
+
+    .sparkle::after {
+      content: '✨';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .sparkle:hover::after {
+      opacity: 1;
+      animation: twinkle 0.6s ease;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 900px) {
+      .book {
+        padding: 26px 18px 22px;
       }
 
-      .shell {
-        padding: 0.9rem 0.65rem 1rem;
-        border-radius: 22px;
-      }
-
-      header.story-hero {
+      .book-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.5rem;
+        gap: 6px;
       }
 
-      .hero-figure {
-        align-self: center;
-        justify-content: center;
+      .pages-wrapper {
+        min-height: 0;
       }
 
-      .bear-card {
-        width: 150px;
-        height: 150px;
+      .page {
+        padding: 26px 18px 22px;
+        max-height: none;
       }
 
-      .panel {
-        padding: 0.85rem;
-        border-radius: 20px;
+      .chapter-title {
+        font-size: 1.55rem;
       }
 
-      .stat-row {
-        flex-direction: column;
-        align-items: flex-start;
+      .story-text {
+        font-size: 1rem;
+        text-indent: 1.5em;
       }
 
-      .control-row {
+      #gameCanvas {
+        height: 300px;
+      }
+
+      .book-nav {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .control-group-main,
-      .control-group-secondary {
+      .nav-btn {
+        justify-content: center;
         width: 100%;
-        justify-content: space-between;
       }
 
-      .game-canvas-shell {
-        padding: 0.5rem;
+      body {
+        cursor: auto;
       }
+    }
 
+    /* Mobile Touch Controls */
+    .mobile-controls {
+      display: none;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 768px) {
       .mobile-controls {
         display: flex;
       }
+    }
 
-      .control-group-secondary .btn-small[data-action="help"],
-      .control-group-secondary .btn-small[data-action="achievements"] {
-        flex: 1;
-        justify-content: center;
-      }
-      
-      .hero-party-details {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .party-pill {
-        width: 100%;
-        justify-content: center;
-      }
+    .touch-btn {
+      flex: 1;
+      padding: 18px 10px;
+      font-size: 1.1rem;
+      background: var(--baby-blue);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: all 0.2s;
+      font-family: 'Schoolbell', system-ui, sans-serif;
+    }
 
-      .swipe-hint {
-        display: block;
+    .touch-btn:active {
+      background: #5a8ab8;
+      transform: scale(0.96);
+    }
+
+    /* Game Overlay */
+    .game-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.96);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+      border-radius: 6px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .game-overlay.hidden {
+      display: none;
+    }
+
+    .overlay-title {
+      font-size: 1.8rem;
+      color: var(--pooh-red);
+      margin-bottom: 12px;
+    }
+
+    .overlay-text {
+      font-size: 1rem;
+      margin-bottom: 20px;
+      max-width: 380px;
+      line-height: 1.7;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
       }
     }
   </style>
 </head>
 <body>
-  <a href="#gameRegion" class="skip-link">Skip to game</a>
-  <div class="shell">
-    <div class="storybook-wrapper">
-      <header class="story-hero" aria-label="Baby Gunner's baby shower announcement">
-        <div class="hero-text">
-          <div class="hero-kicker">You're Invited to Baby Gunner's Hundred Acre Baby Shower</div>
-          <h1 class="hero-title">Welcome to Gunner's Woodland Storybook!</h1>
-          <p class="hero-subtitle">Turn the pages, catch some honey, and leave a wish. Our mini story has four cozy chapters for guests to enjoy between hugs and happy tears.</p>
+  <!-- Ambient scene background -->
+  <div class="ambient-scene">
+    <div class="butterfly">🦋</div>
+    <div class="butterfly">🦋</div>
+    <div class="butterfly">🦋</div>
+    <div class="floating-leaf">🍂</div>
+    <div class="floating-leaf">🍂</div>
+    <div class="floating-leaf">🍂</div>
+    <div class="bee-ambient">🐝</div>
+    <div class="bee-ambient">🐝</div>
+  </div>
 
-          <div class="hero-party-details">
-            <span class="party-pill" style="background: #e6f7ff;">
-              <span>📅</span>
-              <span>Saturday, June 15, 2024</span>
-            </span>
-            <span class="party-pill" style="background: #ffe6f2;">
-              <span>🕐</span>
-              <span>2:00 PM - 4:00 PM</span>
-            </span>
-            <span class="party-pill" style="background: #e6ffe6;">
-              <span>📍</span>
-              <span>123 Honey Tree Lane</span>
-            </span>
-          </div>
+  <!-- Parallax clouds -->
+  <div class="cloud-layer">
+    <div class="cloud">☁️</div>
+    <div class="cloud">☁️</div>
+    <div class="cloud">☁️</div>
+  </div>
 
-          <div class="hero-tag-row">
-            <span class="pill"><span>📖</span> Storybook fun</span>
-            <span class="pill"><span>🎮</span> Playful game</span>
-            <span class="pill"><span>💌</span> Guestbook wishes</span>
+  <div class="stage">
+    <div class="table-shadow"></div>
+
+    <div class="book-container">
+      <div class="book">
+        <div class="book-header">
+          <div class="book-header-title">
+            <span>Hundred Acre Wood • Baby Shower Story</span>
+            <span>Baby Gunner's Hundred Acre Wood Adventure</span>
           </div>
-        </div>
-        <div class="hero-figure" aria-hidden="true">
-          <div class="baby-badge">👶</div>
-          <div class="bear-card">
-            <div class="bear-inner"></div>
-            <div class="bear-ears"></div>
-            <div class="bear-face">
-              <div class="bear-eyes"></div>
-              <div class="bear-nose"></div>
-              <div class="bear-mouth"></div>
-            </div>
-            <div class="bear-shirt"></div>
-            <div class="bear-barrel"></div>
+          <div class="book-header-badge">
+            <span>🧸</span>
+            <span>Hosted with love by family & friends</span>
           </div>
         </div>
-      </header>
 
-      <div class="chapter-controls" aria-label="Chapter navigation">
-        <button class="chapter-btn" id="prevChapter" type="button" aria-label="Previous chapter">⬅ Previous</button>
-        <div class="chapter-meta">
-          <div class="label">Hundred Acre Storybook</div>
-          <div class="current-chapter" id="chapterLabel">Chapter 1 · Invitation</div>
-          <div class="chapter-dots" id="chapterDots"></div>
-        </div>
-        <button class="chapter-btn" id="nextChapter" type="button" aria-label="Next chapter">Next ➡</button>
-      </div>
-
-      <div class="page-window" id="pageWindow">
-        <div class="page-track">
-          <article class="chapter-page active" data-chapter="1" aria-label="Chapter 1 Invitation">
-            <div class="chapter-banner">Chapter One · The Invitation</div>
-            <h2 class="chapter-title">A stroll to the Hundred Acre Wood</h2>
-            <p class="chapter-lede">In a glen that smells of honey and fresh spring air, friends gather with Pooh to welcome Baby Gunner. This parchment page holds the details for your adventure—come as you are, bring your best hug.</p>
-
-            <div class="hero-party-details" style="margin-top: 0.3rem;">
-              <span class="party-pill" style="background: #fff2d8;">
-                <span>🍯</span>
-                <span>Dress code: cozy &amp; cheerful</span>
-              </span>
-              <span class="party-pill" style="background: #e6ffe6;">
-                <span>🌿</span>
-                <span>Woodland + Winnie accents</span>
-              </span>
+        <div class="pages-wrapper">
+          <!-- Chapter 1: Welcome -->
+          <div class="page active" data-chapter="1">
+            <div class="chapter-header">
+              <div class="chapter-number">Chapter One</div>
+              <h1 class="chapter-title">A Special Day in the Hundred Acre Wood</h1>
+              <div class="chapter-subtitle">An Invitation to Celebrate</div>
             </div>
 
-            <div class="pooh-grid">
-              <div class="pooh-card">
-                <h4>Gathering time</h4>
-                <p>Arrive between 2–2:30 PM to nibble on honey cakes and settle into the story.</p>
-              </div>
-              <div class="pooh-card">
-                <h4>Shower keepsakes</h4>
-                <p>Play the honey game, sign the guestbook, and write a tiny note for Gunner's memory box.</p>
-              </div>
-              <div class="pooh-card">
-                <h4>Little note from Pooh</h4>
-                <p>"A day without a friend is like a pot without a single drop of honey left inside." Thank you for filling ours.</p>
-              </div>
+            <p class="story-text">
+              One fine spring day, in a corner of the Hundred Acre Wood where the sun shines warmly through the trees and the flowers bloom in cheerful colors, something wonderful was happening. All the forest friends were gathering, for there was to be a celebration unlike any other.
+            </p>
+
+            <p class="story-text">
+              "What sort of celebration?" you might ask. Well, it was the very best sort—the kind that welcomes a new little friend to the world. A baby boy named Gunner James was soon to arrive, and everyone in the Hundred Acre Wood wanted to share in the joy.
+            </p>
+
+            <div class="illustration-box sparkle">
+              <div class="bear-illustration">🧸🍯</div>
+              <p style="font-style: italic; color: var(--honey-dark); z-index: 1; position: relative;">
+                "A baby!" said Pooh. "How perfectly wonderful. We shall need honey for such an occasion."
+              </p>
             </div>
 
-            <div class="quote-card">
-              Friends are the sweetest honey. Thank you for being part of Baby Gunner's beginning.
-              <span class="attribution">— Pooh &amp; friends</span>
-            </div>
-          </article>
+            <p class="story-text">
+              Winnie the Pooh, being a Bear of Very Little Brain but a Very Big Heart, knew that the most important thing for any celebration was honey. And not just a little honey, but lots and lots of it. After all, welcoming Baby Gunner was a Very Important Matter.
+            </p>
 
-          <article class="chapter-page" data-chapter="2" aria-label="Chapter 2 Honey Game">
-            <div class="chapter-banner">Chapter Two · The Honey Catch</div>
-            <h2 class="chapter-title">Help Pooh fill the baby shower barrel</h2>
-            <p class="chapter-lede">Catch honey, dodge bees, and rack up points in sixty sweet seconds. Arrow keys or A/D for laptops; drag Pooh or tap the big buttons on phones. Pause anytime to chat, then resume the fun.</p>
-
-            <section class="layout" aria-label="Story and game area">
-              <article class="panel game-panel" id="gameRegion">
-                <div class="panel-inner game-shell">
-                  <div class="panel-header">
-                    <div>
-                      <p class="panel-kicker">Mini game</p>
-                      <h2 class="panel-title">Catch the honey for Baby Gunner!</h2>
-                      <p class="panel-subtitle">Help Pooh fill the barrel before the timer runs out. Catch honey drops and dodge the bees!</p>
-                    </div>
-                    <button class="btn-small" type="button" data-action="help" id="helpBtn">How to play</button>
-                  </div>
-
-                  <div class="game-controls">
-                    <div class="control-group-main">
-                      <div class="btn-group" role="group" aria-label="Start and pause game">
-                        <button class="btn" id="startBtn">Start</button>
-                        <button class="btn ghost" id="pauseBtn">Pause</button>
-                      </div>
-                      <div class="difficulty-toggle" role="group" aria-label="Difficulty level">
-                        <button class="active" data-difficulty="easy">Easy</button>
-                        <button data-difficulty="normal">Normal</button>
-                        <button data-difficulty="hard">Hard</button>
-                      </div>
-                    </div>
-                    <div class="control-group-secondary">
-                      <label class="toggle" aria-label="Toggle sound">
-                        <input type="checkbox" id="soundToggle" checked />
-                        <span class="toggle-pill">
-                          <span class="toggle-thumb"></span>
-                          <span class="toggle-label">Sound</span>
-                        </span>
-                      </label>
-                      <button class="btn-small" type="button" data-action="registry" id="registryBtn">Registry</button>
-                      <button class="btn-small" type="button" data-action="achievements" id="achievementsBtn">Achievements</button>
-                    </div>
-                  </div>
-
-                  <div class="stat-row" aria-label="Game statistics">
-                    <div class="stat">
-                      <div class="stat-label">Score</div>
-                      <div class="stat-value" id="scoreValue">0</div>
-                      <div class="stat-sub">Best: <span id="bestScoreValue">0</span></div>
-                    </div>
-                    <div class="stat">
-                      <div class="stat-label">Time</div>
-                      <div class="stat-value" id="timeValue">60</div>
-                      <div class="stat-sub">sec</div>
-                    </div>
-                    <div class="stat">
-                      <div class="stat-label">Streak</div>
-                      <div class="stat-value" id="streakValue">0</div>
-                      <div class="stat-sub">Honey chain</div>
-                    </div>
-                    <div class="stat" aria-label="Lives left">
-                      <div class="stat-label">Hearts</div>
-                      <div class="hearts" id="livesIndicator" aria-live="polite">
-                        <span class="heart" aria-hidden="true"></span>
-                        <span class="heart" aria-hidden="true"></span>
-                        <span class="heart" aria-hidden="true"></span>
-                      </div>
-                      <div class="stat-sub">Bee stings left</div>
-                    </div>
-                  </div>
-
-                  <div class="game-canvas-shell" aria-live="polite">
-                    <div class="game-canvas-wrapper">
-                      <canvas id="gameCanvas" aria-label="Honey catching game" tabindex="0"></canvas>
-                      <div class="overlay" id="gameOverlay">
-                        <div class="overlay-card">
-                          <h3 id="overlayTitle">Ready to play?</h3>
-                          <p id="overlaySubtitle">Catch the honey. Avoid the bees. Fill the barrel before the timer ends!</p>
-                          <div class="overlay-stats" id="overlayStats">
-                            <div>
-                              <div class="label">Score</div>
-                              <div class="value" id="overlayScore">0</div>
-                            </div>
-                            <div>
-                              <div class="label">Best</div>
-                              <div class="value" id="overlayBest">0</div>
-                            </div>
-                            <div>
-                              <div class="label">Honey</div>
-                              <div class="value" id="overlayHoney">0</div>
-                            </div>
-                            <div>
-                              <div class="label">Bees dodged</div>
-                              <div class="value" id="overlayBees">0</div>
-                            </div>
-                          </div>
-                          <div class="overlay-actions">
-                            <button class="btn" id="primaryOverlayBtn">Start fresh</button>
-                            <button class="btn ghost" id="howToPlayOverlayBtn">How to play</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mobile-controls" aria-label="Mobile controls">
-                      <button class="btn" id="moveLeftBtn">⬅ Move left</button>
-                      <button class="btn" id="moveRightBtn">Move right ➡</button>
-                    </div>
-                  </div>
-
-                  <div class="control-row">
-                    <div class="control-group-main">
-                      <div class="btn-group">
-                        <button class="btn-small" type="button" data-action="help" id="helpBtn">Help</button>
-                        <button class="btn-small" type="button" data-action="achievements" id="achievementsBtn">Achievements</button>
-                      </div>
-                    </div>
-                    <div class="control-group-secondary">
-                      <span class="hint">Tip: Drag on the game to move Pooh</span>
-                      <div class="key-hints">
-                        <span class="key-chip">←</span>
-                        <span class="key-chip">→</span>
-                        <span class="key-chip">A</span>
-                        <span class="key-chip">D</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <aside class="panel info-panel">
-                <div class="panel-inner">
-                  <div class="panel-header">
-                    <div>
-                      <p class="panel-kicker">About this shower</p>
-                      <h2 class="panel-title">Baby Gunner's Hundred Acre Party</h2>
-                    </div>
-                  </div>
-
-                  <section class="story-shell">
-                    <article class="storybook-card">
-                      <h3 class="storybook-heading">Chapter 1 · Invitation</h3>
-                      <h4 class="storybook-title">A Hundred Acre Celebration</h4>
-                      <div class="storybook-body">
-                        <p>
-                          Welcome, dear friends! In a sunny corner of the Hundred Acre Wood, we gather with Pooh and pals to celebrate the sweetest honey of all—Baby Gunner.
-                        </p>
-                        <p>
-                          Play a round, sign the guestbook, and share your favorite childhood memory as we get ready to meet our little bear.
-                        </p>
-                      </div>
-                      <div class="storybook-footer">
-                        <span class="storybook-tagline">"Sometimes the smallest things take up the most room in your heart." – Pooh</span>
-                        <span>💛</span>
-                      </div>
-                    </article>
-
-                    <article class="storybook-card">
-                      <h3 class="storybook-heading">Chapter 2 · The Game</h3>
-                      <h4 class="storybook-title">Honey Barrel Showdown</h4>
-                      <div class="storybook-body">
-                        <p>Catch falling honey drops to fill Pooh's barrel while dodging buzzing bees!</p>
-                        <p>Keyboard controls: <strong>Arrow keys</strong> or <strong>A/D</strong>. On phones: tap &amp; drag or use the big left/right buttons.</p>
-                      </div>
-                      <div class="storybook-footer">
-                        <span class="storybook-tagline">Every drop caught is a cheer for Baby Gunner!</span>
-                        <span>🍯</span>
-                      </div>
-                    </article>
-                  </section>
-
-                  <section class="shower-stats-card">
-                    <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem;">
-                      <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--baby-blue-light); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">👶</div>
-                      <div>
-                        <div style="font-weight: 700; color: #2b1b12;">Baby Gunner Stats</div>
-                        <div style="font-size: 0.78rem; color: #5b4637;">Arriving Spring 2024</div>
-                      </div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem;">
-                      <div style="background: white; padding: 0.4rem; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 0.7rem; color: #8a6647;">Theme</div>
-                        <div style="font-weight: 600;">Woodland Bears</div>
-                      </div>
-                      <div style="background: white; padding: 0.4rem; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 0.7rem; color: #8a6647;">Nursery Color</div>
-                        <div style="font-weight: 600; color: var(--baby-blue);">Adventure Blue</div>
-                      </div>
-                      <div style="background: white; padding: 0.4rem; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 0.7rem; color: #8a6647;">First Toy</div>
-                        <div style="font-weight: 600;">Pooh Bear</div>
-                      </div>
-                      <div style="background: white; padding: 0.4rem; border-radius: 8px; text-align: center;">
-                        <div style="font-size: 0.7rem; color: #8a6647;">Middle Name</div>
-                        <div style="font-weight: 600;">James</div>
-                      </div>
-                    </div>
-                  </section>
-
-                  <section aria-label="Tips">
-                    <div class="tip-list">
-                      <div class="tip-item">
-                        <span class="tip-icon">⭐</span>
-                        <div>
-                          <span class="tip-label">Build a streak.</span>
-                          The more honey you catch without a bee bump, the faster your score climbs.
-                        </div>
-                      </div>
-                      <div class="tip-item">
-                        <span class="tip-icon">🐝</span>
-                        <div>
-                          <span class="tip-label">Bees reset your rhythm.</span>
-                          A sting knocks your streak down and nudges a heart away.
-                        </div>
-                      </div>
-                      <div class="tip-item">
-                        <span class="tip-icon">📱</span>
-                        <div>
-                          <span class="tip-label">On phones, go thumbs-only.</span>
-                          Use the big left/right buttons right under the game or drag the bear directly.
-                        </div>
-                      </div>
-                      <div class="tip-item">
-                        <span class="tip-icon">🎉</span>
-                        <div>
-                          <span class="tip-label">Shower fun.</span>
-                          Challenge other guests to beat your score while you enjoy the celebration!
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-
-                  <section class="status-bar" data-state="idle" aria-label="Shower note" id="statusBar">
-                    <div style="display:flex; align-items:center; gap:0.3rem;">
-                      <span class="status-dot"></span>
-                      <span class="label" id="statusLabel">Shower mode ready.</span>
-                    </div>
-                    <span>Perfect while guests arrive and mingle.</span>
-                  </section>
-                </div>
-              </aside>
-            </section>
-          </article>
-
-          <article class="chapter-page" data-chapter="3" aria-label="Chapter 3 Registry and nursery">
-            <div class="chapter-banner">Chapter Three · Feathering the Nursery</div>
-            <h2 class="chapter-title">Honey pots, crib dreams, and cozy corners</h2>
-            <p class="chapter-lede">Peek inside Gunner's nursery plans—soft blues, honey-gold accents, and woodland hugs. If you wish to gift, our registry links are below, but your presence is the real treasure.</p>
-
-            <div class="registry-grid">
-              <div class="pooh-card">
-                <h4>Nursery palette</h4>
-                <p>Adventure Blue walls with honey-gold shelves, soft cloud mobiles, and a Pooh bear standing guard by the crib.</p>
-              </div>
-              <div class="pooh-card">
-                <h4>Storytime corner</h4>
-                <p>A rocking chair, knit blankets, and a stack of Milne classics ready for cozy evenings.</p>
-              </div>
-              <div class="pooh-card">
-                <h4>Wishes over gifts</h4>
-                <p>Your hugs mean the world. If you'd like to help, the registry buttons keep everything in one place.</p>
-              </div>
-            </div>
-
-            <div class="quote-card">
-              "When life throws you a rainy day, play in the puddles." – Tigger. Thank you for splashing into this moment with us.
-            </div>
-
-            <div class="registry-links" style="margin-top: 0.6rem;">
-              <a href="https://www.target.com/gift-registry/" target="_blank" class="registry-link target">
-                <span style="font-size: 1.2rem;">🎯</span>
-                <span>Target Registry</span>
-              </a>
-              <a href="https://www.amazon.com/baby-reg/" target="_blank" class="registry-link amazon">
-                <span style="font-size: 1.2rem;">📦</span>
-                <span>Amazon Registry</span>
-              </a>
-            </div>
-
-            <div class="qr-placeholder">Scan with your phone camera<br />[QR Code]</div>
-          </article>
-
-          <article class="chapter-page" data-chapter="4" aria-label="Chapter 4 Guestbook">
-            <div class="chapter-banner">Chapter Four · Wishes for Baby Gunner</div>
-            <h2 class="chapter-title">Add your note to the digital guestbook</h2>
-            <p class="chapter-lede">Leave a message Pooh will tuck into Gunner's keepsake box. Your words will be read on cozy evenings after bedtime.</p>
-
-            <div class="guestbook">
-              <form id="guestbookForm">
+            <div class="party-details">
+              <h3>You're Invited to Baby Gunner's Baby Shower! 🎉</h3>
+              <div class="detail-item">
+                <div class="detail-icon">👶</div>
                 <div>
-                  <label for="guestName">Your name</label>
-                  <input id="guestName" name="guestName" type="text" placeholder="Christopher Robin" required />
+                  <strong>Celebrating:</strong> Gunner James<br>
+                  <em style="color: var(--baby-blue);">It's a boy!</em>
                 </div>
-                <div>
-                  <label for="guestWish">Wish or note</label>
-                  <textarea id="guestWish" name="guestWish" placeholder="A big adventure is waiting for you, little bear..." required></textarea>
+              </div>
+              <div class="detail-item">
+                <div class="detail-icon">📅</div>
+                <div><strong>When:</strong> Saturday, June 15, 2024</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-icon">🕐</div>
+                <div><strong>Time:</strong> 2:00 PM - 4:00 PM</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-icon">📍</div>
+                <div><strong>Where:</strong> 123 Honey Tree Lane</div>
+              </div>
+            </div>
+
+            <p class="story-text">
+              "But first," thought Pooh, looking up at his honey pots on the high shelf, "we'll need to gather more honey. Won't you help?"
+            </p>
+
+            <div class="divider">🌳 ✿ 🐝 ✿ 🌳</div>
+          </div>
+
+          <!-- Chapter 2: The Game -->
+          <div class="page" data-chapter="2">
+            <div class="chapter-header">
+              <div class="chapter-number">Chapter Two</div>
+              <h1 class="chapter-title">Pooh's Honey Gathering Adventure</h1>
+              <div class="chapter-subtitle">A Game of Skill and Sweetness</div>
+            </div>
+
+            <p class="story-text">
+              Pooh stood beneath the tall honey tree, his favorite barrel in his arms. Above him, golden drops of honey began to fall, glistening in the sunlight like liquid sunshine. But there was a problem—the bees were buzzing about too!
+            </p>
+
+            <p class="story-text">
+              "Oh bother," said Pooh. "I must catch the honey but avoid the bees. This requires concentration. And perhaps some help from a friend like you."
+            </p>
+
+            <div class="game-container sparkle">
+              <div style="position: relative;">
+                <canvas id="gameCanvas"></canvas>
+                <div class="game-overlay" id="gameOverlay">
+                  <div class="overlay-title">🍯 Ready to Help Pooh? 🍯</div>
+                  <p class="overlay-text">
+                    Move Pooh left and right to catch honey drops in the barrel. Avoid the bees—they'll sting!
+                    <br><br>
+                    <strong>Desktop:</strong> Use arrow keys or A/D<br>
+                    <strong>Mobile:</strong> Use the buttons below or drag Pooh
+                  </p>
+                  <button class="btn sparkle" onclick="startGame()">Start Adventure</button>
                 </div>
-                <button type="submit">Save my wish</button>
+              </div>
+
+              <div class="game-stats">
+                <div class="stat">
+                  <div class="stat-label">Score</div>
+                  <div class="stat-value" id="score">0</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Honey</div>
+                  <div class="stat-value" id="honeyCount">0</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Lives</div>
+                  <div class="stat-value" id="lives">❤️❤️❤️</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Time</div>
+                  <div class="stat-value" id="timer">60</div>
+                </div>
+              </div>
+
+              <div class="difficulty-selector">
+                <button class="difficulty-btn active" onclick="setDifficulty('easy', this)">Gentle Drizzle</button>
+                <button class="difficulty-btn" onclick="setDifficulty('normal', this)">Honey Shower</button>
+                <button class="difficulty-btn" onclick="setDifficulty('hard', this)">Bee Storm</button>
+              </div>
+
+              <div class="game-controls">
+                <button class="btn sparkle" id="startBtn" onclick="startGame()">▶ Start</button>
+                <button class="btn btn-secondary" id="pauseBtn" onclick="pauseGame()" disabled>⏸ Pause</button>
+                <button class="btn btn-secondary" onclick="resetGame()">🔄 Reset</button>
+              </div>
+
+              <div class="mobile-controls">
+                <button class="touch-btn" id="leftBtn">⬅️ Left</button>
+                <button class="touch-btn" id="rightBtn">Right ➡️</button>
+              </div>
+            </div>
+
+            <p class="story-text" style="text-indent: 0; text-align: center; font-style: italic; margin-top: 20px;">
+              "That was splendid!" said Pooh when the barrel was full. "Now we have plenty of honey for Baby Gunner's celebration!"
+            </p>
+          </div>
+
+          <!-- Chapter 3: Registry & Details -->
+          <div class="page" data-chapter="3">
+            <div class="chapter-header">
+              <div class="chapter-number">Chapter Three</div>
+              <h1 class="chapter-title">Gifts from the Heart</h1>
+              <div class="chapter-subtitle">Preparing for Baby Gunner</div>
+            </div>
+
+            <p class="story-text">
+              With the honey safely gathered, Pooh and his friends began to think about what else a baby bear—or rather, a baby boy—might need. Piglet suggested soft blankets. Eeyore thought practical things might be useful. Tigger bounced excitedly about toys.
+            </p>
+
+            <p class="story-text">
+              "The most important thing," said Pooh wisely, "is that Baby Gunner knows he is loved. But if you'd like to bring a gift, his parents have made a list of things that might be helpful."
+            </p>
+
+            <div class="illustration-box sparkle">
+              <div style="font-size: 3rem; margin: 18px 0;">🎁</div>
+              <h3 style="color: var(--baby-blue); margin-bottom: 14px;">Baby Gunner's Registry</h3>
+              <p style="margin-bottom: 18px;">Your presence is the greatest present, but if you'd like to help welcome our little one:</p>
+
+              <div class="registry-links">
+                <a href="https://www.target.com/gift-registry/" target="_blank" class="registry-link sparkle">
+                  <span style="font-size: 1.5rem;">🎯</span>
+                  <span>Target Registry</span>
+                </a>
+                <a href="https://www.amazon.com/baby-reg/" target="_blank" class="registry-link sparkle">
+                  <span style="font-size: 1.5rem;">📦</span>
+                  <span>Amazon Registry</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="party-details">
+              <h3>Nursery Theme & Details 🧸</h3>
+              <div class="detail-item">
+                <div class="detail-icon">🎨</div>
+                <div><strong>Theme:</strong> Hundred Acre Wood / Woodland Bears</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-icon">💙</div>
+                <div><strong>Nursery Colors:</strong> Adventure Blue, Honey Gold, Forest Green</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-icon">🧸</div>
+                <div><strong>First Toy:</strong> Classic Teddy Bear Friend</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-icon">📚</div>
+                <div><strong>Favorite Book:</strong> "The House at Pooh Corner"</div>
+              </div>
+            </div>
+
+            <p class="story-text">
+              And so the preparations continued, with each friend contributing something special to welcome the newest member of their woodland family.
+            </p>
+
+            <div class="divider">🌳 ✿ 🐝 ✿ 🌳</div>
+          </div>
+
+          <!-- Chapter 4: Wishes -->
+          <div class="page" data-chapter="4">
+            <div class="chapter-header">
+              <div class="chapter-number">Chapter Four</div>
+              <h1 class="chapter-title">Wishes for Baby Gunner</h1>
+              <div class="chapter-subtitle">Words of Love and Wisdom</div>
+            </div>
+
+            <p class="story-text">
+              As the sun began to set over the Hundred Acre Wood, casting long golden shadows through the trees, Pooh and his friends gathered to share their wishes for Baby Gunner. Each friend had something special to say.
+            </p>
+
+            <div class="illustration-box sparkle">
+              <p style="font-style: italic; line-height: 1.8; text-align: left; z-index: 1; position: relative;">
+                <strong>Pooh said:</strong> "May you always have honey when you need it, and friends when you want them."
+                <br><br>
+                <strong>Piglet squeaked:</strong> "May you be brave, even when you feel small."
+                <br><br>
+                <strong>Eeyore added:</strong> "May you find sunshine, even on cloudy days."
+                <br><br>
+                <strong>Tigger bounced:</strong> "May you have the most wonderful things happen to you, and the most wonderful adventures!"
+              </p>
+            </div>
+
+            <p class="story-text">
+              Now it's your turn! Leave your wishes, advice, or memories for Baby Gunner and his family.
+            </p>
+
+            <div class="wishes-form sparkle">
+              <h3 style="text-align: center; color: var(--honey-dark); margin-bottom: 18px;">
+                Share Your Wishes <span style="animation: bounce 2s ease-in-out infinite; display: inline-block;">🍯</span>
+              </h3>
+              <form id="wishesForm">
+                <div class="form-group">
+                  <label for="guestName">Your Name:</label>
+                  <input type="text" id="guestName" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="wishMessage">Your Wish or Advice for Baby Gunner:</label>
+                  <textarea id="wishMessage" placeholder="Share your wisdom, hopes, or a favorite memory..." required></textarea>
+                </div>
+                <button type="submit" class="btn sparkle" style="width: 100%;">📝 Add to Guestbook</button>
               </form>
-              <div class="guestbook-list" id="guestbookList" aria-live="polite"></div>
             </div>
 
-            <div class="quote-card">
-              "We didn't realize we were making memories, we just knew we were having fun." — Pooh, Piglet, and pals.
-              <span class="attribution">Thank you for writing the next page with us.</span>
+            <div id="wishesDisplay" style="margin-top: 24px;">
+              <!-- Wishes will appear here -->
             </div>
-          </article>
+
+            <p class="story-text" style="text-align: center; font-style: italic; margin-top: 32px;">
+              And so, with honey gathered, gifts prepared, and wishes shared, everyone in the Hundred Acre Wood looked forward to the day they would meet Baby Gunner. For as Pooh always said, "How lucky I am to have something that makes saying goodbye so hard." But in this case, they were all ready to say hello.
+            </p>
+
+            <div style="text-align: center; margin-top: 26px; padding: 18px; background: #fffdf7; border-radius: 10px; animation: fadeIn 3s ease; box-shadow: 0 8px 18px rgba(0,0,0,0.08);">
+              <div style="font-size: 3rem; margin-bottom: 8px; animation: pulse 2s ease-in-out infinite;">💙</div>
+              <div style="font-size: 1.25rem; color: var(--pooh-red); font-weight: 700;">
+                Welcome to the world, Baby Gunner!
+              </div>
+              <div style="margin-top: 8px; font-style: italic;">
+                With love from all your family and friends
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="swipe-hint" id="swipeHint"><span>Swipe</span> or tap the arrows to turn the page.</div>
-    </div>
-
-    <footer class="page-footer">
-      Created for <span>Baby Gunner's Hundred Acre Baby Shower</span> · Spring 2024 ·
-      With love from the soon-to-be parents!
-    </footer>
-  </div>
-<div class="toast" id="toast" role="status" aria-live="polite">
-    <span class="icon" aria-hidden="true">🍯</span>
-    <span id="toastMessage">Honey streak!</span>
-  </div>
-
-  <div class="modal-backdrop" id="helpModalBackdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpModalTitle">
-      <div class="modal-header">
-        <h3 class="modal-title" id="helpModalTitle">How to play</h3>
-        <button class="modal-close" type="button" data-close-modal="help">
-          ✕
-        </button>
-      </div>
-      <div class="modal-body">
-        <h4>Goal</h4>
-        <p>Catch as many honey drops as you can before the timer reaches zero. Avoid the bees – they knock you off your honey rhythm.</p>
-
-        <h4>Controls</h4>
-        <p><strong>Desktop &amp; laptop</strong></p>
-        <div class="key-hints">
-          <span class="key-chip">← / →</span>
-          <span class="key-chip">A / D</span>
+        <!-- Navigation -->
+        <div class="book-nav">
+          <button class="nav-btn prev sparkle" id="prevBtn" onclick="previousPage()">
+            ← Previous Chapter
+          </button>
+          <div class="page-indicator" id="pageIndicator">Chapter 1 of 4</div>
+          <button class="nav-btn next sparkle" id="nextBtn" onclick="nextPage()">
+            Next Chapter →
+          </button>
         </div>
-        <p>Use the arrow or A / D keys to move the bear and barrel left and right.</p>
-        <p><strong>Phones &amp; tablets</strong></p>
-        <ul style="margin-left:1.1rem; padding-left:0; margin-top:0.15rem;">
-          <li>Tap and drag directly on the game to slide the bear.</li>
-          <li>Or use the big <em>Move left</em> / <em>Move right</em> buttons under the game.</li>
-        </ul>
-
-        <h4>Scoring &amp; streaks</h4>
-        <p>Each honey drop adds to your score. Catch several in a row and your streak climbs, giving bonus points every few drops.</p>
-        <p>A bee hit:</p>
-        <ul style="margin-left:1.1rem; padding-left:0; margin-top:0.15rem;">
-          <li>Resets your streak.</li>
-          <li>Removes a heart. Lose all hearts and the round ends early.</li>
-        </ul>
-
-        <h4>Difficulty</h4>
-        <p>Use the difficulty buttons beside the Start button:</p>
-        <ul style="margin-left:1.1rem; padding-left:0; margin-top:0.15rem;">
-          <li><strong>Gentle drizzle</strong> – Slower drops, fewer bees.</li>
-          <li><strong>Honey shower</strong> – Balanced for most players.</li>
-          <li><strong>Bee storm</strong> – Fast, busy, and buzzy.</li>
-        </ul>
       </div>
     </div>
   </div>
 
-  <div class="modal-backdrop" id="achievementsModalBackdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="achievementsModalTitle">
-      <div class="modal-header">
-        <h3 class="modal-title" id="achievementsModalTitle">Shower Feats</h3>
-        <button class="modal-close" type="button" data-close-modal="achievements">
-          ✕
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Try unlocking these little milestones as you play. They stay in this browser only.</p>
-        <ul class="achievements-list" id="achievementsList">
-          <li>
-            <span class="label">First honey</span>
-            <span class="status locked" data-achievement="firstHoney">Locked</span>
-          </li>
-          <li>
-            <span class="label">No-sting round</span>
-            <span class="status locked" data-achievement="noSting">Locked</span>
-          </li>
-          <li>
-            <span class="label">Honey hero (50+)</span>
-            <span class="status locked" data-achievement="fiftyScore">Locked</span>
-          </li>
-          <li>
-            <span class="label">Barrel champion (100+)</span>
-            <span class="status locked" data-achievement="hundredScore">Locked</span>
-          </li>
-          <li>
-            <span class="label">Shower Champion</span>
-            <span class="status locked" data-achievement="showerChamp">Locked</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+  Yep, fair — visually it leveled up, but I did nick a couple of things about the game feel / rendering.
 
-  <div class="modal-backdrop" id="registryModalBackdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="registryModalTitle">
-      <div class="modal-header">
-        <h3 class="modal-title" id="registryModalTitle">Baby Gunner's Registry</h3>
-        <button class="modal-close" type="button" data-close-modal="registry">✕</button>
-      </div>
-      <div class="modal-body" style="text-align: center;">
-        <p>Your presence is gift enough, but if you'd like to help welcome our little honey bear, here are our registry links:</p>
-        
-        <div class="qr-placeholder">
-          Scan with phone camera
-          <br>
-          [QR Code]
-        </div>
-        
-        <div class="registry-links">
-          <a href="https://www.target.com/gift-registry/" target="_blank" class="registry-link target">
-            <span style="font-size: 1.2rem;">🎯</span>
-            <span>Target Registry</span>
-          </a>
-          <a href="https://www.amazon.com/baby-reg/" target="_blank" class="registry-link amazon">
-            <span style="font-size: 1.2rem;">📦</span>
-            <span>Amazon Registry</span>
-          </a>
-        </div>
-        
-        <p style="margin-top: 1rem; font-size: 0.8rem; color: #7a5533;">
-          <strong>Note:</strong> We're most excited to introduce you to Gunner! No gifts are expected.
-        </p>
-      </div>
-    </div>
-  </div>
+The big regression under the hood is that I moved the sky to CSS and forgot to fully clear/redraw the canvas each frame, which can make drops/bees smear and feel “off”. Let’s fix the game rendering while keeping the new aesthetics.
 
-  <script>
-    (function () {
-      const canvas = document.getElementById("gameCanvas");
-      const overlay = document.getElementById("gameOverlay");
-      const overlayTitle = document.getElementById("overlayTitle");
-      const overlaySubtitle = document.getElementById("overlaySubtitle");
-      const overlayStatsRow = document.getElementById("overlayStats");
-      const overlayScore = document.getElementById("overlayScore");
-      const overlayBest = document.getElementById("overlayBest");
-      const overlayHoney = document.getElementById("overlayHoney");
-      const overlayBees = document.getElementById("overlayBees");
-      const primaryOverlayBtn = document.getElementById("primaryOverlayBtn");
-      const howToPlayOverlayBtn = document.getElementById("howToPlayOverlayBtn");
+Below is a drop-in replacement <script> that you can use with the last HTML I sent. Just replace your existing <script>...</script> block with this one.
 
-      const scoreEl = document.getElementById("scoreValue");
-      const timeEl = document.getElementById("timeValue");
-      const streakEl = document.getElementById("streakValue");
-      const bestScoreEl = document.getElementById("bestScoreValue");
-      const livesIndicator = document.getElementById("livesIndicator");
-      const statusBar = document.getElementById("statusBar");
-      const statusLabel = document.getElementById("statusLabel");
+<script>
+  // Game Variables
+  let canvas, ctx;
+  let gameState = 'idle';
+  let score = 0;
+  let honeyCollected = 0;
+  let lives = 3;
+  let timeLeft = 60;
+  let difficulty = 'easy';
+  let gameInterval, timerInterval;
 
-      const startBtn = document.getElementById("startBtn");
-      const pauseBtn = document.getElementById("pauseBtn");
-      const diffButtons = Array.from(document.querySelectorAll(".difficulty-toggle button"));
-      const soundToggle = document.getElementById("soundToggle");
-      const registryBtn = document.getElementById("registryBtn");
+  let player = { x: 0, y: 0, width: 60, height: 90, speed: 5 };
+  let drops = [];
+  let bees = [];
 
-      const moveLeftBtn = document.getElementById("moveLeftBtn");
-      const moveRightBtn = document.getElementById("moveRightBtn");
+  const difficulties = {
+    easy:   { dropSpeed: 2, beeSpeed: 1.5, dropFreq: 1500, beeFreq: 3000 },
+    normal: { dropSpeed: 3, beeSpeed: 2.4, dropFreq: 1000, beeFreq: 2000 },
+    hard:   { dropSpeed: 4, beeSpeed: 3.3, dropFreq: 700,  beeFreq: 1200 }
+  };
 
-      const toast = document.getElementById("toast");
-      const toastMessage = document.getElementById("toastMessage");
+  // Navigation
+  let currentChapter = 1;
+  const totalChapters = 4;
 
-      const helpModalBackdrop = document.getElementById("helpModalBackdrop");
-      const achievementsModalBackdrop = document.getElementById("achievementsModalBackdrop");
-      const registryModalBackdrop = document.getElementById("registryModalBackdrop");
-      const helpBtn = document.getElementById("helpBtn");
-      const achievementsBtn = document.getElementById("achievementsBtn");
-      const achievementsList = document.getElementById("achievementsList");
+  function nextPage() {
+    if (currentChapter < totalChapters) {
+      const currentPage = document.querySelector('[data-chapter="' + currentChapter + '"]');
+      currentPage.classList.add('exiting');
 
-      const ctx = canvas.getContext("2d");
+      setTimeout(() => {
+        currentPage.classList.remove('active', 'exiting');
+        currentChapter++;
+        document.querySelector('[data-chapter="' + currentChapter + '"]').classList.add('active');
+        updateNavigation();
+      }, 600);
+    }
+  }
 
-      const GAME_STATE = {
-        IDLE: "idle",
-        RUNNING: "running",
-        PAUSED: "paused",
-        OVER: "over",
-      };
+  function previousPage() {
+    if (currentChapter > 1) {
+      const currentPage = document.querySelector('[data-chapter="' + currentChapter + '"]');
+      currentPage.classList.add('exiting');
 
-      const defaultConfig = {
-        baseDuration: 60,
-        baseHoneySpawn: 900,
-        baseBeeSpawn: 2100,
-        easyMultiplier: 1.2,
-        hardMultiplier: 0.65,
-        honeySpeedBase: 120,
-        beeSpeedBase: 130,
-        streakBonusStep: 5,
-        maxLives: 3,
-      };
+      setTimeout(() => {
+        currentPage.classList.remove('active', 'exiting');
+        currentChapter--;
+        document.querySelector('[data-chapter="' + currentChapter + '"]').classList.add('active');
+        updateNavigation();
+      }, 600);
+    }
+  }
 
-      const DIFFICULTY = {
-        easy: "easy",
-        normal: "normal",
-        hard: "hard",
-      };
+  function updateNavigation() {
+    document.getElementById('prevBtn').disabled = currentChapter === 1;
+    document.getElementById('nextBtn').disabled = currentChapter === totalChapters;
+    document.getElementById('pageIndicator').textContent = 'Chapter ' + currentChapter + ' of ' + totalChapters;
+  }
 
-      const sounds = {
-        catch: null,
-        bee: null,
-        streak: null,
-        end: null,
-      };
+  // Initialize Game
+  function initGame() {
+    canvas = document.getElementById('gameCanvas');
+    if (!canvas) return;
+    ctx = canvas.getContext('2d');
 
-      function createClickSound(frequency) {
-        const ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
-        return function () {
-          if (!soundToggle.checked) return;
-          const osc = ctxAudio.createOscillator();
-          const gain = ctxAudio.createGain();
-          osc.type = "triangle";
-          osc.frequency.value = frequency;
-          osc.connect(gain);
-          gain.connect(ctxAudio.destination);
-          const now = ctxAudio.currentTime;
-          gain.gain.setValueAtTime(0.18, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-          osc.start(now);
-          osc.stop(now + 0.2);
-        };
+    const container = canvas.parentElement;
+    canvas.width = Math.max(220, Math.min(520, container.offsetWidth - 40));
+    canvas.height = 400;
+
+    player.x = canvas.width / 2 - player.width / 2;
+    player.y = canvas.height - player.height - 18;
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
+
+    let isDragging = false;
+
+    canvas.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      handleTouch(e);
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (isDragging) handleTouch(e);
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', () => { isDragging = false; });
+
+    canvas.addEventListener('mousedown', () => { isDragging = true; });
+    canvas.addEventListener('mousemove', (e) => {
+      if (isDragging && gameState === 'playing') {
+        const rect = canvas.getBoundingClientRect();
+        player.x = e.clientX - rect.left - player.width / 2;
+        player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
       }
+    });
+    canvas.addEventListener('mouseup', () => { isDragging = false; });
+    canvas.addEventListener('mouseleave', () => { isDragging = false; });
 
-      try {
-        sounds.catch = createClickSound(640);
-        sounds.bee = createClickSound(320);
-        sounds.streak = createClickSound(880);
-        sounds.end = createClickSound(220);
-      } catch (e) {
+    const leftBtn = document.getElementById('leftBtn');
+    const rightBtn = document.getElementById('rightBtn');
+
+    leftBtn.addEventListener('touchstart', () => { keys.left = true; }, { passive: true });
+    leftBtn.addEventListener('touchend', () => { keys.left = false; }, { passive: true });
+
+    rightBtn.addEventListener('touchstart', () => { keys.right = true; }, { passive: true });
+    rightBtn.addEventListener('touchend', () => { keys.right = false; }, { passive: true });
+
+    drawGame();
+  }
+
+  function handleTouch(e) {
+    if (gameState !== 'playing') return;
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    player.x = touch.clientX - rect.left - player.width / 2;
+    player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+  }
+
+  let keys = { left: false, right: false };
+
+  function handleKeyDown(e) {
+    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
+    if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
+  }
+
+  function handleKeyUp(e) {
+    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
+    if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
+  }
+
+  function setDifficulty(level, btn) {
+    difficulty = level;
+    document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+
+  function startGame() {
+    if (gameState === 'playing') return;
+
+    const overlay = document.getElementById('gameOverlay');
+    overlay.classList.add('hidden');
+
+    gameState = 'playing';
+    score = 0;
+    honeyCollected = 0;
+    lives = 3;
+    timeLeft = 60;
+    drops = [];
+    bees = [];
+
+    updateDisplay();
+
+    document.getElementById('startBtn').disabled = true;
+    const pauseBtn = document.getElementById('pauseBtn');
+    pauseBtn.disabled = false;
+    pauseBtn.textContent = '⏸ Pause';
+
+    gameInterval = setInterval(gameLoop, 1000 / 60);
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      document.getElementById('timer').textContent = timeLeft;
+      if (timeLeft <= 0) {
+        endGame();
       }
+    }, 1000);
 
-      let gameState = GAME_STATE.IDLE;
-      let difficulty = DIFFICULTY.easy;
+    spawnDrops();
+    spawnBees();
+  }
 
-      let width = 0;
-      let height = 0;
+  function pauseGame() {
+    const pauseBtn = document.getElementById('pauseBtn');
+    if (gameState === 'playing') {
+      gameState = 'paused';
+      clearInterval(gameInterval);
+      clearInterval(timerInterval);
+      pauseBtn.textContent = '▶ Resume';
+    } else if (gameState === 'paused') {
+      gameState = 'playing';
+      gameInterval = setInterval(gameLoop, 1000 / 60);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').textContent = timeLeft;
+        if (timeLeft <= 0) endGame();
+      }, 1000);
+      pauseBtn.textContent = '⏸ Pause';
+    }
+  }
 
-      const bear = {
-        x: 0,
-        y: 0,
-        width: 70,
-        height: 70,
-        speed: 260,
-        targetDirection: 0,
-      };
+  function resetGame() {
+    gameState = 'idle';
+    clearInterval(gameInterval);
+    clearInterval(timerInterval);
 
-      let honeyDrops = [];
-      let bees = [];
+    score = 0;
+    honeyCollected = 0;
+    lives = 3;
+    timeLeft = 60;
+    drops = [];
+    bees = [];
 
-      let score = 0;
-      let bestScore = 0;
-      let timeRemaining = defaultConfig.baseDuration;
-      let lastFrameTime = 0;
-      let lastHoneySpawn = 0;
-      let lastBeeSpawn = 0;
-      let honeyCaught = 0;
-      let beesDodged = 0;
-      let streak = 0;
-      let lives = defaultConfig.maxLives;
+    updateDisplay();
+    const overlay = document.getElementById('gameOverlay');
+    overlay.classList.remove('hidden');
+    overlay.innerHTML = `
+      <div class="overlay-title">🍯 Ready to Help Pooh? 🍯</div>
+      <p class="overlay-text">
+        Move Pooh left and right to catch honey drops in the barrel. Avoid the bees—they'll sting!
+        <br><br>
+        <strong>Desktop:</strong> Use arrow keys or A/D<br>
+        <strong>Mobile:</strong> Use the buttons below or drag Pooh
+      </p>
+      <button class="btn sparkle" onclick="startGame()">Start Adventure</button>
+    `;
 
-      let leftPressed = false;
-      let rightPressed = false;
-      let dragging = false;
-      let dragOffsetX = 0;
+    document.getElementById('startBtn').disabled = false;
+    const pauseBtn = document.getElementById('pauseBtn');
+    pauseBtn.disabled = true;
+    pauseBtn.textContent = '⏸ Pause';
 
-      let achievements = {
-        firstHoney: false,
-        noSting: false,
-        fiftyScore: false,
-        hundredScore: false,
-        showerChamp: false,
-      };
+    drawGame();
+  }
 
-      function restoreBestScore() {
-        try {
-          const stored = localStorage.getItem("babyGunnerHoneyBestScore");
-          if (stored) {
-            bestScore = parseInt(stored, 10) || 0;
-            bestScoreEl.textContent = bestScore;
-          }
-          const storedAchievements = localStorage.getItem("babyGunnerHoneyAchievements");
-          if (storedAchievements) {
-            achievements = Object.assign(achievements, JSON.parse(storedAchievements));
-          }
-        } catch (e) {}
-        refreshAchievementsUI();
+  function endGame() {
+    gameState = 'over';
+    clearInterval(gameInterval);
+    clearInterval(timerInterval);
+
+    const overlay = document.getElementById('gameOverlay');
+    overlay.classList.remove('hidden');
+    overlay.innerHTML = `
+      <div class="overlay-title">🍯 Well Done! 🍯</div>
+      <p class="overlay-text">
+        Pooh thanks you for helping gather honey!<br><br>
+        <strong>Final Score:</strong> ${score}<br>
+        <strong>Honey Collected:</strong> ${honeyCollected}
+      </p>
+      <button class="btn sparkle" onclick="resetGame(); startGame();">Play Again</button>
+      <button class="btn btn-secondary" onclick="resetGame();" style="margin-top: 10px;">Back to Start</button>
+    `;
+
+    document.getElementById('startBtn').disabled = false;
+    const pauseBtn = document.getElementById('pauseBtn');
+    pauseBtn.disabled = true;
+    pauseBtn.textContent = '⏸ Pause';
+  }
+
+  function spawnDrops() {
+    if (gameState !== 'playing') return;
+
+    drops.push({
+      x: Math.random() * (canvas.width - 20),
+      y: -20,
+      width: 20,
+      height: 30,
+      speed: difficulties[difficulty].dropSpeed
+    });
+
+    setTimeout(spawnDrops, difficulties[difficulty].dropFreq);
+  }
+
+  function spawnBees() {
+    if (gameState !== 'playing') return;
+
+    bees.push({
+      x: Math.random() * (canvas.width - 30),
+      y: -30,
+      width: 30,
+      height: 25,
+      speed: difficulties[difficulty].beeSpeed
+    });
+
+    setTimeout(spawnBees, difficulties[difficulty].beeFreq);
+  }
+
+  function gameLoop() {
+    if (gameState !== 'playing') return;
+
+    if (keys.left) {
+      player.x -= player.speed;
+    }
+    if (keys.right) {
+      player.x += player.speed;
+    }
+    player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+
+    drops.forEach((drop, index) => {
+      drop.y += drop.speed;
+
+      if (checkCollision(drop, player)) {
+        score += 10;
+        honeyCollected++;
+        drops.splice(index, 1);
+        updateDisplay();
+      } else if (drop.y > canvas.height) {
+        drops.splice(index, 1);
       }
+    });
 
-      function saveBestScore() {
-        try {
-          localStorage.setItem("babyGunnerHoneyBestScore", String(bestScore));
-        } catch (e) {}
-      }
+    bees.forEach((bee, index) => {
+      bee.y += bee.speed;
 
-      function saveAchievements() {
-        try {
-          localStorage.setItem("babyGunnerHoneyAchievements", JSON.stringify(achievements));
-        } catch (e) {}
-      }
+      if (checkCollision(bee, player)) {
+        lives--;
+        bees.splice(index, 1);
+        updateDisplay();
 
-      function refreshAchievementsUI() {
-        if (!achievementsList) return;
-        achievementsList.querySelectorAll("[data-achievement]").forEach((el) => {
-          const key = el.getAttribute("data-achievement");
-          const unlocked = achievements[key];
-          el.textContent = unlocked ? "Unlocked" : "Locked";
-          el.classList.toggle("unlocked", !!unlocked);
-          el.classList.toggle("locked", !unlocked);
-        });
-      }
-
-      function unlockAchievement(key) {
-        if (!achievements[key]) {
-          achievements[key] = true;
-          refreshAchievementsUI();
-          saveAchievements();
-          if (key === "showerChamp") {
-            showToast("🏆 Shower Champion! Gunner's first high score!");
-          } else {
-            showToast("Achievement unlocked: " + formatAchievementName(key));
-          }
+        if (lives <= 0) {
+          endGame();
         }
+      } else if (bee.y > canvas.height) {
+        bees.splice(index, 1);
       }
+    });
+
+    drawGame();
+  }
+
+  function checkCollision(obj1, obj2) {
+    return obj1.x < obj2.x + obj2.width &&
+           obj1.x + obj1.width > obj2.x &&
+           obj1.y < obj2.y + obj2.height &&
+           obj1.y + obj1.height > obj2.y;
+  }
+
+  function drawGame() {
+    if (!ctx) return;
+
+    // Clear everything first so drops/bees don't smear
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Sky gradient background
+    const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    skyGradient.addColorStop(0, '#8cd3ff');
+    skyGradient.addColorStop(0.45, '#87CEEB');
+    skyGradient.addColorStop(0.9, '#d1f3ff');
+    ctx.fillStyle = skyGradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Ground
+    ctx.fillStyle = '#6fa45a';
+    ctx.fillRect(0, canvas.height - 40, canvas.width, 40);
+
+    // Simple tree silhouettes in background
+    ctx.fillStyle = 'rgba(74, 94, 62, 0.7)';
+    for (let i = 0; i < 4; i++) {
+      const baseX = (canvas.width / 4) * i + 20;
+      ctx.fillRect(baseX, canvas.height - 70, 20, 30);
+      ctx.beginPath();
+      ctx.moveTo(baseX - 20, canvas.height - 70);
+      ctx.lineTo(baseX + 10, canvas.height - 120);
+      ctx.lineTo(baseX + 40, canvas.height - 70);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // Pooh's ears
+    ctx.fillStyle = '#f4c16e';
+    ctx.beginPath();
+    ctx.arc(player.x + 18, player.y + 10, 8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(player.x + 42, player.y + 10, 8, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Pooh's head
+    ctx.beginPath();
+    ctx.arc(player.x + 30, player.y + 26, 20, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Face
+    ctx.fillStyle = '#2b1810';
+    ctx.beginPath();
+    ctx.arc(player.x + 23, player.y + 22, 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(player.x + 37, player.y + 22, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(player.x + 30, player.y + 28, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(player.x + 30, player.y + 33, 7, 0, Math.PI);
+    ctx.strokeStyle = '#2b1810';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Body / shirt
+    ctx.fillStyle = '#f4c16e';
+    ctx.fillRect(player.x + 14, player.y + 40, 32, 30);
+
+    ctx.fillStyle = '#d32f2f';
+    ctx.fillRect(player.x + 12, player.y + 40, 36, 18);
+
+    // Arms
+    ctx.fillStyle = '#f4c16e';
+    ctx.fillRect(player.x + 6, player.y + 44, 10, 14);
+    ctx.fillRect(player.x + 44, player.y + 44, 10, 14);
+
+    // Barrel
+    ctx.fillStyle = '#8b6f47';
+    ctx.beginPath();
+    ctx.moveTo(player.x, player.y + 60);
+    ctx.lineTo(player.x + 60, player.y + 60);
+    ctx.quadraticCurveTo(player.x + 56, player.y + 96, player.x + 30, player.y + 100);
+    ctx.quadraticCurveTo(player.x + 4, player.y + 96, player.x, player.y + 60);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = '#5a4a3a';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Barrel bands
+    ctx.beginPath();
+    ctx.moveTo(player.x + 4, player.y + 72);
+    ctx.lineTo(player.x + 56, player.y + 72);
+    ctx.moveTo(player.x + 4, player.y + 88);
+    ctx.lineTo(player.x + 56, player.y + 88);
+    ctx.stroke();
+
+    // Honey drops
+    drops.forEach(drop => {
+      ctx.fillStyle = '#f4a944';
+      ctx.beginPath();
+      ctx.ellipse(drop.x + 10, drop.y + 15, 10, 15, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#fff5d6';
+      ctx.beginPath();
+      ctx.ellipse(drop.x + 8, drop.y + 10, 3, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Bees
+    bees.forEach(bee => {
+      // Body
+      ctx.fillStyle = '#f4a944';
+      ctx.fillRect(bee.x + 5, bee.y + 5, 22, 16);
+
+      // Stripes
+      ctx.fillStyle = '#2b1810';
+      ctx.fillRect(bee.x + 8, bee.y + 5, 3, 16);
+      ctx.fillRect(bee.x + 15, bee.y + 5, 3, 16);
+      ctx.fillRect(bee.x + 20, bee.y + 5, 3, 16);
+
+      // Wings
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.beginPath();
+      ctx.ellipse(bee.x + 10, bee.y + 2, 7, 5, -0.3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(bee.x + 22, bee.y + 2, 7, 5, 0.3, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+
+  function updateDisplay() {
+    document.getElementById('score').textContent = score;
+    document.getElementById('honeyCount').textContent = honeyCollected;
+    document.getElementById('timer').textContent = timeLeft;
+
+    let heartsDisplay = '';
+    for (let i = 0; i < lives; i++) {
+      heartsDisplay += '❤️';
+    }
+    document.getElementById('lives').textContent = heartsDisplay || '💔';
+  }
+
+  // Wishes Form
+  document.addEventListener('DOMContentLoaded', () => {
+    const wishesForm = document.getElementById('wishesForm');
+    if (wishesForm) {
+      wishesForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('guestName').value.trim();
+        const message = document.getElementById('wishMessage').value.trim();
+
+        if (!name || !message) return;
+
+        const wishElement = document.createElement('div');
+        wishElement.style.cssText = 'background: #fffdf7; padding: 18px 18px 16px; border-radius: 10px; margin-bottom: 16px; border-left: 4px solid var(--honey); box-shadow: 0 6px 14px rgba(0,0,0,0.06); animation: fadeIn 0.5s ease;';
+        wishElement.innerHTML = `
+          <div style="font-weight: 600; color: var(--honey-dark); margin-bottom: 6px;">
+            ${name}
+          </div>
+          <div style="font-style: italic; line-height: 1.7;">
+            "${message}"
+          </div>
+        `;
+
+        const display = document.getElementById('wishesDisplay');
+        display.prepend(wishElement);
+
+        document.getElementById('guestName').value = '';
+        document.getElementById('wishMessage').value = '';
+
+        alert('Thank you for your lovely wishes! 💙');
+      });
+    }
+  });
+
+  // Initialize on load
+  window.addEventListener('load', () => {
+    initGame();
+    updateNavigation();
+  });
+
+  window.addEventListener('resize', () => {
+    if (canvas && ctx) {
+      const container = canvas.parentElement;
+      const oldWidth = canvas.width;
+      canvas.width = Math.max(220, Math.min(520, container.offsetWidth - 40));
+      player.x = (player.x / oldWidth) * canvas.width;
+      drawGame();
+    }
+  });
+</script>
 
-      function formatAchievementName(key) {
-        switch (key) {
-          case "firstHoney":
-            return "First honey!";
-          case "noSting":
-            return "No-sting round";
-          case "fiftyScore":
-            return "Honey hero (50+)";
-          case "hundredScore":
-            return "Barrel champion (100+)";
-          case "showerChamp":
-            return "Shower Champion";
-          default:
-            return key;
-        }
-      }
-
-      function showToast(message) {
-        if (!toast) return;
-        toastMessage.textContent = message;
-        toast.classList.add("visible");
-        setTimeout(() => {
-          toast.classList.remove("visible");
-        }, 1800);
-      }
-
-      function resizeCanvas() {
-        const wrapper = canvas.parentElement;
-        if (!wrapper) return;
-        const rect = wrapper.getBoundingClientRect();
-        const devicePixelRatio = window.devicePixelRatio || 1;
-        width = rect.width * devicePixelRatio;
-        height = rect.height * devicePixelRatio;
-        canvas.width = width;
-        canvas.height = height;
-        ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-        bear.y = rect.height - bear.height - 12;
-        bear.x = rect.width / 2 - bear.width / 2;
-      }
-
-      function getDifficultyFactor() {
-        switch (difficulty) {
-          case DIFFICULTY.easy:
-            return defaultConfig.easyMultiplier;
-          case DIFFICULTY.hard:
-            return defaultConfig.hardMultiplier;
-          default:
-            return 1;
-        }
-      }
-
-      function resetGameState(preserveDifficulty) {
-        const duration = defaultConfig.baseDuration;
-        score = 0;
-        timeRemaining = duration;
-        lastHoneySpawn = 0;
-        lastBeeSpawn = 0;
-        honeyDrops = [];
-        bees = [];
-        honeyCaught = 0;
-        beesDodged = 0;
-        streak = 0;
-        lives = defaultConfig.maxLives;
-        leftPressed = rightPressed = false;
-        dragging = false;
-        dragOffsetX = 0;
-        updateScoreUI();
-        updateTimeUI();
-        updateStreakUI();
-        updateLivesUI();
-        updateStatusBar("Ready when you are.", GAME_STATE.IDLE);
-        if (!preserveDifficulty) difficulty = DIFFICULTY.easy;
-      }
-
-      function updateScoreUI() {
-        scoreEl.textContent = score;
-        bestScoreEl.textContent = bestScore;
-      }
-
-      function updateTimeUI() {
-        timeEl.textContent = Math.max(0, Math.floor(timeRemaining));
-      }
-
-      function updateStreakUI() {
-        streakEl.textContent = streak;
-      }
-
-      function updateLivesUI() {
-        if (!livesIndicator) return;
-        const hearts = livesIndicator.querySelectorAll(".heart");
-        hearts.forEach((heart, idx) => {
-          heart.classList.toggle("lost", idx >= lives);
-        });
-      }
-
-      function updateStatusBar(message, state) {
-        statusLabel.textContent = message;
-        statusBar.dataset.state = state || statusBar.dataset.state || GAME_STATE.IDLE;
-      }
-
-      function setGameState(newState) {
-        gameState = newState;
-        statusBar.dataset.state = newState;
-      }
-
-      function spawnHoney() {
-        const wrapperRect = canvas.parentElement.getBoundingClientRect();
-        const x = 20 + Math.random() * (wrapperRect.width - 40);
-        honeyDrops.push({
-          x,
-          y: -20,
-          radius: 10 + Math.random() * 4,
-          speed: defaultConfig.honeySpeedBase * getDifficultyFactor() * (0.8 + Math.random() * 0.4),
-        });
-      }
-
-      function spawnBee() {
-        const wrapperRect = canvas.parentElement.getBoundingClientRect();
-        const x = 20 + Math.random() * (wrapperRect.width - 40);
-        bees.push({
-          x,
-          y: -24,
-          size: 18,
-          speed: defaultConfig.beeSpeedBase * getDifficultyFactor() * (0.9 + Math.random() * 0.4),
-          zigzagPhase: Math.random() * Math.PI * 2,
-        });
-      }
-
-      function drawBackground() {
-        const w = canvas.clientWidth;
-        const h = canvas.clientHeight;
-        const skyHeight = h * 0.55;
-        const grassHeight = h * 0.45;
-        const gradientSky = ctx.createLinearGradient(0, 0, 0, skyHeight);
-        gradientSky.addColorStop(0, "#b9e6ff");
-        gradientSky.addColorStop(1, "#fff7d4");
-        ctx.fillStyle = gradientSky;
-        ctx.fillRect(0, 0, w, skyHeight);
-        const gradientGrass = ctx.createLinearGradient(0, skyHeight, 0, h);
-        gradientGrass.addColorStop(0, "#c8e6a0");
-        gradientGrass.addColorStop(1, "#9acb6a");
-        ctx.fillStyle = gradientGrass;
-        ctx.fillRect(0, skyHeight, w, h - skyHeight);
-        ctx.fillStyle = "rgba(255,255,255,0.8)";
-        for (let i = 0; i < 3; i++) {
-          const cloudX = (w / 4) * i + 40;
-          const cloudY = 40 + (i % 2) * 20;
-          ctx.beginPath();
-          ctx.ellipse(cloudX, cloudY, 45, 22, 0, 0, Math.PI * 2);
-          ctx.ellipse(cloudX + 30, cloudY + 10, 35, 18, 0, 0, Math.PI * 2);
-          ctx.ellipse(cloudX - 25, cloudY + 8, 30, 16, 0, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        ctx.fillStyle = "#f7c948";
-        ctx.beginPath();
-        ctx.arc(w - 40, 38, 22, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 0.14;
-        ctx.fillStyle = "#f7c948";
-        ctx.beginPath();
-        ctx.arc(w - 40, 38, 42, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
-
-      function drawBear() {
-        const px = bear.x;
-        const py = bear.y;
-        const bw = bear.width;
-        const bh = bear.height;
-        ctx.save();
-        ctx.fillStyle = "#f3b547";
-        const headRadius = 18;
-        const headX = px + bw / 2;
-        const headY = py + 22;
-        ctx.beginPath();
-        ctx.arc(headX, headY, headRadius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(headX - 10, headY - 12, 8, 0, Math.PI * 2);
-        ctx.arc(headX + 10, headY - 12, 8, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = "#f8d48a";
-        ctx.beginPath();
-        ctx.arc(headX, headY + 4, 10, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = "#3b2414";
-        ctx.beginPath();
-        ctx.arc(headX - 6, headY - 2, 2, 0, Math.PI * 2);
-        ctx.arc(headX + 6, headY - 2, 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(headX, headY + 2, 2.8, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = "#3b2414";
-        ctx.lineWidth = 1.4;
-        ctx.beginPath();
-        ctx.arc(headX, headY + 8, 7, 0.15 * Math.PI, 0.85 * Math.PI);
-        ctx.stroke();
-        const bodyWidth = 32;
-        const bodyHeight = 26;
-        const bodyX = headX - bodyWidth / 2;
-        const bodyY = headY + 12;
-        ctx.fillStyle = "#3498db";
-        ctx.beginPath();
-        ctx.roundRect(bodyX, bodyY, bodyWidth, bodyHeight, 8);
-        ctx.fill();
-        ctx.fillStyle = "#f3b547";
-        const legWidth = 10;
-        const legHeight = 14;
-        ctx.beginPath();
-        ctx.roundRect(bodyX + 4, bodyY + bodyHeight - 4, legWidth, legHeight, 5);
-        ctx.roundRect(bodyX + bodyWidth - legWidth - 4, bodyY + bodyHeight - 4, legWidth, legHeight, 5);
-        ctx.fill();
-        const barrelWidth = 40;
-        const barrelHeight = 32;
-        const barrelX = bodyX + bodyWidth / 2 - barrelWidth / 2;
-        const barrelY = bodyY + 6;
-        ctx.fillStyle = "#c47a3d";
-        ctx.beginPath();
-        ctx.roundRect(barrelX, barrelY, barrelWidth, barrelHeight, 10);
-        ctx.fill();
-        ctx.fillStyle = "#e1a35d";
-        ctx.fillRect(barrelX + 4, barrelY + 5, barrelWidth - 8, barrelHeight - 12);
-        ctx.strokeStyle = "rgba(92,56,28,0.9)";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(barrelX + 3, barrelY + 9);
-        ctx.lineTo(barrelX + barrelWidth - 3, barrelY + 9);
-        ctx.moveTo(barrelX + 3, barrelY + barrelHeight - 8);
-        ctx.lineTo(barrelX + barrelWidth - 3, barrelY + barrelHeight - 8);
-        ctx.stroke();
-        ctx.fillStyle = "#fbd56a";
-        ctx.beginPath();
-        ctx.arc(barrelX + barrelWidth / 2, barrelY + barrelHeight / 2 + 1, 7, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-
-      function drawHoneyDrop(drop) {
-        ctx.save();
-        ctx.fillStyle = "#f7c948";
-        ctx.beginPath();
-        ctx.ellipse(drop.x, drop.y, drop.radius, drop.radius * 1.25, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = "rgba(255,255,255,0.8)";
-        ctx.beginPath();
-        ctx.ellipse(drop.x - drop.radius * 0.3, drop.y - drop.radius * 0.2, drop.radius * 0.35, drop.radius * 0.35, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-
-      function drawBee(bee, time) {
-        ctx.save();
-        const wobble = Math.sin(time / 220 + bee.zigzagPhase) * 4;
-        const x = bee.x + wobble;
-        const y = bee.y;
-        ctx.translate(x, y);
-        ctx.fillStyle = "#ffdd75";
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 12, 9, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = "#3b2414";
-        ctx.fillRect(-8, -2, 4, 4);
-        ctx.fillRect(-2, -3, 4, 6);
-        ctx.fillRect(4, -2, 4, 4);
-        ctx.fillStyle = "#3b2414";
-        ctx.beginPath();
-        ctx.arc(11, 0, 4.5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = "#fff";
-        ctx.beginPath();
-        ctx.ellipse(-2, -9, 11, 7, -0.35, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.ellipse(4, -9, 11, 7, 0.35, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = "#3b2414";
-        ctx.beginPath();
-        ctx.arc(13, -1.2, 1.2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(11.2, -0.2, 1.2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-
-      function rectsOverlap(ax, ay, aw, ah, bx, by, bw, bh) {
-        return ax < bx + bw && ax + aw > bx && ay < by + bh && ah + ay > by;
-      }
-
-      function stepEntities(delta, currentTime) {
-        const wrapperRect = canvas.parentElement.getBoundingClientRect();
-        const h = wrapperRect.height;
-        const factor = getDifficultyFactor();
-        const honeySpawnInterval =
-          defaultConfig.baseHoneySpawn * (difficulty === DIFFICULTY.easy ? 1.2 : difficulty === DIFFICULTY.hard ? 0.75 : 1);
-        const beeSpawnInterval =
-          defaultConfig.baseBeeSpawn * (difficulty === DIFFICULTY.easy ? 1.4 : difficulty === DIFFICULTY.hard ? 0.7 : 1);
-        if (currentTime - lastHoneySpawn > honeySpawnInterval) {
-          spawnHoney();
-          lastHoneySpawn = currentTime;
-        }
-        if (currentTime - lastBeeSpawn > beeSpawnInterval) {
-          spawnBee();
-          lastBeeSpawn = currentTime;
-        }
-        const speedFactor = factor;
-        honeyDrops.forEach((drop) => {
-          drop.y += (drop.speed * delta * speedFactor) / 1000;
-        });
-        bees.forEach((bee) => {
-          bee.y += (bee.speed * delta * speedFactor) / 1000;
-        });
-        honeyDrops = honeyDrops.filter((drop) => drop.y - drop.radius < h + 30);
-        bees = bees.filter((bee) => bee.y - bee.size < h + 40);
-      }
-
-      function checkCollisions() {
-        const wrapperRect = canvas.parentElement.getBoundingClientRect();
-        const bearRect = {
-          x: bear.x + 5,
-          y: bear.y + 10,
-          width: bear.width - 10,
-          height: bear.height - 10,
-        };
-        honeyDrops = honeyDrops.filter((drop) => {
-          const dropRect = {
-            x: drop.x - drop.radius,
-            y: drop.y - drop.radius,
-            width: drop.radius * 2,
-            height: drop.radius * 2,
-          };
-          if (rectsOverlap(bearRect.x, bearRect.y, bearRect.width, bearRect.height, dropRect.x, dropRect.y, dropRect.width, dropRect.height)) {
-            honeyCaught++;
-            score += 1 + Math.floor(streak / defaultConfig.streakBonusStep);
-            streak++;
-            if (score >= 50) unlockAchievement("fiftyScore");
-            if (score >= 100) unlockAchievement("hundredScore");
-            if (honeyCaught === 1) unlockAchievement("firstHoney");
-            if (score >= 150 && !achievements.showerChamp) {
-              unlockAchievement("showerChamp");
-            }
-            updateScoreUI();
-            updateStreakUI();
-            if (streak > 0 && streak % defaultConfig.streakBonusStep === 0) {
-              showToast("Honey streak x" + streak + "!");
-              if (sounds.streak) sounds.streak();
-            } else {
-              if (sounds.catch) sounds.catch();
-            }
-            return false;
-          }
-          return true;
-        });
-        bees = bees.filter((bee) => {
-          const beeRect = {
-            x: bee.x - 12,
-            y: bee.y - 10,
-            width: 24,
-            height: 20,
-          };
-          if (rectsOverlap(bearRect.x, bearRect.y, bearRect.width, bearRect.height, beeRect.x, beeRect.y, beeRect.width, beeRect.height)) {
-            streak = 0;
-            updateStreakUI();
-            lives = Math.max(0, lives - 1);
-            updateLivesUI();
-            if (sounds.bee) sounds.bee();
-            return false;
-          }
-          if (bee.y > wrapperRect.height + 20) {
-            beesDodged++;
-          }
-          return true;
-        });
-      }
-
-      function updateBear(delta) {
-        const wrapperRect = canvas.parentElement.getBoundingClientRect();
-        let direction = 0;
-        if (leftPressed && !rightPressed) direction = -1;
-        if (rightPressed && !leftPressed) direction = 1;
-        bear.x += direction * bear.speed * (delta / 1000);
-        bear.x = Math.max(6, Math.min(wrapperRect.width - bear.width - 6, bear.x));
-      }
-
-      function gameLoop(timestamp) {
-        if (lastFrameTime === 0) lastFrameTime = timestamp;
-        const delta = timestamp - lastFrameTime;
-        lastFrameTime = timestamp;
-        if (gameState === GAME_STATE.RUNNING) {
-          timeRemaining -= delta / 1000;
-          if (timeRemaining <= 0 || lives <= 0) {
-            timeRemaining = 0;
-            endGame();
-          }
-          stepEntities(delta, timestamp);
-          checkCollisions();
-          updateTimeUI();
-          updateStatusBar("Keep that barrel under the honey...", GAME_STATE.RUNNING);
-        }
-        ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-        drawBackground();
-        honeyDrops.forEach((drop) => drawHoneyDrop(drop));
-        bees.forEach((bee) => drawBee(bee, timestamp));
-        updateBear(delta);
-        drawBear();
-        requestAnimationFrame(gameLoop);
-      }
-
-      function startGame(fromOverlay) {
-        if (gameState === GAME_STATE.RUNNING) return;
-        overlay.classList.add("hidden");
-        overlayStatsRow.setAttribute("aria-hidden", "true");
-        setGameState(GAME_STATE.RUNNING);
-        updateStatusBar("Honey is falling!", GAME_STATE.RUNNING);
-        if (fromOverlay) {
-          resetGameState(true);
-        }
-      }
-
-      function hardResetAndStart() {
-        resetGameState(true);
-        overlay.classList.add("hidden");
-        overlayStatsRow.setAttribute("aria-hidden", "true");
-        setGameState(GAME_STATE.RUNNING);
-        updateStatusBar("Honey is falling!", GAME_STATE.RUNNING);
-      }
-
-      function pauseGame(reason) {
-        if (gameState !== GAME_STATE.RUNNING) return;
-        setGameState(GAME_STATE.PAUSED);
-        updateStatusBar(reason || "Paused. Stretch your paws.", GAME_STATE.PAUSED);
-      }
-
-      function resumeGame() {
-        if (gameState !== GAME_STATE.PAUSED) return;
-        setGameState(GAME_STATE.RUNNING);
-        updateStatusBar("Back to honey catching!", GAME_STATE.RUNNING);
-      }
-
-      function endGame() {
-        if (gameState === GAME_STATE.OVER || gameState === GAME_STATE.IDLE) return;
-        setGameState(GAME_STATE.OVER);
-        if (sounds.end) sounds.end();
-        const tookNoSting = bees.length === 0 && lives === defaultConfig.maxLives;
-        if (tookNoSting) unlockAchievement("noSting");
-        if (score > bestScore) {
-          bestScore = score;
-          saveBestScore();
-        }
-        updateScoreUI();
-        overlayTitle.textContent = lives <= 0 ? "Bee bump! Round over." : "Time's up!";
-        overlaySubtitle.textContent =
-          score > 0
-            ? "Nice work. Want to try for a higher score or a no-sting round?"
-            : "No honey just yet – try a gentler drizzle or move sooner when you see the first drops.";
-        overlayScore.textContent = score;
-        overlayBest.textContent = bestScore;
-        overlayHoney.textContent = honeyCaught;
-        overlayBees.textContent = beesDodged;
-        overlayStatsRow.setAttribute("aria-hidden", "false");
-        overlay.classList.remove("hidden");
-        updateStatusBar("Round complete. Ready when you are.", GAME_STATE.OVER);
-      }
-
-      function setDifficulty(level) {
-        difficulty = level;
-        diffButtons.forEach((btn) => {
-          btn.classList.toggle("active", btn.getAttribute("data-difficulty") === level);
-        });
-        const label =
-          level === DIFFICULTY.easy
-            ? "Gentle drizzle selected."
-            : level === DIFFICULTY.hard
-            ? "Bee storm selected. Buzz-y!"
-            : "Honey shower selected.";
-        showToast(label);
-      }
-
-      function showModal(which) {
-        const backdrop = which === "help" ? helpModalBackdrop : 
-                        which === "achievements" ? achievementsModalBackdrop :
-                        which === "registry" ? registryModalBackdrop : null;
-        if (!backdrop) return;
-        backdrop.classList.add("visible");
-        backdrop.setAttribute("aria-hidden", "false");
-      }
-
-      function hideModal(which) {
-        const backdrop = which === "help" ? helpModalBackdrop :
-                        which === "achievements" ? achievementsModalBackdrop :
-                        which === "registry" ? registryModalBackdrop : null;
-        if (!backdrop) return;
-        backdrop.classList.remove("visible");
-        backdrop.setAttribute("aria-hidden", "true");
-      }
-
-      function isGameChapterActive() {
-        const page = document.querySelector('[data-chapter="2"]');
-        return page && page.classList.contains("active");
-      }
-
-      function bindEvents() {
-        window.addEventListener("resize", () => {
-          resizeCanvas();
-        });
-
-        primaryOverlayBtn.addEventListener("click", () => {
-          hardResetAndStart();
-        });
-
-        howToPlayOverlayBtn.addEventListener("click", () => {
-          showModal("help");
-        });
-
-        startBtn.addEventListener("click", () => {
-          if (gameState === GAME_STATE.RUNNING) {
-            resetGameState(true);
-            hardResetAndStart();
-          } else if (gameState === GAME_STATE.PAUSED) {
-            resumeGame();
-          } else {
-            hardResetAndStart();
-          }
-        });
-
-        pauseBtn.addEventListener("click", () => {
-          if (gameState === GAME_STATE.RUNNING) {
-            pauseGame();
-          } else if (gameState === GAME_STATE.PAUSED) {
-            resumeGame();
-          }
-        });
-
-        diffButtons.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const level = btn.getAttribute("data-difficulty");
-            setDifficulty(level);
-          });
-        });
-
-        helpBtn.addEventListener("click", () => showModal("help"));
-        achievementsBtn.addEventListener("click", () => showModal("achievements"));
-        registryBtn.addEventListener("click", () => showModal("registry"));
-
-        document.querySelectorAll(".modal-close").forEach((btn) => {
-          btn.addEventListener("click", (e) => {
-            const which = e.currentTarget.getAttribute("data-close-modal");
-            hideModal(which);
-          });
-        });
-
-        [helpModalBackdrop, achievementsModalBackdrop, registryModalBackdrop].forEach((backdrop) => {
-          if (!backdrop) return;
-          backdrop.addEventListener("click", (e) => {
-            if (e.target === backdrop) {
-              if (backdrop === helpModalBackdrop) hideModal("help");
-              if (backdrop === achievementsModalBackdrop) hideModal("achievements");
-              if (backdrop === registryModalBackdrop) hideModal("registry");
-            }
-          });
-        });
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") {
-            hideModal("help");
-            hideModal("achievements");
-            hideModal("registry");
-          }
-        });
-
-        document.addEventListener("keydown", (e) => {
-          if (!isGameChapterActive()) return;
-          if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
-            leftPressed = true;
-          }
-          if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
-            rightPressed = true;
-          }
-        });
-
-        document.addEventListener("keyup", (e) => {
-          if (!isGameChapterActive()) return;
-          if (e.key === "ArrowLeft" || e.key.toLowerCase() === "a") {
-            leftPressed = false;
-          }
-          if (e.key === "ArrowRight" || e.key.toLowerCase() === "d") {
-            rightPressed = false;
-          }
-        });
-
-        function onPointerDown(e) {
-          const rect = canvas.getBoundingClientRect();
-          const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-          const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-          const bearRect = {
-            x: bear.x,
-            y: bear.y,
-            width: bear.width,
-            height: bear.height,
-          };
-          if (
-            x >= bearRect.x &&
-            x <= bearRect.x + bearRect.width &&
-            y >= bearRect.y &&
-            y <= bearRect.y + bearRect.height
-          ) {
-            dragging = true;
-            dragOffsetX = x - bear.x;
-          } else {
-            dragging = true;
-            dragOffsetX = bear.width / 2;
-            bear.x = x - dragOffsetX;
-          }
-        }
-
-        function onPointerMove(e) {
-          if (!dragging) return;
-          const rect = canvas.getBoundingClientRect();
-          const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-          bear.x = x - dragOffsetX;
-          bear.x = Math.max(6, Math.min(rect.width - bear.width - 6, bear.x));
-        }
-
-        function onPointerUp() {
-          dragging = false;
-        }
-
-        canvas.addEventListener("mousedown", onPointerDown);
-        canvas.addEventListener("mousemove", onPointerMove);
-        document.addEventListener("mouseup", onPointerUp);
-        canvas.addEventListener("touchstart", (e) => {
-          e.preventDefault();
-          onPointerDown(e);
-        }, { passive: false });
-        canvas.addEventListener("touchmove", (e) => {
-          e.preventDefault();
-          onPointerMove(e);
-        }, { passive: false });
-        canvas.addEventListener("touchend", (e) => {
-          e.preventDefault();
-          onPointerUp();
-        }, { passive: false });
-
-        function bindHoldButton(btn, direction) {
-          let active = false;
-          const start = () => {
-            active = true;
-            if (direction < 0) {
-              leftPressed = true;
-              rightPressed = false;
-            } else {
-              rightPressed = true;
-              leftPressed = false;
-            }
-          };
-          const stop = () => {
-            active = false;
-            if (direction < 0) {
-              leftPressed = false;
-            } else {
-              rightPressed = false;
-            }
-          };
-          btn.addEventListener("mousedown", (e) => {
-            e.preventDefault();
-            start();
-          });
-          btn.addEventListener("mouseup", (e) => {
-            e.preventDefault();
-            stop();
-          });
-          btn.addEventListener("mouseleave", (e) => {
-            if (active) stop();
-          });
-          btn.addEventListener("touchstart", (e) => {
-            e.preventDefault();
-            start();
-          }, { passive: false });
-          btn.addEventListener("touchend", (e) => {
-            e.preventDefault();
-            stop();
-          }, { passive: false });
-          btn.addEventListener("touchcancel", (e) => {
-            e.preventDefault();
-            stop();
-          }, { passive: false });
-        }
-        bindHoldButton(moveLeftBtn, -1);
-        bindHoldButton(moveRightBtn, 1);
-      }
-
-      function init() {
-        restoreBestScore();
-        resizeCanvas();
-        resetGameState(true);
-        bindEvents();
-        updateStatusBar("Use Start to begin. Difficulty can be changed any time.", GAME_STATE.IDLE);
-        requestAnimationFrame(gameLoop);
-      }
-
-      window.addEventListener("load", init);
-
-      window.honeyGame = {
-        isRunning: () => gameState === GAME_STATE.RUNNING,
-        isPaused: () => gameState === GAME_STATE.PAUSED,
-        pause: (message) => pauseGame(message),
-        resume: () => resumeGame(),
-        stopInputs: () => {
-          leftPressed = false;
-          rightPressed = false;
-          dragging = false;
-        },
-      };
-    })();
-
-    (() => {
-      const chapters = Array.from(document.querySelectorAll(".chapter-page"));
-      const chapterTitles = [
-        "Chapter 1 · Invitation",
-        "Chapter 2 · Honey Game",
-        "Chapter 3 · Nursery & Registry",
-        "Chapter 4 · Guestbook",
-      ];
-      const prevBtn = document.getElementById("prevChapter");
-      const nextBtn = document.getElementById("nextChapter");
-      const chapterLabel = document.getElementById("chapterLabel");
-      const dotsContainer = document.getElementById("chapterDots");
-      const swipeHint = document.getElementById("swipeHint");
-      const pageWindow = document.getElementById("pageWindow");
-      const skipLink = document.querySelector(".skip-link");
-
-      let currentChapter = 0;
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let touching = false;
-
-      function buildDots() {
-        if (!dotsContainer) return;
-        dotsContainer.innerHTML = "";
-        chapters.forEach((_, idx) => {
-          const dot = document.createElement("span");
-          dot.className = "chapter-dot";
-          dot.setAttribute("role", "button");
-          dot.setAttribute("aria-label", chapterTitles[idx] || `Chapter ${idx + 1}`);
-          dot.tabIndex = 0;
-          dot.addEventListener("click", () => updateChapter(idx));
-          dot.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              updateChapter(idx);
-            }
-          });
-          dotsContainer.appendChild(dot);
-        });
-      }
-
-      function setActiveChapterClasses() {
-        chapters.forEach((chapter, idx) => {
-          chapter.classList.toggle("active", idx === currentChapter);
-        });
-        if (dotsContainer) {
-          dotsContainer.querySelectorAll(".chapter-dot").forEach((dot, idx) => {
-            dot.classList.toggle("active", idx === currentChapter);
-          });
-        }
-      }
-
-      function shouldBlockNavigationKey() {
-        const modalOpen = document.querySelector(".modal-backdrop.visible");
-        const activeTag = (document.activeElement && document.activeElement.tagName) || "";
-        const typing = ["INPUT", "TEXTAREA"].includes(activeTag);
-        const gameRunning = window.honeyGame && window.honeyGame.isRunning() && currentChapter === 1;
-        return Boolean(modalOpen || typing || gameRunning);
-      }
-
-      function updateChapter(next) {
-        const previous = currentChapter;
-        currentChapter = Math.max(0, Math.min(chapters.length - 1, next));
-        setActiveChapterClasses();
-        if (chapterLabel) {
-          chapterLabel.textContent = chapterTitles[currentChapter] || `Chapter ${currentChapter + 1}`;
-        }
-        if (prevBtn) prevBtn.disabled = currentChapter === 0;
-        if (nextBtn) nextBtn.disabled = currentChapter === chapters.length - 1;
-        if (window.honeyGame && previous === 1 && currentChapter !== 1 && window.honeyGame.isRunning()) {
-          window.honeyGame.pause("Paused while you turn the page. Tap start to keep playing.");
-        }
-        if (window.honeyGame && currentChapter !== 1) {
-          window.honeyGame.stopInputs();
-        }
-      }
-
-      function nextChapter() {
-        updateChapter(currentChapter + 1);
-      }
-
-      function prevChapter() {
-        updateChapter(currentChapter - 1);
-      }
-
-      function bindNavigation() {
-        if (prevBtn) prevBtn.addEventListener("click", prevChapter);
-        if (nextBtn) nextBtn.addEventListener("click", nextChapter);
-        if (skipLink) {
-          skipLink.addEventListener("click", (e) => {
-            e.preventDefault();
-            updateChapter(1);
-            document.getElementById("gameRegion")?.scrollIntoView({ behavior: "smooth" });
-          });
-        }
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-            if (shouldBlockNavigationKey()) return;
-            e.preventDefault();
-            if (e.key === "ArrowLeft") prevChapter();
-            if (e.key === "ArrowRight") nextChapter();
-          }
-        });
-
-        if (pageWindow) {
-          pageWindow.addEventListener("touchstart", (e) => {
-            if (e.touches.length !== 1) return;
-            if (e.target.closest(".game-panel")) return;
-            if (e.target.closest("input, textarea, button")) return;
-            touching = true;
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-          });
-
-          pageWindow.addEventListener("touchend", (e) => {
-            if (!touching) return;
-            touching = false;
-            const touch = e.changedTouches[0];
-            const dx = touch.clientX - touchStartX;
-            const dy = touch.clientY - touchStartY;
-            if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
-              if (dx > 0) {
-                prevChapter();
-              } else {
-                nextChapter();
-              }
-            }
-          });
-        }
-      }
-
-      function initGuestbook() {
-        const form = document.getElementById("guestbookForm");
-        const list = document.getElementById("guestbookList");
-        const nameInput = document.getElementById("guestName");
-        const wishInput = document.getElementById("guestWish");
-        const STORAGE_KEY = "babyGunnerGuestbook";
-
-        if (!form || !list || !nameInput || !wishInput) return;
-
-        function loadWishes() {
-          try {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            return saved ? JSON.parse(saved) : [];
-          } catch (err) {
-            console.warn("Unable to load wishes", err);
-            return [];
-          }
-        }
-
-        function saveWishes(wishes) {
-          try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(wishes));
-          } catch (err) {
-            console.warn("Unable to save wishes", err);
-          }
-        }
-
-        function render() {
-          const wishes = loadWishes();
-          list.innerHTML = "";
-          if (!wishes.length) {
-            const empty = document.createElement("p");
-            empty.textContent = "Be the first to leave a wish for Baby Gunner.";
-            empty.style.color = "#5a3b21";
-            empty.style.margin = "0";
-            list.appendChild(empty);
-            return;
-          }
-          wishes
-            .sort((a, b) => b.timestamp - a.timestamp)
-            .forEach((wish) => {
-              const card = document.createElement("div");
-              card.className = "wish-card";
-              const from = document.createElement("div");
-              from.className = "from";
-              from.textContent = `💌 ${wish.name}`;
-
-              const message = document.createElement("div");
-              message.className = "message";
-              message.textContent = wish.message;
-
-              const time = document.createElement("div");
-              time.className = "time";
-              time.textContent = new Date(wish.timestamp).toLocaleString();
-
-              card.appendChild(from);
-              card.appendChild(message);
-              card.appendChild(time);
-              list.appendChild(card);
-            });
-        }
-
-        form.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const name = nameInput.value.trim() || "A friend";
-          const message = wishInput.value.trim();
-          if (!message) return;
-          const wishes = loadWishes();
-          wishes.push({ name, message, timestamp: Date.now() });
-          saveWishes(wishes);
-          wishInput.value = "";
-          nameInput.value = nameInput.value.trim();
-          render();
-        });
-
-        render();
-      }
-
-      function init() {
-        buildDots();
-        updateChapter(0);
-        bindNavigation();
-        initGuestbook();
-        if (swipeHint) {
-          swipeHint.style.display = "block";
-        }
-      }
-
-      document.addEventListener("DOMContentLoaded", init);
-    })();
-  </script>
 </body>
 </html>
