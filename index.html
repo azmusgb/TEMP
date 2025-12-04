@@ -268,15 +268,184 @@
       perspective: 2500px;
       position: relative;
       z-index: 1;
+      margin-top: 10px;
+    }
+
+    .book-container::before {
+      content: '';
+      position: absolute;
+      inset: -10px -14px -30px -14px;
+      background: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.18), transparent 35%),
+                  radial-gradient(circle at 80% 20%, rgba(0,0,0,0.14), transparent 32%);
+      filter: blur(28px);
+      opacity: 0.55;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .book {
-      background: #3a2a1a;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      background: linear-gradient(135deg, #3c2c1d 0%, #2c1f13 46%, #24160d 100%);
+      padding: 46px 52px;
+      border-radius: 14px;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.05);
       position: relative;
       transform-style: preserve-3d;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .book::after {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.06);
+      pointer-events: none;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.35);
+    }
+
+    .chapter-tracker {
+      background: linear-gradient(120deg, rgba(249, 244, 232, 0.9), rgba(232, 220, 197, 0.95));
+      border: 2px solid rgba(244, 169, 68, 0.35);
+      padding: 16px 18px 12px;
+      border-radius: 16px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chapter-tracker::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 18% 30%, rgba(255,255,255,0.45), transparent 38%),
+                  radial-gradient(circle at 80% 20%, rgba(244, 169, 68, 0.25), transparent 40%);
+      pointer-events: none;
+    }
+
+    .tracker-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .tracker-label {
+      font-size: 1.05rem;
+      color: var(--pooh-red);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tracker-label::before {
+      content: '📖';
+      font-size: 1.2rem;
+    }
+
+    .book-progress {
+      position: relative;
+      flex: 1;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(212, 138, 31, 0.16);
+      overflow: hidden;
+      border: 1px solid rgba(212, 138, 31, 0.2);
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0;
+      width: 0%;
+      background: linear-gradient(90deg, var(--honey), var(--honey-dark));
+      border-radius: 999px;
+      box-shadow: 0 0 12px rgba(244, 169, 68, 0.55);
+      transition: width 0.4s ease;
+    }
+
+    .chapter-pill-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    .chapter-pill {
+      border: 2px dashed rgba(212, 138, 31, 0.6);
+      background: rgba(255,255,255,0.92);
+      padding: 10px 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chapter-pill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(244, 169, 68, 0.12), transparent 50%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .chapter-pill:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.12);
+      border-color: var(--honey);
+    }
+
+    .chapter-pill:hover::after { opacity: 1; }
+
+    .chapter-pill.active {
+      border-style: solid;
+      border-color: var(--honey);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.16), inset 0 0 0 2px rgba(255,255,255,0.7);
+    }
+
+    .chapter-pill.visited {
+      border-color: rgba(90, 124, 62, 0.7);
+      opacity: 0.9;
+    }
+
+    .pill-number {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.45), rgba(244, 169, 68, 0.95));
+      display: grid;
+      place-items: center;
+      color: #3c1f0a;
+      font-weight: 800;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.4);
+      flex-shrink: 0;
+    }
+
+    .pill-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .pill-title {
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 1rem;
+    }
+
+    .pill-detail {
+      font-size: 0.9rem;
+      color: #5b4633;
+      opacity: 0.8;
     }
 
     /* Book spine decoration */
@@ -294,19 +463,25 @@
 
     .pages-wrapper {
       display: flex;
-      gap: 40px;
+      gap: 32px;
       min-height: 600px;
       position: relative;
+      padding: 12px 10px;
+      background: linear-gradient(120deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border-radius: 10px;
     }
 
     .page {
       flex: 1;
-      background: var(--parchment);
-      padding: 40px;
-      border-radius: 8px;
+      background: radial-gradient(circle at 20% 20%, rgba(244, 169, 68, 0.04), transparent 35%),
+                  radial-gradient(circle at 80% 10%, rgba(106, 159, 96, 0.05), transparent 32%),
+                  var(--parchment);
+      padding: 42px;
+      border-radius: 12px;
+      border: 1px solid var(--parchment-dark);
       box-shadow:
-        inset 0 0 30px rgba(139, 111, 71, 0.1),
-        0 10px 30px var(--shadow);
+        inset 0 0 30px rgba(139, 111, 71, 0.12),
+        0 18px 32px rgba(0, 0, 0, 0.24);
       position: relative;
       max-height: none;
       overflow-y: visible;
@@ -376,6 +551,18 @@
       position: absolute;
       inset: 0;
       background: radial-gradient(circle at 30% 40%, rgba(244, 169, 68, 0.03), transparent 60%);
+      pointer-events: none;
+    }
+
+    .page::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 24px;
+      width: 12px;
+      background: linear-gradient(90deg, rgba(0,0,0,0.08), rgba(0,0,0,0));
+      opacity: 0.2;
       pointer-events: none;
     }
 
@@ -1084,6 +1271,19 @@
         padding: 24px;
       }
 
+      .chapter-tracker {
+        padding: 14px 14px 10px;
+      }
+
+      .tracker-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .chapter-pill-row {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
       .page {
         padding: 22px;
       }
@@ -1127,6 +1327,15 @@
 
       .book {
         padding: 18px 14px;
+      }
+
+      .chapter-tracker {
+        padding: 12px;
+      }
+
+      .chapter-pill-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
       }
 
       .page {
@@ -1632,6 +1841,19 @@
         cursor: auto;
       }
 
+      .chapter-tracker {
+        padding: 14px 14px 10px;
+      }
+
+      .tracker-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .chapter-pill-row {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
       .book {
         padding: 24px;
       }
@@ -1688,6 +1910,15 @@
   body {
     align-items: flex-start;
     padding: 14px;
+  }
+
+  .chapter-tracker {
+    padding: 12px;
+  }
+
+  .chapter-pill-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .masthead-inner {
@@ -1947,6 +2178,45 @@
   </div>
 
   <div class="book-container">
+    <div class="chapter-tracker" aria-label="Chapter navigation">
+      <div class="tracker-row">
+        <div class="tracker-label">Story path</div>
+        <div class="book-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+      <div class="chapter-pill-row">
+        <button class="chapter-pill sparkle active" data-chapter-target="1" aria-current="page" type="button">
+          <div class="pill-number">1</div>
+          <div class="pill-text">
+            <div class="pill-title">Welcome</div>
+            <div class="pill-detail">Invitation arrives</div>
+          </div>
+        </button>
+        <button class="chapter-pill sparkle" data-chapter-target="2" type="button">
+          <div class="pill-number">2</div>
+          <div class="pill-text">
+            <div class="pill-title">Honey Hunt</div>
+            <div class="pill-detail">Play the honey game</div>
+          </div>
+        </button>
+        <button class="chapter-pill sparkle" data-chapter-target="3" type="button">
+          <div class="pill-number">3</div>
+          <div class="pill-text">
+            <div class="pill-title">Gifts</div>
+            <div class="pill-detail">Pick thoughtful presents</div>
+          </div>
+        </button>
+        <button class="chapter-pill sparkle" data-chapter-target="4" type="button">
+          <div class="pill-number">4</div>
+          <div class="pill-text">
+            <div class="pill-title">Wishes</div>
+            <div class="pill-detail">Share love for Gunner</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
     <div class="book">
       <div class="pages-wrapper">
         <!-- Chapter 1: Welcome -->
@@ -2289,6 +2559,11 @@
     // ===== STORYBOOK NAVIGATION =====
     let currentChapter = 1;
     const totalChapters = 4;
+    const pageIndicator = document.getElementById('pageIndicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressFill = document.getElementById('progressFill');
+    const chapterPills = Array.from(document.querySelectorAll('.chapter-pill'));
 
     function showChapter(ch) {
       const currentPage = document.querySelector('[data-chapter="' + currentChapter + '"]');
@@ -2317,11 +2592,38 @@
     }
 
     function updateNavigation() {
-      document.getElementById('prevBtn').disabled = currentChapter === 1;
-      document.getElementById('nextBtn').disabled = currentChapter === totalChapters;
-      document.getElementById('pageIndicator').textContent =
-        'Chapter ' + currentChapter + ' of ' + totalChapters;
+      if (prevBtn && nextBtn) {
+        prevBtn.disabled = currentChapter === 1;
+        nextBtn.disabled = currentChapter === totalChapters;
+      }
+
+      if (pageIndicator) {
+        pageIndicator.textContent = 'Chapter ' + currentChapter + ' of ' + totalChapters;
+      }
+
+      const progress = totalChapters > 1
+        ? ((currentChapter - 1) / (totalChapters - 1)) * 100
+        : 100;
+      if (progressFill) {
+        progressFill.style.width = progress + '%';
+        progressFill.setAttribute('aria-valuenow', progress.toFixed(0));
+      }
+
+      chapterPills.forEach((pill) => {
+        const target = Number(pill.dataset.chapterTarget);
+        const isActive = target === currentChapter;
+        pill.classList.toggle('active', isActive);
+        pill.classList.toggle('visited', target < currentChapter);
+        pill.setAttribute('aria-current', isActive ? 'page' : 'false');
+      });
     }
+
+    chapterPills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const targetChapter = Number(pill.dataset.chapterTarget);
+        showChapter(targetChapter);
+      });
+    });
 
     // ===== GAME LOGIC =====
     let canvas, ctx;
