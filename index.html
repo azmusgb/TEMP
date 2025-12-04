@@ -3,12 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Baby Gunner's Hundred Acre Wood Adventure</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Storybook fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Schoolbell&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="A storybook-style Hundred Acre Wood adventure with a honey-catching game to celebrate Baby Gunner." />
 
   <style>
     * {
@@ -18,7 +14,7 @@
     }
 
     :root {
-      --parchment: #fbf4e4;
+      --parchment: #f9f4e8;
       --parchment-dark: #e8dcc5;
       --ink: #2b1810;
       --honey: #f4a944;
@@ -26,14 +22,12 @@
       --pooh-red: #d32f2f;
       --forest-green: #5a7c3e;
       --baby-blue: #6ba3d4;
-      --shadow: rgba(43, 24, 16, 0.18);
+      --shadow: rgba(43, 24, 16, 0.15);
     }
 
     body {
-      font-family: 'Playfair Display', 'Georgia', 'Garamond', serif;
-      background:
-        radial-gradient(circle at top, #f7e3b8 0, transparent 55%),
-        radial-gradient(circle at bottom, #3a291c 0, #1e1410 55%);
+      font-family: 'Georgia', 'Garamond', serif;
+      background: linear-gradient(135deg, #8b6f47 0%, #5a4a3a 100%);
       color: var(--ink);
       min-height: 100vh;
       display: flex;
@@ -44,38 +38,7 @@
       cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text y="20" font-size="20">🍯</text></svg>'), auto;
     }
 
-    /* Stage around the book */
-    .stage {
-      max-width: 1320px;
-      width: 100%;
-      position: relative;
-      z-index: 1;
-    }
-
-    .stage::before {
-      /* soft spotlight behind the book */
-      content: '';
-      position: absolute;
-      inset: -60px;
-      margin: auto;
-      max-width: 1100px;
-      max-height: 700px;
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.18), transparent 70%);
-      z-index: -1;
-    }
-
-    .table-shadow {
-      position: absolute;
-      bottom: -40px;
-      left: 10%;
-      right: 10%;
-      height: 80px;
-      background: radial-gradient(ellipse at center, rgba(0,0,0,0.35), transparent 70%);
-      filter: blur(4px);
-      z-index: 0;
-    }
-
-    /* Floating elements background */
+    /* Ambient scene background */
     .ambient-scene {
       position: fixed;
       inset: 0;
@@ -88,12 +51,12 @@
       position: absolute;
       font-size: 24px;
       animation: flutter 8s ease-in-out infinite;
-      opacity: 0.6;
+      opacity: 0.7;
     }
 
-    .butterfly:nth-child(1) { top: 16%; left: 8%; animation-delay: 0s; }
-    .butterfly:nth-child(2) { top: 60%; right: 10%; animation-delay: 2s; }
-    .butterfly:nth-child(3) { top: 38%; left: 72%; animation-delay: 4s; }
+    .butterfly:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .butterfly:nth-child(2) { top: 60%; right: 15%; animation-delay: 2s; }
+    .butterfly:nth-child(3) { top: 40%; left: 70%; animation-delay: 4s; }
 
     @keyframes flutter {
       0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -106,7 +69,7 @@
       position: absolute;
       font-size: 20px;
       animation: fall 15s linear infinite;
-      opacity: 0.5;
+      opacity: 0.6;
     }
 
     .floating-leaf:nth-child(4) { left: 20%; animation-delay: 0s; }
@@ -123,17 +86,16 @@
     .bee-ambient {
       position: absolute;
       font-size: 18px;
-      animation: buzz 14s linear infinite;
-      opacity: 0.85;
+      animation: buzz 12s linear infinite;
     }
 
-    .bee-ambient:nth-child(7) { top: 28%; animation-delay: 1s; }
-    .bee-ambient:nth-child(8) { top: 72%; animation-delay: 6s; }
+    .bee-ambient:nth-child(7) { top: 30%; animation-delay: 1s; }
+    .bee-ambient:nth-child(8) { top: 70%; animation-delay: 6s; }
 
     @keyframes buzz {
-      0% { left: -60px; transform: translateY(0); }
-      50% { transform: translateY(-26px); }
-      100% { left: calc(100% + 60px); transform: translateY(0); }
+      0% { left: -50px; transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+      100% { left: calc(100% + 50px); transform: translateY(0); }
     }
 
     /* Parallax clouds */
@@ -147,35 +109,34 @@
 
     .cloud {
       position: absolute;
-      font-size: 44px;
-      opacity: 0.25;
+      font-size: 48px;
+      opacity: 0.3;
       animation: drift 60s linear infinite;
     }
 
-    .cloud:nth-child(1) { top: 8%; animation-duration: 80s; }
+    .cloud:nth-child(1) { top: 10%; animation-duration: 80s; }
     .cloud:nth-child(2) { top: 30%; animation-duration: 100s; animation-delay: -20s; }
     .cloud:nth-child(3) { top: 50%; animation-duration: 90s; animation-delay: -40s; }
 
     @keyframes drift {
-      from { transform: translateX(-120px); }
+      from { transform: translateX(-100px); }
       to { transform: translateX(100vw); }
     }
 
-    /* Book */
+    /* Book container */
     .book-container {
+      max-width: 1200px;
       width: 100%;
       perspective: 2500px;
       position: relative;
-      z-index: 2;
+      z-index: 1;
     }
 
     .book {
-      background: linear-gradient(135deg, #3b2a1a, #2b1d12);
-      padding: 36px 32px 28px;
-      border-radius: 18px;
-      box-shadow:
-        0 26px 60px rgba(0,0,0,0.75),
-        0 0 0 2px rgba(255,255,255,0.05);
+      background: #3a2a1a;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
       position: relative;
       transform-style: preserve-3d;
     }
@@ -184,90 +145,34 @@
     .book::before {
       content: '';
       position: absolute;
-      left: -14px;
-      top: 9%;
-      bottom: 12%;
-      width: 12px;
-      background: linear-gradient(180deg, #24160b, #4b3a26);
-      border-radius: 6px 0 0 6px;
-      box-shadow:
-        inset -2px 0 5px rgba(0,0,0,0.6),
-        4px 0 10px rgba(0,0,0,0.5);
-    }
-
-    /* Honey drips along top edge of book */
-    .book::after {
-      content: '';
-      position: absolute;
-      top: -8px;
-      left: 16%;
-      right: 18%;
-      height: 18px;
-      background: radial-gradient(circle at 20% 0, #ffd87c 0, #f4a944 40%, transparent 72%);
-      opacity: 0.9;
-      clip-path: polygon(0 40%, 10% 0, 20% 36%, 32% 10%, 42% 40%, 52% 6%, 64% 34%, 74% 8%, 86% 42%, 100% 12%, 100% 100%, 0 100%);
-      pointer-events: none;
-    }
-
-    .book-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-      padding: 10px 18px;
-      border-radius: 12px;
-      background: linear-gradient(90deg, rgba(250, 237, 205, 0.28), rgba(238, 212, 170, 0.1));
-      color: #fdf7ec;
-      font-family: 'Schoolbell', system-ui, sans-serif;
-      letter-spacing: 0.6px;
-      border: 1px solid rgba(255,255,255,0.18);
-    }
-
-    .book-header-title {
-      font-size: 1.35rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .book-header-title span:first-child {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
-
-    .book-header-title span:last-child {
-      font-size: 1.2rem;
-    }
-
-    .book-header-badge {
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(244,169,68,0.18);
-      border: 1px dashed rgba(244,169,68,0.5);
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      left: -10px;
+      top: 10%;
+      bottom: 10%;
+      width: 10px;
+      background: linear-gradient(180deg, #2a1a0a, #4a3a2a);
+      border-radius: 3px 0 0 3px;
+      box-shadow: inset -2px 0 4px rgba(0,0,0,0.5);
     }
 
     .pages-wrapper {
       display: flex;
-      min-height: 560px;
+      gap: 40px;
+      min-height: 600px;
       position: relative;
     }
 
     .page {
       flex: 1;
       background: var(--parchment);
-      padding: 34px 32px 30px;
-      border-radius: 10px;
+      padding: 40px;
+      border-radius: 8px;
       box-shadow:
-        inset 0 0 30px rgba(139, 111, 71, 0.12),
-        0 10px 26px var(--shadow);
+        inset 0 0 30px rgba(139, 111, 71, 0.1),
+        0 10px 30px var(--shadow);
       position: relative;
-      overflow-y: auto;
-      max-height: 72vh;
+      /* let the whole layout scroll instead of forcing scroll inside page */
+      max-height: none;
+      overflow-y: visible;
       display: none;
       transform-style: preserve-3d;
       background-image:
@@ -275,8 +180,8 @@
           0deg,
           transparent,
           transparent 31px,
-          rgba(139, 111, 71, 0.05) 31px,
-          rgba(139, 111, 71, 0.05) 32px
+          rgba(139, 111, 71, 0.03) 31px,
+          rgba(139, 111, 71, 0.03) 32px
         );
     }
 
@@ -315,33 +220,29 @@
       }
     }
 
-    /* Decorative page vignette */
     .page::before {
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(circle at top, rgba(244, 169, 68, 0.08), transparent 60%),
-        radial-gradient(circle at bottom, rgba(90,124,62,0.08), transparent 55%);
+      background: radial-gradient(circle at 30% 40%, rgba(244, 169, 68, 0.03), transparent 60%);
       pointer-events: none;
     }
 
-    /* Chapter decorative headers */
+    /* Chapter headers */
     .chapter-header {
       text-align: center;
-      margin-bottom: 26px;
-      padding-bottom: 18px;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
       border-bottom: 2px solid var(--honey);
       position: relative;
-      z-index: 1;
     }
 
     .chapter-header::before,
     .chapter-header::after {
       content: '🌿';
       position: absolute;
-      bottom: -14px;
-      font-size: 22px;
+      bottom: -15px;
+      font-size: 24px;
       animation: sway 3s ease-in-out infinite;
     }
 
@@ -360,7 +261,7 @@
     }
 
     .chapter-number {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       letter-spacing: 3px;
       color: var(--honey-dark);
       text-transform: uppercase;
@@ -369,30 +270,29 @@
     }
 
     .chapter-title {
-      font-size: 1.9rem;
+      font-size: 2rem;
       color: var(--pooh-red);
-      font-weight: 600;
-      margin-bottom: 8px;
+      font-weight: normal;
+      margin-bottom: 10px;
       font-style: italic;
       animation: fadeInUp 1s ease;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.18);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
 
     .chapter-subtitle {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--ink);
-      opacity: 0.75;
+      opacity: 0.7;
       animation: fadeIn 1.2s ease;
-      font-family: 'Schoolbell', system-ui, sans-serif;
     }
 
     @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-14px); }
+      from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(16px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -402,39 +302,38 @@
     }
 
     .story-text {
-      font-size: 1.05rem;
-      line-height: 1.9;
-      margin-bottom: 18px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
       text-indent: 2em;
       text-align: justify;
       animation: fadeIn 1.5s ease;
     }
 
     .story-text:first-of-type::first-letter {
-      font-size: 3.4rem;
+      font-size: 3.5rem;
       float: left;
       line-height: 0.9;
-      margin: 4px 10px 0 0;
+      margin: 5px 8px 0 0;
       color: var(--pooh-red);
-      font-weight: 700;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.22);
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     }
 
     .illustration-box {
       border: 3px solid var(--honey);
-      padding: 18px 22px;
-      margin: 26px 0;
-      background: #fffdf7;
+      padding: 20px;
+      margin: 30px 0;
+      background: white;
       text-align: center;
-      border-radius: 10px;
+      border-radius: 4px;
       position: relative;
       overflow: hidden;
       animation: slideIn 1s ease;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
     }
 
     @keyframes slideIn {
-      from { transform: scale(0.96); opacity: 0; }
+      from { transform: scale(0.9); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
 
@@ -445,8 +344,8 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
-      animation: shine 3.5s ease-in-out infinite;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+      animation: shine 3s ease-in-out infinite;
     }
 
     @keyframes shine {
@@ -455,9 +354,9 @@
     }
 
     .bear-illustration {
-      font-size: 78px;
-      margin: 14px 0;
-      animation: bounce 2.2s ease-in-out infinite;
+      font-size: 80px;
+      margin: 20px 0;
+      animation: bounce 2s ease-in-out infinite;
     }
 
     @keyframes bounce {
@@ -466,34 +365,32 @@
     }
 
     .party-details {
-      background: #fffdf7;
-      padding: 22px 22px 20px;
-      border-radius: 10px;
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
       border: 2px solid var(--baby-blue);
-      margin: 16px 0 10px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+      margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       animation: fadeIn 1.8s ease;
     }
 
     .party-details h3 {
       color: var(--baby-blue);
-      margin-bottom: 14px;
+      margin-bottom: 15px;
       text-align: center;
-      font-weight: 600;
     }
 
     .detail-item {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 8px 0;
+      gap: 15px;
+      padding: 10px 0;
       border-bottom: 1px solid var(--parchment-dark);
-      transition: transform 0.25s ease, background-color 0.25s ease;
+      transition: transform 0.3s ease;
     }
 
     .detail-item:hover {
-      transform: translateX(4px);
-      background-color: rgba(239, 229, 208, 0.4);
+      transform: translateX(5px);
     }
 
     .detail-item:last-child {
@@ -501,82 +398,77 @@
     }
 
     .detail-icon {
-      font-size: 1.45rem;
+      font-size: 1.5rem;
       width: 40px;
       text-align: center;
-      animation: pulse 2.2s ease-in-out infinite;
+      animation: pulse 2s ease-in-out infinite;
     }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+      50% { transform: scale(1.1); }
     }
 
     /* Game Canvas Styling */
     .game-container {
-      background: #fffdf7;
-      padding: 18px 20px 22px;
-      border-radius: 10px;
-      margin: 18px 0;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
       border: 3px solid var(--honey);
       animation: fadeIn 2s ease;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.1);
+      position: relative;
     }
 
     #gameCanvas {
       display: block;
       width: 100%;
-      max-width: 520px;
+      max-width: 500px;
       height: 400px;
       margin: 0 auto;
       border: 2px solid var(--parchment-dark);
-      border-radius: 6px;
-      background: linear-gradient(#8cd3ff, #87CEEB 40%, #d1f3ff 75%);
-      transition: box-shadow 0.3s ease, transform 0.2s ease;
+      border-radius: 4px;
+      background: #87CEEB;
+      transition: box-shadow 0.3s ease;
     }
 
     #gameCanvas:hover {
-      box-shadow: 0 0 20px rgba(244, 169, 68, 0.55);
-      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(244, 169, 68, 0.5);
     }
 
     .game-stats {
       display: flex;
       justify-content: space-around;
-      margin: 14px 0 10px;
+      margin: 15px 0;
       flex-wrap: wrap;
       gap: 10px;
     }
 
     .stat {
       text-align: center;
-      padding: 8px 10px;
+      padding: 10px;
       background: var(--parchment);
-      border-radius: 999px;
-      min-width: 90px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
-      border: 1px solid rgba(0,0,0,0.03);
+      border-radius: 6px;
+      min-width: 80px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .stat:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
-      background-color: #fffaf0;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     .stat-label {
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       color: var(--honey-dark);
       text-transform: uppercase;
       letter-spacing: 1px;
-      font-family: 'Schoolbell', system-ui, sans-serif;
     }
 
     .stat-value {
-      font-size: 1.25rem;
-      font-weight: 600;
+      font-size: 1.5rem;
+      font-weight: bold;
       color: var(--ink);
-      margin-top: 2px;
     }
 
     .game-controls {
@@ -584,27 +476,22 @@
       gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-top: 12px;
+      margin-top: 15px;
     }
 
     .btn {
-      padding: 11px 22px;
+      padding: 12px 24px;
       border: 2px solid var(--ink);
       background: var(--honey);
       color: var(--ink);
       font-family: inherit;
-      font-size: 0.98rem;
+      font-size: 1rem;
       cursor: pointer;
-      border-radius: 999px;
+      border-radius: 6px;
       transition: all 0.3s;
-      font-weight: 600;
+      font-weight: bold;
       position: relative;
       overflow: hidden;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      min-width: 120px;
     }
 
     .btn::before {
@@ -621,19 +508,18 @@
     }
 
     .btn:hover::before {
-      width: 260px;
-      height: 260px;
+      width: 300px;
+      height: 300px;
     }
 
     .btn:hover {
       background: var(--honey-dark);
-      transform: translateY(-1px);
-      box-shadow: 0 10px 18px var(--shadow);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--shadow);
     }
 
     .btn:active {
       transform: translateY(0);
-      box-shadow: none;
     }
 
     .btn-secondary {
@@ -641,61 +527,62 @@
     }
 
     .btn-secondary:hover {
-      background: #d9ccb0;
+      background: #d4c8ad;
     }
 
     .difficulty-selector {
       display: flex;
-      gap: 6px;
+      gap: 5px;
       justify-content: center;
-      margin: 12px 0 6px;
+      margin: 15px 0;
       flex-wrap: wrap;
     }
 
     .difficulty-btn {
-      padding: 7px 14px;
-      border: 1px solid var(--ink);
+      padding: 8px 16px;
+      border: 2px solid var(--ink);
       background: white;
       cursor: pointer;
-      font-family: 'Schoolbell', system-ui, sans-serif;
-      font-size: 0.84rem;
-      transition: all 0.25s;
-      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      border-radius: 6px;
     }
 
     .difficulty-btn.active {
       background: var(--forest-green);
       color: white;
       border-color: var(--forest-green);
-      transform: scale(1.06);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.18);
+      transform: scale(1.05);
     }
 
     /* Navigation with page curl effect */
     .book-nav {
       display: flex;
       justify-content: space-between;
-      margin-top: 22px;
-      padding-top: 18px;
+      margin-top: 30px;
+      padding-top: 20px;
       border-top: 2px solid var(--honey);
       align-items: center;
-      gap: 16px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .nav-btn {
-      padding: 9px 18px;
+      padding: 10px 20px;
       background: var(--pooh-red);
       color: white;
       border: none;
-      border-radius: 999px;
+      border-radius: 6px;
       cursor: pointer;
-      font-family: 'Schoolbell', system-ui, sans-serif;
-      font-size: 0.98rem;
+      font-family: inherit;
+      font-size: 1rem;
       transition: all 0.3s;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 8px;
       position: relative;
+      white-space: nowrap;
     }
 
     .nav-btn::after {
@@ -710,31 +597,30 @@
     }
 
     .nav-btn.next:hover::after {
-      width: 18px;
-      height: 18px;
-      border-width: 0 18px 18px 0;
-      border-color: transparent rgba(255,255,255,0.35) transparent transparent;
+      width: 20px;
+      height: 20px;
+      border-width: 0 20px 20px 0;
+      border-color: transparent rgba(255,255,255,0.3) transparent transparent;
     }
 
     .nav-btn:hover {
       background: #b02626;
-      transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+      transform: scale(1.05);
     }
 
     .nav-btn:disabled {
-      opacity: 0.35;
+      opacity: 0.3;
       cursor: not-allowed;
       transform: none;
-      box-shadow: none;
     }
 
     .page-indicator {
       text-align: center;
       color: var(--honey-dark);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
+      margin-top: 10px;
       animation: fadeIn 2s ease;
-      font-family: 'Schoolbell', system-ui, sans-serif;
+      flex: 1;
     }
 
     /* Registry Section */
@@ -750,57 +636,52 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 13px 22px;
+      padding: 15px 25px;
       background: white;
       border: 2px solid var(--baby-blue);
-      border-radius: 999px;
+      border-radius: 8px;
       text-decoration: none;
       color: var(--ink);
       transition: all 0.3s;
-      font-weight: 600;
-      font-size: 0.96rem;
+      font-weight: bold;
     }
 
     .registry-link:hover {
       background: var(--baby-blue);
       color: white;
-      transform: translateY(-2px) scale(1.03);
+      transform: translateY(-3px) scale(1.05);
       box-shadow: 0 6px 20px var(--shadow);
     }
 
     /* Wishes Form */
     .wishes-form {
-      background: #fffdf7;
-      padding: 22px 22px 20px;
-      border-radius: 10px;
-      margin: 18px 0 6px;
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 20px 0;
       animation: fadeIn 2.2s ease;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-      border: 2px solid rgba(244,169,68,0.35);
     }
 
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
+      margin-bottom: 8px;
+      font-weight: bold;
       color: var(--honey-dark);
-      font-size: 0.96rem;
     }
 
     .form-group input,
     .form-group textarea {
       width: 100%;
-      padding: 11px 12px;
+      padding: 12px;
       border: 2px solid var(--parchment-dark);
-      border-radius: 8px;
+      border-radius: 6px;
       font-family: inherit;
-      font-size: 0.98rem;
-      transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
-      background-color: #fffdf8;
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     .form-group input:focus,
@@ -808,7 +689,6 @@
       outline: none;
       border-color: var(--honey);
       box-shadow: 0 0 10px rgba(244, 169, 68, 0.3);
-      background-color: #fffaf0;
     }
 
     .form-group textarea {
@@ -818,10 +698,92 @@
 
     .divider {
       text-align: center;
-      margin: 24px 0 10px;
+      margin: 30px 0;
       color: var(--honey);
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       animation: fadeIn 2.5s ease;
+    }
+
+    /* Mobile Touch Controls */
+    .mobile-controls {
+      display: none;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .touch-btn {
+      flex: 1;
+      padding: 20px;
+      font-size: 1.2rem;
+      background: var(--baby-blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: all 0.2s;
+    }
+
+    .touch-btn:active {
+      background: #5a8ab8;
+      transform: scale(0.95);
+    }
+
+    /* Game Overlay */
+    .game-overlay {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+      border-radius: 4px;
+      animation: fadeIn 0.5s ease;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .game-overlay.hidden {
+      display: none;
+    }
+
+    .overlay-title {
+      font-size: 2rem;
+      color: var(--pooh-red);
+      margin-bottom: 15px;
+    }
+
+    .overlay-text {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      max-width: 400px;
+    }
+
+    /* Honey drip decoration */
+    .honey-drip {
+      position: absolute;
+      top: 0;
+      width: 10px;
+      height: 20px;
+      background: linear-gradient(180deg, var(--honey) 0%, var(--honey-dark) 100%);
+      border-radius: 0 0 10px 10px;
+      animation: drip 4s ease-in-out infinite;
+    }
+
+    .honey-drip:nth-child(1) { left: 20%; animation-delay: 0s; }
+    .honey-drip:nth-child(2) { left: 50%; animation-delay: 1.5s; }
+    .honey-drip:nth-child(3) { left: 80%; animation-delay: 3s; }
+
+    @keyframes drip {
+      0%, 100% { height: 0; opacity: 0; }
+      50% { height: 30px; opacity: 1; }
     }
 
     /* Sparkle effect on hover */
@@ -836,12 +798,12 @@
       right: -10px;
       font-size: 1rem;
       opacity: 0;
-      transition: opacity 0.3s, transform 0.3s;
+      transition: opacity 0.3s;
     }
 
     .sparkle:hover::after {
       opacity: 1;
-      animation: twinkle 0.6s ease;
+      animation: twinkle 0.5s ease;
     }
 
     @keyframes twinkle {
@@ -849,29 +811,23 @@
       50% { transform: scale(1.2); }
     }
 
-    /* Mobile Responsive */
+    /* Responsive tweaks */
     @media (max-width: 900px) {
-      .book {
-        padding: 26px 18px 22px;
-      }
-
-      .book-header {
-        flex-direction: column;
+      body {
         align-items: flex-start;
-        gap: 6px;
+        cursor: auto;
       }
 
-      .pages-wrapper {
-        min-height: 0;
+      .book {
+        padding: 24px;
       }
 
       .page {
-        padding: 26px 18px 22px;
-        max-height: none;
+        padding: 24px;
       }
 
       .chapter-title {
-        font-size: 1.55rem;
+        font-size: 1.6rem;
       }
 
       .story-text {
@@ -883,93 +839,25 @@
         height: 300px;
       }
 
+      .game-controls {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .mobile-controls {
+        display: flex;
+      }
+
       .book-nav {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .nav-btn {
-        justify-content: center;
-        width: 100%;
-      }
-
-      body {
-        cursor: auto;
-      }
-    }
-
-    /* Mobile Touch Controls */
-    .mobile-controls {
-      display: none;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    @media (max-width: 768px) {
-      .mobile-controls {
-        display: flex;
-      }
-    }
-
-    .touch-btn {
-      flex: 1;
-      padding: 18px 10px;
-      font-size: 1.1rem;
-      background: var(--baby-blue);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      touch-action: manipulation;
-      transition: all 0.2s;
-      font-family: 'Schoolbell', system-ui, sans-serif;
-    }
-
-    .touch-btn:active {
-      background: #5a8ab8;
-      transform: scale(0.96);
-    }
-
-    /* Game Overlay */
-    .game-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(255, 255, 255, 0.96);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      text-align: center;
-      border-radius: 6px;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .game-overlay.hidden {
-      display: none;
-    }
-
-    .overlay-title {
-      font-size: 1.8rem;
-      color: var(--pooh-red);
-      margin-bottom: 12px;
-    }
-
-    .overlay-text {
-      font-size: 1rem;
-      margin-bottom: 20px;
-      max-width: 380px;
-      line-height: 1.7;
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation: none !important;
-        transition: none !important;
+      .page-indicator {
+        order: -1;
       }
     }
   </style>
@@ -994,822 +882,792 @@
     <div class="cloud">☁️</div>
   </div>
 
-  <div class="stage">
-    <div class="table-shadow"></div>
+  <div class="book-container">
+    <div class="book">
+      <div class="pages-wrapper">
+        <!-- Chapter 1: Welcome -->
+        <div class="page active" data-chapter="1">
+          <div class="chapter-header">
+            <div class="chapter-number">Chapter One</div>
+            <h1 class="chapter-title">A Special Day in the Hundred Acre Wood</h1>
+            <div class="chapter-subtitle">An Invitation to Celebrate</div>
+          </div>
 
-    <div class="book-container">
-      <div class="book">
-        <div class="book-header">
-          <div class="book-header-title">
-            <span>Hundred Acre Wood • Baby Shower Story</span>
-            <span>Baby Gunner's Hundred Acre Wood Adventure</span>
+          <p class="story-text">
+            One fine spring day, in a corner of the Hundred Acre Wood where the sun shines warmly through the trees and the flowers bloom in cheerful colors, something wonderful was happening. All the forest friends were gathering, for there was to be a celebration unlike any other.
+          </p>
+
+          <p class="story-text">
+            "What sort of celebration?" you might ask. Well, it was the very best sort—the kind that welcomes a new little friend to the world. A baby boy named Gunner James was soon to arrive, and everyone in the Hundred Acre Wood wanted to share in the joy.
+          </p>
+
+          <div class="illustration-box sparkle">
+            <div class="bear-illustration">🧸🍯</div>
+            <p style="font-style: italic; color: var(--honey-dark);">
+              "A baby!" said Pooh. "How perfectly wonderful. We shall need honey for such an occasion."
+            </p>
           </div>
-          <div class="book-header-badge">
-            <span>🧸</span>
-            <span>Hosted with love by family & friends</span>
+
+          <p class="story-text">
+            Winnie the Pooh, being a Bear of Very Little Brain but a Very Big Heart, knew that the most important thing for any celebration was honey. And not just a little honey, but lots and lots of it. After all, welcoming Baby Gunner was a Very Important Matter.
+          </p>
+
+          <div class="party-details">
+            <h3>You're Invited to Baby Gunner's Baby Shower! 🎉</h3>
+            <div class="detail-item">
+              <div class="detail-icon">👶</div>
+              <div>
+                <strong>Celebrating:</strong> Gunner James<br>
+                <em style="color: var(--baby-blue);">It's a boy!</em>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon">📅</div>
+              <div><strong>When:</strong> Saturday, June 15, 2024</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon">🕐</div>
+              <div><strong>Time:</strong> 2:00 PM - 4:00 PM</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon">📍</div>
+              <div><strong>Where:</strong> 123 Honey Tree Lane</div>
+            </div>
           </div>
+
+          <p class="story-text">
+            "But first," thought Pooh, looking up at his honey pots on the high shelf, "we'll need to gather more honey. Won't you help?"
+          </p>
+
+          <div class="divider">🌳 ✿ 🐝 ✿ 🌳</div>
         </div>
 
-        <div class="pages-wrapper">
-          <!-- Chapter 1: Welcome -->
-          <div class="page active" data-chapter="1">
-            <div class="chapter-header">
-              <div class="chapter-number">Chapter One</div>
-              <h1 class="chapter-title">A Special Day in the Hundred Acre Wood</h1>
-              <div class="chapter-subtitle">An Invitation to Celebrate</div>
-            </div>
-
-            <p class="story-text">
-              One fine spring day, in a corner of the Hundred Acre Wood where the sun shines warmly through the trees and the flowers bloom in cheerful colors, something wonderful was happening. All the forest friends were gathering, for there was to be a celebration unlike any other.
-            </p>
-
-            <p class="story-text">
-              "What sort of celebration?" you might ask. Well, it was the very best sort—the kind that welcomes a new little friend to the world. A baby boy named Gunner James was soon to arrive, and everyone in the Hundred Acre Wood wanted to share in the joy.
-            </p>
-
-            <div class="illustration-box sparkle">
-              <div class="bear-illustration">🧸🍯</div>
-              <p style="font-style: italic; color: var(--honey-dark); z-index: 1; position: relative;">
-                "A baby!" said Pooh. "How perfectly wonderful. We shall need honey for such an occasion."
-              </p>
-            </div>
-
-            <p class="story-text">
-              Winnie the Pooh, being a Bear of Very Little Brain but a Very Big Heart, knew that the most important thing for any celebration was honey. And not just a little honey, but lots and lots of it. After all, welcoming Baby Gunner was a Very Important Matter.
-            </p>
-
-            <div class="party-details">
-              <h3>You're Invited to Baby Gunner's Baby Shower! 🎉</h3>
-              <div class="detail-item">
-                <div class="detail-icon">👶</div>
-                <div>
-                  <strong>Celebrating:</strong> Gunner James<br>
-                  <em style="color: var(--baby-blue);">It's a boy!</em>
-                </div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-icon">📅</div>
-                <div><strong>When:</strong> Saturday, June 15, 2024</div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-icon">🕐</div>
-                <div><strong>Time:</strong> 2:00 PM - 4:00 PM</div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-icon">📍</div>
-                <div><strong>Where:</strong> 123 Honey Tree Lane</div>
-              </div>
-            </div>
-
-            <p class="story-text">
-              "But first," thought Pooh, looking up at his honey pots on the high shelf, "we'll need to gather more honey. Won't you help?"
-            </p>
-
-            <div class="divider">🌳 ✿ 🐝 ✿ 🌳</div>
+        <!-- Chapter 2: The Game -->
+        <div class="page" data-chapter="2">
+          <div class="chapter-header">
+            <div class="chapter-number">Chapter Two</div>
+            <h1 class="chapter-title">Pooh's Honey Gathering Adventure</h1>
+            <div class="chapter-subtitle">A Game of Skill and Sweetness</div>
           </div>
 
-          <!-- Chapter 2: The Game -->
-          <div class="page" data-chapter="2">
-            <div class="chapter-header">
-              <div class="chapter-number">Chapter Two</div>
-              <h1 class="chapter-title">Pooh's Honey Gathering Adventure</h1>
-              <div class="chapter-subtitle">A Game of Skill and Sweetness</div>
-            </div>
+          <p class="story-text">
+            Pooh stood beneath the tall honey tree, his favorite barrel in his arms. Above him, golden drops of honey began to fall, glistening in the sunlight like liquid sunshine. But there was a problem—the bees were buzzing about too!
+          </p>
 
-            <p class="story-text">
-              Pooh stood beneath the tall honey tree, his favorite barrel in his arms. Above him, golden drops of honey began to fall, glistening in the sunlight like liquid sunshine. But there was a problem—the bees were buzzing about too!
-            </p>
+          <p class="story-text">
+            "Oh bother," said Pooh. "I must catch the honey but avoid the bees. This requires concentration. And perhaps some help from a friend like you."
+          </p>
 
-            <p class="story-text">
-              "Oh bother," said Pooh. "I must catch the honey but avoid the bees. This requires concentration. And perhaps some help from a friend like you."
-            </p>
-
-            <div class="game-container sparkle">
-              <div style="position: relative;">
-                <canvas id="gameCanvas"></canvas>
-                <div class="game-overlay" id="gameOverlay">
-                  <div class="overlay-title">🍯 Ready to Help Pooh? 🍯</div>
-                  <p class="overlay-text">
-                    Move Pooh left and right to catch honey drops in the barrel. Avoid the bees—they'll sting!
-                    <br><br>
-                    <strong>Desktop:</strong> Use arrow keys or A/D<br>
-                    <strong>Mobile:</strong> Use the buttons below or drag Pooh
-                  </p>
-                  <button class="btn sparkle" onclick="startGame()">Start Adventure</button>
-                </div>
-              </div>
-
-              <div class="game-stats">
-                <div class="stat">
-                  <div class="stat-label">Score</div>
-                  <div class="stat-value" id="score">0</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-label">Honey</div>
-                  <div class="stat-value" id="honeyCount">0</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-label">Lives</div>
-                  <div class="stat-value" id="lives">❤️❤️❤️</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-label">Time</div>
-                  <div class="stat-value" id="timer">60</div>
-                </div>
-              </div>
-
-              <div class="difficulty-selector">
-                <button class="difficulty-btn active" onclick="setDifficulty('easy', this)">Gentle Drizzle</button>
-                <button class="difficulty-btn" onclick="setDifficulty('normal', this)">Honey Shower</button>
-                <button class="difficulty-btn" onclick="setDifficulty('hard', this)">Bee Storm</button>
-              </div>
-
-              <div class="game-controls">
-                <button class="btn sparkle" id="startBtn" onclick="startGame()">▶ Start</button>
-                <button class="btn btn-secondary" id="pauseBtn" onclick="pauseGame()" disabled>⏸ Pause</button>
-                <button class="btn btn-secondary" onclick="resetGame()">🔄 Reset</button>
-              </div>
-
-              <div class="mobile-controls">
-                <button class="touch-btn" id="leftBtn">⬅️ Left</button>
-                <button class="touch-btn" id="rightBtn">Right ➡️</button>
+          <div class="game-container sparkle">
+            <div style="position: relative;">
+              <canvas id="gameCanvas"></canvas>
+              <div class="game-overlay" id="gameOverlay">
+                <div class="overlay-title">🍯 Ready to Help Pooh? 🍯</div>
+                <p class="overlay-text">
+                  Move Pooh left and right to catch honey drops in the barrel. Avoid the bees—they'll sting!
+                  <br><br>
+                  <strong>Desktop:</strong> Use arrow keys or A/D<br>
+                  <strong>Mobile:</strong> Use the buttons below or drag Pooh
+                </p>
+                <button class="btn sparkle" onclick="startGame()">Start Adventure</button>
               </div>
             </div>
 
-            <p class="story-text" style="text-indent: 0; text-align: center; font-style: italic; margin-top: 20px;">
-              "That was splendid!" said Pooh when the barrel was full. "Now we have plenty of honey for Baby Gunner's celebration!"
+            <div class="game-stats">
+              <div class="stat">
+                <div class="stat-label">Score</div>
+                <div class="stat-value" id="score">0</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Honey</div>
+                <div class="stat-value" id="honeyCount">0</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Lives</div>
+                <div class="stat-value" id="lives">❤️❤️❤️</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Time</div>
+                <div class="stat-value" id="timer">60</div>
+              </div>
+            </div>
+
+            <div class="difficulty-selector">
+              <button class="difficulty-btn active" onclick="setDifficulty('easy', this)">Gentle Drizzle</button>
+              <button class="difficulty-btn" onclick="setDifficulty('normal', this)">Honey Shower</button>
+              <button class="difficulty-btn" onclick="setDifficulty('hard', this)">Bee Storm</button>
+            </div>
+
+            <div class="game-controls">
+              <button class="btn sparkle" id="startBtn" onclick="startGame()">▶ Start</button>
+              <button class="btn btn-secondary" id="pauseBtn" onclick="pauseGame()" disabled>⏸ Pause</button>
+              <button class="btn btn-secondary" onclick="resetGame()">🔄 Reset</button>
+            </div>
+
+            <div class="mobile-controls">
+              <button class="touch-btn" id="leftBtn">⬅️ Left</button>
+              <button class="touch-btn" id="rightBtn">Right ➡️</button>
+            </div>
+          </div>
+
+          <p class="story-text" style="text-indent: 0; text-align: center; font-style: italic; margin-top: 20px;">
+            "That was splendid!" said Pooh when the barrel was full. "Now we have plenty of honey for Baby Gunner's celebration!"
+          </p>
+        </div>
+
+        <!-- Chapter 3: Registry & Details -->
+        <div class="page" data-chapter="3">
+          <div class="chapter-header">
+            <div class="chapter-number">Chapter Three</div>
+            <h1 class="chapter-title">Gifts from the Heart</h1>
+            <div class="chapter-subtitle">Preparing for Baby Gunner</div>
+          </div>
+
+          <p class="story-text">
+            With the honey safely gathered, Pooh and his friends began to think about what else a baby bear—or rather, a baby boy—might need. Piglet suggested soft blankets. Eeyore thought practical things might be useful. Tigger bounced excitedly about toys.
+          </p>
+
+          <p class="story-text">
+            "The most important thing," said Pooh wisely, "is that Baby Gunner knows he is loved. But if you'd like to bring a gift, his parents have made a list of things that might be helpful."
+          </p>
+
+          <div class="illustration-box sparkle">
+            <div style="font-size: 3rem; margin: 20px 0;">🎁</div>
+            <h3 style="color: var(--baby-blue); margin-bottom: 15px;">Baby Gunner's Registry</h3>
+            <p style="margin-bottom: 20px;">Your presence is the greatest present, but if you'd like to help welcome our little one:</p>
+
+            <div class="registry-links">
+              <a href="https://www.target.com/gift-registry/" target="_blank" class="registry-link sparkle">
+                <span style="font-size: 1.5rem;">🎯</span>
+                <span>Target Registry</span>
+              </a>
+              <a href="https://www.amazon.com/baby-reg/" target="_blank" class="registry-link sparkle">
+                <span style="font-size: 1.5rem;">📦</span>
+                <span>Amazon Registry</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="party-details">
+            <h3>Nursery Theme & Details 🧸</h3>
+            <div class="detail-item">
+              <div class="detail-icon">🎨</div>
+              <div><strong>Theme:</strong> Hundred Acre Wood / Woodland Bears</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon">💙</div>
+              <div><strong>Nursery Colors:</strong> Adventure Blue, Honey Gold, Forest Green</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon">🧸</div>
+              <div><strong>First Toy:</strong> Classic Winnie the Pooh Bear</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon">📚</div>
+              <div><strong>Favorite Book:</strong> "The House at Pooh Corner"</div>
+            </div>
+          </div>
+
+          <p class="story-text">
+            And so the preparations continued, with each friend contributing something special to welcome the newest member of their woodland family.
+          </p>
+
+          <div class="divider">🌳 ✿ 🐝 ✿ 🌳</div>
+        </div>
+
+        <!-- Chapter 4: Wishes -->
+        <div class="page" data-chapter="4">
+          <div class="chapter-header">
+            <div class="chapter-number">Chapter Four</div>
+            <h1 class="chapter-title">Wishes for Baby Gunner</h1>
+            <div class="chapter-subtitle">Words of Love and Wisdom</div>
+          </div>
+
+          <p class="story-text">
+            As the sun began to set over the Hundred Acre Wood, casting long golden shadows through the trees, Pooh and his friends gathered to share their wishes for Baby Gunner. Each friend had something special to say.
+          </p>
+
+          <div class="illustration-box sparkle">
+            <p style="font-style: italic; line-height: 1.8; text-align: left;">
+              <strong>Pooh said:</strong> "May you always have honey when you need it, and friends when you want them."
+              <br><br>
+              <strong>Piglet squeaked:</strong> "May you be brave, even when you feel small."
+              <br><br>
+              <strong>Eeyore added:</strong> "May you find sunshine, even on cloudy days."
+              <br><br>
+              <strong>Tigger bounced:</strong> "May you have the most wonderful things happen to you, and the most wonderful adventures!"
             </p>
           </div>
 
-          <!-- Chapter 3: Registry & Details -->
-          <div class="page" data-chapter="3">
-            <div class="chapter-header">
-              <div class="chapter-number">Chapter Three</div>
-              <h1 class="chapter-title">Gifts from the Heart</h1>
-              <div class="chapter-subtitle">Preparing for Baby Gunner</div>
-            </div>
+          <p class="story-text">
+            Now it's your turn! Leave your wishes, advice, or memories for Baby Gunner and his family.
+          </p>
 
-            <p class="story-text">
-              With the honey safely gathered, Pooh and his friends began to think about what else a baby bear—or rather, a baby boy—might need. Piglet suggested soft blankets. Eeyore thought practical things might be useful. Tigger bounced excitedly about toys.
-            </p>
-
-            <p class="story-text">
-              "The most important thing," said Pooh wisely, "is that Baby Gunner knows he is loved. But if you'd like to bring a gift, his parents have made a list of things that might be helpful."
-            </p>
-
-            <div class="illustration-box sparkle">
-              <div style="font-size: 3rem; margin: 18px 0;">🎁</div>
-              <h3 style="color: var(--baby-blue); margin-bottom: 14px;">Baby Gunner's Registry</h3>
-              <p style="margin-bottom: 18px;">Your presence is the greatest present, but if you'd like to help welcome our little one:</p>
-
-              <div class="registry-links">
-                <a href="https://www.target.com/gift-registry/" target="_blank" class="registry-link sparkle">
-                  <span style="font-size: 1.5rem;">🎯</span>
-                  <span>Target Registry</span>
-                </a>
-                <a href="https://www.amazon.com/baby-reg/" target="_blank" class="registry-link sparkle">
-                  <span style="font-size: 1.5rem;">📦</span>
-                  <span>Amazon Registry</span>
-                </a>
+          <div class="wishes-form sparkle">
+            <h3 style="text-align: center; color: var(--honey-dark); margin-bottom: 20px;">
+              Share Your Wishes <span style="animation: bounce 2s ease-in-out infinite; display: inline-block;">🍯</span>
+            </h3>
+            <form id="wishesForm">
+              <div class="form-group">
+                <label for="guestName">Your Name:</label>
+                <input type="text" id="guestName" placeholder="Enter your name" required>
               </div>
-            </div>
-
-            <div class="party-details">
-              <h3>Nursery Theme & Details 🧸</h3>
-              <div class="detail-item">
-                <div class="detail-icon">🎨</div>
-                <div><strong>Theme:</strong> Hundred Acre Wood / Woodland Bears</div>
+              <div class="form-group">
+                <label for="wishMessage">Your Wish or Advice for Baby Gunner:</label>
+                <textarea id="wishMessage" placeholder="Share your wisdom, hopes, or a favorite memory..." required></textarea>
               </div>
-              <div class="detail-item">
-                <div class="detail-icon">💙</div>
-                <div><strong>Nursery Colors:</strong> Adventure Blue, Honey Gold, Forest Green</div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-icon">🧸</div>
-                <div><strong>First Toy:</strong> Classic Teddy Bear Friend</div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-icon">📚</div>
-                <div><strong>Favorite Book:</strong> "The House at Pooh Corner"</div>
-              </div>
-            </div>
-
-            <p class="story-text">
-              And so the preparations continued, with each friend contributing something special to welcome the newest member of their woodland family.
-            </p>
-
-            <div class="divider">🌳 ✿ 🐝 ✿ 🌳</div>
+              <button type="submit" class="btn sparkle" style="width: 100%;">📝 Add to Guestbook</button>
+            </form>
           </div>
 
-          <!-- Chapter 4: Wishes -->
-          <div class="page" data-chapter="4">
-            <div class="chapter-header">
-              <div class="chapter-number">Chapter Four</div>
-              <h1 class="chapter-title">Wishes for Baby Gunner</h1>
-              <div class="chapter-subtitle">Words of Love and Wisdom</div>
+          <div id="wishesDisplay" style="margin-top: 30px;">
+            <!-- Wishes appear here -->
+          </div>
+
+          <p class="story-text" style="text-align: center; font-style: italic; margin-top: 40px;">
+            And so, with honey gathered, gifts prepared, and wishes shared, everyone in the Hundred Acre Wood looked forward to the day they would meet Baby Gunner. For as Pooh always said, "How lucky I am to have something that makes saying goodbye so hard." But in this case, they were all ready to say hello.
+          </p>
+
+          <div style="text-align: center; margin-top: 30px; padding: 20px; background: white; border-radius: 8px; animation: fadeIn 3s ease;">
+            <div style="font-size: 3rem; margin-bottom: 10px; animation: pulse 2s ease-in-out infinite;">💙</div>
+            <div style="font-size: 1.3rem; color: var(--pooh-red); font-weight: bold;">
+              Welcome to the world, Baby Gunner!
             </div>
-
-            <p class="story-text">
-              As the sun began to set over the Hundred Acre Wood, casting long golden shadows through the trees, Pooh and his friends gathered to share their wishes for Baby Gunner. Each friend had something special to say.
-            </p>
-
-            <div class="illustration-box sparkle">
-              <p style="font-style: italic; line-height: 1.8; text-align: left; z-index: 1; position: relative;">
-                <strong>Pooh said:</strong> "May you always have honey when you need it, and friends when you want them."
-                <br><br>
-                <strong>Piglet squeaked:</strong> "May you be brave, even when you feel small."
-                <br><br>
-                <strong>Eeyore added:</strong> "May you find sunshine, even on cloudy days."
-                <br><br>
-                <strong>Tigger bounced:</strong> "May you have the most wonderful things happen to you, and the most wonderful adventures!"
-              </p>
-            </div>
-
-            <p class="story-text">
-              Now it's your turn! Leave your wishes, advice, or memories for Baby Gunner and his family.
-            </p>
-
-            <div class="wishes-form sparkle">
-              <h3 style="text-align: center; color: var(--honey-dark); margin-bottom: 18px;">
-                Share Your Wishes <span style="animation: bounce 2s ease-in-out infinite; display: inline-block;">🍯</span>
-              </h3>
-              <form id="wishesForm">
-                <div class="form-group">
-                  <label for="guestName">Your Name:</label>
-                  <input type="text" id="guestName" placeholder="Enter your name" required>
-                </div>
-                <div class="form-group">
-                  <label for="wishMessage">Your Wish or Advice for Baby Gunner:</label>
-                  <textarea id="wishMessage" placeholder="Share your wisdom, hopes, or a favorite memory..." required></textarea>
-                </div>
-                <button type="submit" class="btn sparkle" style="width: 100%;">📝 Add to Guestbook</button>
-              </form>
-            </div>
-
-            <div id="wishesDisplay" style="margin-top: 24px;">
-              <!-- Wishes will appear here -->
-            </div>
-
-            <p class="story-text" style="text-align: center; font-style: italic; margin-top: 32px;">
-              And so, with honey gathered, gifts prepared, and wishes shared, everyone in the Hundred Acre Wood looked forward to the day they would meet Baby Gunner. For as Pooh always said, "How lucky I am to have something that makes saying goodbye so hard." But in this case, they were all ready to say hello.
-            </p>
-
-            <div style="text-align: center; margin-top: 26px; padding: 18px; background: #fffdf7; border-radius: 10px; animation: fadeIn 3s ease; box-shadow: 0 8px 18px rgba(0,0,0,0.08);">
-              <div style="font-size: 3rem; margin-bottom: 8px; animation: pulse 2s ease-in-out infinite;">💙</div>
-              <div style="font-size: 1.25rem; color: var(--pooh-red); font-weight: 700;">
-                Welcome to the world, Baby Gunner!
-              </div>
-              <div style="margin-top: 8px; font-style: italic;">
-                With love from all your family and friends
-              </div>
+            <div style="margin-top: 10px; font-style: italic;">
+              With love from all your family and friends
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Navigation -->
-        <div class="book-nav">
-          <button class="nav-btn prev sparkle" id="prevBtn" onclick="previousPage()">
-            ← Previous Chapter
-          </button>
-          <div class="page-indicator" id="pageIndicator">Chapter 1 of 4</div>
-          <button class="nav-btn next sparkle" id="nextBtn" onclick="nextPage()">
-            Next Chapter →
-          </button>
-        </div>
+      <!-- Navigation -->
+      <div class="book-nav">
+        <button class="nav-btn prev sparkle" id="prevBtn" onclick="previousPage()">
+          ← Previous Chapter
+        </button>
+        <div class="page-indicator" id="pageIndicator">Chapter 1 of 4</div>
+        <button class="nav-btn next sparkle" id="nextBtn" onclick="nextPage()">
+          Next Chapter →
+        </button>
       </div>
     </div>
   </div>
 
-  Yep, fair — visually it leveled up, but I did nick a couple of things about the game feel / rendering.
+  <script>
+    // ===== STORYBOOK NAVIGATION =====
+    let currentChapter = 1;
+    const totalChapters = 4;
 
-The big regression under the hood is that I moved the sky to CSS and forgot to fully clear/redraw the canvas each frame, which can make drops/bees smear and feel “off”. Let’s fix the game rendering while keeping the new aesthetics.
-
-Below is a drop-in replacement <script> that you can use with the last HTML I sent. Just replace your existing <script>...</script> block with this one.
-
-<script>
-  // Game Variables
-  let canvas, ctx;
-  let gameState = 'idle';
-  let score = 0;
-  let honeyCollected = 0;
-  let lives = 3;
-  let timeLeft = 60;
-  let difficulty = 'easy';
-  let gameInterval, timerInterval;
-
-  let player = { x: 0, y: 0, width: 60, height: 90, speed: 5 };
-  let drops = [];
-  let bees = [];
-
-  const difficulties = {
-    easy:   { dropSpeed: 2, beeSpeed: 1.5, dropFreq: 1500, beeFreq: 3000 },
-    normal: { dropSpeed: 3, beeSpeed: 2.4, dropFreq: 1000, beeFreq: 2000 },
-    hard:   { dropSpeed: 4, beeSpeed: 3.3, dropFreq: 700,  beeFreq: 1200 }
-  };
-
-  // Navigation
-  let currentChapter = 1;
-  const totalChapters = 4;
-
-  function nextPage() {
-    if (currentChapter < totalChapters) {
+    function showChapter(ch) {
       const currentPage = document.querySelector('[data-chapter="' + currentChapter + '"]');
-      currentPage.classList.add('exiting');
+      const nextPageEl = document.querySelector('[data-chapter="' + ch + '"]');
+      if (!nextPageEl || currentChapter === ch) return;
 
+      currentPage.classList.add('exiting');
       setTimeout(() => {
         currentPage.classList.remove('active', 'exiting');
-        currentChapter++;
-        document.querySelector('[data-chapter="' + currentChapter + '"]').classList.add('active');
+        nextPageEl.classList.add('active');
+        currentChapter = ch;
         updateNavigation();
       }, 600);
     }
-  }
 
-  function previousPage() {
-    if (currentChapter > 1) {
-      const currentPage = document.querySelector('[data-chapter="' + currentChapter + '"]');
-      currentPage.classList.add('exiting');
-
-      setTimeout(() => {
-        currentPage.classList.remove('active', 'exiting');
-        currentChapter--;
-        document.querySelector('[data-chapter="' + currentChapter + '"]').classList.add('active');
-        updateNavigation();
-      }, 600);
+    function nextPage() {
+      if (currentChapter < totalChapters) {
+        showChapter(currentChapter + 1);
+      }
     }
-  }
 
-  function updateNavigation() {
-    document.getElementById('prevBtn').disabled = currentChapter === 1;
-    document.getElementById('nextBtn').disabled = currentChapter === totalChapters;
-    document.getElementById('pageIndicator').textContent = 'Chapter ' + currentChapter + ' of ' + totalChapters;
-  }
-
-  // Initialize Game
-  function initGame() {
-    canvas = document.getElementById('gameCanvas');
-    if (!canvas) return;
-    ctx = canvas.getContext('2d');
-
-    const container = canvas.parentElement;
-    canvas.width = Math.max(220, Math.min(520, container.offsetWidth - 40));
-    canvas.height = 400;
-
-    player.x = canvas.width / 2 - player.width / 2;
-    player.y = canvas.height - player.height - 18;
-
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('keyup', handleKeyUp);
-
-    let isDragging = false;
-
-    canvas.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      handleTouch(e);
-    }, { passive: false });
-
-    canvas.addEventListener('touchmove', (e) => {
-      if (isDragging) handleTouch(e);
-    }, { passive: false });
-
-    canvas.addEventListener('touchend', () => { isDragging = false; });
-
-    canvas.addEventListener('mousedown', () => { isDragging = true; });
-    canvas.addEventListener('mousemove', (e) => {
-      if (isDragging && gameState === 'playing') {
-        const rect = canvas.getBoundingClientRect();
-        player.x = e.clientX - rect.left - player.width / 2;
-        player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+    function previousPage() {
+      if (currentChapter > 1) {
+        showChapter(currentChapter - 1);
       }
-    });
-    canvas.addEventListener('mouseup', () => { isDragging = false; });
-    canvas.addEventListener('mouseleave', () => { isDragging = false; });
+    }
 
-    const leftBtn = document.getElementById('leftBtn');
-    const rightBtn = document.getElementById('rightBtn');
+    function updateNavigation() {
+      document.getElementById('prevBtn').disabled = currentChapter === 1;
+      document.getElementById('nextBtn').disabled = currentChapter === totalChapters;
+      document.getElementById('pageIndicator').textContent =
+        'Chapter ' + currentChapter + ' of ' + totalChapters;
+    }
 
-    leftBtn.addEventListener('touchstart', () => { keys.left = true; }, { passive: true });
-    leftBtn.addEventListener('touchend', () => { keys.left = false; }, { passive: true });
+    // ===== GAME LOGIC =====
+    let canvas, ctx;
+    let gameState = 'idle';
+    let score = 0;
+    let honeyCollected = 0;
+    let lives = 3;
+    let timeLeft = 60;
+    let difficulty = 'easy';
+    let gameInterval, timerInterval;
 
-    rightBtn.addEventListener('touchstart', () => { keys.right = true; }, { passive: true });
-    rightBtn.addEventListener('touchend', () => { keys.right = false; }, { passive: true });
+    let player = { x: 0, y: 0, width: 60, height: 90, speed: 5 };
+    let drops = [];
+    let bees = [];
 
-    drawGame();
-  }
+    const difficulties = {
+      easy:   { dropSpeed: 2, beeSpeed: 1.5, dropFreq: 1500, beeFreq: 3000 },
+      normal: { dropSpeed: 3, beeSpeed: 2.4, dropFreq: 1000, beeFreq: 2000 },
+      hard:   { dropSpeed: 4, beeSpeed: 3.3, dropFreq: 700,  beeFreq: 1200 }
+    };
 
-  function handleTouch(e) {
-    if (gameState !== 'playing') return;
-    e.preventDefault();
-    const rect = canvas.getBoundingClientRect();
-    const touch = e.touches[0];
-    player.x = touch.clientX - rect.left - player.width / 2;
-    player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
-  }
+    let keys = { left: false, right: false };
 
-  let keys = { left: false, right: false };
+    function initGame() {
+      canvas = document.getElementById('gameCanvas');
+      if (!canvas) return;
+      ctx = canvas.getContext('2d');
 
-  function handleKeyDown(e) {
-    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
-    if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
-  }
+      const container = canvas.parentElement;
+      canvas.width = Math.max(220, Math.min(520, container.offsetWidth - 40));
+      canvas.height = 400;
 
-  function handleKeyUp(e) {
-    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
-    if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
-  }
+      player.x = canvas.width / 2 - player.width / 2;
+      player.y = canvas.height - player.height - 18;
 
-  function setDifficulty(level, btn) {
-    difficulty = level;
-    document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-  }
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('keyup', handleKeyUp);
 
-  function startGame() {
-    if (gameState === 'playing') return;
+      let isDragging = false;
 
-    const overlay = document.getElementById('gameOverlay');
-    overlay.classList.add('hidden');
+      canvas.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        handleTouch(e);
+      }, { passive: false });
 
-    gameState = 'playing';
-    score = 0;
-    honeyCollected = 0;
-    lives = 3;
-    timeLeft = 60;
-    drops = [];
-    bees = [];
+      canvas.addEventListener('touchmove', (e) => {
+        if (isDragging) handleTouch(e);
+      }, { passive: false });
 
-    updateDisplay();
+      canvas.addEventListener('touchend', () => { isDragging = false; });
 
-    document.getElementById('startBtn').disabled = true;
-    const pauseBtn = document.getElementById('pauseBtn');
-    pauseBtn.disabled = false;
-    pauseBtn.textContent = '⏸ Pause';
+      canvas.addEventListener('mousedown', () => { isDragging = true; });
+      canvas.addEventListener('mousemove', (e) => {
+        if (isDragging && gameState === 'playing') {
+          const rect = canvas.getBoundingClientRect();
+          player.x = e.clientX - rect.left - player.width / 2;
+          player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+        }
+      });
+      canvas.addEventListener('mouseup', () => { isDragging = false; });
+      canvas.addEventListener('mouseleave', () => { isDragging = false; });
 
-    gameInterval = setInterval(gameLoop, 1000 / 60);
+      const leftBtn = document.getElementById('leftBtn');
+      const rightBtn = document.getElementById('rightBtn');
 
-    timerInterval = setInterval(() => {
-      timeLeft--;
-      document.getElementById('timer').textContent = timeLeft;
-      if (timeLeft <= 0) {
-        endGame();
-      }
-    }, 1000);
+      leftBtn.addEventListener('touchstart', () => { keys.left = true; }, { passive: true });
+      leftBtn.addEventListener('touchend', () => { keys.left = false; }, { passive: true });
 
-    spawnDrops();
-    spawnBees();
-  }
+      rightBtn.addEventListener('touchstart', () => { keys.right = true; }, { passive: true });
+      rightBtn.addEventListener('touchend', () => { keys.right = false; }, { passive: true });
 
-  function pauseGame() {
-    const pauseBtn = document.getElementById('pauseBtn');
-    if (gameState === 'playing') {
-      gameState = 'paused';
-      clearInterval(gameInterval);
-      clearInterval(timerInterval);
-      pauseBtn.textContent = '▶ Resume';
-    } else if (gameState === 'paused') {
+      drawGame();
+    }
+
+    function handleTouch(e) {
+      if (gameState !== 'playing') return;
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      player.x = touch.clientX - rect.left - player.width / 2;
+      player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+    }
+
+    function handleKeyDown(e) {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
+    }
+
+    function handleKeyUp(e) {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
+    }
+
+    function setDifficulty(level, btn) {
+      difficulty = level;
+      document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    function startGame() {
+      if (gameState === 'playing') return;
+
+      const overlay = document.getElementById('gameOverlay');
+      overlay.classList.add('hidden');
+
       gameState = 'playing';
+      score = 0;
+      honeyCollected = 0;
+      lives = 3;
+      timeLeft = 60;
+      drops = [];
+      bees = [];
+
+      updateDisplay();
+
+      document.getElementById('startBtn').disabled = true;
+      const pauseBtn = document.getElementById('pauseBtn');
+      pauseBtn.disabled = false;
+      pauseBtn.textContent = '⏸ Pause';
+
       gameInterval = setInterval(gameLoop, 1000 / 60);
+
       timerInterval = setInterval(() => {
         timeLeft--;
         document.getElementById('timer').textContent = timeLeft;
-        if (timeLeft <= 0) endGame();
-      }, 1000);
-      pauseBtn.textContent = '⏸ Pause';
-    }
-  }
-
-  function resetGame() {
-    gameState = 'idle';
-    clearInterval(gameInterval);
-    clearInterval(timerInterval);
-
-    score = 0;
-    honeyCollected = 0;
-    lives = 3;
-    timeLeft = 60;
-    drops = [];
-    bees = [];
-
-    updateDisplay();
-    const overlay = document.getElementById('gameOverlay');
-    overlay.classList.remove('hidden');
-    overlay.innerHTML = `
-      <div class="overlay-title">🍯 Ready to Help Pooh? 🍯</div>
-      <p class="overlay-text">
-        Move Pooh left and right to catch honey drops in the barrel. Avoid the bees—they'll sting!
-        <br><br>
-        <strong>Desktop:</strong> Use arrow keys or A/D<br>
-        <strong>Mobile:</strong> Use the buttons below or drag Pooh
-      </p>
-      <button class="btn sparkle" onclick="startGame()">Start Adventure</button>
-    `;
-
-    document.getElementById('startBtn').disabled = false;
-    const pauseBtn = document.getElementById('pauseBtn');
-    pauseBtn.disabled = true;
-    pauseBtn.textContent = '⏸ Pause';
-
-    drawGame();
-  }
-
-  function endGame() {
-    gameState = 'over';
-    clearInterval(gameInterval);
-    clearInterval(timerInterval);
-
-    const overlay = document.getElementById('gameOverlay');
-    overlay.classList.remove('hidden');
-    overlay.innerHTML = `
-      <div class="overlay-title">🍯 Well Done! 🍯</div>
-      <p class="overlay-text">
-        Pooh thanks you for helping gather honey!<br><br>
-        <strong>Final Score:</strong> ${score}<br>
-        <strong>Honey Collected:</strong> ${honeyCollected}
-      </p>
-      <button class="btn sparkle" onclick="resetGame(); startGame();">Play Again</button>
-      <button class="btn btn-secondary" onclick="resetGame();" style="margin-top: 10px;">Back to Start</button>
-    `;
-
-    document.getElementById('startBtn').disabled = false;
-    const pauseBtn = document.getElementById('pauseBtn');
-    pauseBtn.disabled = true;
-    pauseBtn.textContent = '⏸ Pause';
-  }
-
-  function spawnDrops() {
-    if (gameState !== 'playing') return;
-
-    drops.push({
-      x: Math.random() * (canvas.width - 20),
-      y: -20,
-      width: 20,
-      height: 30,
-      speed: difficulties[difficulty].dropSpeed
-    });
-
-    setTimeout(spawnDrops, difficulties[difficulty].dropFreq);
-  }
-
-  function spawnBees() {
-    if (gameState !== 'playing') return;
-
-    bees.push({
-      x: Math.random() * (canvas.width - 30),
-      y: -30,
-      width: 30,
-      height: 25,
-      speed: difficulties[difficulty].beeSpeed
-    });
-
-    setTimeout(spawnBees, difficulties[difficulty].beeFreq);
-  }
-
-  function gameLoop() {
-    if (gameState !== 'playing') return;
-
-    if (keys.left) {
-      player.x -= player.speed;
-    }
-    if (keys.right) {
-      player.x += player.speed;
-    }
-    player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
-
-    drops.forEach((drop, index) => {
-      drop.y += drop.speed;
-
-      if (checkCollision(drop, player)) {
-        score += 10;
-        honeyCollected++;
-        drops.splice(index, 1);
-        updateDisplay();
-      } else if (drop.y > canvas.height) {
-        drops.splice(index, 1);
-      }
-    });
-
-    bees.forEach((bee, index) => {
-      bee.y += bee.speed;
-
-      if (checkCollision(bee, player)) {
-        lives--;
-        bees.splice(index, 1);
-        updateDisplay();
-
-        if (lives <= 0) {
+        if (timeLeft <= 0) {
           endGame();
         }
-      } else if (bee.y > canvas.height) {
-        bees.splice(index, 1);
+      }, 1000);
+
+      spawnDrops();
+      spawnBees();
+    }
+
+    function pauseGame() {
+      const pauseBtn = document.getElementById('pauseBtn');
+      if (gameState === 'playing') {
+        gameState = 'paused';
+        clearInterval(gameInterval);
+        clearInterval(timerInterval);
+        pauseBtn.textContent = '▶ Resume';
+      } else if (gameState === 'paused') {
+        gameState = 'playing';
+        gameInterval = setInterval(gameLoop, 1000 / 60);
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          document.getElementById('timer').textContent = timeLeft;
+          if (timeLeft <= 0) endGame();
+        }, 1000);
+        pauseBtn.textContent = '⏸ Pause';
       }
-    });
-
-    drawGame();
-  }
-
-  function checkCollision(obj1, obj2) {
-    return obj1.x < obj2.x + obj2.width &&
-           obj1.x + obj1.width > obj2.x &&
-           obj1.y < obj2.y + obj2.height &&
-           obj1.y + obj1.height > obj2.y;
-  }
-
-  function drawGame() {
-    if (!ctx) return;
-
-    // Clear everything first so drops/bees don't smear
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Sky gradient background
-    const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    skyGradient.addColorStop(0, '#8cd3ff');
-    skyGradient.addColorStop(0.45, '#87CEEB');
-    skyGradient.addColorStop(0.9, '#d1f3ff');
-    ctx.fillStyle = skyGradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Ground
-    ctx.fillStyle = '#6fa45a';
-    ctx.fillRect(0, canvas.height - 40, canvas.width, 40);
-
-    // Simple tree silhouettes in background
-    ctx.fillStyle = 'rgba(74, 94, 62, 0.7)';
-    for (let i = 0; i < 4; i++) {
-      const baseX = (canvas.width / 4) * i + 20;
-      ctx.fillRect(baseX, canvas.height - 70, 20, 30);
-      ctx.beginPath();
-      ctx.moveTo(baseX - 20, canvas.height - 70);
-      ctx.lineTo(baseX + 10, canvas.height - 120);
-      ctx.lineTo(baseX + 40, canvas.height - 70);
-      ctx.closePath();
-      ctx.fill();
     }
 
-    // Pooh's ears
-    ctx.fillStyle = '#f4c16e';
-    ctx.beginPath();
-    ctx.arc(player.x + 18, player.y + 10, 8, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(player.x + 42, player.y + 10, 8, 0, Math.PI * 2);
-    ctx.fill();
+    function resetGame() {
+      gameState = 'idle';
+      clearInterval(gameInterval);
+      clearInterval(timerInterval);
 
-    // Pooh's head
-    ctx.beginPath();
-    ctx.arc(player.x + 30, player.y + 26, 20, 0, Math.PI * 2);
-    ctx.fill();
+      score = 0;
+      honeyCollected = 0;
+      lives = 3;
+      timeLeft = 60;
+      drops = [];
+      bees = [];
 
-    // Face
-    ctx.fillStyle = '#2b1810';
-    ctx.beginPath();
-    ctx.arc(player.x + 23, player.y + 22, 3, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(player.x + 37, player.y + 22, 3, 0, Math.PI * 2);
-    ctx.fill();
+      updateDisplay();
+      const overlay = document.getElementById('gameOverlay');
+      overlay.classList.remove('hidden');
+      overlay.innerHTML = `
+        <div class="overlay-title">🍯 Ready to Help Pooh? 🍯</div>
+        <p class="overlay-text">
+          Move Pooh left and right to catch honey drops in the barrel. Avoid the bees—they'll sting!
+          <br><br>
+          <strong>Desktop:</strong> Use arrow keys or A/D<br>
+          <strong>Mobile:</strong> Use the buttons below or drag Pooh
+        </p>
+        <button class="btn sparkle" onclick="startGame()">Start Adventure</button>
+      `;
 
-    ctx.beginPath();
-    ctx.arc(player.x + 30, player.y + 28, 3, 0, Math.PI * 2);
-    ctx.fill();
+      document.getElementById('startBtn').disabled = false;
+      const pauseBtn = document.getElementById('pauseBtn');
+      pauseBtn.disabled = true;
+      pauseBtn.textContent = '⏸ Pause';
 
-    ctx.beginPath();
-    ctx.arc(player.x + 30, player.y + 33, 7, 0, Math.PI);
-    ctx.strokeStyle = '#2b1810';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    // Body / shirt
-    ctx.fillStyle = '#f4c16e';
-    ctx.fillRect(player.x + 14, player.y + 40, 32, 30);
-
-    ctx.fillStyle = '#d32f2f';
-    ctx.fillRect(player.x + 12, player.y + 40, 36, 18);
-
-    // Arms
-    ctx.fillStyle = '#f4c16e';
-    ctx.fillRect(player.x + 6, player.y + 44, 10, 14);
-    ctx.fillRect(player.x + 44, player.y + 44, 10, 14);
-
-    // Barrel
-    ctx.fillStyle = '#8b6f47';
-    ctx.beginPath();
-    ctx.moveTo(player.x, player.y + 60);
-    ctx.lineTo(player.x + 60, player.y + 60);
-    ctx.quadraticCurveTo(player.x + 56, player.y + 96, player.x + 30, player.y + 100);
-    ctx.quadraticCurveTo(player.x + 4, player.y + 96, player.x, player.y + 60);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.strokeStyle = '#5a4a3a';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // Barrel bands
-    ctx.beginPath();
-    ctx.moveTo(player.x + 4, player.y + 72);
-    ctx.lineTo(player.x + 56, player.y + 72);
-    ctx.moveTo(player.x + 4, player.y + 88);
-    ctx.lineTo(player.x + 56, player.y + 88);
-    ctx.stroke();
-
-    // Honey drops
-    drops.forEach(drop => {
-      ctx.fillStyle = '#f4a944';
-      ctx.beginPath();
-      ctx.ellipse(drop.x + 10, drop.y + 15, 10, 15, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = '#fff5d6';
-      ctx.beginPath();
-      ctx.ellipse(drop.x + 8, drop.y + 10, 3, 5, 0, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    // Bees
-    bees.forEach(bee => {
-      // Body
-      ctx.fillStyle = '#f4a944';
-      ctx.fillRect(bee.x + 5, bee.y + 5, 22, 16);
-
-      // Stripes
-      ctx.fillStyle = '#2b1810';
-      ctx.fillRect(bee.x + 8, bee.y + 5, 3, 16);
-      ctx.fillRect(bee.x + 15, bee.y + 5, 3, 16);
-      ctx.fillRect(bee.x + 20, bee.y + 5, 3, 16);
-
-      // Wings
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-      ctx.beginPath();
-      ctx.ellipse(bee.x + 10, bee.y + 2, 7, 5, -0.3, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.ellipse(bee.x + 22, bee.y + 2, 7, 5, 0.3, 0, Math.PI * 2);
-      ctx.fill();
-    });
-  }
-
-  function updateDisplay() {
-    document.getElementById('score').textContent = score;
-    document.getElementById('honeyCount').textContent = honeyCollected;
-    document.getElementById('timer').textContent = timeLeft;
-
-    let heartsDisplay = '';
-    for (let i = 0; i < lives; i++) {
-      heartsDisplay += '❤️';
-    }
-    document.getElementById('lives').textContent = heartsDisplay || '💔';
-  }
-
-  // Wishes Form
-  document.addEventListener('DOMContentLoaded', () => {
-    const wishesForm = document.getElementById('wishesForm');
-    if (wishesForm) {
-      wishesForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const name = document.getElementById('guestName').value.trim();
-        const message = document.getElementById('wishMessage').value.trim();
-
-        if (!name || !message) return;
-
-        const wishElement = document.createElement('div');
-        wishElement.style.cssText = 'background: #fffdf7; padding: 18px 18px 16px; border-radius: 10px; margin-bottom: 16px; border-left: 4px solid var(--honey); box-shadow: 0 6px 14px rgba(0,0,0,0.06); animation: fadeIn 0.5s ease;';
-        wishElement.innerHTML = `
-          <div style="font-weight: 600; color: var(--honey-dark); margin-bottom: 6px;">
-            ${name}
-          </div>
-          <div style="font-style: italic; line-height: 1.7;">
-            "${message}"
-          </div>
-        `;
-
-        const display = document.getElementById('wishesDisplay');
-        display.prepend(wishElement);
-
-        document.getElementById('guestName').value = '';
-        document.getElementById('wishMessage').value = '';
-
-        alert('Thank you for your lovely wishes! 💙');
-      });
-    }
-  });
-
-  // Initialize on load
-  window.addEventListener('load', () => {
-    initGame();
-    updateNavigation();
-  });
-
-  window.addEventListener('resize', () => {
-    if (canvas && ctx) {
-      const container = canvas.parentElement;
-      const oldWidth = canvas.width;
-      canvas.width = Math.max(220, Math.min(520, container.offsetWidth - 40));
-      player.x = (player.x / oldWidth) * canvas.width;
       drawGame();
     }
-  });
-</script>
 
+    function endGame() {
+      gameState = 'over';
+      clearInterval(gameInterval);
+      clearInterval(timerInterval);
+
+      const overlay = document.getElementById('gameOverlay');
+      overlay.classList.remove('hidden');
+      overlay.innerHTML = `
+        <div class="overlay-title">🍯 Well Done! 🍯</div>
+        <p class="overlay-text">
+          Pooh thanks you for helping gather honey!<br><br>
+          <strong>Final Score:</strong> ${score}<br>
+          <strong>Honey Collected:</strong> ${honeyCollected}
+        </p>
+        <button class="btn sparkle" onclick="resetGame(); startGame();">Play Again</button>
+        <button class="btn btn-secondary" onclick="resetGame();" style="margin-top: 10px;">Back to Start</button>
+      `;
+
+      document.getElementById('startBtn').disabled = false;
+      const pauseBtn = document.getElementById('pauseBtn');
+      pauseBtn.disabled = true;
+      pauseBtn.textContent = '⏸ Pause';
+    }
+
+    function spawnDrops() {
+      if (gameState !== 'playing') return;
+
+      drops.push({
+        x: Math.random() * (canvas.width - 20),
+        y: -20,
+        width: 20,
+        height: 30,
+        speed: difficulties[difficulty].dropSpeed
+      });
+
+      setTimeout(spawnDrops, difficulties[difficulty].dropFreq);
+    }
+
+    function spawnBees() {
+      if (gameState !== 'playing') return;
+
+      bees.push({
+        x: Math.random() * (canvas.width - 30),
+        y: -30,
+        width: 30,
+        height: 25,
+        speed: difficulties[difficulty].beeSpeed
+      });
+
+      setTimeout(spawnBees, difficulties[difficulty].beeFreq);
+    }
+
+    function gameLoop() {
+      if (gameState !== 'playing') return;
+
+      if (keys.left) {
+        player.x -= player.speed;
+      }
+      if (keys.right) {
+        player.x += player.speed;
+      }
+      player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+
+      drops.forEach((drop, index) => {
+        drop.y += drop.speed;
+
+        if (checkCollision(drop, player)) {
+          score += 10;
+          honeyCollected++;
+          drops.splice(index, 1);
+          updateDisplay();
+        } else if (drop.y > canvas.height) {
+          drops.splice(index, 1);
+        }
+      });
+
+      bees.forEach((bee, index) => {
+        bee.y += bee.speed;
+
+        if (checkCollision(bee, player)) {
+          lives--;
+          bees.splice(index, 1);
+          updateDisplay();
+
+          if (lives <= 0) {
+            endGame();
+          }
+        } else if (bee.y > canvas.height) {
+          bees.splice(index, 1);
+        }
+      });
+
+      drawGame();
+    }
+
+    function checkCollision(obj1, obj2) {
+      return obj1.x < obj2.x + obj2.width &&
+             obj1.x + obj1.width > obj2.x &&
+             obj1.y < obj2.y + obj2.height &&
+             obj1.y + obj1.height > obj2.y;
+    }
+
+    function drawGame() {
+      if (!ctx) return;
+
+      // Clear
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Sky gradient
+      const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      skyGradient.addColorStop(0, '#8cd3ff');
+      skyGradient.addColorStop(0.45, '#87CEEB');
+      skyGradient.addColorStop(0.9, '#d1f3ff');
+      ctx.fillStyle = skyGradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Ground
+      ctx.fillStyle = '#6fa45a';
+      ctx.fillRect(0, canvas.height - 40, canvas.width, 40);
+
+      // Simple trees
+      ctx.fillStyle = 'rgba(74, 94, 62, 0.7)';
+      for (let i = 0; i < 4; i++) {
+        const baseX = (canvas.width / 4) * i + 20;
+        ctx.fillRect(baseX, canvas.height - 70, 20, 30);
+        ctx.beginPath();
+        ctx.moveTo(baseX - 20, canvas.height - 70);
+        ctx.lineTo(baseX + 10, canvas.height - 120);
+        ctx.lineTo(baseX + 40, canvas.height - 70);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Pooh ears
+      ctx.fillStyle = '#f4c16e';
+      ctx.beginPath();
+      ctx.arc(player.x + 18, player.y + 10, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(player.x + 42, player.y + 10, 8, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Pooh head
+      ctx.beginPath();
+      ctx.arc(player.x + 30, player.y + 26, 20, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Face
+      ctx.fillStyle = '#2b1810';
+      ctx.beginPath();
+      ctx.arc(player.x + 23, player.y + 22, 3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(player.x + 37, player.y + 22, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(player.x + 30, player.y + 28, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(player.x + 30, player.y + 33, 7, 0, Math.PI);
+      ctx.strokeStyle = '#2b1810';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Body + shirt
+      ctx.fillStyle = '#f4c16e';
+      ctx.fillRect(player.x + 14, player.y + 40, 32, 30);
+      ctx.fillStyle = '#d32f2f';
+      ctx.fillRect(player.x + 12, player.y + 40, 36, 18);
+
+      // Arms
+      ctx.fillStyle = '#f4c16e';
+      ctx.fillRect(player.x + 6, player.y + 44, 10, 14);
+      ctx.fillRect(player.x + 44, player.y + 44, 10, 14);
+
+      // Barrel
+      ctx.fillStyle = '#8b6f47';
+      ctx.beginPath();
+      ctx.moveTo(player.x, player.y + 60);
+      ctx.lineTo(player.x + 60, player.y + 60);
+      ctx.quadraticCurveTo(player.x + 56, player.y + 96, player.x + 30, player.y + 100);
+      ctx.quadraticCurveTo(player.x + 4, player.y + 96, player.x, player.y + 60);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = '#5a4a3a';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Barrel bands
+      ctx.beginPath();
+      ctx.moveTo(player.x + 4, player.y + 72);
+      ctx.lineTo(player.x + 56, player.y + 72);
+      ctx.moveTo(player.x + 4, player.y + 88);
+      ctx.lineTo(player.x + 56, player.y + 88);
+      ctx.stroke();
+
+      // Honey drops
+      drops.forEach(drop => {
+        ctx.fillStyle = '#f4a944';
+        ctx.beginPath();
+        ctx.ellipse(drop.x + 10, drop.y + 15, 10, 15, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#fff5d6';
+        ctx.beginPath();
+        ctx.ellipse(drop.x + 8, drop.y + 10, 3, 5, 0, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Bees
+      bees.forEach(bee => {
+        ctx.fillStyle = '#f4a944';
+        ctx.fillRect(bee.x + 5, bee.y + 5, 22, 16);
+
+        ctx.fillStyle = '#2b1810';
+        ctx.fillRect(bee.x + 8, bee.y + 5, 3, 16);
+        ctx.fillRect(bee.x + 15, bee.y + 5, 3, 16);
+        ctx.fillRect(bee.x + 20, bee.y + 5, 3, 16);
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.beginPath();
+        ctx.ellipse(bee.x + 10, bee.y + 2, 7, 5, -0.3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(bee.x + 22, bee.y + 2, 7, 5, 0.3, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function updateDisplay() {
+      document.getElementById('score').textContent = score;
+      document.getElementById('honeyCount').textContent = honeyCollected;
+      document.getElementById('timer').textContent = timeLeft;
+
+      let heartsDisplay = '';
+      for (let i = 0; i < lives; i++) {
+        heartsDisplay += '❤️';
+      }
+      document.getElementById('lives').textContent = heartsDisplay || '💔';
+    }
+
+    // ===== GUESTBOOK =====
+    document.addEventListener('DOMContentLoaded', () => {
+      const wishesForm = document.getElementById('wishesForm');
+      if (wishesForm) {
+        wishesForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          const name = document.getElementById('guestName').value.trim();
+          const message = document.getElementById('wishMessage').value.trim();
+          if (!name || !message) return;
+
+          const wishElement = document.createElement('div');
+          wishElement.style.cssText =
+            'background: #fffdf7; padding: 18px 18px 16px; border-radius: 10px; margin-bottom: 16px; border-left: 4px solid var(--honey); box-shadow: 0 6px 14px rgba(0,0,0,0.06); animation: fadeIn 0.5s ease;';
+          wishElement.innerHTML = `
+            <div style="font-weight: 600; color: var(--honey-dark); margin-bottom: 6px;">
+              ${name}
+            </div>
+            <div style="font-style: italic; line-height: 1.7;">
+              "${message}"
+            </div>
+          `;
+
+          const display = document.getElementById('wishesDisplay');
+          display.prepend(wishElement);
+
+          document.getElementById('guestName').value = '';
+          document.getElementById('wishMessage').value = '';
+
+          alert('Thank you for your lovely wishes! 💙');
+        });
+      }
+
+      updateNavigation();
+      initGame();
+    });
+
+    window.addEventListener('resize', () => {
+      if (canvas && ctx) {
+        const container = canvas.parentElement;
+        const oldWidth = canvas.width;
+        canvas.width = Math.max(220, Math.min(520, container.offsetWidth - 40));
+        player.x = (player.x / oldWidth) * canvas.width;
+        drawGame();
+      }
+    });
+  </script>
 </body>
 </html>
+
