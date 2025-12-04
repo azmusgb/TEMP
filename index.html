@@ -170,7 +170,6 @@
         inset 0 0 30px rgba(139, 111, 71, 0.1),
         0 10px 30px var(--shadow);
       position: relative;
-      /* let the whole layout scroll instead of forcing scroll inside page */
       max-height: none;
       overflow-y: visible;
       display: none;
@@ -441,15 +440,64 @@
       50% { transform: scale(1.1); }
     }
 
-    /* Game Canvas Styling */
-    .game-container {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      margin: 20px 0;
-      border: 3px solid var(--honey);
-      animation: fadeIn 2s ease;
+    /* GAME SECTION STYLING */
+
+    .game-section {
+      margin-top: 10px;
+      padding: 20px 22px 24px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 0 0, rgba(250, 236, 200, 0.9), transparent 60%),
+                  radial-gradient(circle at 100% 0, rgba(212, 233, 202, 0.8), transparent 60%),
+                  var(--parchment);
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.18),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.03);
       position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .game-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .game-section-title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .game-section-title span:first-child {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--forest-green);
+    }
+
+    .game-section-title span:last-child {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--pooh-red);
+    }
+
+    .game-tag {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(244, 169, 68, 0.12);
+      border: 1px solid rgba(212, 138, 31, 0.45);
+      color: #5a3a1f;
     }
 
     .game-layout {
@@ -457,56 +505,116 @@
       grid-template-columns: 1.4fr 1fr;
       gap: 20px;
       align-items: start;
-      margin: 20px 0;
+      margin: 4px 0 4px;
+    }
+
+    .game-container {
+      background: white;
+      padding: 18px 18px 16px;
+      border-radius: 12px;
+      border: 3px solid rgba(244, 169, 68, 0.8);
+      animation: fadeIn 2s ease;
+      position: relative;
+      box-shadow:
+        0 10px 30px rgba(43, 24, 16, 0.18),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+    }
+
+    .game-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 0 0, rgba(255,255,255,0.4), transparent 55%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .game-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .honey-drip {
+      position: absolute;
+      top: -2px;
+      width: 14px;
+      height: 26px;
+      background: linear-gradient(180deg, var(--honey) 0%, var(--honey-dark) 100%);
+      border-radius: 0 0 12px 12px;
+      animation: drip 4s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .honey-drip:nth-child(1) { left: 18%; animation-delay: 0s; }
+    .honey-drip:nth-child(2) { left: 50%; animation-delay: 1.5s; }
+    .honey-drip:nth-child(3) { left: 80%; animation-delay: 3s; }
+
+    @keyframes drip {
+      0%, 100% { height: 0; opacity: 0; }
+      50% { height: 28px; opacity: 1; }
     }
 
     #gameCanvas {
       display: block;
       width: 100%;
-      max-width: 500px;
-      height: 400px;
+      max-width: 520px;
+      height: 380px;
       margin: 0 auto;
       border: 2px solid var(--parchment-dark);
-      border-radius: 4px;
+      border-radius: 8px;
       background: #87CEEB;
-      transition: box-shadow 0.3s ease;
+      transition: box-shadow 0.3s ease, transform 0.15s ease;
     }
 
     #gameCanvas:hover {
-      box-shadow: 0 0 20px rgba(244, 169, 68, 0.5);
+      box-shadow: 0 0 22px rgba(244, 169, 68, 0.55);
+      transform: translateY(-1px);
     }
 
     .game-stats {
       display: flex;
-      justify-content: space-around;
-      margin: 15px 0;
+      justify-content: space-between;
+      margin: 14px 0 10px;
       flex-wrap: wrap;
       gap: 10px;
     }
 
     .stat {
-      text-align: center;
-      padding: 10px;
+      flex: 1;
+      min-width: 90px;
+      text-align: left;
+      padding: 10px 12px;
       background: var(--parchment);
-      border-radius: 6px;
-      min-width: 80px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 8px;
+      border: 1px solid var(--parchment-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .stat:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
     }
 
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--honey-dark);
+    .stat-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 1px;
+      color: var(--honey-dark);
+    }
+
+    .stat-emoji {
+      font-size: 1rem;
     }
 
     .stat-value {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: bold;
       color: var(--ink);
     }
@@ -516,22 +624,23 @@
       gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-top: 15px;
+      margin-top: 10px;
     }
 
     .btn {
-      padding: 12px 24px;
+      padding: 11px 22px;
       border: 2px solid var(--ink);
       background: var(--honey);
       color: var(--ink);
       font-family: inherit;
-      font-size: 1rem;
+      font-size: 0.98rem;
       cursor: pointer;
-      border-radius: 6px;
-      transition: all 0.3s;
+      border-radius: 999px;
+      transition: all 0.25s;
       font-weight: bold;
       position: relative;
       overflow: hidden;
+      white-space: nowrap;
     }
 
     .btn::before {
@@ -548,14 +657,14 @@
     }
 
     .btn:hover::before {
-      width: 300px;
-      height: 300px;
+      width: 260px;
+      height: 260px;
     }
 
     .btn:hover {
       background: var(--honey-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px var(--shadow);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px var(--shadow);
     }
 
     .btn:active {
@@ -572,21 +681,21 @@
 
     .difficulty-selector {
       display: flex;
-      gap: 5px;
+      gap: 6px;
       justify-content: center;
-      margin: 15px 0;
+      margin: 12px 0 6px;
       flex-wrap: wrap;
     }
 
     .difficulty-btn {
-      padding: 8px 16px;
-      border: 2px solid var(--ink);
+      padding: 7px 14px;
+      border: 1px solid var(--ink);
       background: white;
       cursor: pointer;
       font-family: inherit;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-      border-radius: 6px;
+      font-size: 0.82rem;
+      transition: all 0.2s;
+      border-radius: 999px;
     }
 
     .difficulty-btn.active {
@@ -594,6 +703,7 @@
       color: white;
       border-color: var(--forest-green);
       transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(90, 124, 62, 0.35);
     }
 
     /* Navigation with page curl effect */
@@ -747,53 +857,54 @@
     /* Mobile Touch Controls */
     .mobile-controls {
       display: none;
-      gap: 10px;
-      margin-top: 15px;
+      gap: 12px;
+      margin-top: 12px;
     }
 
     .touch-btn {
       flex: 1;
-      padding: 20px;
-      font-size: 1.2rem;
+      padding: 18px;
+      font-size: 1.1rem;
       background: var(--baby-blue);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
       touch-action: manipulation;
       transition: all 0.2s;
+      font-weight: 600;
     }
 
     .touch-btn:active {
       background: #5a8ab8;
-      transform: scale(0.95);
+      transform: scale(0.97);
     }
 
     /* Game Overlay */
     .game-overlay {
       position: absolute;
-      top: 0;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      right: 0;
-      bottom: 0;
+      right: 10px;
+      bottom: 10px;
       background: linear-gradient(180deg, rgba(249, 244, 232, 0.97), rgba(232, 220, 197, 0.97));
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 28px 26px 24px;
+      padding: 24px 22px 20px;
       text-align: center;
       border-radius: 12px;
       animation: fadeIn 0.5s ease;
-      max-width: 540px;
+      max-width: 520px;
       margin: 0 auto;
       box-shadow:
         0 15px 30px rgba(43, 24, 16, 0.25),
         inset 0 0 0 2px rgba(244, 169, 68, 0.3);
       border: 3px solid rgba(90, 124, 62, 0.18);
       overflow: hidden;
-      gap: 12px;
+      gap: 10px;
     }
 
     .game-overlay.hidden {
@@ -801,15 +912,15 @@
     }
 
     .overlay-title {
-      font-size: 2rem;
+      font-size: 1.9rem;
       color: var(--pooh-red);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .overlay-subtitle {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #5a3a1f;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       line-height: 1.5;
     }
 
@@ -826,12 +937,12 @@
       background: rgba(107, 163, 212, 0.12);
       border: 1px solid rgba(107, 163, 212, 0.35);
       color: #2f4f6b;
-      padding: 8px 14px;
+      padding: 7px 13px;
       border-radius: 999px;
       font-weight: bold;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
     }
 
     .overlay-steps {
@@ -841,13 +952,14 @@
       width: 100%;
       text-align: left;
       display: grid;
-      gap: 10px;
+      gap: 8px;
+      font-size: 0.96rem;
     }
 
     .overlay-steps li {
       background: rgba(244, 169, 68, 0.12);
       border: 1px solid rgba(244, 169, 68, 0.35);
-      padding: 12px 14px;
+      padding: 10px 12px;
       border-radius: 10px;
       line-height: 1.5;
       box-shadow: 0 6px 12px rgba(43, 24, 16, 0.08);
@@ -855,16 +967,17 @@
 
     .overlay-controls {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
       width: 100%;
       text-align: left;
       margin-bottom: 4px;
+      font-size: 0.95rem;
     }
 
     .overlay-controls .control-label {
       font-weight: bold;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       color: #3c2a1a;
       display: inline-flex;
       align-items: center;
@@ -878,14 +991,14 @@
 
     .overlay-footer {
       color: #6b4b2b;
-      font-size: 0.95rem;
-      margin-top: 4px;
+      font-size: 0.9rem;
+      margin-top: 3px;
     }
 
     .overlay-metrics {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
+      gap: 10px;
       width: 100%;
       margin: 6px 0 10px;
     }
@@ -894,7 +1007,7 @@
       background: rgba(107, 163, 212, 0.1);
       border: 1px solid rgba(107, 163, 212, 0.35);
       border-radius: 10px;
-      padding: 12px;
+      padding: 11px;
       text-align: center;
       box-shadow: 0 6px 12px rgba(43, 24, 16, 0.08);
     }
@@ -911,26 +1024,6 @@
       font-size: 1.4rem;
       color: var(--pooh-red);
       font-weight: bold;
-    }
-
-    /* Honey drip decoration */
-    .honey-drip {
-      position: absolute;
-      top: 0;
-      width: 10px;
-      height: 20px;
-      background: linear-gradient(180deg, var(--honey) 0%, var(--honey-dark) 100%);
-      border-radius: 0 0 10px 10px;
-      animation: drip 4s ease-in-out infinite;
-    }
-
-    .honey-drip:nth-child(1) { left: 20%; animation-delay: 0s; }
-    .honey-drip:nth-child(2) { left: 50%; animation-delay: 1.5s; }
-    .honey-drip:nth-child(3) { left: 80%; animation-delay: 3s; }
-
-    @keyframes drip {
-      0%, 100% { height: 0; opacity: 0; }
-      50% { height: 30px; opacity: 1; }
     }
 
     /* Sparkle effect on hover */
@@ -991,7 +1084,7 @@
       }
 
       #gameCanvas {
-        height: 300px;
+        height: 320px;
       }
 
       .game-controls {
@@ -1000,6 +1093,7 @@
 
       .btn {
         width: 100%;
+        justify-content: center;
       }
 
       .mobile-controls {
@@ -1015,6 +1109,188 @@
         order: -1;
       }
     }
+
+@media (max-width: 600px) {
+  body {
+    align-items: flex-start;
+    padding: 14px;
+  }
+
+  .book {
+    padding: 18px;
+  }
+
+  .page {
+    padding: 18px;
+  }
+
+  .chapter-title {
+    font-size: 1.45rem;
+  }
+
+  .story-text {
+    font-size: 0.98rem;
+    text-indent: 1.3em;
+  }
+
+  .page-content {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* GAME SECTION – phone layout */
+  .game-section {
+    padding: 14px 12px 16px;
+    border-radius: 12px;
+    margin-top: 12px;
+  }
+
+  .game-section-header {
+    align-items: flex-start;
+  }
+
+  .game-section-title span:last-child {
+    font-size: 1.2rem;
+  }
+
+  .game-layout {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .game-container {
+    padding: 12px 10px 12px;
+    border-radius: 12px;
+  }
+
+  #gameCanvas {
+    height: 260px;          /* shorter on phones */
+    max-width: 100%;
+  }
+
+  .game-stats {
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0 6px;
+  }
+
+  .stat {
+    min-width: 100%;
+    padding: 8px 10px;
+  }
+
+  .stat-label-row {
+    font-size: 0.74rem;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+  }
+
+  .game-controls {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+  }
+
+  .mobile-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .touch-btn {
+    padding: 14px;
+    font-size: 1rem;
+  }
+
+  /* OVERLAY tuned for small screens */
+  .game-overlay {
+    top: auto;
+    bottom: 10px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100% - 28px);
+    max-width: 380px;
+    padding: 12px 12px 10px;
+    border-radius: 14px;
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.25),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+
+  .overlay-title {
+    font-size: 1.25rem;
+    margin-bottom: 4px;
+  }
+
+  .overlay-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  .overlay-text {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .overlay-steps {
+    font-size: 0.88rem;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .overlay-steps li {
+    padding: 7px 8px;
+  }
+
+  .overlay-controls {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+  }
+
+  .overlay-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 6px 0 8px;
+  }
+
+  .metric-card {
+    padding: 8px;
+  }
+
+  .metric-value {
+    font-size: 1.2rem;
+  }
+
+  .overlay-footer {
+    font-size: 0.82rem;
+  }
+
+  /* Book nav on phone */
+  .book-nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .page-indicator {
+    order: -1;
+    font-size: 0.88rem;
+  }
+}
+      
   </style>
 </head>
 <body>
@@ -1126,81 +1402,112 @@
             "Oh bother," said Pooh. "I must catch the honey but avoid the bees. This requires concentration. And perhaps some help from a friend like you."
           </p>
 
-          <div class="game-layout">
-            <div class="game-container sparkle">
-              <div style="position: relative;">
-                <canvas id="gameCanvas"></canvas>
-                <div class="game-overlay" id="gameOverlay">
-                  <div class="overlay-pill">Storybook briefing</div>
-                  <div class="overlay-title">🍯 Catch Pooh's Sweet Rain</div>
-                  <div class="overlay-subtitle">Gather every golden drop while tiptoeing around the buzzing bees.</div>
-                  <ul class="overlay-steps">
-                    <li>🐝 Bees sting and take a heart, so give them a wide berth.</li>
-                    <li>🍯 Honey drops boost your score—fill the barrel before the timer blinks away.</li>
-                    <li>🌳 Pick a drizzle strength with the difficulty buttons below the game.</li>
-                  </ul>
-                  <div class="overlay-controls">
-                    <div>
-                      <div class="control-label">🖥️ Desktop</div>
-                      <p>Use the ← → arrow keys or A / D to roll Pooh along the forest floor.</p>
-                    </div>
-                    <div>
-                      <div class="control-label">📱 Mobile</div>
-                      <p>Tap and hold the on-screen arrows or drag Pooh left and right with your finger.</p>
+          <section class="game-section sparkle">
+            <div class="game-section-header">
+              <div class="game-section-title">
+                <span>Mini game</span>
+                <span>Pooh’s Honey Run</span>
+              </div>
+              <div class="game-tag">
+                <span>🍯</span> <span>Catch &amp; Dodge</span>
+              </div>
+            </div>
+
+            <div class="game-layout">
+              <div class="game-container">
+                <!-- honey drips at the top of the frame -->
+                <div class="honey-drip"></div>
+                <div class="honey-drip"></div>
+                <div class="honey-drip"></div>
+
+                <div class="game-inner">
+                  <div style="position: relative;">
+                    <canvas id="gameCanvas"></canvas>
+                    <div class="game-overlay" id="gameOverlay">
+                      <div class="overlay-pill">Storybook briefing</div>
+                      <div class="overlay-title">🍯 Catch Pooh's Sweet Rain</div>
+                      <div class="overlay-subtitle">Gather every golden drop while tiptoeing around the buzzing bees.</div>
+                      <ul class="overlay-steps">
+                        <li>🐝 Bees sting and take a heart, so give them a wide berth.</li>
+                        <li>🍯 Honey drops boost your score—fill the barrel before the timer blinks away.</li>
+                        <li>🌳 Pick a drizzle strength with the difficulty buttons below the game.</li>
+                      </ul>
+                      <div class="overlay-controls">
+                        <div>
+                          <div class="control-label">🖥️ Desktop</div>
+                          <p>Use the ← → arrow keys or A / D to roll Pooh along the forest floor.</p>
+                        </div>
+                        <div>
+                          <div class="control-label">📱 Mobile</div>
+                          <p>Tap and hold the on-screen arrows or drag Pooh left and right with your finger.</p>
+                        </div>
+                      </div>
+                      <button class="btn sparkle" onclick="startGame()">Begin Honey Run</button>
+                      <p class="overlay-footer">Tip: Quick nudges help dodge bees better than long slides.</p>
                     </div>
                   </div>
-                  <button class="btn sparkle" onclick="startGame()">Begin Honey Run</button>
-                  <p class="overlay-footer">Tip: Quick nudges help dodge bees better than long slides.</p>
+
+                  <div class="game-stats">
+                    <div class="stat">
+                      <div class="stat-label-row">
+                        <span>Score</span>
+                        <span class="stat-emoji">⭐</span>
+                      </div>
+                      <div class="stat-value" id="score">0</div>
+                    </div>
+                    <div class="stat">
+                      <div class="stat-label-row">
+                        <span>Honey</span>
+                        <span class="stat-emoji">🍯</span>
+                      </div>
+                      <div class="stat-value" id="honeyCount">0</div>
+                    </div>
+                    <div class="stat">
+                      <div class="stat-label-row">
+                        <span>Lives</span>
+                        <span class="stat-emoji">❤️</span>
+                      </div>
+                      <div class="stat-value" id="lives">❤️❤️❤️</div>
+                    </div>
+                    <div class="stat">
+                      <div class="stat-label-row">
+                        <span>Time</span>
+                        <span class="stat-emoji">⏱️</span>
+                      </div>
+                      <div class="stat-value" id="timer">60</div>
+                    </div>
+                  </div>
+
+                  <div class="difficulty-selector">
+                    <button class="difficulty-btn active" onclick="setDifficulty('easy', this)">Gentle Drizzle</button>
+                    <button class="difficulty-btn" onclick="setDifficulty('normal', this)">Honey Shower</button>
+                    <button class="difficulty-btn" onclick="setDifficulty('hard', this)">Bee Storm</button>
+                  </div>
+
+                  <div class="game-controls">
+                    <button class="btn sparkle" id="startBtn" onclick="startGame()">▶ Start</button>
+                    <button class="btn btn-secondary" id="pauseBtn" onclick="pauseGame()" disabled>⏸ Pause</button>
+                    <button class="btn btn-secondary" onclick="resetGame()">🔄 Reset</button>
+                  </div>
+
+                  <div class="mobile-controls">
+                    <button class="touch-btn" id="leftBtn">⬅️ Move Left</button>
+                    <button class="touch-btn" id="rightBtn">Move Right ➡️</button>
+                  </div>
                 </div>
               </div>
 
-              <div class="game-stats">
-                <div class="stat">
-                  <div class="stat-label">Score</div>
-                  <div class="stat-value" id="score">0</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-label">Honey</div>
-                  <div class="stat-value" id="honeyCount">0</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-label">Lives</div>
-                  <div class="stat-value" id="lives">❤️❤️❤️</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-label">Time</div>
-                  <div class="stat-value" id="timer">60</div>
-                </div>
-              </div>
-
-              <div class="difficulty-selector">
-                <button class="difficulty-btn active" onclick="setDifficulty('easy', this)">Gentle Drizzle</button>
-                <button class="difficulty-btn" onclick="setDifficulty('normal', this)">Honey Shower</button>
-                <button class="difficulty-btn" onclick="setDifficulty('hard', this)">Bee Storm</button>
-              </div>
-
-              <div class="game-controls">
-                <button class="btn sparkle" id="startBtn" onclick="startGame()">▶ Start</button>
-                <button class="btn btn-secondary" id="pauseBtn" onclick="pauseGame()" disabled>⏸ Pause</button>
-                <button class="btn btn-secondary" onclick="resetGame()">🔄 Reset</button>
-              </div>
-
-              <div class="mobile-controls">
-                <button class="touch-btn" id="leftBtn">⬅️ Left</button>
-                <button class="touch-btn" id="rightBtn">Right ➡️</button>
+              <div class="info-card sparkle">
+                <h4>Quick game tips</h4>
+                <ul style="margin-left: 16px; line-height: 1.6;">
+                  <li>Pick a difficulty that matches your mood, then press <strong>Start</strong>.</li>
+                  <li>Short taps on mobile buttons give gentle nudges; hold them to glide faster.</li>
+                  <li>Watch the timer and keep an eye on your hearts—three stings ends the round.</li>
+                </ul>
+                <p style="margin: 0; line-height: 1.6;">Fill the honey pot and return with a sweet score to share with the rest of the party.</p>
               </div>
             </div>
-
-            <div class="info-card sparkle">
-              <h4>Quick game tips</h4>
-              <ul style="margin-left: 16px; line-height: 1.6;">
-                <li>Pick a difficulty that matches your mood, then press <strong>Start</strong>.</li>
-                <li>Short taps on mobile buttons give gentle nudges; hold them to glide faster.</li>
-                <li>Watch the timer and keep an eye on your hearts—three stings ends the round.</li>
-              </ul>
-              <p style="margin: 0; line-height: 1.6;">Fill the honey pot and return with a sweet score to share with the rest of the party.</p>
-            </div>
-          </div>
+          </section>
 
           <p class="story-text" style="text-indent: 0; text-align: center; font-style: italic; margin-top: 20px;">
             "That was splendid!" said Pooh when the barrel was full. "Now we have plenty of honey for Baby Gunner's celebration!"
@@ -1396,6 +1703,7 @@
     let player = { x: 0, y: 0, width: 60, height: 90, speed: 5 };
     let drops = [];
     let bees = [];
+    let sparkles = [];
 
     const difficulties = {
       easy:   { dropSpeed: 2, beeSpeed: 1.5, dropFreq: 1500, beeFreq: 3000 },
@@ -1412,7 +1720,7 @@
 
       const container = canvas.parentElement;
       canvas.width = Math.max(220, Math.min(520, container.offsetWidth - 40));
-      canvas.height = 400;
+      canvas.height = 380;
 
       player.x = canvas.width / 2 - player.width / 2;
       player.y = canvas.height - player.height - 18;
@@ -1494,6 +1802,7 @@
       timeLeft = 60;
       drops = [];
       bees = [];
+      sparkles = [];
 
       updateDisplay();
 
@@ -1546,6 +1855,7 @@
       timeLeft = 60;
       drops = [];
       bees = [];
+      sparkles = [];
 
       updateDisplay();
       const overlay = document.getElementById('gameOverlay');
@@ -1658,6 +1968,11 @@
         if (checkCollision(drop, player)) {
           score += 10;
           honeyCollected++;
+          sparkles.push({
+            x: drop.x + 10,
+            y: drop.y + 10,
+            life: 22
+          });
           drops.splice(index, 1);
           updateDisplay();
         } else if (drop.y > canvas.height) {
@@ -1679,6 +1994,13 @@
         } else if (bee.y > canvas.height) {
           bees.splice(index, 1);
         }
+      });
+
+      // Update sparkles
+      sparkles.forEach((s, i) => {
+        s.life--;
+        s.y += 0.5;
+        if (s.life <= 0) sparkles.splice(i, 1);
       });
 
       drawGame();
@@ -1704,6 +2026,17 @@
       skyGradient.addColorStop(0.9, '#d1f3ff');
       ctx.fillStyle = skyGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Soft distant hills
+      ctx.fillStyle = '#b7d7a8';
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height - 80);
+      ctx.quadraticCurveTo(canvas.width * 0.25, canvas.height - 120, canvas.width * 0.5, canvas.height - 80);
+      ctx.quadraticCurveTo(canvas.width * 0.75, canvas.height - 40, canvas.width, canvas.height - 70);
+      ctx.lineTo(canvas.width, canvas.height);
+      ctx.lineTo(0, canvas.height);
+      ctx.closePath();
+      ctx.fill();
 
       // Ground
       ctx.fillStyle = '#6fa45a';
@@ -1819,6 +2152,20 @@
         ctx.ellipse(bee.x + 22, bee.y + 2, 7, 5, 0.3, 0, Math.PI * 2);
         ctx.fill();
       });
+
+      // Sparkles on honey catch
+      sparkles.forEach(s => {
+        const alpha = Math.max(0, s.life / 22);
+        const radius = 10 + (22 - s.life) * 0.7;
+        const gradient = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, radius);
+        gradient.addColorStop(0, `rgba(255, 245, 214, ${alpha})`);
+        gradient.addColorStop(0.4, `rgba(244, 169, 68, ${alpha * 0.9})`);
+        gradient.addColorStop(1, 'rgba(244, 169, 68, 0)');
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
     }
 
     function updateDisplay() {
@@ -1882,4 +2229,3 @@
   </script>
 </body>
 </html>
-
