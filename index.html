@@ -7,6 +7,8 @@
   <meta name="description" content="A storybook-style Hundred Acre Wood adventure with a honey-catching game to celebrate Baby Gunner." />
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand:wght@400;700&display=swap');
+
     * {
       margin: 0;
       padding: 0;
@@ -26,8 +28,11 @@
     }
 
     body {
-      font-family: 'Georgia', 'Garamond', serif;
-      background: linear-gradient(135deg, #8b6f47 0%, #5a4a3a 100%);
+      font-family: 'Patrick Hand', 'Georgia', 'Garamond', serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 247, 224, 0.18), transparent 35%),
+        radial-gradient(circle at 80% 10%, rgba(212, 233, 202, 0.14), transparent 30%),
+        linear-gradient(135deg, #d7b98d 0%, #a37c4e 40%, #5a4a3a 100%);
       color: var(--ink);
       min-height: 100vh;
       display: flex;
@@ -36,6 +41,20 @@
       padding: 20px;
       overflow-x: hidden;
       cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><text y="20" font-size="20">🍯</text></svg>'), auto;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(244, 169, 68, 0.08) 0, rgba(244, 169, 68, 0.08) 8px, transparent 12px),
+        radial-gradient(circle at 60% 10%, rgba(90, 124, 62, 0.06) 0, rgba(90, 124, 62, 0.06) 10px, transparent 16px),
+        radial-gradient(circle at 80% 70%, rgba(211, 47, 47, 0.05) 0, rgba(211, 47, 47, 0.05) 12px, transparent 18px);
+      background-size: 140px 140px, 200px 200px, 220px 220px;
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* Ambient scene background */
@@ -112,6 +131,124 @@
       font-size: 48px;
       opacity: 0.3;
       animation: drift 60s linear infinite;
+    }
+
+    /* Pooh masthead and characters */
+    .pooh-masthead {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .masthead-inner {
+      background: linear-gradient(180deg, rgba(249, 244, 232, 0.94), rgba(232, 220, 197, 0.94));
+      border: 3px solid rgba(244, 169, 68, 0.55);
+      border-radius: 16px;
+      box-shadow: 0 18px 32px rgba(43, 24, 16, 0.28);
+      padding: 22px 26px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .honey-drip {
+      position: absolute;
+      inset: -18px -12px auto -12px;
+      height: 36px;
+      background: radial-gradient(circle at 10% 60%, rgba(244, 169, 68, 0.8) 0, rgba(244, 169, 68, 0.8) 14px, transparent 18px),
+                  radial-gradient(circle at 35% 60%, rgba(212, 138, 31, 0.8) 0, rgba(212, 138, 31, 0.8) 13px, transparent 18px),
+                  radial-gradient(circle at 65% 60%, rgba(244, 169, 68, 0.8) 0, rgba(244, 169, 68, 0.8) 15px, transparent 18px),
+                  radial-gradient(circle at 90% 60%, rgba(212, 138, 31, 0.8) 0, rgba(212, 138, 31, 0.8) 12px, transparent 18px);
+      background-size: 90px 36px;
+      mix-blend-mode: multiply;
+      opacity: 0.8;
+    }
+
+    .masthead-title {
+      font-size: 2.1rem;
+      color: var(--pooh-red);
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+      letter-spacing: 1px;
+    }
+
+    .masthead-tagline {
+      color: #3c2a1a;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      max-width: 720px;
+    }
+
+    .forest-garland {
+      display: flex;
+      gap: 10px;
+      font-size: 1.3rem;
+      color: var(--forest-green);
+      margin-top: 8px;
+    }
+
+    .honeypot-badge {
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), rgba(244, 169, 68, 0.9));
+      border: 3px solid rgba(212, 138, 31, 0.7);
+      color: #3c1f0a;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.4), 0 10px 20px rgba(0,0,0,0.15);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .character-banner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .character-card {
+      background: rgba(255,255,255,0.92);
+      border: 2px dashed rgba(244, 169, 68, 0.8);
+      border-radius: 14px;
+      padding: 12px;
+      display: grid;
+      justify-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .character-card:hover {
+      transform: translateY(-4px) rotate(-1deg);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+    }
+
+    .character-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.2));
+    }
+
+    .character-name {
+      font-weight: 700;
+      color: var(--pooh-red);
+      text-align: center;
+    }
+
+    .character-trait {
+      font-size: 0.9rem;
+      color: #3c2a1a;
+      text-align: center;
+      line-height: 1.4;
     }
 
     .cloud:nth-child(1) { top: 10%; animation-duration: 80s; }
@@ -933,6 +1070,15 @@
         padding: 18px 14px;
       }
 
+      .masthead-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .honeypot-badge {
+        align-self: flex-end;
+      }
+
       .book {
         padding: 24px;
       }
@@ -1543,6 +1689,18 @@
     padding: 14px;
   }
 
+  .masthead-inner {
+    padding: 16px 18px 12px;
+  }
+
+  .masthead-title {
+    font-size: 1.6rem;
+  }
+
+  .honeypot-badge {
+    align-self: flex-start;
+  }
+
   .book {
     padding: 18px;
   }
@@ -1738,6 +1896,53 @@
     <div class="cloud">☁️</div>
     <div class="cloud">☁️</div>
     <div class="cloud">☁️</div>
+  </div>
+
+  <div class="pooh-masthead">
+    <div class="masthead-inner">
+      <div>
+        <div class="honey-drip"></div>
+        <div class="masthead-title">Winnie the Pooh & Friends</div>
+        <div class="masthead-tagline">A honey-warmed welcome from the Hundred Acre Wood as we celebrate Baby Gunner's arrival.</div>
+        <div class="forest-garland" aria-hidden="true">
+          <span>🍯</span><span>🐝</span><span>🌳</span><span>🐾</span><span>🌿</span>
+        </div>
+      </div>
+      <div class="honeypot-badge">🍯 Honey Day</div>
+    </div>
+
+    <div class="character-banner" aria-label="Pooh and friends">
+      <div class="character-card">
+        <img src="Images/Characters/honey-bear.png" alt="Winnie the Pooh illustration">
+        <div class="character-name">Winnie the Pooh</div>
+        <div class="character-trait">Keeper of honey pots and cozy hugs</div>
+      </div>
+      <div class="character-card">
+        <img src="Images/Characters/piglet.png" alt="Piglet illustration">
+        <div class="character-name">Piglet</div>
+        <div class="character-trait">Tiny hero with the biggest heart</div>
+      </div>
+      <div class="character-card">
+        <img src="Images/Characters/tigger.png" alt="Tigger illustration">
+        <div class="character-name">Tigger</div>
+        <div class="character-trait">Bounce-bringing party starter</div>
+      </div>
+      <div class="character-card">
+        <img src="Images/Characters/eeyore.png" alt="Eeyore illustration">
+        <div class="character-name">Eeyore</div>
+        <div class="character-trait">Soft-spoken friend who brings the cuddly calm</div>
+      </div>
+      <div class="character-card">
+        <img src="Images/Characters/roo.png" alt="Roo illustration">
+        <div class="character-name">Roo</div>
+        <div class="character-trait">Little explorer ready to meet Baby Gunner</div>
+      </div>
+      <div class="character-card">
+        <img src="Images/Characters/owl.png" alt="Owl illustration">
+        <div class="character-name">Owl</div>
+        <div class="character-trait">Storyteller guiding guests through the pages</div>
+      </div>
+    </div>
   </div>
 
   <div class="book-container">
