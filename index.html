@@ -908,30 +908,65 @@
       transform: translateY(-1px);
     }
 
-    .game-stats {
+    .status-bar {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 8px;
       margin: 14px 0 10px;
+      padding: 8px 10px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.35));
+      border-radius: 14px;
+      border: 2px solid rgba(43, 24, 16, 0.08);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-bar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 40%, rgba(244, 169, 68, 0.16), transparent 32%),
+                  radial-gradient(circle at 80% 60%, rgba(107, 163, 212, 0.16), transparent 32%);
+      pointer-events: none;
+      opacity: 0.6;
     }
 
     .stat {
       text-align: left;
       padding: 10px 12px;
-      background: var(--parchment);
-      border-radius: 10px;
-      border: 1px solid var(--parchment-dark);
+      background: rgba(255, 255, 255, 0.86);
+      border-radius: 12px;
+      border: 2px solid rgba(43, 24, 16, 0.08);
       display: flex;
       flex-direction: column;
       gap: 4px;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.3s ease, background 0.3s ease;
       min-width: 0;
+      position: relative;
+      z-index: 1;
     }
 
     .stat:hover {
       transform: translateY(-3px);
       box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
     }
+
+    .stat::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .stat--score { border-color: rgba(107, 163, 212, 0.4); background: linear-gradient(180deg, #e7f3ff, #f7fbff); }
+    .stat--honey { border-color: rgba(244, 169, 68, 0.5); background: linear-gradient(180deg, #fff6e5, #fffaf1); }
+    .stat--lives { border-color: rgba(90, 124, 62, 0.4); background: linear-gradient(180deg, #eef6ea, #fbfff8); }
+    .stat--timer { border-color: rgba(211, 47, 47, 0.2); background: linear-gradient(180deg, #fef1f0, #fff6f5); }
+    .stat--penalty { border-color: rgba(211, 47, 47, 0.24); background: linear-gradient(180deg, #fff1f1, #ffeaea); }
 
     .stat-alert {
       border-color: #d32f2f;
@@ -944,11 +979,34 @@
       border-color: #b02525;
       background: linear-gradient(180deg, #fff3f0, #fde1dc);
       box-shadow: 0 10px 18px rgba(176, 37, 37, 0.2);
+      animation: pulse 1s ease-in-out infinite;
     }
 
     .timer-warning .stat-label-row,
     .timer-warning .stat-value {
       color: #8c1717;
+    }
+
+    .health-warning {
+      border-color: #b02525;
+      background: linear-gradient(180deg, #fff2f2, #ffe3e3);
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    .health-warning .stat-label-row,
+    .health-warning .stat-value {
+      color: #8c1717;
+    }
+
+    .penalty-active {
+      animation: wiggle 0.8s ease, pulse 1.3s ease-in-out infinite;
+      border-color: #d32f2f;
+      box-shadow: 0 10px 18px rgba(211, 47, 47, 0.2);
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.18); }
+      50% { box-shadow: 0 0 0 8px rgba(211, 47, 47, 0.12); }
     }
 
     @keyframes stat-shake {
@@ -958,6 +1016,15 @@
       60% { transform: translateY(-2px); }
       80% { transform: translateY(2px); }
       100% { transform: translateY(0); }
+    }
+
+    @keyframes wiggle {
+      0% { transform: rotate(0deg); }
+      20% { transform: rotate(-2deg); }
+      40% { transform: rotate(2deg); }
+      60% { transform: rotate(-2deg); }
+      80% { transform: rotate(2deg); }
+      100% { transform: rotate(0deg); }
     }
 
     .stat-label-row {
@@ -1437,7 +1504,7 @@
         height: 320px;
       }
 
-      .game-stats {
+      .status-bar {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
@@ -1497,7 +1564,7 @@
         height: 260px;
       }
 
-      .game-stats {
+      .status-bar {
         grid-template-columns: 1fr;
         gap: 8px;
         margin-top: 10px;
@@ -2138,7 +2205,7 @@
     max-width: 100%;
   }
 
-  .game-stats {
+  .status-bar {
     flex-direction: column;
     gap: 8px;
     margin: 10px 0 6px;
@@ -2300,7 +2367,7 @@
     height: 230px;
   }
 
-  .game-stats {
+  .status-bar {
     margin-top: 6px;
   }
 
@@ -2553,34 +2620,41 @@
                     </div>
                   </div>
 
-                  <div class="game-stats">
-                    <div class="stat" id="scoreStat">
+                  <div class="status-bar">
+                    <div class="stat stat--score" id="scoreStat">
                       <div class="stat-label-row">
                         <span>Score</span>
                         <span class="stat-emoji">⭐</span>
                       </div>
                       <div class="stat-value" id="score">0</div>
                     </div>
-                    <div class="stat" id="honeyStat">
+                    <div class="stat stat--honey" id="honeyStat">
                       <div class="stat-label-row">
                         <span>Honey</span>
                         <span class="stat-emoji">🍯</span>
                       </div>
                       <div class="stat-value" id="honeyCount">0</div>
                     </div>
-                    <div class="stat" id="livesStat">
+                    <div class="stat stat--lives" id="livesStat">
                       <div class="stat-label-row">
-                        <span>Lives</span>
+                        <span>Hearts</span>
                         <span class="stat-emoji">❤️</span>
                       </div>
                       <div class="stat-value" id="lives">❤️❤️❤️</div>
                     </div>
-                    <div class="stat" id="timerStat">
+                    <div class="stat stat--timer" id="timerStat">
                       <div class="stat-label-row">
                         <span>Time</span>
                         <span class="stat-emoji">⏱️</span>
                       </div>
                       <div class="stat-value" id="timer">60</div>
+                    </div>
+                    <div class="stat stat--penalty" id="penaltyStat">
+                      <div class="stat-label-row">
+                        <span>Penalty</span>
+                        <span class="stat-emoji">🐝</span>
+                      </div>
+                      <div class="stat-value" id="penaltyText">Clean run</div>
                     </div>
                   </div>
 
@@ -2864,6 +2938,10 @@
 
     const livesStat = document.getElementById('livesStat');
     const timerStat = document.getElementById('timerStat');
+    const penaltyStat = document.getElementById('penaltyStat');
+    const penaltyText = document.getElementById('penaltyText');
+
+    let penaltyTimeout;
 
     const difficulties = {
       easy:   { dropSpeed: 2, beeSpeed: 1.5, dropFreq: 1500, beeFreq: 3000 },
@@ -3154,6 +3232,7 @@
           bees.splice(index, 1);
           triggerStatAlert(livesStat);
           updateDisplay();
+          showPenalty('Bee sting! -1 heart');
 
           if (lives <= 0) {
             endGame();
@@ -3355,11 +3434,38 @@
       }
     }
 
+    function updateHealthWarning() {
+      if (!livesStat) return;
+      if (lives <= 1) {
+        livesStat.classList.add('health-warning');
+      } else {
+        livesStat.classList.remove('health-warning');
+      }
+    }
+
+    function showPenalty(message) {
+      if (!penaltyStat || !penaltyText) return;
+      penaltyText.textContent = message;
+      penaltyStat.classList.add('penalty-active');
+
+      clearTimeout(penaltyTimeout);
+      penaltyTimeout = setTimeout(() => {
+        penaltyStat.classList.remove('penalty-active');
+        penaltyText.textContent = 'Clean run';
+      }, 1800);
+    }
+
     function resetStatAlerts() {
-      [livesStat, timerStat].forEach(el => {
+      [livesStat, timerStat, penaltyStat].forEach(el => {
         el?.classList.remove('stat-alert');
         el?.classList.remove('timer-warning');
+        el?.classList.remove('health-warning');
+        el?.classList.remove('penalty-active');
       });
+
+      if (penaltyText) {
+        penaltyText.textContent = 'Clean run';
+      }
     }
 
     function updateDisplay() {
@@ -3372,6 +3478,8 @@
         heartsDisplay += '❤️';
       }
       document.getElementById('lives').textContent = heartsDisplay || '💔';
+
+      updateHealthWarning();
     }
 
     // ===== GUESTBOOK =====
