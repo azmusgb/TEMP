@@ -1603,6 +1603,11 @@
       box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
     }
 
+    .hud-secondary {
+      grid-template-columns: repeat(2, 1fr);
+      background: #fff3e0;
+    }
+
     .hud-item {
       background: white;
       border-radius: 10px;
@@ -1639,6 +1644,8 @@
       border-radius: 14px;
       padding: 8px;
       border: 2px solid #d48a1f;
+      position: relative;
+      overflow: hidden;
     }
 
     .canvas-shell #gameCanvas {
@@ -1712,6 +1719,113 @@
       box-shadow: 0 6px 20px rgba(45, 52, 54, 0.3);
     }
 
+    .game-card .btn.warning {
+      background: linear-gradient(135deg, #ffb300, #f57c00);
+      box-shadow: 0 6px 20px rgba(245, 124, 0, 0.3);
+    }
+
+    .game-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2;
+      transition: opacity 0.3s ease;
+    }
+
+    .game-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .overlay-card {
+      background: #fffaf0;
+      border: 2px solid #f4a944;
+      border-radius: 18px;
+      padding: 16px 18px;
+      text-align: center;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+      max-width: 320px;
+    }
+
+    .overlay-icon {
+      font-size: 2.6rem;
+      margin-bottom: 8px;
+    }
+
+    .overlay-card h3 {
+      margin: 0 0 6px;
+      color: #d32f2f;
+    }
+
+    .overlay-card p {
+      color: #5a4a3a;
+      margin: 0 0 12px;
+      line-height: 1.5;
+    }
+
+    .overlay-action {
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    .touch-controls {
+      position: absolute;
+      inset: auto 10px 10px 10px;
+      display: none;
+      justify-content: space-between;
+      z-index: 3;
+      gap: 8px;
+    }
+
+    .touch-btn {
+      flex: 1;
+      padding: 12px 0;
+      border-radius: 12px;
+      border: 2px solid #f4a944;
+      background: rgba(255, 255, 255, 0.9);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #2b1810;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .touch-btn:active {
+      transform: scale(0.97);
+    }
+
+    .achievement-toast {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: linear-gradient(135deg, #ffd54f, #ffb300);
+      color: #2b1810;
+      padding: 12px 14px;
+      border-radius: 14px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      z-index: 5;
+      min-width: 220px;
+    }
+
+    .toast-title {
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .toast-text {
+      font-size: 0.95rem;
+    }
+
+    .toast-icon {
+      font-size: 1.8rem;
+    }
+
     @media (max-width: 500px) {
       .game-card {
         padding: 10px;
@@ -1719,6 +1833,10 @@
 
       .canvas-shell #gameCanvas {
         height: 240px;
+      }
+
+      .touch-controls {
+        display: flex;
       }
     }
 
@@ -1930,9 +2048,30 @@
     <div class="hud-item clock">⏱ <span id="time">60</span></div>
   </div>
 
+  <div class="hud hud-secondary">
+    <div class="hud-item">🏅 Honey Best <span id="bestHoney">0</span></div>
+    <div class="hud-item">🔥 Combo Best <span id="bestCombo">0</span></div>
+    <div class="hud-item" id="comboBadge">Combo x<span id="combo">0</span></div>
+    <div class="hud-item" id="statusBadge">Ready to play!</div>
+  </div>
+
   <!-- GAME CANVAS AREA (UNCHANGED) -->
   <div class="canvas-shell">
     <canvas id="gameCanvas"></canvas>
+
+    <div class="game-overlay" id="gameOverlay" aria-live="polite" role="status">
+      <div class="overlay-card">
+        <div class="overlay-icon" id="overlayIcon">🍯</div>
+        <h3 id="overlayTitle">Ready to Play</h3>
+        <p id="overlayMessage">Help Pooh catch honey and dodge the bees!</p>
+        <button class="btn primary overlay-action" id="overlayButton">Start Adventure</button>
+      </div>
+    </div>
+
+    <div class="touch-controls" aria-label="Touch controls">
+      <button class="touch-btn" id="leftBtn" aria-label="Move left">←</button>
+      <button class="touch-btn" id="rightBtn" aria-label="Move right">→</button>
+    </div>
   </div>
 
   <!-- CONTROLS -->
@@ -1945,10 +2084,19 @@
 
     <div class="action-row">
       <button class="btn primary" onclick="Game.start()">▶ Start</button>
+      <button class="btn warning" onclick="Game.togglePause()">⏸ Pause</button>
       <button class="btn secondary" onclick="Game.reset()">↻ Reset</button>
     </div>
   </div>
 </section>
+
+<div class="achievement-toast" id="achievementToast" role="status" aria-live="polite">
+  <div class="toast-icon">🏆</div>
+  <div>
+    <div class="toast-title">Achievement Unlocked!</div>
+    <div class="toast-text" id="achievementText">Sweet streak!</div>
+  </div>
+</div>
       </div>
 
       <!-- Chapter 3: Registry & Details -->
@@ -2177,23 +2325,30 @@
     let honeyCollected = 0;
     let bestScore = 0;
     let bestHoney = 0;
+    let bestCombo = 0;
+    let combo = 0;
     let lives = 3;
     let timeLeft = 60;
     let difficulty = 'easy';
-    let gameInterval, timerInterval;
+    let gameInterval, timerInterval, dropInterval, beeInterval, powerInterval;
     let hitFlash = 0;
-    let hintTimeout;
     const isTouchDevice = 'ontouchstart' in window;
 
     let player = { x: 0, y: 0, width: 60, height: 90, speed: isTouchDevice ? 6 : 5 };
     let drops = [];
     let bees = [];
     let sparkles = [];
+    let powerups = [];
+    const activeEffects = {
+      shield: false,
+      magnetUntil: 0,
+      doubleUntil: 0
+    };
 
     const difficulties = {
-      easy: { dropSpeed: 2, beeSpeed: 1.5, dropFreq: 1500, beeFreq: 3000 },
-      normal: { dropSpeed: 3, beeSpeed: 2.4, dropFreq: 1000, beeFreq: 2000 },
-      cozy: { dropSpeed: 1.6, beeSpeed: 1.1, dropFreq: 1800, beeFreq: 3200 }
+      easy: { dropSpeed: 2, beeSpeed: 1.5, dropFreq: 1500, beeFreq: 3000, dropValue: 10 },
+      normal: { dropSpeed: 3, beeSpeed: 2.4, dropFreq: 1000, beeFreq: 2000, dropValue: 14 },
+      cozy: { dropSpeed: 1.6, beeSpeed: 1.1, dropFreq: 1800, beeFreq: 3200, dropValue: 8 }
     };
 
     let keys = { left: false, right: false };
@@ -2207,6 +2362,22 @@
           return;
         }
         ctx = canvas.getContext('2d');
+
+        this.overlay = document.getElementById('gameOverlay');
+        this.overlayButton = document.getElementById('overlayButton');
+        this.overlayTitle = document.getElementById('overlayTitle');
+        this.overlayMessage = document.getElementById('overlayMessage');
+        this.overlayIcon = document.getElementById('overlayIcon');
+
+        if (this.overlayButton) {
+          this.overlayButton.addEventListener('click', () => {
+            if (gameState === 'paused') {
+              this.resume();
+            } else {
+              this.start();
+            }
+          });
+        }
 
         const sizeCanvas = () => {
           const container = canvas.parentElement;
@@ -2273,7 +2444,10 @@
         });
 
         this.draw();
-        
+
+        this.showOverlay('Ready to Play', 'Catch honey, avoid bees, and chase your best streak!', '🍯', 'Start Adventure');
+        this.updateStatus('Ready to play!');
+
         window.addEventListener('resize', () => {
           const oldWidth = canvas.width;
           sizeCanvas();
@@ -2287,6 +2461,13 @@
       handleKeyDown: function(e) {
         if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
         if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
+        if (e.key === ' ') {
+          e.preventDefault();
+          Game.togglePause();
+        }
+        if (e.key === 'r' || e.key === 'R') {
+          Game.reset();
+        }
       },
 
       handleKeyUp: function(e) {
@@ -2317,20 +2498,32 @@
         gameState = 'playing';
         score = 0;
         honeyCollected = 0;
+        combo = 0;
         lives = 3;
         hitFlash = 0;
         timeLeft = 60;
         drops = [];
         bees = [];
         sparkles = [];
+        powerups = [];
+        activeEffects.shield = false;
+        activeEffects.magnetUntil = 0;
+        activeEffects.doubleUntil = 0;
 
+        this.hideOverlay();
         this.updateDisplay();
+        this.startLoops();
+        this.updateStatus('Go! Catch the honey!');
 
-        // Start game loop
+        console.log('Game started');
+      },
+
+      startLoops: function() {
+        this.clearIntervals();
         gameInterval = setInterval(() => this.loop(), 1000 / 60);
 
-        // Start timer
         timerInterval = setInterval(() => {
+          if (gameState !== 'playing') return;
           timeLeft--;
           document.getElementById('time').textContent = timeLeft;
           if (timeLeft <= 0) {
@@ -2338,81 +2531,152 @@
           }
         }, 1000);
 
-        // Start spawning objects
-        this.spawnDrops();
-        this.spawnBees();
+        this.startSpawners();
+      },
 
-        console.log('Game started');
+      startSpawners: function() {
+        const diff = difficulties[difficulty];
+        this.clearSpawnerIntervals();
+
+        dropInterval = setInterval(() => {
+          if (gameState !== 'playing') return;
+          drops.push({
+            x: Math.random() * (canvas.width - 20),
+            y: -20,
+            width: 20,
+            height: 30,
+            speed: diff.dropSpeed,
+            value: diff.dropValue,
+            type: 'honey'
+          });
+        }, diff.dropFreq);
+
+        beeInterval = setInterval(() => {
+          if (gameState !== 'playing') return;
+          bees.push({
+            x: Math.random() * (canvas.width - 30),
+            y: -30,
+            width: 30,
+            height: 25,
+            speed: diff.beeSpeed,
+            type: 'bee'
+          });
+        }, diff.beeFreq);
+
+        powerInterval = setInterval(() => {
+          if (gameState !== 'playing') return;
+          if (Math.random() < 0.2) this.spawnPowerup();
+        }, 4000);
+      },
+
+      clearSpawnerIntervals: function() {
+        if (dropInterval) clearInterval(dropInterval);
+        if (beeInterval) clearInterval(beeInterval);
+        if (powerInterval) clearInterval(powerInterval);
+      },
+
+      clearIntervals: function() {
+        if (gameInterval) clearInterval(gameInterval);
+        if (timerInterval) clearInterval(timerInterval);
+        this.clearSpawnerIntervals();
+      },
+
+      togglePause: function() {
+        if (gameState === 'playing') {
+          this.pause();
+        } else if (gameState === 'paused') {
+          this.resume();
+        }
+      },
+
+      pause: function() {
+        if (gameState !== 'playing') return;
+        gameState = 'paused';
+        this.clearIntervals();
+        this.showOverlay('Game Paused', 'Take a breather then keep catching honey!', '⏸', 'Continue');
+        this.updateStatus('Paused');
+      },
+
+      resume: function() {
+        if (gameState !== 'paused') return;
+        gameState = 'playing';
+        this.hideOverlay();
+        this.startLoops();
+        this.updateStatus('Back to the adventure!');
       },
 
       reset: function() {
         gameState = 'idle';
-        clearInterval(gameInterval);
-        clearInterval(timerInterval);
+        this.clearIntervals();
 
         score = 0;
         honeyCollected = 0;
+        combo = 0;
         lives = 3;
         timeLeft = 60;
         drops = [];
         bees = [];
         sparkles = [];
+        powerups = [];
+        activeEffects.shield = false;
+        activeEffects.magnetUntil = 0;
+        activeEffects.doubleUntil = 0;
 
         player.x = canvas.width / 2 - player.width / 2;
         player.y = canvas.height - player.height - 18;
 
         this.updateDisplay();
         this.draw();
-        
+        this.showOverlay('Reset & Ready', 'Press start to begin a new honey run!', '🔄', 'Start Adventure');
+        this.updateStatus('Ready to play!');
+
         console.log('Game reset');
       },
 
       end: function() {
         gameState = 'over';
-        clearInterval(gameInterval);
-        clearInterval(timerInterval);
+        this.clearIntervals();
 
         // Update best scores
         if (score > bestScore) {
           bestScore = score;
           document.getElementById('gameHighScore').textContent = bestScore;
-          this.saveBestStats();
+          this.showAchievement('New High Score!');
         }
         if (honeyCollected > bestHoney) {
           bestHoney = honeyCollected;
+          this.showAchievement('Most Honey Yet!');
         }
 
-        alert(`Game Over!\nFinal Score: ${score}\nHoney Collected: ${honeyCollected}\nBest Score: ${bestScore}`);
-        
+        if (combo > bestCombo) {
+          bestCombo = combo;
+          this.showAchievement('Sweetest Combo!');
+        }
+
+        this.saveBestStats();
+        this.updateDisplay();
+        this.showOverlay('Game Over', `Score: ${score}<br>Honey: ${honeyCollected}<br>Best Combo: x${bestCombo}`, '🐝', 'Play Again');
+        this.updateStatus('Game over — try again!');
+
         console.log('Game ended');
       },
 
-      spawnDrops: function() {
-        if (gameState !== 'playing') return;
+      spawnPowerup: function() {
+        const options = [
+          { type: 'shield', color: '#64b5f6', symbol: '🛡️', note: 'Blocks one bee hit' },
+          { type: 'magnet', color: '#e57373', symbol: '🧲', note: 'Pulls honey toward you' },
+          { type: 'double', color: '#81c784', symbol: '2️⃣', note: 'Double honey points' }
+        ];
+        const pick = options[Math.floor(Math.random() * options.length)];
 
-        drops.push({
-          x: Math.random() * (canvas.width - 20),
-          y: -20,
-          width: 20,
-          height: 30,
-          speed: difficulties[difficulty].dropSpeed
-        });
-
-        setTimeout(() => this.spawnDrops(), difficulties[difficulty].dropFreq);
-      },
-
-      spawnBees: function() {
-        if (gameState !== 'playing') return;
-
-        bees.push({
-          x: Math.random() * (canvas.width - 30),
+        powerups.push({
+          x: Math.random() * (canvas.width - 26),
           y: -30,
-          width: 30,
-          height: 25,
-          speed: difficulties[difficulty].beeSpeed
+          width: 26,
+          height: 26,
+          speed: 2.2,
+          ...pick
         });
-
-        setTimeout(() => this.spawnBees(), difficulties[difficulty].beeFreq);
       },
 
       loop: function() {
@@ -2427,32 +2691,70 @@
         }
         player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
 
+        const now = Date.now();
+        const magnetActive = activeEffects.magnetUntil > now;
+        const doubleActive = activeEffects.doubleUntil > now;
+        const playerCenter = player.x + player.width / 2;
+
         // Update drops
-        drops.forEach((drop, index) => {
+        for (let i = drops.length - 1; i >= 0; i--) {
+          const drop = drops[i];
           drop.y += drop.speed;
+          if (magnetActive) {
+            const dropCenter = drop.x + drop.width / 2;
+            drop.x += (playerCenter - dropCenter) * 0.03;
+          }
 
           if (this.checkCollision(drop, player)) {
-            score += 10;
+            const points = (drop.value || 10) * (doubleActive ? 2 : 1);
+            score += points;
             honeyCollected++;
+            combo++;
+            bestCombo = Math.max(bestCombo, combo);
             sparkles.push({
               x: drop.x + 10,
               y: drop.y + 10,
               life: 22
             });
-            drops.splice(index, 1);
+            drops.splice(i, 1);
+            if (combo > 0 && combo % 5 === 0) {
+              this.showAchievement(`${combo}x Combo!`);
+            }
             this.updateDisplay();
           } else if (drop.y > canvas.height) {
-            drops.splice(index, 1);
+            drops.splice(i, 1);
+            combo = 0;
           }
-        });
+        }
+
+        // Update powerups
+        for (let i = powerups.length - 1; i >= 0; i--) {
+          const power = powerups[i];
+          power.y += power.speed;
+
+          if (this.checkCollision(power, player)) {
+            this.activatePowerup(power);
+            powerups.splice(i, 1);
+            this.updateDisplay();
+          } else if (power.y > canvas.height) {
+            powerups.splice(i, 1);
+          }
+        }
 
         // Update bees
-        bees.forEach((bee, index) => {
+        for (let i = bees.length - 1; i >= 0; i--) {
+          const bee = bees[i];
           bee.y += bee.speed;
 
           if (this.checkCollision(bee, player)) {
-            lives--;
-            bees.splice(index, 1);
+            if (activeEffects.shield) {
+              activeEffects.shield = false;
+              this.updateStatus('Shield blocked a bee!');
+            } else {
+              lives--;
+              combo = 0;
+            }
+            bees.splice(i, 1);
             hitFlash = 16;
             this.updateDisplay();
 
@@ -2460,9 +2762,9 @@
               this.end();
             }
           } else if (bee.y > canvas.height) {
-            bees.splice(index, 1);
+            bees.splice(i, 1);
           }
-        });
+        }
 
         // Update sparkles
         sparkles.forEach((s, i) => {
@@ -2621,6 +2923,17 @@
           ctx.fill();
         });
 
+        // Power-ups
+        powerups.forEach(power => {
+          ctx.fillStyle = power.color;
+          ctx.fillRect(power.x, power.y, power.width, power.height);
+          ctx.fillStyle = 'white';
+          ctx.font = '16px "Patrick Hand", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(power.symbol, power.x + power.width / 2, power.y + power.height / 2 + 1);
+        });
+
         // Sparkles on honey catch
         sparkles.forEach(s => {
           const alpha = Math.max(0, s.life / 22);
@@ -2640,13 +2953,28 @@
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           hitFlash--;
         }
+
+        if (combo > 1) {
+          ctx.fillStyle = 'rgba(0,0,0,0.4)';
+          ctx.fillRect(canvas.width / 2 - 70, 10, 140, 32);
+          ctx.fillStyle = '#fffbe6';
+          ctx.font = '18px "Patrick Hand", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(`Combo x${combo}`, canvas.width / 2, 32);
+        }
       },
 
       updateDisplay: function() {
+        bestHoney = Math.max(bestHoney, honeyCollected);
+        bestCombo = Math.max(bestCombo, combo);
         document.getElementById('score').textContent = score;
         document.getElementById('honey').textContent = honeyCollected;
         document.getElementById('time').textContent = timeLeft;
-        
+        document.getElementById('combo').textContent = combo;
+        document.getElementById('bestHoney').textContent = bestHoney;
+        document.getElementById('bestCombo').textContent = bestCombo;
+        document.getElementById('gameHighScore').textContent = bestScore;
+
         let heartsDisplay = '';
         for (let i = 0; i < lives; i++) {
           heartsDisplay += '❤️';
@@ -2654,11 +2982,65 @@
         document.getElementById('lives').textContent = heartsDisplay || '💔';
       },
 
+      updateStatus: function(message) {
+        const badge = document.getElementById('statusBadge');
+        if (badge) {
+          badge.textContent = message;
+        }
+      },
+
+      showOverlay: function(title, message, icon = '🍯', buttonText = 'Start') {
+        if (!this.overlay) return;
+        this.overlayTitle.textContent = title;
+        this.overlayMessage.innerHTML = message;
+        this.overlayIcon.textContent = icon;
+        if (this.overlayButton) {
+          this.overlayButton.textContent = buttonText;
+        }
+        this.overlay.classList.remove('hidden');
+      },
+
+      hideOverlay: function() {
+        if (this.overlay) {
+          this.overlay.classList.add('hidden');
+        }
+      },
+
+      showAchievement: function(text) {
+        const toast = document.getElementById('achievementToast');
+        const detail = document.getElementById('achievementText');
+        if (!toast || !detail) return;
+        detail.textContent = text;
+        toast.style.display = 'flex';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 2400);
+      },
+
+      activatePowerup: function(power) {
+        switch (power.type) {
+          case 'shield':
+            activeEffects.shield = true;
+            this.updateStatus('Shield ready for one bee!');
+            break;
+          case 'magnet':
+            activeEffects.magnetUntil = Date.now() + 6000;
+            this.updateStatus('Honey magnet active!');
+            break;
+          case 'double':
+            activeEffects.doubleUntil = Date.now() + 6000;
+            this.updateStatus('Double honey for 6s!');
+            break;
+        }
+        this.showAchievement(power.note);
+      },
+
       saveBestStats: function() {
         try {
-          localStorage.setItem('poohBest', JSON.stringify({ 
-            score: bestScore, 
-            honey: bestHoney 
+          localStorage.setItem('poohBest', JSON.stringify({
+            score: bestScore,
+            honey: bestHoney,
+            combo: bestCombo
           }));
         } catch (e) {
           console.warn('Unable to save best stats', e);
@@ -2672,8 +3054,11 @@
             const parsed = JSON.parse(saved);
             if (parsed.score) bestScore = parsed.score;
             if (parsed.honey) bestHoney = parsed.honey;
+            if (parsed.combo) bestCombo = parsed.combo;
           }
           document.getElementById('gameHighScore').textContent = bestScore;
+          document.getElementById('bestHoney').textContent = bestHoney;
+          document.getElementById('bestCombo').textContent = bestCombo;
         } catch (e) {
           console.warn('No saved stats', e);
         }
