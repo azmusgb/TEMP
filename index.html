@@ -213,6 +213,34 @@
       white-space: nowrap;
     }
 
+    .name-art {
+      max-width: 1200px;
+      margin: 12px auto 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .name-art figure {
+      border: 3px solid rgba(212, 138, 31, 0.35);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(249, 244, 232, 0.96), rgba(232, 220, 197, 0.92));
+      box-shadow: 0 16px 30px rgba(43, 24, 16, 0.24);
+      overflow: hidden;
+    }
+
+    .name-art img {
+      width: 100%;
+      display: block;
+    }
+
+    .name-art figcaption {
+      padding: 10px 16px 14px;
+      color: #3c2a1a;
+      font-size: 1rem;
+      letter-spacing: 0.4px;
+      text-align: center;
+    }
+
     .character-banner {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -1907,6 +1935,13 @@
         <div class="character-trait">Storyteller guiding guests through the pages</div>
       </div>
     </div>
+  </div>
+
+  <div class="name-art" aria-label="Gunnar name banner with Hundred Acre Wood characters">
+    <figure>
+      <img src="Images/Characters/gunnar-name.svg" alt="Colorful Gunnar name art featuring Pooh, Piglet, Tigger, Eeyore, Roo, and Owl">
+      <figcaption>Brand-new name art to welcome Baby Gunner alongside Pooh and friends.</figcaption>
+    </figure>
   </div>
 
   <div class="book-container">
